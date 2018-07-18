@@ -1,0 +1,1158 @@
+﻿<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="clr-namespace:Start9.UI.Wpf"
+    xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters">
+    <!--#region Converters -->
+
+    <conv:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
+
+    <!--#endregion Converters -->
+
+    <!--#region Window Styles -->
+
+    <Style TargetType="local:DecoratableWindow">
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0,24,0,0" />
+        <Setter Property="Background" Value="{DynamicResource DefaultWindowBodyBrush}"/>
+        <Setter Property="FontFamily" Value="Selawik"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="ShadowOffsetThickness" Value="49,14,14,60"/>
+        <Setter Property="ShadowStyle">
+            <Setter.Value>
+                <Style TargetType="Window">
+                    <Setter Property="WindowStyle" Value="None"/>
+                    <Setter Property="ResizeMode" Value="NoResize"/>
+                    <Setter Property="AllowsTransparency" Value="True"/>
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Window">
+                                <Grid x:Name="ShadowGrid" ClipToBounds="True">
+                                    <Grid.OpacityMask>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Grid Background="#01000000" Margin="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                                    <Border BorderThickness="49,14,14,60" CornerRadius="12" BorderBrush="Black" Background="Transparent"/>
+                                                    <Border Margin="39,4,4,50" BorderThickness="10" CornerRadius="16" BorderBrush="Black" Background="Transparent"/>
+                                                </Grid>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Grid.OpacityMask>
+                                    <Grid.Background>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Grid Background="#01000000" Margin="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                                    <!--Diagonal size is 67.19-->
+                                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Width="58" Height="58">
+                                                        <Canvas.Background>
+                                                            <RadialGradientBrush GradientOrigin="1,1" Center="1,1" RadiusX="1" RadiusY="1">
+                                                                <RadialGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#7F000000" />
+                                                                    <GradientStop Offset="1" Color="#00000000" />
+                                                                </RadialGradientBrush.GradientStops>
+                                                            </RadialGradientBrush>
+                                                        </Canvas.Background>
+                                                    </Canvas>
+                                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="58,0" Height="58">
+                                                        <Canvas.Background>
+                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#00000000" />
+                                                                    <GradientStop Offset="1" Color="#7F000000" />
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Canvas.Background>
+                                                    </Canvas>
+                                                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Top" Width="58" Height="58">
+                                                        <Canvas.Background>
+                                                            <RadialGradientBrush GradientOrigin="0,1" Center="0,1" RadiusX="1" RadiusY="1">
+                                                                <RadialGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#7F000000" />
+                                                                    <GradientStop Offset="1" Color="#00000000" />
+                                                                </RadialGradientBrush.GradientStops>
+                                                            </RadialGradientBrush>
+                                                        </Canvas.Background>
+                                                    </Canvas>
+                                                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,58" Width="58">
+                                                        <Canvas.Background>
+                                                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#00000000" />
+                                                                    <GradientStop Offset="1" Color="#7F000000" />
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Canvas.Background>
+                                                    </Canvas>
+                                                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="58" Height="58">
+                                                        <Canvas.Background>
+                                                            <RadialGradientBrush GradientOrigin="0,0" Center="0,0" RadiusX="1" RadiusY="1">
+                                                                <RadialGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#7F000000" />
+                                                                    <GradientStop Offset="1" Color="#00000000" />
+                                                                </RadialGradientBrush.GradientStops>
+                                                            </RadialGradientBrush>
+                                                        </Canvas.Background>
+                                                    </Canvas>
+                                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="58,0" Height="58">
+                                                        <Canvas.Background>
+                                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#00000000" />
+                                                                    <GradientStop Offset="1" Color="#7F000000" />
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Canvas.Background>
+                                                    </Canvas>
+                                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="58" Height="58">
+                                                        <Canvas.Background>
+                                                            <RadialGradientBrush GradientOrigin="1,0" Center="1,0" RadiusX="1" RadiusY="1">
+                                                                <RadialGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#7F000000" />
+                                                                    <GradientStop Offset="1" Color="#00000000" />
+                                                                </RadialGradientBrush.GradientStops>
+                                                            </RadialGradientBrush>
+                                                        </Canvas.Background>
+                                                    </Canvas>
+                                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,58" Width="58">
+                                                        <Canvas.Background>
+                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#00000000" />
+                                                                    <GradientStop Offset="1" Color="#7F000000" />
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Canvas.Background>
+                                                    </Canvas>
+                                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="58,58" Background="#7F000000" />
+                                                </Grid>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Grid.Background>
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsEnabled" Value="False">
+                                        <Trigger.EnterActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="ShadowGrid" Storyboard.TargetProperty="Opacity" To="0.75" Duration="0:0:0.25" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.EnterActions>
+                                        <Trigger.ExitActions>
+                                            <BeginStoryboard>
+                                                <Storyboard>
+                                                    <DoubleAnimation Storyboard.TargetName="ShadowGrid" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                                                </Storyboard>
+                                            </BeginStoryboard>
+                                        </Trigger.ExitActions>
+                                    </Trigger>
+                                    <Trigger Property="IsHitTestVisible" Value="True">
+                                        <Setter Property="Visibility" Value="Hidden"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:DecoratableWindow}">
+                    <ControlTemplate.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="pack://application:,,,/Start9.Api;component/Themes/Colors/PlexBlue.xaml"/>
+                            </ResourceDictionary.MergedDictionaries>
+                            <Style x:Key="BorderThumb" TargetType="Thumb">
+                                <Setter Property="SnapsToDevicePixels" Value="true" />
+                                <Setter Property="OverridesDefaultStyle" Value="true" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0">
+                                                <Rectangle.Fill>
+                                                    <SolidColorBrush Color="#01000000" />
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <Style x:Key="PlexCaptionButtonStyle" TargetType="Button">
+                                <Setter Property="OverridesDefaultStyle" Value="True" />
+                                <Setter Property="Background" Value="Transparent" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Foreground" Value="{DynamicResource CaptionButtonActiveIdleBrush}" />
+                                <Setter Property="BorderThickness" Value="0" />
+                                <Setter Property="BorderBrush" Value="Transparent" />
+                                <Setter Property="FontFamily" Value="Marlett"/>
+                                <Setter Property="FontSize" Value="12"/>
+                                <Setter Property="Focusable" Value="False" />
+                                <Setter Property="IsTabStop" Value="False" />
+                                <Setter Property="IsHitTestVisible" Value="True"/>
+                                <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
+                                <Setter Property="SnapsToDevicePixels" Value="True" />
+                                <Setter Property="UseLayoutRounding" Value="True" />
+                                <Setter Property="Width" Value="20"/>
+                                <Setter Property="VerticalAlignment" Value="Stretch"/>
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320" ShadowDepth="3"
+                                              BlurRadius="10" Opacity="0.5" />
+                                    </Setter.Value>
+                                </Setter>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Margin="{TemplateBinding Padding}">
+                                                <ContentControl x:Name="Glyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" />
+                                                <ContentControl x:Name="InactiveGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonInactiveIdleBrush}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
+                                                <ContentControl x:Name="HoverGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActiveHoverBrush}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
+                                                <ContentControl x:Name="PressedGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActivePressedBrush}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DecoratableWindow}}}" Value="False">
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                    <DataTrigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.ExitActions>
+                                                </DataTrigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <Style x:Key="MinimizeButtonStyle" TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Background="#01000000" IsHitTestVisible="True">
+                                                <Border x:Name="Glyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border x:Name="InactiveGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border x:Name="HoverGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border x:Name="PressedGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DecoratableWindow}}}" Value="False">
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                    <DataTrigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.ExitActions>
+                                                </DataTrigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <Style x:Key="MaximizeButtonStyle" TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Background="#01000000" IsHitTestVisible="True" Margin="0.25,1,-0.25,-1">
+                                                <Border x:Name="Glyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border x:Name="InactiveGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border x:Name="HoverGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                <Border x:Name="PressedGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DecoratableWindow}}}" Value="False">
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                    <DataTrigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.ExitActions>
+                                                </DataTrigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <Style x:Key="RestoreButtonStyle" TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
+                                <!--Setter Property="Content">
+                                <Setter.Value>
+                                    <Grid Width="9" Height="9">
+                                        <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                                        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
+                                    </Grid>
+                                </Setter.Value>
+                            </Setter-->
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <Grid Background="#01000000" IsHitTestVisible="True" Margin="0.25,1,-0.25,-1">
+                                                <Grid x:Name="Glyph" Width="9" Height="9" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{TemplateBinding Foreground}"/>
+                                                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{TemplateBinding Foreground}"/>
+                                                </Grid>
+                                                <Grid x:Name="InactiveGlyph" Width="9" Height="9" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                                                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                                                </Grid>
+                                                <Grid x:Name="HoverGlyph" Width="9" Height="9" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}"/>
+                                                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}"/>
+                                                </Grid>
+                                                <Grid x:Name="PressedGlyph" Width="9" Height="9" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}"/>
+                                                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}"/>
+                                                </Grid>
+                                            </Grid>
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DecoratableWindow}}}" Value="False">
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                    <DataTrigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.ExitActions>
+                                                </DataTrigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Button">
+                                            <ControlTemplate.Resources>
+                                                <!--PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 1 0 L 4 3 L 7 0 L 8 0 L 8 1 L 5 4 L 8 7 L 8 8 L 7 8 L 4 5 L 1 8 L 0 8 L 0 7 L 3 4 L 0 1 Z"/-->
+                                                <!--PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 2 0 L 4 2 L 6 0 L 8 0 L 8 2 L 6 4 L 8 6 L 8 8 L 6 8 L 4 6 L 2 8 L 0 8 L 0 6 L 2 4 L 0 2 Z"/-->
+                                                <!--PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 1.5 0 L 4 2.5 L 6.5 0 L 8 0 L 8 1.5 L 5.5 4 L 8 6.5 L 8 8 L 6.5 8 L 4 5.5 L 1.5 8 L 0 8 L 0 6.5 L 2.5 4 L 0 1.5 Z"/-->
+                                                <PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 1.5 0 L 4.5 3 L 7.5 0 L 9 0 L 9 1.5 L 6 4.5 L 9 7.5 L 9 9 L 7.5 9 L 4.5 6 L 1.5 9 L 0 9 L 0 7.5 L 3 4.5 L 0 1.5 Z"/>
+                                            </ControlTemplate.Resources>
+                                            <Border Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Margin="{TemplateBinding Padding}">
+                                                <Grid Background="#01000000" IsHitTestVisible="True" Margin="0,0.5,0,-0.5">
+                                                    <Path x:Name="Glyph" Fill="{TemplateBinding Foreground}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                    <Path x:Name="InactiveGlyph" Fill="{DynamicResource CaptionButtonInactiveIdleBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
+                                                    <Path x:Name="HoverGlyph" Fill="{DynamicResource CaptionButtonActiveHoverBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
+                                                    <Path x:Name="PressedGlyph" Fill="{DynamicResource CaptionButtonActivePressedBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
+                                                </Grid>
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DecoratableWindow}}}" Value="False">
+                                                    <DataTrigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.EnterActions>
+                                                    <DataTrigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </DataTrigger.ExitActions>
+                                                </DataTrigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                                <Trigger Property="IsPressed" Value="True">
+                                                    <Trigger.EnterActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.EnterActions>
+                                                    <Trigger.ExitActions>
+                                                        <BeginStoryboard>
+                                                            <Storyboard>
+                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                                            </Storyboard>
+                                                        </BeginStoryboard>
+                                                    </Trigger.ExitActions>
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+
+                            <Style x:Key="ResizeGripThumbStyle" TargetType="Thumb" BasedOn="{StaticResource BorderThumb}">
+                                <Setter Property="SnapsToDevicePixels" Value="True" />
+                                <Setter Property="OverridesDefaultStyle" Value="True" />
+                                <Setter Property="Width" Value="18" />
+                                <Setter Property="Height" Value="18" />
+                                <Setter Property="Margin" Value="2" />
+                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                <Setter Property="VerticalAlignment" Value="Bottom" />
+                                <Setter Property="Cursor" Value="SizeNWSE"/>
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="Thumb">
+                                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <ResizeGrip x:Name="PART_ResizeGrip" Style="{DynamicResource {x:Type ResizeGrip}}" Visibility="Visible"/>
+                                                <Rectangle StrokeThickness="0">
+                                                    <Rectangle.Fill>
+                                                        <SolidColorBrush Color="#01000000" />
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                            </Grid>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ResourceDictionary>
+                    </ControlTemplate.Resources>
+                    <Grid x:Name="WindowRoot" Margin="{TemplateBinding Padding}">
+                        <DockPanel LastChildFill="True" Background="Transparent">
+                            <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" Margin="0" Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}" Visibility="Visible" Opacity="1" DockPanel.Dock="Top">
+                                <Grid x:Name="ActiveTitlebarBackground" Visibility="Visible">
+                                    <Border x:Name="ActiveTitlebarBorder" CornerRadius="12,12,0,0"
+                                            BorderThickness="0,1,0,0"
+                                            Background="{DynamicResource ActiveTitlebarBackgroundBrush}"
+                                            BorderBrush="{DynamicResource ActiveTitlebarBorderBrush}"
+                                            Margin="0,0,0,-12" Padding="0" />
+                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1"
+                                            Margin="12,2,12,0" Background="{DynamicResource ActiveTitlebarBorderBrush}" />
+                                </Grid>
+                                <Grid x:Name="InactiveTitlebarBackground" Visibility="Hidden">
+                                    <Border x:Name="InactiveTitlebarBorder" CornerRadius="12,12,0,0"
+                                            BorderThickness="0,1,0,0"
+                                            Background="{DynamicResource InactiveTitlebarBackgroundBrush}"
+                                            BorderBrush="{DynamicResource InactiveTitlebarBorderBrush}"
+                                            Margin="0,0,0,-12" Padding="0" />
+                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1"
+                                            Margin="12,2,12,0"
+                                            Background="{DynamicResource InactiveTitlebarBorderBrush}" />
+                                </Grid>
+                                <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16"
+                                        Margin="3">
+                                    <Canvas.Background>
+                                        <ImageBrush ImageSource="{TemplateBinding Icon}" />
+                                    </Canvas.Background>
+                                </Canvas>
+                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Stretch"
+                                       VerticalAlignment="Top" HorizontalContentAlignment="Center"
+                                       VerticalContentAlignment="Center" Height="26" Margin="0,-2" FontSize="12" Foreground="White">
+                                    <Label.Effect>
+                                        <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320"
+                                                          ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
+                                    </Label.Effect>
+                                </Label>
+                                <ContentPresenter Content="{TemplateBinding TitleBarContent}" />
+                                <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                            Orientation="Horizontal" Height="22">
+                                    <!--RenderTransformOrigin="1,0">
+                                        <StackPanel.RenderTransform>
+                                            <ScaleTransform ScaleX="2" ScaleY="2"/>
+                                        </StackPanel.RenderTransform-->
+                                    <!--Width="18" VerticalAlignment="Stretch" -->
+                                    <Button x:Name="PART_MinimizeButton" Margin="-0.5,0,0.5,0" Style="{DynamicResource MinimizeButtonStyle}"/>
+                                    <!--Border Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContentControl}}"/-->
+                                    <!--0-->
+                                    <Grid x:Name="MaxRestButtonGrid" Margin="-1,0,1,0">
+                                        <!--Margin="-1,0,1,0"-->
+                                        <Button x:Name="PART_MaximizeButton" Style="{DynamicResource MaximizeButtonStyle}"/>
+                                        <!--Border Width="10" Height="9" BorderThickness="1,2,1,1" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/-->
+                                        <!--1-->
+                                        <Button x:Name="PART_RestoreButton" Visibility="Hidden" Style="{DynamicResource RestoreButtonStyle}"/>
+                                    </Grid>
+                                    <Button x:Name="PART_CloseButton" Padding="-3.25,0.625,3.25,-0.625" Style="{DynamicResource CloseButtonStyle}"/>
+                                </StackPanel>
+                                <Border x:Name="DialogFilm" CornerRadius="12,12,0,0" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
+                            </Grid>
+                            <Border x:Name="Body" CornerRadius="12" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="0" Padding="0" Background="{TemplateBinding Background}">
+                                <Grid>
+                                    <Rectangle x:Name="BodySizingAid"/>
+                                    <ContentPresenter Content="{TemplateBinding Content}">
+                                        <ContentPresenter.OpacityMask>
+                                            <VisualBrush>
+                                                <VisualBrush.Visual>
+                                                    <Border Width="{Binding ActualWidth, Source={x:Reference BodySizingAid}}" Height="{Binding ActualHeight, Source={x:Reference BodySizingAid}}" Background="Black" BorderBrush="Transparent" BorderThickness="0" CornerRadius="12"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </ContentPresenter.OpacityMask>
+                                    </ContentPresenter>
+                                </Grid>
+                            </Border>
+                        </DockPanel>
+                        <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
+                            <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
+                        </Grid>
+                        <Grid>
+                            <Grid x:Name="ResizeGrid">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Thumb x:Name="PART_ThumbBottom" HorizontalAlignment="Stretch" Cursor="SizeNS"
+                                   Grid.Column="0" Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Grid.Row="3"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbTop" HorizontalAlignment="Stretch" Cursor="SizeNS" Grid.Column="0"
+                                   Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Height="4"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.RowSpan="4"
+                                   Background="{x:Null}" Margin="0,3" Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.RowSpan="4"
+                                   HorizontalContentAlignment="Right" Background="{x:Null}" Margin="0,3"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbBottomRightCorner" HorizontalAlignment="Right" Cursor="SizeNWSE"
+                                   Grid.Row="3" Grid.Column="3" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbTopRightCorner" HorizontalAlignment="Right" Cursor="SizeNESW"
+                                   Grid.Row="0" Grid.Column="2" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbTopLeftCorner" HorizontalAlignment="Left" Cursor="SizeNWSE"
+                                   Grid.Row="0" Grid.Column="0" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbBottomLeftCorner" HorizontalAlignment="Left" Cursor="SizeNESW"
+                                   Grid.Row="3" Grid.Column="0" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                            </Grid>
+                            <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumb}" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="3"/>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter Property="Margin" Value="7"/>
+                            <Setter Property="MaxWidth" Value="{x:Static SystemParameters.PrimaryScreenWidth}"/>
+                            <Setter Property="MaxHeight" Value="{x:Static SystemParameters.PrimaryScreenHeight}"/>
+                            <Setter TargetName="PART_MaximizeButton" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_RestoreButton" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="IsActive" Value="False">
+                            <Setter TargetName="ActiveTitlebarBackground" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="InactiveTitlebarBackground" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="PART_MinimizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                            <Setter TargetName="PART_MaximizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                            <Setter TargetName="PART_RestoreButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                            <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                        </Trigger>
+                        <Trigger Property="WindowStyle" Value="None">
+                            <Setter TargetName="PART_Titlebar" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="NoResize">
+                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="PlexCaptionButtonStyle" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Foreground" Value="{DynamicResource CaptionButtonActiveIdleBrush}" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="FontFamily" Value="Marlett"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="Focusable" Value="False" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="IsHitTestVisible" Value="True"/>
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="UseLayoutRounding" Value="True" />
+        <Setter Property="Width" Value="20"/>
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Effect">
+            <Setter.Value>
+                <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320" ShadowDepth="3"
+                                              BlurRadius="10" Opacity="0.5" />
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Margin="{TemplateBinding Padding}">
+                        <ContentControl x:Name="Glyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" />
+                        <ContentControl x:Name="InactiveGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonInactiveIdleBrush}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
+                        <ContentControl x:Name="HoverGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActiveHoverBrush}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
+                        <ContentControl x:Name="PressedGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActivePressedBrush}"
+                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
+                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DecoratableWindow}}}" Value="False">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion Window Styles -->
+
+    <!--#region Command Link Styles-->
+
+    <!--Style x:Key="{x:Type controls:CommandLinkButton}" TargetType="{x:Type controls:CommandLinkButton}">
+        <Setter Property="Icon" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="{DynamicResource CommandLinkButtonBodyForegroundBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="HeaderForeground" Value="{DynamicResource CommandLinkButtonHeaderForegroundBrush}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="False" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:CommandLinkButton}">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Border x:Name="HoverBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverBorderBrush}" BorderThickness="1" CornerRadius="4" Opacity="0">
+                            <Border BorderThickness="1" CornerRadius="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
+                                <Border BorderThickness="0,1,0,2" CornerRadius="2" Background="{DynamicResource ToolbarButtonHoverTertiaryBackgroundBrush}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}"/>
+                            </Border>
+                        </Border>
+                        <Border x:Name="PressedBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverPrimaryBorderBrush}" BorderThickness="1" CornerRadius="4" Opacity="0">
+                            <Border BorderThickness="1" CornerRadius="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
+                                <Border BorderThickness="0,1,0,2" CornerRadius="2" Background="{DynamicResource ToolbarToggleButtonSelectedBackground}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}"/>
+                            </Border>
+                        </Border>
+                        <Grid x:Name="ContentGrid" Margin="{TemplateBinding Padding}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="32"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0" Grid.Row="0" Margin="0,5,0,-5" >
+                                <ContentControl x:Name="DefaultIcon" Content="{DynamicResource LargeForwardArrowPathIcon}" Visibility="Hidden"/>
+                                <ContentControl x:Name="IconContentControl" Content="{TemplateBinding Icon}" Visibility="Visible"/>
+                            </Grid>
+                            <TextBlock FontSize="14" Foreground="{TemplateBinding HeaderForeground}" Background="#01000000" TextWrapping="Wrap" Text="{TemplateBinding Header}" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" Focusable="False" Grid.Column="1" Grid.Row="0" MaxWidth="{Binding Width, RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=300}"/>
+                            <ContentControl Foreground="{DynamicResource CommandLinkButtonBodyForegroundBrush}" Background="#01000000" Content="{TemplateBinding Content}" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" Grid.Column="1" Grid.Row="1" MaxWidth="{Binding Width, RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=300}"/>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonHoverForegroundBrush}" />
+                            <Setter Property="HeaderForeground" Value="{DynamicResource CommandLinkButtonHeaderForegroundHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonHoverForegroundBrush}" />
+                            <Setter Property="HeaderForeground" Value="{DynamicResource CommandLinkButtonHeaderForegroundHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource CommandLinkButtonForegroundDisabledBrush}"/>
+                            <Setter Property="HeaderForeground" Value="{DynamicResource CommandLinkButtonHeaderForegroundDisabledBrush}"/>
+                        </Trigger>
+                        <Trigger Property="Icon" Value="{x:Null}">
+                            <Setter TargetName="DefaultIcon" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="IconContentControl" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </>
+
+    <Style x:Key="IceIconCommandLinkButtonStyle" TargetType="{x:Type controls:CommandLinkButton}">
+        <Setter Property="Icon" Value="{x:Null}"/>
+        <Setter Property="Foreground" Value="{DynamicResource CommandLinkButtonBodyForegroundBrush}" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="HeaderForeground" Value="{DynamicResource CommandLinkButtonHeaderForegroundBrush}"/>
+        <Setter Property="MinWidth" Value="315"/>
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="SnapsToDevicePixels" Value="False" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type controls:CommandLinkButton}">
+                    <Grid x:Name="RootGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid x:Name="HoverBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Opacity="0" ClipToBounds="True">
+                            <Grid.OpacityMask>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Offset="0" Color="White"/>
+                                        <GradientStop Offset="0.375" Color="#7FFFFFFF"/>
+                                        <GradientStop Offset="1" Color="Transparent"/>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Grid.OpacityMask>
+                            <Grid.Background>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <LinearGradientBrush.GradientStops>
+                                        <GradientStop Offset="0" Color="#FF71B8EA"/>
+                                        <GradientStop Offset="0.5" Color="#FF84D3F3"/>
+                                        <GradientStop Offset="1" Color="#FF71B8EA"/>
+                                    </LinearGradientBrush.GradientStops>
+                                </LinearGradientBrush>
+                            </Grid.Background>
+                            <Canvas HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="6">
+                                <Canvas.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="#FF9EFDFF"/>
+                                            <GradientStop Offset="1" Color="#009EFDFF"/>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                            <Canvas HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="6">
+                                <Canvas.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="#009EFDFF"/>
+                                            <GradientStop Offset="1" Color="#FF9EFDFF"/>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="6">
+                                <Canvas.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="#FF9EFDFF"/>
+                                            <GradientStop Offset="1" Color="#009EFDFF"/>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="6">
+                                <Canvas.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="#009EFDFF"/>
+                                            <GradientStop Offset="0.625" Color="White"/>
+                                            <GradientStop Offset="1" Color="#FF9EFDFF"/>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Canvas.Background>
+                            </Canvas>
+                        </Grid>
+                        <Border x:Name="PressedBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverPrimaryBorderBrush}" BorderThickness="1" CornerRadius="4" Opacity="0">
+                        </Border>
+                        <Grid x:Name="ContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{TemplateBinding Padding}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <Grid x:Name="IceIconFrameGrid" Background="{DynamicResource IceIconFrame}" HorizontalAlignment="Left" VerticalAlignment="Stretch" Height="{TemplateBinding ActualHeight}" Width="{Binding Height, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}, ConverterParameter=1.125, FallbackValue=280}" Grid.RowSpan="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                </Grid.RowDefinitions>
+                                <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="Transparent" Grid.Column="5" Grid.ColumnSpan="10" Grid.Row="3" Grid.RowSpan="15">
+                                    <Grid.RenderTransform>
+                                        <TransformGroup>
+                                            <SkewTransform CenterX="{Binding Width, Source=IconContentControl, Converter={StaticResource DoubleToFractionOfDoubleConverter}, FallbackValue=15}" CenterY="{Binding Height, Source=IconContentControl, Converter={StaticResource DoubleToFractionOfDoubleConverter}, FallbackValue=15}" AngleX="3.0625" AngleY="3.0625"/>
+                                            <RotateTransform CenterX="{Binding Width, Source=IconContentControl, Converter={StaticResource DoubleToFractionOfDoubleConverter}, FallbackValue=15}" CenterY="{Binding Height, Source=IconContentControl, Converter={StaticResource DoubleToFractionOfDoubleConverter}, FallbackValue=15}" Angle="-11.25"/>
+                                        </TransformGroup>
+                                    </Grid.RenderTransform>
+                                    <ContentControl x:Name="IconContentControl" Content="{TemplateBinding Icon}" Visibility="Visible" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="5,-1,-5,1"/>
+                                </Grid>
+                            </Grid>
+                            <TextBlock FontSize="14" Foreground="{TemplateBinding HeaderForeground}" Background="#01000000" TextWrapping="Wrap" Text="{TemplateBinding Header}" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" Focusable="False" Grid.Column="1" Grid.Row="0" MaxWidth="{Binding Width, RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=300}"/>
+                            <ContentControl Foreground="{DynamicResource CommandLinkButtonBodyForegroundBrush}" Background="#01000000" Content="{TemplateBinding Content}" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" Grid.Column="1" Grid.Row="1" MaxWidth="{Binding Width, RelativeSource={RelativeSource Mode=TemplatedParent}, FallbackValue=300}"/>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonHoverForegroundBrush}" />
+                            <Setter Property="HeaderForeground" Value="{DynamicResource CommandLinkButtonHeaderForegroundHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonHoverForegroundBrush}" />
+                            <Setter Property="HeaderForeground" Value="{DynamicResource CommandLinkButtonHeaderForegroundHoverBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource CommandLinkButtonForegroundDisabledBrush}"/>
+                            <Setter Property="HeaderForeground" Value="{DynamicResource CommandLinkButtonHeaderForegroundDisabledBrush}"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style-->
+
+    <!--#endregion Command Link Styles-->
+</ResourceDictionary>

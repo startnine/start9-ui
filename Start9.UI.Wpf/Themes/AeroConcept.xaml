@@ -1,0 +1,1144 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Start9.UI.Wpf"
+                    xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters">
+    <conv:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
+
+    <Style x:Key="AeroCaptionButtonStyle" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="Transparent" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="VerticalAlignment" Value="Stretch" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+    </Style>
+
+    <Style x:Key="AeroCloseButtonStyle" TargetType="Button" BasedOn="{StaticResource AeroCaptionButtonStyle}">
+        <Setter Property="Width" Value="41"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderBrush="#7FFFFFFF" BorderThickness="0,0,1,1" CornerRadius="0,0,3,0">
+                        <Grid x:Name="RootGrid">
+                            <Ellipse x:Name="HoverGlow" Margin="-10" Stroke="Transparent" StrokeThickness="0" Opacity="0">
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                        <RadialGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="#FFFF0000"/>
+                                            <GradientStop Offset="0.25" Color="#C0FF4435"/>
+                                            <GradientStop Offset="1" Color="#00FF8869"/>
+                                        </RadialGradientBrush.GradientStops>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Border x:Name="HoverBackground" BorderBrush="Transparent" BorderThickness="0" CornerRadius="0,0,3,0" Opacity="0">
+                                <Border.Background>
+                                    <RadialGradientBrush GradientOrigin="0.5,1" Center="0.5,1" RadiusY="1">
+                                        <RadialGradientBrush.GradientStops>
+                                            <GradientStop Offset="0.1" Color="#FFFF8869"/>
+                                            <GradientStop Offset="1" Color="#FFBF4323"/>
+                                        </RadialGradientBrush.GradientStops>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <Canvas x:Name="PressedBackground" Background="#20000000" Opacity="0"/>
+                            <Border BorderBrush="#7F000000" BorderThickness="1,0,1,1" CornerRadius="0,0,2,0">
+                                <Border Background="#01000000" BorderThickness="1,0,1,1" CornerRadius="0,0,1,0">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                                                <GradientStop Offset="1" Color="#67FFFFFF"/>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                    <!--TextBlock FontFamily="Marlett" TextAlignment="Center" VerticalAlignment="Center" HorizontalAlignment="Center" UseLayoutRounding="True">
+                                                <TextBlock.Foreground>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <LinearGradientBrush.GradientStops>
+                                                            <GradientStop Offset="0" Color="White"/>
+                                                            <GradientStop Offset="1" Color="#FFC0C0C0"/>
+                                                        </LinearGradientBrush.GradientStops>
+                                                    </LinearGradientBrush>
+                                                </TextBlock.Foreground>
+                                                <TextBlock.Effect>
+                                                    <DropShadowEffect BlurRadius="3" Color="Black" Direction="0" ShadowDepth="0"/>
+                                                </TextBlock.Effect>
+                                                r</TextBlock-->
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <!--ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" /-->
+                                        <Path Data="M 1.5875 2.99999 H 2.38125 L 1.5875 1.94165 2.38125 0.88332 H 1.5875 L 1.190625 1.41249 0.79375 0.88332 H 0 L 0.79375 1.94165 0 2.99999 h 0.79375 l 0.396875 -0.52917 z" Stroke="#FF676767" StrokeThickness="0.28571428571428571428571428571429" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2">
+                                            <Path.RenderTransform>
+                                                <TransformGroup>
+                                                    <ScaleTransform ScaleX="3.5" ScaleY="3.5"/>
+                                                    <TranslateTransform X="0" Y="-1"/>
+                                                </TransformGroup>
+                                            </Path.RenderTransform>
+                                            <Path.Fill>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="White"/>
+                                                        <GradientStop Offset="1" Color="#FFC0C0C0"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Canvas Grid.Row="0">
+                                            <Canvas.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="#A8FFFFFF"/>
+                                                        <GradientStop Offset="1" Color="#67FFFFFF"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Canvas.Background>
+                                        </Canvas>
+                                    </Grid>
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1375" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlow"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1375" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlow"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="RootGrid"
+                                                         Storyboard.TargetProperty="Opacity" To="0.625" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="RootGrid"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AeroMaximizeRestoreButtonStyle" TargetType="Button" BasedOn="{StaticResource AeroCaptionButtonStyle}">
+        <Setter Property="Width" Value="25"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderBrush="#7FFFFFFF" BorderThickness="0,0,0,1" CornerRadius="0">
+                        <Grid x:Name="RootGrid">
+                            <Ellipse x:Name="HoverGlow" Margin="-10" Stroke="Transparent" StrokeThickness="0" Opacity="0">
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                        <RadialGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="#FF007FFF"/>
+                                            <GradientStop Offset="0.25" Color="#C03977FF"/>
+                                            <GradientStop Offset="1" Color="#0073EEFF"/>
+                                        </RadialGradientBrush.GradientStops>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Border x:Name="HoverBackground" BorderBrush="Transparent" BorderThickness="0" CornerRadius="0" Opacity="0">
+                                <Border.Background>
+                                    <RadialGradientBrush GradientOrigin="0.5,1" Center="0.5,1" RadiusY="1">
+                                        <RadialGradientBrush.GradientStops>
+                                            <GradientStop Offset="0.1" Color="#FF73EEFF"/>
+                                            <GradientStop Offset="1" Color="#FF289AFF"/>
+                                        </RadialGradientBrush.GradientStops>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <Canvas x:Name="PressedBackground" Background="#20000000" Opacity="0"/>
+                            <Border BorderBrush="#7F000000" BorderThickness="1,0,0,1" CornerRadius="0">
+                                <Border Background="#01000000" BorderThickness="1,0,1,1" CornerRadius="0">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                                                <GradientStop Offset="1" Color="#67FFFFFF"/>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Path Data="M 0 5 L 9 5 L 4.5 0 Z" Stroke="#FF676767" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2">
+                                            <Path.Fill>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="White"/>
+                                                        <GradientStop Offset="1" Color="#FFC0C0C0"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Canvas Grid.Row="0">
+                                            <Canvas.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="#A8FFFFFF"/>
+                                                        <GradientStop Offset="1" Color="#67FFFFFF"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Canvas.Background>
+                                        </Canvas>
+                                    </Grid>
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1375" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlow"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1375" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlow"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="RootGrid"
+                                                         Storyboard.TargetProperty="Opacity" To="0.625" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="RootGrid"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AeroMinimizeButtonStyle" TargetType="Button" BasedOn="{StaticResource AeroCaptionButtonStyle}">
+        <Setter Property="Width" Value="26"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border BorderBrush="#7FFFFFFF" BorderThickness="1,0,0,1" CornerRadius="0,0,0,3">
+                        <Grid x:Name="RootGrid">
+                            <Ellipse x:Name="HoverGlow" Margin="-10" Stroke="Transparent" StrokeThickness="0" Opacity="0">
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                        <RadialGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="#FF007FFF"/>
+                                            <GradientStop Offset="0.25" Color="#C03977FF"/>
+                                            <GradientStop Offset="1" Color="#0073EEFF"/>
+                                        </RadialGradientBrush.GradientStops>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <Border x:Name="HoverBackground" BorderBrush="Transparent" BorderThickness="0" CornerRadius="0,0,0,3" Opacity="0">
+                                <Border.Background>
+                                    <RadialGradientBrush GradientOrigin="0.5,1" Center="0.5,1" RadiusY="1">
+                                        <RadialGradientBrush.GradientStops>
+                                            <GradientStop Offset="0.1" Color="#FF73EEFF"/>
+                                            <GradientStop Offset="1" Color="#FF289AFF"/>
+                                        </RadialGradientBrush.GradientStops>
+                                    </RadialGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <Canvas x:Name="PressedBackground" Background="#20000000" Opacity="0"/>
+                            <Border BorderBrush="#7F000000" BorderThickness="1,0,0,1" CornerRadius="0,0,0,2">
+                                <Border Background="#01000000" BorderThickness="1,0,1,1" CornerRadius="0,0,0,1">
+                                    <Border.BorderBrush>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <LinearGradientBrush.GradientStops>
+                                                <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                                                <GradientStop Offset="1" Color="#67FFFFFF"/>
+                                            </LinearGradientBrush.GradientStops>
+                                        </LinearGradientBrush>
+                                    </Border.BorderBrush>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Path Data="M 0 0 L 9 0 L 4.5 5 Z" Stroke="#FF676767" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.RowSpan="2">
+                                            <Path.RenderTransform>
+                                                <TranslateTransform X="0" Y="1"/>
+                                            </Path.RenderTransform>
+                                            <Path.Fill>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="White"/>
+                                                        <GradientStop Offset="1" Color="#FFC0C0C0"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Path.Fill>
+                                        </Path>
+                                        <Canvas Grid.Row="0">
+                                            <Canvas.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="#A8FFFFFF"/>
+                                                        <GradientStop Offset="1" Color="#67FFFFFF"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Canvas.Background>
+                                        </Canvas>
+                                    </Grid>
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1375" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlow"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.1375" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverGlow"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="RootGrid"
+                                                         Storyboard.TargetProperty="Opacity" To="0.625" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="RootGrid"
+                                                         Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AeroNavButtonStyle" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Background" Value="#FF4E7A93" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Width" Value="30" />
+        <Setter Property="Height" Value="30" />
+        <Setter Property="Foreground" Value="Black" />
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexRoundFocusVisualStyle}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <ControlTemplate.Resources>
+                        <RadialGradientBrush x:Key="ColouresMask" Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                            <RadialGradientBrush.GradientStops>
+                                <GradientStop Offset="0.5" Color="White"/>
+                                <GradientStop Offset="1.5" Color="Transparent"/>
+                            </RadialGradientBrush.GradientStops>
+                        </RadialGradientBrush>
+
+                        <BlurEffect x:Key="SmallBlur" Radius="1"/>
+                        <BlurEffect x:Key="LargeBlur" Radius="2"/>
+                    </ControlTemplate.Resources>
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid x:Name="Background" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                              Margin="0" Background="Transparent" Opacity="1">
+                            <Ellipse Fill="Black" Stroke="Transparent" StrokeThickness="0"/>
+                            <Ellipse x:Name="IdleColoures" Fill="{TemplateBinding Background}" Stroke="Transparent" StrokeThickness="0" OpacityMask="{DynamicResource ColouresMask}"/>
+                            <Ellipse x:Name="HoverColoures" Fill="#FF459F45" Stroke="Transparent" StrokeThickness="0" OpacityMask="{DynamicResource ColouresMask}" Opacity="0"/>
+                            <Ellipse x:Name="PressedBlack" Fill="Black" Stroke="Transparent" StrokeThickness="0" Opacity="0"/>
+                            <Ellipse x:Name="PressedColoures" Fill="#FF318E31" Stroke="Transparent" StrokeThickness="0" OpacityMask="{DynamicResource ColouresMask}" Opacity="0"/>
+                            <!--Element#E6838383-->
+                            <Canvas>
+                                <Canvas.Background>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Grid>
+                                                <Path Fill="#20FFFFFF" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Effect="{DynamicResource SmallBlur}">
+                                                    <Path.Data>
+                                                        <PathGeometry Figures="m 1.3937872 7.3469123 c 0.4348524 0.07693 0.7082925 -0.802762 1.1339286 -0.685082 0.4210094 0.1164 0.2445148 0.924909 0.6142112 1.157552 0.6603451 0.4155419 1.5968907 0.3361719 2.3387278 0.09449 0.783441 -0.255232 1.989543 -0.713229 1.9371278 -1.535528 C 7.3838491 5.8459923 6.5673173 5.4312443 6.047619 5.5515253 5.4815735 5.6825333 5.5909374 6.7012643 5.1026784 7.0161833 4.7882273 7.2189983 4.3414233 7.3163723 3.9923735 7.1815473 3.5747728 7.0202433 3.1981347 6.5862413 3.141927 6.1421133 3.0972496 5.7890923 3.8245727 5.4417993 3.5907739 5.1735493 2.8657508 4.3416896 0.7496043 5.0873973 0.42522322 6.1421133 0.27374813 6.6346293 0.88638211 7.2571483 1.3937872 7.3469123 Z" FillRule="NonZero"/>
+                                                    </Path.Data>
+                                                </Path>
+                                                <Path Fill="#30FFFFFF" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Effect="{DynamicResource SmallBlur}">
+                                                    <Path.Data>
+                                                        <PathGeometry Figures="M -1.4646577 2.0079984 C -1.5078659 3.2873041 1.052358 4.6273172 1.2284226 3.7325149 1.5253092 2.2236668 2.4391135 2.1312717 3.4962797 2.3151042 4.4257614 2.4767334 3.8266658 -0.42279726 2.9529389 -0.80319943 1.352628 -1.4999408 -1.4057407 0.26358661 -1.4646577 2.0079984 Z" FillRule="NonZero"/>
+                                                    </Path.Data>
+                                                </Path>
+                                                <Path Fill="#80FFFFFF" StrokeLineJoin="Miter" StrokeStartLineCap="Flat" StrokeEndLineCap="Flat" Effect="{DynamicResource LargeBlur}">
+                                                    <Path.Data>
+                                                        <PathGeometry Figures="M 2.4568453 5.0554313 C 2.0131802 4.6320654 1.2043506 5.7422424 0.66145831 5.4570313 0.19543946 5.212206 -0.16087251 4.465034 0.07087054 3.9923733 0.26181595 3.602923 0.93935391 3.8405335 1.3229166 3.6380209 2.2029133 3.1734021 2.6716351 2.0430508 3.6143973 1.7245163 4.1221834 1.5529488 4.7283071 1.5838758 5.220796 1.7953868 5.7836746 2.0371283 5.9980232 2.7926785 6.5437126 3.0710564 7.0638266 3.3363873 8.224443 2.7959236 8.2682292 3.3781622 8.308752 3.9170061 6.906891 3.3863594 6.7327008 3.8978793 6.5679591 4.3816531 7.5364228 4.6646347 7.5831473 5.173549 7.6379768 5.7707416 7.4529152 6.669037 6.8744418 6.8271948 6.2059747 7.0099574 5.8889056 5.5568666 5.1971727 5.5987722 4.5076314 5.640545 4.3332715 6.7768016 3.6852678 7.016183 3.1972485 7.196464 2.4516531 7.3511323 2.126116 6.9453125 1.7259421 6.4464493 2.9195248 5.4969416 2.4568453 5.0554313 Z" FillRule="NonZero"/>
+                                                    </Path.Data>
+                                                </Path>
+                                                <Path Fill="#00FFFFFF" StrokeMiterLimit="4" Effect="{DynamicResource LargeBlur}" Opacity="1">
+                                                    <Path.Data>
+                                                        <PathGeometry Figures="M 6.1965725 5.147572 A 2.4299603 4.4179339 0 0 1 3.7666123 9.565506 2.4299603 4.4179339 0 0 1 1.336652 5.147572 2.4299603 4.4179339 0 0 1 3.7666123 0.7296381 2.4299603 4.4179339 0 0 1 6.1965725 5.147572 Z" FillRule="NonZero"/>
+                                                    </Path.Data>
+                                                    <Path.RenderTransform>
+                                                        <MatrixTransform Matrix="0.39188028 -0.38933874 0.39188028 0.38933874 2.8206276 1.1045233"/>
+                                                    </Path.RenderTransform>
+                                                </Path>
+                                            </Grid>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Canvas.Background>
+                                <Canvas.OpacityMask>
+                                    <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                        <RadialGradientBrush.GradientStops>
+                                            <GradientStop Offset="1" Color="White"/>
+                                            <GradientStop Offset="1" Color="Transparent"/>
+                                        </RadialGradientBrush.GradientStops>
+                                    </RadialGradientBrush>
+                                </Canvas.OpacityMask>
+                            </Canvas>
+                            <Ellipse x:Name="Shine" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Effect="{DynamicResource LargeBlur}">
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush Center="0.75,0.25" GradientOrigin="2,-1" RadiusX="0.3125" RadiusY="0.3125">
+                                        <RadialGradientBrush.GradientStops>
+                                            <GradientStop Offset="1" Color="White"/>
+                                            <GradientStop Offset="1" Color="Transparent"/>
+                                        </RadialGradientBrush.GradientStops>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                                <Ellipse.OpacityMask>
+                                    <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                        <RadialGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="#C0000000"/>
+                                            <GradientStop Offset="0.875" Color="White"/>
+                                            <GradientStop Offset="1" Color="Transparent"/>
+                                        </RadialGradientBrush.GradientStops>
+                                    </RadialGradientBrush>
+                                </Ellipse.OpacityMask>
+                            </Ellipse>
+                        </Grid>
+                        <Grid x:Name="HoverBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                              Margin="0" Background="Transparent" Opacity="0">
+                        </Grid>
+                        <Grid x:Name="PressedBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                              Margin="0" Background="Transparent" Opacity="0">
+                        </Grid>
+                        <Grid x:Name="DisabledBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                              Margin="0" Background="Transparent" Opacity="0">
+                        </Grid>
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" />
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="IdleBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="DisabledBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="1"
+                                                         Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="IdleBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="1"
+                                                         Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="DisabledBackground"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverColoures"
+                                                         Storyboard.TargetProperty="Opacity" To="1"
+                                                         Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverColoures"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBlack"
+                                                         Storyboard.TargetProperty="Opacity" To="0.5"
+                                                         Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="PressedColoures"
+                                                         Storyboard.TargetProperty="Opacity" To="1"
+                                                         Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PressedBlack"
+                                                         Storyboard.TargetProperty="Opacity" To="0"
+                                                         Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="PressedColoures"
+                                                         Storyboard.TargetProperty="Opacity" To="0"
+                                                         Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AeroMediaWindowStyle" TargetType="{x:Type local:DecoratableWindow}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="WindowStyle" Value="None" />
+        <Setter Property="ResizeMode" Value="NoResize" />
+        <Setter Property="Opacity" Value="0"/>
+        <Setter Property="Background" Value="White" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="FontFamily" Value="Selawik"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="ShadowOffsetThickness" Value="50,0,0,50"/>
+        <Setter Property="ShadowStyle">
+            <Setter.Value>
+                <Style TargetType="Window">
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Window">
+                                <Border>
+                                    <Border.OpacityMask>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Grid Background="#01000000">
+                                                    <Border Width="{Binding ActualWidth, Source={x:Reference SizingAid}}" Height="{Binding ActualHeight, Source={x:Reference SizingAid}}" Background="Transparent" BorderBrush="Black" BorderThickness="50,0,0,50" CornerRadius="18.75"/>
+                                                </Grid>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Border.OpacityMask>
+                                    <Grid>
+                                        <Rectangle x:Name="SizingAid"/>
+                                        <Border>
+                                            <Border.Effect>
+                                                <BlurEffect KernelType="Gaussian" Radius="25"/>
+                                            </Border.Effect>
+                                            <Border Background="#40000000" BorderBrush="#40000000" BorderThickness="0" CornerRadius="25" Margin="25">
+                                            </Border>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:DecoratableWindow}">
+                    <Border ClipToBounds="True" CornerRadius="4">
+                        <Border.OpacityMask>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Border Width="{Binding ActualWidth, Source={x:Reference ActiveWindowFrameBackground}}" Height="{Binding ActualHeight, Source={x:Reference ActiveWindowFrameBackground}}" Background="Black" BorderBrush="Transparent" BorderThickness="0" CornerRadius="7"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Border.OpacityMask>
+                        <Grid x:Name="WindowRoot" Margin="{TemplateBinding Margin}" Background="Transparent" ClipToBounds="True">
+                            <Border x:Name="ActiveWindowFrameBackground" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" BorderBrush="#7F000000" BorderThickness="1" CornerRadius="7" ClipToBounds="True">
+                                <Border.OpacityMask>
+                                    <VisualBrush>
+                                        <VisualBrush.Visual>
+                                            <Grid Width="{Binding Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DecoratableWindow}}}" Height="{Binding Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:DecoratableWindow}}}">
+                                                <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="92" Height="14" CornerRadius="0,0,3,3" BorderThickness="2" BorderBrush="Black" Margin="5,0"/>
+                                                <Rectangle Fill="Black" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="15" Margin="0"/>
+                                                <Rectangle Fill="Black" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="15" Margin="0,0,96,0"/>
+                                                <Rectangle Fill="Black" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,13,0,0"/>
+                                            </Grid>
+                                        </VisualBrush.Visual>
+                                    </VisualBrush>
+                                </Border.OpacityMask>
+                                <Grid>
+                                    <Border BorderBrush="#C0FFFFFF" BorderThickness="0,1,1,0" CornerRadius="6" Background="#20FFFFFF"/>
+                                    <Border BorderBrush="#FF80E3D3" BorderThickness="1,0,0,1" CornerRadius="6" Background="Transparent"/>
+                                </Grid>
+                            </Border>
+                            <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" Margin="2,2,2,0"
+                                  Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}" Visibility="Visible" Opacity="1"
+                                  DockPanel.Dock="Top">
+                                    <Border ClipToBounds="True">
+                                        <Border.OpacityMask>
+                                            <VisualBrush>
+                                                <VisualBrush.Visual>
+                                                    <Grid Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" Height="{Binding Height, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}}" Background="#01000000">
+                                                        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="92" Height="14" CornerRadius="0,0,3,3" BorderThickness="2,0,2,2" BorderBrush="Black" Margin="5,0"/>
+                                                        <Rectangle Fill="Black" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="15" Margin="0"/>
+                                                        <Rectangle Fill="Black" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="15" Margin="0,0,96,0"/>
+                                                        <Rectangle Fill="Black" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,13,0,0"/>
+                                                    </Grid>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Border.OpacityMask>
+                                        <Grid ClipToBounds="True">
+                                            <Border Margin="9,0" ClipToBounds="True">
+                                                <Border.OpacityMask>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <LinearGradientBrush.GradientStops>
+                                                            <GradientStop Offset="0" Color="Transparent"/>
+                                                            <GradientStop Offset="1" Color="White"/>
+                                                        </LinearGradientBrush.GradientStops>
+                                                    </LinearGradientBrush>
+                                                </Border.OpacityMask>
+                                                <DockPanel>
+                                                    <Rectangle Width="40" Stroke="Transparent" StrokeThickness="0" DockPanel.Dock="Left">
+                                                        <Rectangle.Fill>
+                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="Transparent"/>
+                                                                    <GradientStop Offset="1" Color="#40FFFFFF"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Rectangle.Fill>
+                                                    </Rectangle>
+                                                    <Rectangle Width="40" Stroke="Transparent" StrokeThickness="0" DockPanel.Dock="Right">
+                                                        <Rectangle.Fill>
+                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#40FFFFFF"/>
+                                                                    <GradientStop Offset="1" Color="Transparent"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Rectangle.Fill>
+                                                    </Rectangle>
+                                                    <Rectangle Fill="#40FFFFFF" Stroke="Transparent" StrokeThickness="0"/>
+                                                </DockPanel>
+                                            </Border>
+                                            <Border x:Name="ActiveTitlebarBackground" Visibility="Visible" Background="#01000000" BorderBrush="Transparent" BorderThickness="0" CornerRadius="5,5,0,0">
+                                                <Border.OpacityMask>
+                                                    <VisualBrush>
+                                                        <VisualBrush.Visual>
+                                                            <Border Width="{Binding ActualWidth, Source={x:Reference ReflectionGrid}}" Height="{Binding ActualHeight, Source={x:Reference ReflectionGrid}}" Background="Black" BorderBrush="Transparent" BorderThickness="0" CornerRadius="5,5,0,0"/>
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Border.OpacityMask>
+                                                <Grid x:Name="ReflectionGrid">
+                                                    <Canvas HorizontalAlignment="Left" Width="192">
+                                                        <Canvas.Background>
+                                                            <RadialGradientBrush Center="1.125,7.375" GradientOrigin="1.125,7.375" RadiusX="1.375" RadiusY="7.5">
+                                                                <RadialGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0.999" Color="Transparent"/>
+                                                                    <GradientStop Offset="1" Color="#7FFFFFFF"/>
+                                                                </RadialGradientBrush.GradientStops>
+                                                            </RadialGradientBrush>
+                                                        </Canvas.Background>
+                                                        <Canvas.OpacityMask>
+                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="White"/>
+                                                                    <GradientStop Offset="1" Color="Transparent"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Canvas.OpacityMask>
+                                                    </Canvas>
+                                                    <Canvas HorizontalAlignment="Right" Width="192">
+                                                        <Canvas.Background>
+                                                            <RadialGradientBrush Center="-0.125,7.375" GradientOrigin="-0.125,7.375" RadiusX="1.375" RadiusY="7.5">
+                                                                <RadialGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0.999" Color="Transparent"/>
+                                                                    <GradientStop Offset="1" Color="#7FFFFFFF"/>
+                                                                </RadialGradientBrush.GradientStops>
+                                                            </RadialGradientBrush>
+                                                        </Canvas.Background>
+                                                        <Canvas.OpacityMask>
+                                                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="White"/>
+                                                                    <GradientStop Offset="1" Color="Transparent"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Canvas.OpacityMask>
+                                                    </Canvas>
+                                                </Grid>
+                                            </Border>
+                                            <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16"
+                                        Margin="3">
+                                                <Canvas.Background>
+                                                    <ImageBrush ImageSource="{TemplateBinding Icon}" />
+                                                </Canvas.Background>
+                                            </Canvas>
+                                            <Grid x:Name="TitleText">
+                                                <!--Label Content="{TemplateBinding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="0,-2" Foreground="White">
+                                                <Label.Effect>
+                                                    <DropShadowEffect Color="White" Direction="320" ShadowDepth="0" BlurRadius="15" Opacity="1" />
+                                                </Label.Effect>
+                                            </Label>
+                                            <Label Content="{TemplateBinding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="0,-2" Foreground="White">
+                                                <Label.Effect>
+                                                    <DropShadowEffect Color="White" Direction="320" ShadowDepth="0" BlurRadius="15" Opacity="1" />
+                                                </Label.Effect>
+                                            </Label-->
+                                                <Label Content="{TemplateBinding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="0,-2" Foreground="White" FontWeight="Black">
+                                                    <Label.Effect>
+                                                        <BlurEffect KernelType="Gaussian" Radius="15"/>
+                                                    </Label.Effect>
+                                                </Label>
+                                                <Label Content="{TemplateBinding Title}" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="0,-2" Foreground="#FF0E4080">
+                                                    <Label.Effect>
+                                                        <DropShadowEffect Color="White" Direction="320" ShadowDepth="0" BlurRadius="15" Opacity="1" />
+                                                    </Label.Effect>
+                                                </Label>
+                                            </Grid>
+                                        </Grid>
+                                    </Border>
+                                    <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Top"
+                                            Orientation="Horizontal" Height="13" Margin="5,0">
+                                        <Button x:Name="PART_MinimizeButton" Style="{DynamicResource AeroMinimizeButtonStyle}"/>
+                                        <Grid x:Name="MaxRestButtonGrid" Width="Auto" VerticalAlignment="Stretch">
+                                            <Button x:Name="PART_MaximizeButton" Style="{DynamicResource AeroMaximizeRestoreButtonStyle}"/>
+                                            <Button x:Name="PART_RestoreButton" Style="{DynamicResource AeroMaximizeRestoreButtonStyle}" Visibility="Hidden"/>
+                                        </Grid>
+                                        <Button x:Name="PART_CloseButton" Style="{DynamicResource AeroCloseButtonStyle}"/>
+                                    </StackPanel>
+                                    <ContentPresenter Content="{TemplateBinding TitleBarContent}" Margin="-2,-2,-2,0"/>
+                                    <Border x:Name="DialogFilm" CornerRadius="12,12,0,0" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
+                                </Grid>
+                            <Border x:Name="BodyBorderOuter" BorderBrush="White" BorderThickness="0,1" Padding="0" CornerRadius="12" Margin="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <Grid>
+                                    <Border x:Name="BodyMaskSizingAid" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" CornerRadius="12"/>
+                                    <Border x:Name="BodyBorderInner" BorderBrush="Black" BorderThickness="0,1" Padding="0" CornerRadius="12" Margin="0" ClipToBounds="True">
+                                        <Border.OpacityMask>
+                                            <VisualBrush>
+                                                <VisualBrush.Visual>
+                                                    <Border CornerRadius="{Binding CornerRadius, Source={x:Reference BodyMaskSizingAid}}" Background="Black" BorderBrush="Transparent" BorderThickness="0" Width="{Binding ActualWidth, Source={x:Reference BodyMaskSizingAid}}" Height="{Binding ActualHeight, Source={x:Reference BodyMaskSizingAid}}"/>
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Border.OpacityMask>
+                                        <ContentPresenter Content="{TemplateBinding Content}" Margin="0" />
+                                    </Border>
+                                </Grid>
+                            </Border>
+                            <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible">
+                                <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
+                            </Grid>
+                            <!--Grid>
+                                    <Grid Height="108" VerticalAlignment="Top" Margin="2,0">
+                                        <Rectangle Width="192" HorizontalAlignment="Left">
+                                            <Rectangle.Fill>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="#63FFFFFF"/>
+                                                        <GradientStop Offset="0.95" Color="#C0FFFFFF"/>
+                                                        <GradientStop Offset="1" Color="Transparent"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Rectangle.Fill>
+                                            <Rectangle.OpacityMask>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="White"/>
+                                                        <GradientStop Offset="1" Color="Transparent"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                        <Rectangle Width="192" HorizontalAlignment="Right">
+                                            <Rectangle.Fill>
+                                                <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="#63FFFFFF"/>
+                                                        <GradientStop Offset="0.95" Color="#C0FFFFFF"/>
+                                                        <GradientStop Offset="1" Color="Transparent"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Rectangle.Fill>
+                                            <Rectangle.OpacityMask>
+                                                <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                                                    <LinearGradientBrush.GradientStops>
+                                                        <GradientStop Offset="0" Color="White"/>
+                                                        <GradientStop Offset="1" Color="Transparent"/>
+                                                    </LinearGradientBrush.GradientStops>
+                                                </LinearGradientBrush>
+                                            </Rectangle.OpacityMask>
+                                        </Rectangle>
+                                    </Grid>
+                                    <Rectangle Stroke="Transparent" StrokeThickness="0" Margin="2">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <LinearGradientBrush.GradientStops>
+                                                    <GradientStop Offset="0.5" Color="Transparent"/>
+                                                    <GradientStop Offset="1" Color="#40FFFFFF"/>
+                                                </LinearGradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Border x:Name="ClientArea" Margin="7,0,7,7" CornerRadius="4" BorderThickness="1" BorderBrush="#40FFFFFF">
+                                        <Border CornerRadius="3" BorderThickness="1" BorderBrush="#40000000">
+                                            <Border CornerRadius="2" BorderThickness="0" BorderBrush="Transparent" Background="Transparent" ClipToBounds="True">
+                                                <Border.OpacityMask>
+                                                    <VisualBrush>
+                                                        <VisualBrush.Visual>
+                                                            <Border Width="{Binding ActualWidth, Source={x:Reference ClientContent}}" Height="{Binding ActualHeight, Source={x:Reference ClientContent}}" Background="Black" BorderBrush="Transparent" BorderThickness="0" CornerRadius="2"/>
+                                                        </VisualBrush.Visual>
+                                                    </VisualBrush>
+                                                </Border.OpacityMask>
+                                                <DockPanel x:Name="ClientContent">
+                                                    <Grid x:Name="ToolBar" HorizontalAlignment="Stretch" Margin="0"
+                                  Height="{TemplateBinding ToolBarHeight}" Visibility="Visible" DockPanel.Dock="Top">
+                                                        <Border Margin="0,0,0,-10" BorderBrush="#FFA1BADC" BorderThickness="1,1,1,0" CornerRadius="1,1,0,0">
+                                                            <Border.Background>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                    <LinearGradientBrush.GradientStops>
+                                                                        <GradientStop Offset="0" Color="#FF4172B0"/>
+                                                                        <GradientStop Offset="0.5" Color="#FF93B1DB"/>
+                                                                        <GradientStop Offset="1" Color="#FF4172B0"/>
+                                                                    </LinearGradientBrush.GradientStops>
+                                                                </LinearGradientBrush>
+                                                            </Border.Background>
+                                                        </Border>
+                                                        <Canvas VerticalAlignment="Top" Height="9" Background="#40FFFFFF"/>
+                                                        <ContentPresenter Content="{TemplateBinding ToolBarContent}" />
+                                                    </Grid>
+                                                    <Grid x:Name="Footer" HorizontalAlignment="Stretch" Margin="0"
+                                  Height="{TemplateBinding FooterHeight}" Visibility="Visible" DockPanel.Dock="Bottom">
+                                                        <Border Margin="0,-10,0,0" BorderBrush="#FFA1BADC" BorderThickness="1,0,1,1" CornerRadius="0,0,1,1">
+                                                            <Border.Background>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                    <LinearGradientBrush.GradientStops>
+                                                                        <GradientStop Offset="0" Color="#FF4172B0"/>
+                                                                        <GradientStop Offset="0.5" Color="#FF93B1DB"/>
+                                                                        <GradientStop Offset="1" Color="#FF4172B0"/>
+                                                                    </LinearGradientBrush.GradientStops>
+                                                                </LinearGradientBrush>
+                                                            </Border.Background>
+                                                        </Border>
+                                                        <Canvas VerticalAlignment="Bottom" Height="6" Background="#20FFFFFF"/>
+                                                        <ContentPresenter Content="{TemplateBinding FooterContent}" />
+                                                    </Grid>
+                                                    <Grid>
+                                                        <Border x:Name="BodyBorderOuter" BorderBrush="White" BorderThickness="0,1" Padding="0" CornerRadius="12" Margin="0" Background="{TemplateBinding BodyBrush}">
+                                                            <Grid>
+                                                                <Border x:Name="BodyMaskSizingAid" Background="Transparent" BorderBrush="Transparent" BorderThickness="0" CornerRadius="12"/>
+                                                                <Border x:Name="BodyBorderInner" BorderBrush="Black" BorderThickness="0,1" Padding="0" CornerRadius="12" Margin="0" ClipToBounds="True">
+                                                                    <Border.OpacityMask>
+                                                                        <VisualBrush>
+                                                                            <VisualBrush.Visual>
+                                                                                <Border CornerRadius="{Binding CornerRadius, Source={x:Reference BodyMaskSizingAid}}" Background="Black" BorderBrush="Transparent" BorderThickness="0" Width="{Binding ActualWidth, Source={x:Reference BodyMaskSizingAid}}" Height="{Binding ActualHeight, Source={x:Reference BodyMaskSizingAid}}"/>
+                                                                            </VisualBrush.Visual>
+                                                                        </VisualBrush>
+                                                                    </Border.OpacityMask>
+                                                                    <ContentPresenter Content="{TemplateBinding Content}" Margin="0" />
+                                                                </Border>
+                                                            </Grid>
+                                                        </Border>
+                                                        <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
+                                                            <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </DockPanel>
+                                            </Border>
+                                        </Border>
+                                    </Border>
+                                </Grid-->
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{TemplateBinding Padding}">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Thumb x:Name="PART_ThumbBottom" HorizontalAlignment="Stretch" Cursor="SizeNS"
+                                   Grid.Column="0" Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Grid.Row="3"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbTop" HorizontalAlignment="Stretch" Cursor="SizeNS" Grid.Column="0"
+                                   Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Height="4"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.RowSpan="4"
+                                   Background="{x:Null}" Margin="0,3" Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.RowSpan="4"
+                                   HorizontalContentAlignment="Right" Background="{x:Null}" Margin="0,3"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbBottomRightCorner" HorizontalAlignment="Right" Cursor="SizeNWSE"
+                                   Grid.Row="3" Grid.Column="3" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbTopRightCorner" HorizontalAlignment="Right" Cursor="SizeNESW"
+                                   Grid.Row="0" Grid.Column="2" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbTopLeftCorner" HorizontalAlignment="Left" Cursor="SizeNWSE"
+                                   Grid.Row="0" Grid.Column="0" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                <Thumb x:Name="PART_ThumbBottomLeftCorner" HorizontalAlignment="Left" Cursor="SizeNESW"
+                                   Grid.Row="3" Grid.Column="0" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                            </Grid>
+                            <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumb}" Visibility="Hidden"/>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <!--Trigger Property="ShowTitle" Value="False">
+                            <Setter TargetName="TitleText" Property="Visibility" Value="Hidden"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowCloseButton" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="PART_CloseButton" Property="Visibility" Value="Hidden"/>
+                                <Setter TargetName="PART_CloseButton" Property="Width" Value="0"/>
+                                <Setter TargetName="PART_CloseButton" Property="Height" Value="0"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowMaxRestButton" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Hidden"/>
+                                <Setter TargetName="MaxRestButtonGrid" Property="Width" Value="0"/>
+                                <Setter TargetName="MaxRestButtonGrid" Property="Height" Value="0"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowMinButton" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Hidden"/>
+                                <Setter TargetName="PART_MinimizeButton" Property="Width" Value="0"/>
+                                <Setter TargetName="PART_MinimizeButton" Property="Height" Value="0"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowResizeEdges" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="PART_ThumbBottom" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="PART_ThumbTop" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="PART_ThumbBottomRightCorner" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="PART_ThumbTopRightCorner" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="PART_ThumbTopLeftCorner" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="PART_ThumbBottomLeftCorner" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="PART_ThumbRight" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="PART_ThumbLeft" Property="Visibility" Value="Hidden" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ResizeMode" Value="Manual"/>
+                                <Condition Property="ShowResizeGrip" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible" />
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <Trigger Property="Maximized" Value="True">
+                            <Setter TargetName="PART_MaximizeButton" Property="Visibility" Value="Hidden"/>
+                            <Setter TargetName="PART_RestoreButton" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="ShowToolBar" Value="False">
+                            <Setter TargetName="ToolBar" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ShowFooter" Value="False">
+                            <Setter TargetName="Footer" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ShowToolBar" Value="True"/>
+                                <Condition Property="ShowFooter" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="BodyBorderOuter" Property="CornerRadius" Value="12,12,0,0"/>
+                                <Setter TargetName="BodyBorderOuter" Property="BorderThickness" Value="0,1,0,0"/>
+                                <Setter TargetName="BodyBorderInner" Property="CornerRadius" Value="12,12,0,0"/>
+                                <Setter TargetName="BodyBorderInner" Property="BorderThickness" Value="0,1,0,0"/>
+                                <Setter TargetName="BodyMaskSizingAid" Property="CornerRadius" Value="12,12,0,0"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ShowToolBar" Value="False"/>
+                                <Condition Property="ShowFooter" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="BodyBorderOuter" Property="CornerRadius" Value="0,0,12,12"/>
+                                <Setter TargetName="BodyBorderOuter" Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter TargetName="BodyBorderInner" Property="CornerRadius" Value="0,0,12,12"/>
+                                <Setter TargetName="BodyBorderInner" Property="BorderThickness" Value="0,0,0,1"/>
+                                <Setter TargetName="BodyMaskSizingAid" Property="CornerRadius" Value="0,0,12,12"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="ShowToolBar" Value="False"/>
+                                <Condition Property="ShowFooter" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="BodyBorderOuter" Property="CornerRadius" Value="0"/>
+                                <Setter TargetName="BodyBorderOuter" Property="BorderThickness" Value="0"/>
+                                <Setter TargetName="BodyBorderInner" Property="CornerRadius" Value="0"/>
+                                <Setter TargetName="BodyBorderInner" Property="BorderThickness" Value="0"/>
+                                <Setter TargetName="BodyMaskSizingAid" Property="CornerRadius" Value="0"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger-->
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
