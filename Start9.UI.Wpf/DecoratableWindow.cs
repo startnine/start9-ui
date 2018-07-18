@@ -24,7 +24,7 @@ namespace Start9.UI.Wpf
     [TemplatePart(Name = PartThumbBottomLeftCorner, Type = typeof(Thumb))]
     [TemplatePart(Name = PartThumbRight, Type = typeof(Thumb))]
     [TemplatePart(Name = PartThumbLeft, Type = typeof(Thumb))]
-
+     
     [ContentProperty("Content")]
     public partial class DecoratableWindow : Window
     {
