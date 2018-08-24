@@ -67,12 +67,15 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MonitorInfo.cs" />
+    <Compile Include="Windows\AppBarWindow.cs" />
+    <Compile Include="Windows\CompositingWindow.cs" />
     <Compile Include="Converters\DoubleToFractionOfDoubleConverter.cs" />
     <Compile Include="Converters\DoubleToThicknessConverter.cs" />
     <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
     <Compile Include="Converters\WidthToOffsetMarginConverter.cs" />
     <Compile Include="CutCornerBorder.cs" />
-    <Compile Include="DecoratableWindow.cs" />
+    <Compile Include="Windows\DecoratableWindow.cs" />
     <Compile Include="Planerator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>

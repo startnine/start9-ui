@@ -1,0 +1,17 @@
+﻿<win:DecoratableWindow x:Class="FrontEndTest.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf"
+        xmlns:win="clr-namespace:Start9.UI.Wpf.Windows;assembly=Start9.UI.Wpf"
+        xmlns:local="clr-namespace:FrontEndTest"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
+            <Button x:Name="CycleCompositionStateButton" Click="CycleCompositionStateButton_Click">Cycle Composition State</Button>
+            <TextBlock Background="White" Foreground="Red" x:Name="CurrentCompositionStateTextBlock">Alpha</TextBlock>
+        </StackPanel>
+    </Grid>
+</win:DecoratableWindow>

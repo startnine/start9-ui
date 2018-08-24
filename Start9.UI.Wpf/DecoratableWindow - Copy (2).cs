@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -24,7 +25,7 @@ namespace Start9.UI.Wpf
     [TemplatePart(Name = PartThumbBottomLeftCorner, Type = typeof(Thumb))]
     [TemplatePart(Name = PartThumbRight, Type = typeof(Thumb))]
     [TemplatePart(Name = PartThumbLeft, Type = typeof(Thumb))]
-     
+
     [ContentProperty("Content")]
     public partial class DecoratableWindow : Window
     {
@@ -60,6 +61,13 @@ namespace Start9.UI.Wpf
 
         Grid _titlebar;
 
+        IntPtr _handle;
+        NativeMethods.DWM_BLURBEHIND _blurInfo = new NativeMethods.DWM_BLURBEHIND();
+        NativeMethods.DWM_BLURBEHIND _unblurInfo = new NativeMethods.DWM_BLURBEHIND();
+        /*{
+            fEnable = false
+        };*/
+
         new public WindowStyle WindowStyle
         {
             get => (WindowStyle)GetValue(WindowStyleProperty);
@@ -77,6 +85,29 @@ namespace Start9.UI.Wpf
 
         public static readonly DependencyProperty ShadowOffsetThicknessProperty =
             DependencyProperty.Register("ShadowOffsetThickness", typeof(Thickness), typeof(DecoratableWindow), new PropertyMetadata(new Thickness(50)));
+
+        public enum WindowCompositionState
+        {
+            Alpha,
+            Glass,
+            Accent,
+            Acrylic
+        }
+
+        public WindowCompositionState CompositionState
+        {
+            get => (WindowCompositionState)GetValue(CompositionStateProperty);
+            set => SetValue(CompositionStateProperty, value);
+        }
+
+        public static readonly DependencyProperty CompositionStateProperty =
+            DependencyProperty.Register("CompositionState", typeof(WindowCompositionState), typeof(DecoratableWindow), new FrameworkPropertyMetadata(WindowCompositionState.Alpha, OnCompositionStatePropertyChangedCallback));
+
+        static void OnCompositionStatePropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
+        {
+            Debug.WriteLine("CompositionState: " + (sender as DecoratableWindow).CompositionState.ToString());
+            (sender as DecoratableWindow).SetCompositionState((WindowCompositionState)(e.NewValue));
+        }
 
         public Style ShadowStyle
         {
@@ -148,7 +179,7 @@ namespace Start9.UI.Wpf
             _shadowWindow.SourceInitialized += (sneder, args) =>
             {
                 var helper = new WindowInteropHelper(_shadowWindow);
-                //WinApi.SetWindowLong(helper.Handle, WinApi.GwlExstyle, (Int32)(WinApi.GetWindowLong(helper.Handle, WinApi.GwlExstyle)) | WinApi.WsExToolwindow | WinApi.WsExTransparent); ////WinApi
+                NativeMethods.SetWindowLong(helper.Handle, NativeMethods.GwlExstyle, (Int32)(NativeMethods.GetWindowLong(helper.Handle, NativeMethods.GwlExstyle)) | NativeMethods.WsExToolwindow | NativeMethods.WsExTransparent); ////WinApi
             };
 
             Binding shadowStyleBinding = new Binding()
@@ -188,10 +219,27 @@ namespace Start9.UI.Wpf
             };
             BindingOperations.SetBinding(_shadowWindow, Window.IsHitTestVisibleProperty, shadowIsHitTestVisibleBinding);
 
+            _blurInfo.dwFlags = NativeMethods.DWM_BB.Enable | NativeMethods.DWM_BB.BlurRegion | NativeMethods.DWM_BB.TransitionMaximized;
+            _blurInfo.fEnable = true;
+            //_blurInfo.hRgnBlur = IntPtr.Zero;
+            _blurInfo.fTransitionOnMaximized = true;
+
+            _unblurInfo.dwFlags = NativeMethods.DWM_BB.Enable | NativeMethods.DWM_BB.BlurRegion | NativeMethods.DWM_BB.TransitionMaximized;
+            _unblurInfo.fEnable = false;
+            _unblurInfo.hRgnBlur = IntPtr.Zero;
+            _unblurInfo.fTransitionOnMaximized = true;
+
+            _handle = new WindowInteropHelper(this).EnsureHandle();
+
             Closed += (sneder, args) =>
             {
                 _shadowWindow.Close();
             };
+        }
+
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            SetCompositionState(CompositionState);
         }
 
         public void SyncShadowToWindow()
@@ -204,6 +252,103 @@ namespace Start9.UI.Wpf
         {
             _shadowWindow.Width = Width + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
             _shadowWindow.Height = Height + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
+            if (CompositionState != WindowCompositionState.Alpha)
+                SetCompositionState();
+        }
+
+        void SetCompositionState()
+        {
+            if (CompositionState != WindowCompositionState.Alpha)
+                SetCompositionState(CompositionState);
+        }
+
+        void ClearCompositionState()
+        {
+            NativeMethods.DwmEnableBlurBehindWindow(_handle, ref _unblurInfo);
+
+            var accent = new NativeMethods.AccentPolicy();
+            var accentStructSize = Marshal.SizeOf(accent);
+            accent.GradientColor = (0x990000 << 24) | (0x990000 /* BGR */ & 0xFFFFFF);
+            accent.AccentState = NativeMethods.AccentState.ACCENT_DISABLED;
+
+            var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+            Marshal.StructureToPtr(accent, accentPtr, false);
+
+            var data = new NativeMethods.WindowCompositionAttributeData();
+            data.Attribute = NativeMethods.WindowCompositionAttribute.WCA_ACCENT_POLICY;
+            data.SizeOfData = accentStructSize;
+            data.Data = accentPtr;
+
+            NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+
+            Marshal.FreeHGlobal(accentPtr);
+        }
+
+        void SetCompositionState(WindowCompositionState targetState)
+        {
+            ClearCompositionState();
+
+            if (targetState == WindowCompositionState.Glass)
+            {
+                var accent = new NativeMethods.AccentPolicy();
+                var accentStructSize = Marshal.SizeOf(accent);
+                accent.GradientColor = (0x990000 << 24) | (0x990000 /* BGR */ & 0xFFFFFF);
+                accent.AccentState = NativeMethods.AccentState.ACCENT_ENABLE_BLURBEHIND;
+
+                var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+                Marshal.StructureToPtr(accent, accentPtr, false);
+
+                var data = new NativeMethods.WindowCompositionAttributeData();
+                data.Attribute = NativeMethods.WindowCompositionAttribute.WCA_ACCENT_POLICY;
+                data.SizeOfData = accentStructSize;
+                data.Data = accentPtr;
+
+                NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+
+                Marshal.FreeHGlobal(accentPtr);
+            }
+            else if (targetState == WindowCompositionState.Accent)
+            {
+                var accent = new NativeMethods.AccentPolicy();
+                var accentStructSize = Marshal.SizeOf(accent);
+                accent.GradientColor = (0x990000 << 24) | (0x990000 /* BGR */ & 0xFFFFFF);
+                accent.AccentState = NativeMethods.AccentState.ACCENT_ENABLE_TRANSPARENTGRADIENT;
+
+                var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+                Marshal.StructureToPtr(accent, accentPtr, false);
+
+                var data = new NativeMethods.WindowCompositionAttributeData();
+                data.Attribute = NativeMethods.WindowCompositionAttribute.WCA_ACCENT_POLICY;
+                data.SizeOfData = accentStructSize;
+                data.Data = accentPtr;
+
+                NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+
+                Marshal.FreeHGlobal(accentPtr);
+            }
+            else if (targetState == WindowCompositionState.Acrylic)
+            {
+                var accent = new NativeMethods.AccentPolicy();
+                var accentStructSize = Marshal.SizeOf(accent);
+                accent.GradientColor = (0x990000 << 24) | (0x990000 /* BGR */ & 0xFFFFFF);
+                accent.AccentState = NativeMethods.AccentState.ACCENT_ENABLE_ACRYLICBLURBEHIND;
+
+                var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+                Marshal.StructureToPtr(accent, accentPtr, false);
+
+                var data = new NativeMethods.WindowCompositionAttributeData();
+                data.Attribute = NativeMethods.WindowCompositionAttribute.WCA_ACCENT_POLICY;
+                data.SizeOfData = accentStructSize;
+                data.Data = accentPtr;
+
+                NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+
+                Marshal.FreeHGlobal(accentPtr);
+            }
+            else
+            {
+
+            }
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
@@ -425,6 +570,201 @@ namespace Start9.UI.Wpf
             }
             SyncShadowToWindow();
             SyncShadowToWindowSize();
+        }
+
+
+        public static class NativeMethods
+        {
+            /*[DllImport("user32.dll")]
+            private static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+            [StructLayout(LayoutKind.Sequential)]
+            internal struct WindowCompositionAttributeData
+            {
+                public WindowCompositionAttribute Attribute;
+                public IntPtr Data;
+                public int SizeOfData;
+            }
+
+            internal enum WindowCompositionAttribute
+            {
+                WCA_ACCENT_POLICY = 19
+            }
+
+            internal enum AccentState
+            {
+                ACCENT_DISABLED = 0,
+                ACCENT_ENABLE_GRADIENT = 1,
+                ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+                ACCENT_ENABLE_BLURBEHIND = 3,
+                ACCENT_INVALID_STATE = 4
+            }*/
+
+            [DllImport("user32.dll")]
+            internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);
+
+            [StructLayout(LayoutKind.Sequential)]
+            internal struct WindowCompositionAttributeData
+            {
+                public WindowCompositionAttribute Attribute;
+                public IntPtr Data;
+                public int SizeOfData;
+            }
+
+            internal enum WindowCompositionAttribute
+            {
+                // ...
+                WCA_ACCENT_POLICY = 19
+                // ...
+            }
+
+            /*internal enum AccentState
+            {
+                ACCENT_DISABLED = 0,
+                ACCENT_ENABLE_GRADIENT = 1,
+                ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+                ACCENT_ENABLE_BLURBEHIND = 3,
+                ACCENT_INVALID_STATE = 4
+            }*/
+
+            internal enum AccentState
+            {
+                ACCENT_DISABLED = 0,
+                ACCENT_ENABLE_GRADIENT = 1,
+                ACCENT_ENABLE_TRANSPARENTGRADIENT = 2,
+                ACCENT_ENABLE_BLURBEHIND = 3,
+                ACCENT_ENABLE_ACRYLICBLURBEHIND = 4,
+                ACCENT_INVALID_STATE = 5
+            }
+
+            [StructLayout(LayoutKind.Sequential)]
+            internal struct AccentPolicy
+            {
+                public AccentState AccentState;
+                public int AccentFlags;
+                public int GradientColor;
+                public int AnimationId;
+            }
+
+
+            [DllImport("dwmapi.dll")]
+            static extern Int32 DwmIsCompositionEnabled(out Boolean enabled);
+
+            public static bool DwmIsCompositionEnabled()
+            {
+                bool returnValue;
+                DwmIsCompositionEnabled(out returnValue);
+                return returnValue;
+            }
+
+
+            public static IntPtr SetWindowLong(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong) => IntPtr.Size == 8
+            ? SetWindowLongPtr64(hWnd, nIndex, dwNewLong)
+            : SetWindowLong32(hWnd, nIndex, dwNewLong);
+
+            [DllImport("user32.dll", EntryPoint = "SetWindowLong")]
+            static extern IntPtr SetWindowLong32(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
+
+            [DllImport("user32.dll", EntryPoint = "SetWindowLongPtr")]
+            static extern IntPtr SetWindowLongPtr64(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
+
+
+            public const Int32 GwlStyle = -16;
+            public const Int32 GwlExstyle = -20;
+
+            public const Int32 WsExToolwindow = 0x00000080;
+            public const Int32 WsExTransparent = 0x00000020;
+
+
+            public static IntPtr GetWindowLong(IntPtr hWnd, Int32 nIndex) => IntPtr.Size == 8
+            ? GetWindowLongPtr64(hWnd, nIndex)
+            : GetWindowLongPtr32(hWnd, nIndex);
+
+            [DllImport("user32.dll", EntryPoint = "GetWindowLong")]
+            static extern IntPtr GetWindowLongPtr32(IntPtr hWnd, int nIndex);
+
+            [DllImport("user32.dll", EntryPoint = "GetWindowLongPtr")]
+            private static extern IntPtr GetWindowLongPtr64(IntPtr hWnd, int nIndex);
+
+
+            [DllImport("user32.dll")]
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct RECT
+            {
+                public int Left;        // x position of upper-left corner
+                public int Top;         // y position of upper-left corner
+                public int Right;       // x position of lower-right corner
+                public int Bottom;      // y position of lower-right corner
+            }
+
+
+            [DllImport("gdi32.dll")]
+            public static extern IntPtr CreateRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect);
+
+
+            [DllImport("user32.dll")]
+            public static extern int GetWindowRgn(IntPtr hWnd, IntPtr hRgn);
+
+            public enum RegionFlags
+            {
+                ERROR = 0,
+                NULLREGION = 1,
+                SIMPLEREGION = 2,
+                COMPLEXREGION = 3,
+            }
+
+
+            [DllImport("dwmapi.dll")]
+            public static extern void DwmEnableBlurBehindWindow(IntPtr hwnd, ref DWM_BLURBEHIND blurBehind);
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct DWM_BLURBEHIND
+            {
+                public DWM_BB dwFlags;
+                public bool fEnable;
+                public IntPtr hRgnBlur;
+                public bool fTransitionOnMaximized;
+
+                public DWM_BLURBEHIND(bool enabled)
+                {
+                    fEnable = enabled ? true : false;
+                    hRgnBlur = IntPtr.Zero;
+                    fTransitionOnMaximized = true;
+                    dwFlags = DWM_BB.Enable;
+                }
+
+                public System.Drawing.Region Region
+                {
+                    get { return System.Drawing.Region.FromHrgn(hRgnBlur); }
+                }
+
+                public bool TransitionOnMaximized
+                {
+                    get { return fTransitionOnMaximized; }
+                    set
+                    {
+                        fTransitionOnMaximized = value ? true : false;
+                        dwFlags |= DWM_BB.TransitionMaximized;
+                    }
+                }
+
+                public void SetRegion(System.Drawing.Graphics graphics, System.Drawing.Region region)
+                {
+                    hRgnBlur = region.GetHrgn(graphics);
+                    dwFlags |= DWM_BB.BlurRegion;
+                }
+            }
+
+            [Flags]
+            public enum DWM_BB
+            {
+                Enable = 1,
+                BlurRegion = 2,
+                TransitionMaximized = 4
+            }
         }
     }
 
