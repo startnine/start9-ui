@@ -142,7 +142,8 @@ namespace Start9.UI.Wpf.Windows
             {
                 WindowStyle = WindowStyle.None,
                 AllowsTransparency = true,
-                ShowInTaskbar = false
+                ShowInTaskbar = false,
+                ShowActivated = false
             };
 
             _shadowWindow.SourceInitialized += (sneder, args) =>
@@ -168,6 +169,33 @@ namespace Start9.UI.Wpf.Windows
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
             BindingOperations.SetBinding(_shadowWindow, Window.TopmostProperty, shadowTopmostBinding);
+
+            Binding shadowVisibilityBinding = new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath("Visibility"),
+                Mode = BindingMode.OneWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+            BindingOperations.SetBinding(_shadowWindow, Window.VisibilityProperty, shadowVisibilityBinding);
+
+            Binding shadowRenderTransformBinding = new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath("RenderTransform"),
+                Mode = BindingMode.OneWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+            BindingOperations.SetBinding(_shadowWindow, Window.RenderTransformProperty, shadowRenderTransformBinding);
+
+            Binding shadowOpacityBinding = new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath("Opacity"),
+                Mode = BindingMode.OneWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+            BindingOperations.SetBinding(_shadowWindow, Window.OpacityProperty, shadowOpacityBinding);
 
             Binding shadowIsEnabledBinding = new Binding()
             {

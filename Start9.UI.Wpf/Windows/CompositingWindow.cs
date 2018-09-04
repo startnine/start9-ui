@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using System.Timers;
+using System.ComponentModel;
 
 namespace Start9.UI.Wpf.Windows
 {
@@ -38,9 +40,27 @@ namespace Start9.UI.Wpf.Windows
         public static readonly DependencyProperty CompositionStateProperty =
             DependencyProperty.Register("CompositionState", typeof(WindowCompositionState), typeof(CompositingWindow), new FrameworkPropertyMetadata(WindowCompositionState.Alpha, OnCompositionStatePropertyChangedCallback));
 
+        public bool IsWindowVisible
+        {
+            get => (bool)GetValue(IsWindowVisibleProperty);
+            set => SetValue(IsWindowVisibleProperty, value);
+        }
+
+        public static readonly DependencyProperty IsWindowVisibleProperty =
+            DependencyProperty.Register("IsWindowVisible", typeof(bool), typeof(CompositingWindow), new FrameworkPropertyMetadata(true));
+
+        public int HideTransitionDuration
+        {
+            get => (int)GetValue(HideTransitionDurationProperty);
+            set => SetValue(HideTransitionDurationProperty, value);
+        }
+
+        public static readonly DependencyProperty HideTransitionDurationProperty =
+            DependencyProperty.Register("HideTransitionDuration", typeof(int), typeof(CompositingWindow), new FrameworkPropertyMetadata(3500));
+
         static void OnCompositionStatePropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
-            Debug.WriteLine("CompositionState: " + (sender as CompositingWindow).CompositionState.ToString());
+            //Debug.WriteLine("CompositionState: " + (sender as CompositingWindow).CompositionState.ToString());
             (sender as CompositingWindow).SetCompositionState((WindowCompositionState)(e.NewValue));
         }
 
@@ -68,11 +88,109 @@ namespace Start9.UI.Wpf.Windows
             base.WindowStyle = WindowStyle.None;
             base.AllowsTransparency = true;
             _handle = new WindowInteropHelper(this).EnsureHandle();
+
+            Loaded += CompositingWindow_Loaded;
+        }
+
+        private void CompositingWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (IsVisible)
+            {
+                IsWindowVisible = false;
+                Show();
+            }
+
+            Loaded -= CompositingWindow_Loaded;
+        }
+
+        new public void Show()
+        {
+            IsWindowVisible = true;
+            base.Show();
+            /*int interval = 0;
+            Timer timer = new Timer(1);
+            timer.Elapsed += (sneder, args) =>
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    if (interval < )
+                        interval++;
+                    else
+                    {
+                        base.Show();
+                        timer.Stop();
+                    }
+                }));
+            };*/
+        }
+
+        new public void Hide()
+        {
+            IsWindowVisible = false;
+            int interval = 0;
+            Timer timer = new Timer(1);
+            timer.Elapsed += (sneder, args) =>
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    if (interval >= HideTransitionDuration)
+                    {
+                        timer.Stop();
+                        base.Hide();
+                    }
+                    else
+                    {
+                        interval++;
+                        //Debug.WriteLine("interval: " + interval);
+                    }
+                }));
+            };
+            timer.Start();
         }
 
         protected override void OnSourceInitialized(EventArgs e)
         {
             SetCompositionState(CompositionState);
+        }
+
+        bool _isClosingNow = false;
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            base.OnClosing(e);
+            bool animate = false;
+
+            if (!(e.Cancel) & !_isClosingNow)
+            {
+                e.Cancel = true;
+                _isClosingNow = true;
+                animate = true;
+                //Debug.WriteLine("doing the thing");
+            }
+
+            if (animate == true)
+            {
+                IsWindowVisible = false;
+                int interval = 0;
+                Timer timer = new Timer(1);
+                timer.Elapsed += (sneder, args) =>
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        if (interval >= HideTransitionDuration)
+                        {
+                            base.Close();
+                            timer.Stop();
+                        }
+                        else
+                        {
+                            interval++;
+                            //Debug.WriteLine("interval: " + interval);
+                        }
+                    }));
+                };
+                timer.Start();
+            }
         }
 
         void ClearCompositionState()
@@ -311,6 +429,12 @@ namespace Start9.UI.Wpf.Windows
                 ACCENT_ENABLE_BLURBEHIND = 3,
                 ACCENT_INVALID_STATE = 4
             }*/
+
+            [return: MarshalAs(UnmanagedType.Bool)]
+            [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
+            public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+            public static uint WmClose = 0x0010;
 
             [DllImport("user32.dll")]
             internal static extern int SetWindowCompositionAttribute(IntPtr hwnd, ref WindowCompositionAttributeData data);

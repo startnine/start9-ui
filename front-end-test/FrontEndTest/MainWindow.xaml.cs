@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -26,6 +27,37 @@ namespace FrontEndTest
         public MainWindow()
         {
             InitializeComponent();
+            Timer timer = new Timer(5000);
+            timer.Elapsed += (sneder, args) =>
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    if (IsVisible)
+                        Hide();
+                    else
+                        Show();
+                }));
+            };
+            timer.Start();
+            //Loaded += MainWindow_Loaded;
+        }
+
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            var win = new Window();
+            win.Show();
+            Timer timer = new Timer(5000);
+            timer.Elapsed += (sneder, args) =>
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    if (win.IsVisible)
+                        win.Hide();
+                    else
+                        win.Show();
+                }));
+            };
+            timer.Start();
         }
 
         private void ToggleGlassToggleButton_Click(object sender, RoutedEventArgs e)
