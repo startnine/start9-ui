@@ -9,10 +9,17 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <win:DecoratableWindow.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/>
+                <!--ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/DarkPlexBlue.xaml"/-->
+            </ResourceDictionary.MergedDictionaries>
+            
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        </ResourceDictionary>
     </win:DecoratableWindow.Resources>
     <win:DecoratableWindow.FullWindowContent>
-        <ui:NavigationView x:Name="NavigationView"><!--DisplayMode="Minimal"-->
+        <ui:NavigationView x:Name="NavigationView" Visibility="Collapsed"><!--DisplayMode="Minimal"-->
             <ui:NavigationView.Style>
                 <Style TargetType="{x:Type ui:NavigationView}">
                     <Setter Property="Template">
@@ -208,9 +215,97 @@
             </ui:NavigationView>
     </win:DecoratableWindow.FullWindowContent>
     <Grid>
-        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" >
+        <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
             <Button x:Name="CycleCompositionStateButton" Click="CycleCompositionStateButton_Click">Cycle Composition State</Button>
             <TextBlock Background="White" Foreground="Red" x:Name="CurrentCompositionStateTextBlock">Alpha</TextBlock>
         </StackPanel>
+        <DockPanel>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem>StatusBar</StatusBarItem>
+            </StatusBar>
+            <Grid DockPanel.Dock="Top">
+                <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True"/>
+            </Grid>
+            <TabControl>
+                <TabItem Header="Buttons">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0">
+                            <Button>Normal Button</Button>
+                            <Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30">Round Button</Button>
+                            <Button IsDefault="True">Default Button</Button>
+                            <Rectangle Width="1" Height="50"/>
+                            <CheckBox>Normal CheckBox</CheckBox>
+                            <CheckBox IsChecked="True">Checked CheckBox</CheckBox>
+                            <CheckBox IsThreeState="True" IsChecked="{x:Null}">Null CheckBox</CheckBox>
+                            <Rectangle Width="1" Height="50"/>
+                            <RadioButton GroupName="NormalRadio">Normal RadioButton</RadioButton>
+                            <RadioButton GroupName="NormalRadio" IsChecked="True">Checked RadioButton</RadioButton>
+                        </StackPanel>
+                        <StackPanel Grid.Column="1" IsEnabled="False">
+                            <Button>Disabled Button</Button>
+                            <Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30">Disabled Round Button</Button>
+                            <Button Visibility="Hidden">Hidden Button</Button>
+                            <Rectangle Width="1" Height="50"/>
+                            <CheckBox>Disabled CheckBox</CheckBox>
+                            <CheckBox IsChecked="True">Disabled Checked CheckBox</CheckBox>
+                            <CheckBox IsThreeState="True" IsChecked="{x:Null}">Disabled Null CheckBox</CheckBox>
+                            <Rectangle Width="1" Height="50"/>
+                            <RadioButton GroupName="DisabledRadio">Disabled RadioButton</RadioButton>
+                            <RadioButton GroupName="DisabledRadio" IsChecked="True">Disabled Checked RadioButton</RadioButton>
+                        </StackPanel>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Boxes">
+                    <GroupBox Header="Group Box">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+                            <StackPanel Grid.Column="0">
+                                <ComboBox IsEditable="True" SelectedIndex="0">
+                                    <ComboBoxItem>Editable ComboBox</ComboBoxItem>
+                                    <ComboBoxItem>Editable ComboBox</ComboBoxItem>
+                                    <ComboBoxItem>Editable ComboBox</ComboBoxItem>
+                                </ComboBox>
+                                <ComboBox IsEditable="False" SelectedIndex="0">
+                                    <ComboBoxItem>Read-Only ComboBox</ComboBoxItem>
+                                    <ComboBoxItem>Read-Only ComboBox</ComboBoxItem>
+                                    <ComboBoxItem>Read-Only ComboBox</ComboBoxItem>
+                                </ComboBox>
+                                <TextBox>TextBox</TextBox>
+                                <ListBox>
+                                    <ListBoxItem>ListBox</ListBoxItem>
+                                    <ListBoxItem>ListBox</ListBoxItem>
+                                    <ListBoxItem>ListBox</ListBoxItem>
+                                </ListBox>
+                            </StackPanel>
+                            <StackPanel Grid.Column="1" IsEnabled="False">
+                                <ComboBox IsEditable="True" SelectedIndex="0">
+                                    <ComboBoxItem>Disabled Editable ComboBox</ComboBoxItem>
+                                    <ComboBoxItem>Disabled Editable ComboBox</ComboBoxItem>
+                                    <ComboBoxItem>Disabled Editable ComboBox</ComboBoxItem>
+                                </ComboBox>
+                                <ComboBox IsEditable="False" SelectedIndex="0">
+                                    <ComboBoxItem>Disabled Read-Only ComboBox</ComboBoxItem>
+                                    <ComboBoxItem>Disabled Read-Only ComboBox</ComboBoxItem>
+                                    <ComboBoxItem>Disabled Read-Only ComboBox</ComboBoxItem>
+                                </ComboBox>
+                                <TextBox>Disabled TextBox</TextBox>
+                                <ListBox>
+                                    <ListBoxItem>Disabled ListBox</ListBoxItem>
+                                    <ListBoxItem>Disabled ListBox</ListBoxItem>
+                                    <ListBoxItem>Disabled ListBox</ListBoxItem>
+                                </ListBox>
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+                </TabItem>
+            </TabControl>
+        </DockPanel>
     </Grid>
 </win:DecoratableWindow>

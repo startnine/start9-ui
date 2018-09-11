@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -10,12 +11,14 @@ namespace Start9.UI.Wpf
     [TemplatePart(Name = PartGrip, Type = typeof(Button))]
     [TemplatePart(Name = PartOffsetter, Type = typeof(Canvas))]
     [TemplatePart(Name = PartStateText, Type = typeof(TextBlock))]
+    [TemplatePart(Name = PartGripContainer, Type = typeof(Panel))]
 
     public partial class ToggleSwitch : CheckBox
     {
         const string PartGrip = "PART_Grip";
         const string PartOffsetter = "PART_Offsetter";
         const string PartStateText = "PART_StateText";
+        const string PartGripContainer = "PART_GripContainer";
 
         public string TrueText
         {
@@ -86,7 +89,7 @@ namespace Start9.UI.Wpf
             double widthValue = 0;
             if ((IsChecked == null) & (IsThreeState))
             {
-                widthValue = (ActualWidth / 2) - (_grip.ActualWidth / 2);
+                widthValue = (_gripContainer.ActualWidth / 2) - (_grip.ActualWidth / 2);
             }
             else if (IsChecked == false)
             {
@@ -94,7 +97,7 @@ namespace Start9.UI.Wpf
             }
             else
             {
-                widthValue = ActualWidth - _grip.ActualWidth;
+                widthValue = _gripContainer.ActualWidth - _grip.ActualWidth;
             }
             return widthValue;
         }
@@ -161,6 +164,7 @@ namespace Start9.UI.Wpf
         Button _grip = new Button();
         Canvas _offsetter = new Canvas();
         TextBlock _stateText = new TextBlock();
+        Panel _gripContainer = new StackPanel();
 
         public override void OnApplyTemplate()
         {
@@ -170,6 +174,7 @@ namespace Start9.UI.Wpf
             _grip.PreviewMouseLeftButtonDown += (sendurr, args) => ToggleSwitch_PreviewMouseLeftButtonDown(this, args);
             _offsetter = GetTemplateChild(PartOffsetter) as Canvas;
             _stateText = GetTemplateChild(PartStateText) as TextBlock;
+            _gripContainer = GetTemplateChild(PartGripContainer) as Panel;
             OnIsCheckedChanged(this, new DependencyPropertyChangedEventArgs());
         }
 
@@ -218,82 +223,39 @@ namespace Start9.UI.Wpf
                     else
                     {
                         timer.Stop();
-                        //offset = (cursorCurrentX - cursorStartX);
                         if (isDragging)
                         {
-                            double isCheckedOffset = 0;
-                            if (IsChecked == true)
-                            {
-                                isCheckedOffset = ActualWidth - _grip.ActualWidth;
-                            }
-                            else if (IsChecked == null)
-                            {
-                                isCheckedOffset = (ActualWidth / 2) - (_grip.ActualWidth / 2);
-                            }
+                            double regionWidth = _gripContainer.ActualWidth - _grip.ActualWidth;
 
-                            double toggleChange = cursorChange + isCheckedOffset;
+                            double isCheckedOffset = 0;
+
                             if (IsThreeState)
                             {
-                                if (toggleChange < (ActualWidth / 3))
-                                {
+                                if (IsChecked == true)
+                                    isCheckedOffset = regionWidth;
+                                else if (IsChecked == null)
+                                    isCheckedOffset = (regionWidth / 2);
+
+                                double toggleChange = cursorChange + isCheckedOffset;
+
+                                if (toggleChange < (regionWidth / 3))
                                     IsChecked = false;
-                                    ////Debug.WriteLine("VERTICT: false");
-                                }
-                                else if (toggleChange > ((ActualWidth / 3) * 2))
-                                {
+                                else if (toggleChange > (regionWidth * (2.0 / 3.0)))
                                     IsChecked = true;
-                                    ////Debug.WriteLine("VERTICT: true");
-                                }
                                 else
-                                {
                                     IsChecked = null;
-                                    ////Debug.WriteLine("VERTICT: null");
-                                }
                             }
                             else
                             {
-                                if ((ActualWidth > (_grip.ActualWidth * 2.5)) && (_grip.ActualWidth > (_grip.ActualHeight * 2)))
-                                {
-                                    if (originalValue == true)
-                                    {
-                                        if (toggleChange < (ActualWidth - (_grip.ActualWidth / 2)))
-                                        {
-                                            IsChecked = false;
-                                            ////Debug.WriteLine("VERTICT: false");
-                                        }
-                                        else
-                                        {
-                                            IsChecked = true;
-                                            ////Debug.WriteLine("VERTICT: true");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        if (toggleChange < (_grip.ActualWidth / 2))
-                                        {
-                                            IsChecked = false;
-                                            ////Debug.WriteLine("VERTICT: false");
-                                        }
-                                        else
-                                        {
-                                            IsChecked = true;
-                                            ////Debug.WriteLine("VERTICT: true");
-                                        }
-                                    }
-                                }
+                                if (IsChecked == true)
+                                    isCheckedOffset = regionWidth;
+
+                                double toggleChange = cursorChange + isCheckedOffset;
+
+                                if (toggleChange < (regionWidth / 2))
+                                    IsChecked = false;
                                 else
-                                {
-                                    if (toggleChange < ((ActualWidth / 2) - (_grip.ActualWidth / 2)))
-                                    {
-                                        IsChecked = false;
-                                        ////Debug.WriteLine("VERTICT: false");
-                                    }
-                                    else
-                                    {
-                                        IsChecked = true;
-                                        ////Debug.WriteLine("VERTICT: true");
-                                    }
-                                }
+                                    IsChecked = true;
                             }
                         }
                         else

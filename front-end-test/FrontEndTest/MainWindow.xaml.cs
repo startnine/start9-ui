@@ -38,8 +38,7 @@ namespace FrontEndTest
                         Show();
                 }));
             };
-            timer.Start();
-            //Loaded += MainWindow_Loaded;
+            //timer.Start();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -82,6 +81,22 @@ namespace FrontEndTest
                 CompositionState = WindowCompositionState.Alpha;
 
             CurrentCompositionStateTextBlock.Text = CompositionState.ToString();
+        }
+
+        private void ThemeToggleSwitch_Checked(object sender, RoutedEventArgs e)
+        {
+            Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml", UriKind.RelativeOrAbsolute)
+            });
+        }
+
+        private void ThemeToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = new Uri("/Start9.UI.Wpf;component/Themes/Colors/DarkPlexBlue.xaml", UriKind.RelativeOrAbsolute)
+            });
         }
     }
 }

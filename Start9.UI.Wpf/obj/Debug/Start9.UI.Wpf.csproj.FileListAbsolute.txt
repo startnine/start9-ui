@@ -1,6 +1,5 @@
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\Start9.UI.Wpf.dll
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\Start9.UI.Wpf.pdb
-C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Start9.UI.Wpf.csprojAssemblyReference.cache
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Start9.UI.Wpf_MarkupCompile.cache
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Start9.UI.Wpf_MarkupCompile.lref
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Themes\Generic.baml
@@ -11,6 +10,8 @@ C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.W
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Start9.UI.Wpf.dll
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Start9.UI.Wpf.pdb
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Themes\Colors\PlexBlue.baml
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Themes\Plex.baml
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Themes\AeroConcept.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Themes\Colors\DarkPlexBlue.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Themes\Colors\LightPlexBlue.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Start9.UI.Wpf.csprojAssemblyReference.cache

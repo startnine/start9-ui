@@ -1,0 +1,17 @@
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Release\Start9.UI.Wpf.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Release\Start9.UI.Wpf.pdb
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Start9.UI.Wpf.csprojAssemblyReference.cache
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\GeneratedInternalTypeHelper.g.cs
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Start9.UI.Wpf_MarkupCompile.cache
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Start9.UI.Wpf_MarkupCompile.lref
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Themes\AeroConcept.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Themes\Colors\DarkPlexBlue.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Themes\Colors\LightPlexBlue.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Themes\Generic.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Themes\Plex.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Start9.UI.Wpf.g.resources
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Start9.UI.Wpf.Properties.Resources.resources
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Start9.UI.Wpf.csproj.GenerateResource.cache
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Start9.UI.Wpf.csproj.CoreCompileInputs.cache
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Start9.UI.Wpf.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Release\Start9.UI.Wpf.pdb

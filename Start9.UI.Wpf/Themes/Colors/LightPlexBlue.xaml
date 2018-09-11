@@ -1,7 +1,7 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:local="clr-namespace:Start9.UI.Wpf">
-    <!--#region Focus Visuals -->
+    <!--#region Focus Visuals-->
 
     <SolidColorBrush x:Key="FocusVisualBorderBrush">#FF425284</SolidColorBrush>
 
@@ -15,13 +15,14 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <!--#endregion Focus Visuals -->
+    <!--#endregion Focus Visuals-->
 
 
-    <!--#region Window Brushes -->
+    <!--#region Window Brushes-->
+    <SolidColorBrush x:Key="WindowForegroundBrush">Black</SolidColorBrush>
 
     <SolidColorBrush x:Key="CaptionButtonActiveIdleBrush">#FFC4DFFF</SolidColorBrush>
-    <!--#region #FF425284 -->
+    
     <SolidColorBrush x:Key="CaptionButtonActiveHoverBrush">White</SolidColorBrush>
     <SolidColorBrush x:Key="CaptionButtonActivePressedBrush">#FF89A4D2</SolidColorBrush>
     <SolidColorBrush x:Key="CaptionButtonInactiveIdleBrush">#FF89A4D2</SolidColorBrush>
@@ -115,10 +116,10 @@
 
     <SolidColorBrush x:Key="WindowDialogFooterBrush">#FF5C75B5</SolidColorBrush>
 
-    <!--#endregion Window Brushes -->
+    <!--#endregion Window Brushes-->
 
 
-    <!--#region ToolTip Brushes -->
+    <!--#region ToolTip Brushes-->
 
     <LinearGradientBrush x:Key="TooltipBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -131,18 +132,20 @@
 
     <SolidColorBrush x:Key="TooltipBorderBrush">#FF767676</SolidColorBrush>
 
-    <!--#endregion ToolTip Brushes -->
+    <SolidColorBrush x:Key="TooltipForegroundBrush">Black</SolidColorBrush>
+
+    <!--#endregion ToolTip Brushes-->
 
 
-    <!--#region ResizeGrip Brushes -->
+    <!--#region ResizeGrip Brushes-->
 
     <SolidColorBrush x:Key="ResizeGripCircleBackgroundBrush">White</SolidColorBrush>
     <SolidColorBrush x:Key="ResizeGripCircleBorderBrush">#40000000</SolidColorBrush>
 
-    <!--#endregion Resize Grip Brushes -->
+    <!--#endregion ResizeGrip Brushes-->
 
 
-    <!--#region Button Brushes -->
+    <!--#region Button Brushes-->
 
     <LinearGradientBrush x:Key="StandardButtonIdleBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -152,6 +155,9 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
     <SolidColorBrush x:Key="StandardButtonIdleBorderBrush">#FF425284</SolidColorBrush>
+
+    <SolidColorBrush x:Key="ButtonIdleForegroundBrush">Black</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonDisabledForegroundBrush">#7F000000</SolidColorBrush>
 
     <LinearGradientBrush x:Key="StandardButtonPressedBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -380,6 +386,7 @@
         </RadialGradientBrush.GradientStops>
     </RadialGradientBrush>
 
+    <SolidColorBrush x:Key="ToolbarButtonForegroundBrush">White</SolidColorBrush>
     <SolidColorBrush x:Key="ToolbarButtonHoverPrimaryBorderBrush">#40000000</SolidColorBrush>
 
     <LinearGradientBrush x:Key="ToolbarButtonHoverSecondaryBorderBrush" StartPoint="0,0" EndPoint="0.25,1">
@@ -408,10 +415,10 @@
 
     <SolidColorBrush x:Key="ToolbarButtonDisabledForegroundBrush">#FFC0C0FF</SolidColorBrush>
 
-    <!--#endregion Button Brushes -->
+    <!--#endregion Button Brushes-->
 
 
-    <!--#region CommandLinkButton Brushes -->
+    <!--#region CommandLinkButton Brushes-->
 
     <SolidColorBrush x:Key="CommandLinkButtonHeaderForegroundBrush">DarkBlue</SolidColorBrush>
     <SolidColorBrush x:Key="CommandLinkButtonHeaderForegroundHoverBrush">MediumBlue</SolidColorBrush>
@@ -420,10 +427,10 @@
     <SolidColorBrush x:Key="CommandLinkButtonHeaderForegroundDisabledBrush">#FF3F3F7F</SolidColorBrush>
     <SolidColorBrush x:Key="CommandLinkButtonBodyForegroundDisabledBrush">#FF909090</SolidColorBrush>
 
-    <!--#endregion CommandLinkButton Brushes -->
+    <!--#endregion CommandLinkButton Brushes-->
 
 
-    <!--#region ToggleButton Brushes -->
+    <!--#region ToggleButton Brushes-->
 
     <LinearGradientBrush x:Key="ToolbarToggleButtonSelectedBackground" StartPoint="1,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -434,24 +441,20 @@
 
     <LinearGradientBrush x:Key="PlexGlowToggleButtonHoverBorderBrush" StartPoint="0,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0.5" Color="#FFB5FFFF" />
+            <GradientStop Offset="0" Color="#FFB5FFFF" />
+            <GradientStop Offset="0.125" Color="#FFFFFFFF" />
+            <GradientStop Offset="0.25" Color="#FFB5FFFF" />
+            <GradientStop Offset="0.75" Color="#FFB5FFFF" />
             <GradientStop Offset="0.875" Color="#FFFFFFFF" />
             <GradientStop Offset="1" Color="#FFB5FFFF" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
     <SolidColorBrush x:Key="PlexGlowToggleButtonHoverBackground">#7FB5FFFF</SolidColorBrush>
 
-    <!--#endregion ToggleButton Brushes -->
+    <!--#endregion ToggleButton Brushes-->
 
 
-    <!--#region ListView Brushes -->
-
-
-
-    <!--#endregion ListView Brushes -->
-
-
-    <!--#region ContextMenu Brushes -->
+    <!--#region ContextMenu Brushes-->
 
     <LinearGradientBrush x:Key="ContextMenuBackgroundBrush" StartPoint="0.25,0" EndPoint="0.75,1">
         <LinearGradientBrush.GradientStops>
@@ -467,11 +470,12 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <!--#endregion ContextMenu Brushes -->
+    <!--#endregion ContextMenu Brushes-->
 
 
-    <!--#region TextBox Brushes -->
+    <!--#region TextBox Brushes-->
 
+    <SolidColorBrush x:Key="TextBoxForegroundBrush">Black</SolidColorBrush>
     <SolidColorBrush x:Key="TextBoxPrimaryBorderBrush">#FF6C8C9F</SolidColorBrush>
     <SolidColorBrush x:Key="TextBoxPrimaryBackgroundBrush">White</SolidColorBrush>
 
@@ -567,12 +571,13 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <!--#endregion TextBox Brushes -->
+    <!--#endregion TextBox Brushes-->
 
 
-    <!--#region Checkbox Brushes -->
+    <!--#region CheckBox Brushes-->
 
     <SolidColorBrush x:Key="CheckBoxBorderBrush">#FFB1BDC7</SolidColorBrush>
+    <SolidColorBrush x:Key="CheckBoxDisabledForegroundBrush">#7F000000</SolidColorBrush>
 
     <LinearGradientBrush x:Key="CheckBoxSecondaryBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
         <LinearGradientBrush.GradientStops>
@@ -590,10 +595,10 @@
 
     <SolidColorBrush x:Key="CheckBoxCheckMarkBrush">#FF6EB043</SolidColorBrush>
 
-    <!--#region Checkbox Brushes -->
+    <!--#endregion CheckBox Brushes-->
 
 
-    <!--#region Vertical ScrollBar Brushes -->
+    <!--#region Vertical ScrollBar Brushes-->
 
     <LinearGradientBrush x:Key="VerticalScrollbarArrowIdleFillBrush" StartPoint="0,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
@@ -623,20 +628,137 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <!--#endregion Vertical ScrollBar Brushes -->
+    <RadialGradientBrush x:Key="VerticalScrollBarThumbIdlePrimaryBackgroundBrush" GradientOrigin="0.5,0.5" Center="0.5,0.5">
+        <RadialGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FFCFD6E0" />
+            <GradientStop Offset="1" Color="#FFEDF0F2" />
+        </RadialGradientBrush.GradientStops>
+    </RadialGradientBrush>
+
+    <LinearGradientBrush x:Key="VerticalScrollBarThumbIdleSecondaryBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="Transparent" />
+            <GradientStop Offset="0.4" Color="Transparent" />
+            <GradientStop Offset="0.6" Color="#7FFFFFFF" />
+            <GradientStop Offset="1" Color="#40FFFFFF" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="VerticalScrollbarTopRidgeBrush">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="Transparent" />
+            <GradientStop Offset="0.5" Color="White" />
+            <GradientStop Offset="1" Color="Transparent" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="VerticalScrollbarBottomRidgeBrush">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#00B4B7C0" />
+            <GradientStop Offset="0.5" Color="#FFB4B7C0" />
+            <GradientStop Offset="1" Color="#00B4B7C0" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="VerticalScrollbarThumbHoverBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="White" />
+            <GradientStop Offset="1" Color="#FFC4D5E7" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="VerticalScrollbarTrackBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#00BBC9E4" />
+            <GradientStop Offset="0.5" Color="#FFBBC9E4" />
+            <GradientStop Offset="1" Color="#00BBC9E4" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!--#endregion Vertical ScrollBar Brushes-->
 
 
-    <!--#region Horizontal ScrollBar Brushes -->
+    <!--#region Horizontal ScrollBar Brushes-->
 
-    <!--#endregion Horizontal ScrollBar Brushes -->
+    <LinearGradientBrush x:Key="HorizontalScrollbarArrowIdleFillBrush" StartPoint="0,0" EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.5" Color="#FFEDF0F2" />
+            <GradientStop Offset="1" Color="#FFCFD6E0" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HorizontalScrollbarArrowIdleStrokeBrush" StartPoint="0,0.375" EndPoint="1,0.625">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FF788DA8" />
+            <GradientStop Offset="1" Color="#FFA7B3C1" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HorizontalScrollbarArrowHoverFillBrush" StartPoint="0,0.375" EndPoint="1,0.625">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.5" Color="#FFF2F5F7" />
+            <GradientStop Offset="1" Color="#FFDEE5EF" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HorizontalScrollbarArrowHoverStrokeBrush" StartPoint="0,0" EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FF5481BD" />
+            <GradientStop Offset="1" Color="#FF86A0BF" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <RadialGradientBrush x:Key="HorizontalScrollBarThumbIdlePrimaryBackgroundBrush" GradientOrigin="0.5,0.5" Center="0.5,0.5">
+        <RadialGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FFCFD6E0" />
+            <GradientStop Offset="1" Color="#FFEDF0F2" />
+        </RadialGradientBrush.GradientStops>
+    </RadialGradientBrush>
+
+    <LinearGradientBrush x:Key="HorizontalScrollBarThumbIdleSecondaryBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="Transparent" />
+            <GradientStop Offset="0.4" Color="Transparent" />
+            <GradientStop Offset="0.6" Color="#7FFFFFFF" />
+            <GradientStop Offset="1" Color="#40FFFFFF" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HorizontalScrollbarTopRidgeBrush">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="Transparent" />
+            <GradientStop Offset="0.5" Color="White" />
+            <GradientStop Offset="1" Color="Transparent" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HorizontalScrollbarBottomRidgeBrush">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#00B4B7C0" />
+            <GradientStop Offset="0.5" Color="#FFB4B7C0" />
+            <GradientStop Offset="1" Color="#00B4B7C0" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HorizontalScrollbarThumbHoverBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="White" />
+            <GradientStop Offset="1" Color="#FFC4D5E7" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="HorizontalScrollbarTrackBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#00BBC9E4" />
+            <GradientStop Offset="0.5" Color="#FFBBC9E4" />
+            <GradientStop Offset="1" Color="#00BBC9E4" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!--#endregion Horizontal ScrollBar Brushes-->
 
 
-    <!--#region ScrollBar and ScrollViewer Brushes -->
-
-    <!--#endregion ScrollBar and ScrollViewer Brushes -->
-
-
-    <!--#region Path Brushes -->
+    <!--#region Path Brushes-->
 
     <SolidColorBrush x:Key="IconPathStrokeBrush">#FF7A9BCA</SolidColorBrush>
 
@@ -649,14 +771,48 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <!--#endregion Path Brushes -->
+    <!--#endregion Path Brushes-->
 
 
-    <!--#region Ribbon Brushes -->
+    <!--#region Ribbon Brushes-->
 
     <SolidColorBrush x:Key="PlexRibbonTextColorBrush">#FF73AEF0</SolidColorBrush>
 
     <!--#endregion Ribbon Brushes-->
 
+    
+    <!--#region TabItem and TabControl Brushes-->
 
+    <LinearGradientBrush x:Key="TabItemIdleBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0.875" Color="#FFB1CEED"/>
+            <GradientStop Offset="1" Color="#FF91B7E2"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!--#endregion TabItem and TabControl Brushes-->
+
+    
+    <!--#region Separator Brushes-->
+
+    <SolidColorBrush x:Key="SeparatorBackgroundBrush">#FFBED7FC</SolidColorBrush>
+
+    <!--#endregion Separator Brushes-->
+
+    
+    <!--#region GroupBox Brushes-->
+
+    <SolidColorBrush x:Key="GroupBoxOuterBorderBrush">#FF4D7CB3</SolidColorBrush>
+    <SolidColorBrush x:Key="GroupBoxInnerBorderBrush">#FFF6F9FD</SolidColorBrush>
+
+    <LinearGradientBrush x:Key="GroupBoxHeaderBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#40A5C4E5" />
+            <GradientStop Offset="1" Color="#00A5C4E5" />
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="GroupBoxHeaderForegroundBrush">#FF225D91</SolidColorBrush>
+
+    <!--#endregion GroupBox Brushes-->
 </ResourceDictionary>

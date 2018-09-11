@@ -7,6 +7,7 @@
     <!--#region Converters -->
 
     <conv:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
+    <conv:WidthAndHeightToRectConverter x:Key="WidthAndHeightToRectConverter"/>
 
     <!--#endregion Converters -->
 
@@ -16,7 +17,7 @@
         <Style.Resources>
             <ResourceDictionary>
                 <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/PlexBlue.xaml"/>
+                    <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml"/>
                 </ResourceDictionary.MergedDictionaries>
 
                 <QuarticEase x:Key="WindowVisibleEase" EasingMode="EaseOut"/>
@@ -33,6 +34,7 @@
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="0,24,0,0" />
         <Setter Property="Background" Value="{DynamicResource DefaultWindowBodyBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource WindowForegroundBrush}"/>
         <Setter Property="FontFamily" Value="Selawik"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="ShadowOffsetThickness" Value="49,14,14,60"/>
@@ -649,8 +651,9 @@
                                        VerticalAlignment="Top" HorizontalContentAlignment="Center"
                                        VerticalContentAlignment="Center" Height="26" Margin="0,-2" FontSize="12" Foreground="White">
                                     <Label.Effect>
-                                        <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320"
-                                                          ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
+                                        <!--DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320"
+                                                          ShadowDepth="3" BlurRadius="10" Opacity="0.5" /-->
+                                        <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="230" ShadowDepth="3" BlurRadius="3" Opacity="0.375"/>
                                     </Label.Effect>
                                 </Label>
                                 <ContentPresenter Content="{TemplateBinding TitleBarContent}" />
@@ -676,16 +679,26 @@
                                 <Border x:Name="DialogFilm" CornerRadius="12,12,0,0" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
                             </Grid>
                             <Border x:Name="Body" CornerRadius="12" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="0" Padding="0" Background="{TemplateBinding Background}">
+                                <Border.Clip>
+                                    <RectangleGeometry RadiusX="{Binding CornerRadius.TopLeft, RelativeSource={RelativeSource AncestorType={x:Type Border}}}" RadiusY="{Binding RadiusX, RelativeSource={RelativeSource Self}}">
+                                        <RectangleGeometry.Rect>
+                                            <MultiBinding Converter="{StaticResource WidthAndHeightToRectConverter}" >
+                                                <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType={x:Type Border}}" />
+                                                <Binding Path="ActualHeight" RelativeSource="{RelativeSource AncestorType={x:Type Border}}"/>
+                                            </MultiBinding>
+                                        </RectangleGeometry.Rect>
+                                    </RectangleGeometry>
+                                </Border.Clip>
                                 <Grid>
-                                    <Rectangle x:Name="BodySizingAid"/>
+                                    <!--Rectangle x:Name="BodySizingAid"/-->
                                     <ContentPresenter Content="{TemplateBinding Content}">
-                                        <ContentPresenter.OpacityMask>
+                                        <!--ContentPresenter.OpacityMask>
                                             <VisualBrush>
                                                 <VisualBrush.Visual>
                                                     <Border Width="{Binding ActualWidth, Source={x:Reference BodySizingAid}}" Height="{Binding ActualHeight, Source={x:Reference BodySizingAid}}" Background="Black" BorderBrush="Transparent" BorderThickness="0" CornerRadius="12"/>
                                                 </VisualBrush.Visual>
                                             </VisualBrush>
-                                        </ContentPresenter.OpacityMask>
+                                        </ContentPresenter.OpacityMask-->
                                     </ContentPresenter>
                                 </Grid>
                             </Border>

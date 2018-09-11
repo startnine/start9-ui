@@ -53,7 +53,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Themes\Colors\PlexBlue.xaml">
+    <Page Include="Themes\Colors\DarkPlexBlue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Colors\LightPlexBlue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -67,6 +70,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\WidthAndHeightToRectConverter.cs" />
     <Compile Include="MonitorInfo.cs" />
     <Compile Include="NavigationView.cs" />
     <Compile Include="Windows\AppBarWindow.cs" />
