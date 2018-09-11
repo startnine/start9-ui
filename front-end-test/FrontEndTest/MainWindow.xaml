@@ -224,7 +224,7 @@
                 <StatusBarItem>StatusBar</StatusBarItem>
             </StatusBar>
             <Grid DockPanel.Dock="Top">
-                <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True"/>
+                <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True">Current Theme</ui:ToggleSwitch>
             </Grid>
             <TabControl>
                 <TabItem Header="Buttons">
@@ -235,6 +235,7 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
                             <Button>Normal Button</Button>
+                            <RepeatButton>RepeatButton</RepeatButton>
                             <Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30">Round Button</Button>
                             <Button IsDefault="True">Default Button</Button>
                             <Rectangle Width="1" Height="50"/>
@@ -247,6 +248,7 @@
                         </StackPanel>
                         <StackPanel Grid.Column="1" IsEnabled="False">
                             <Button>Disabled Button</Button>
+                            <RepeatButton>Disabled RepeatButton</RepeatButton>
                             <Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30">Disabled Round Button</Button>
                             <Button Visibility="Hidden">Hidden Button</Button>
                             <Rectangle Width="1" Height="50"/>
