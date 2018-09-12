@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Windows.Data;
 
 using System.Windows;
+using System.Diagnostics;
 
 namespace Start9.UI.Wpf.Converters
 {
@@ -13,6 +14,7 @@ namespace Start9.UI.Wpf.Converters
         {
             Thickness val = (Thickness)value;
             var param = parameter.ToString().ToLower();
+            Debug.WriteLine("val: " + val);
             if (param == "t")
             {
                 return val.Top;

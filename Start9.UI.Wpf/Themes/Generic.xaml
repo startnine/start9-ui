@@ -3,23 +3,22 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="clr-namespace:Start9.UI.Wpf"
     xmlns:win="clr-namespace:Start9.UI.Wpf.Windows"
-    xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters">
-    <!--#region Converters -->
+    xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters"
+    xmlns:theme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic">
+    <!--#region Converters-->
 
     <conv:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
     <conv:WidthAndHeightToRectConverter x:Key="WidthAndHeightToRectConverter"/>
+    <conv:CombinedClassicFrameSizeConverter x:Key="CombinedClassicFrameSizeConverter"/>
+    <conv:ThicknessInvertFilterConverter x:Key="ThicknessInvertFilterConverter"/>
 
-    <!--#endregion Converters -->
+    <!--#endregion Converters-->
 
-    <!--#region Window Styles -->
+    <!--#region Window Styles-->
 
     <Style TargetType="win:DecoratableWindow">
         <Style.Resources>
             <ResourceDictionary>
-                <ResourceDictionary.MergedDictionaries>
-                    <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml"/>
-                </ResourceDictionary.MergedDictionaries>
-
                 <QuarticEase x:Key="WindowVisibleEase" EasingMode="EaseOut"/>
                 <QuinticEase x:Key="WindowHiddenEase" EasingMode="EaseIn"/>
             </ResourceDictionary>
@@ -32,12 +31,13 @@
         <Setter Property="HideTransitionDuration" Value="50"/>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0,24,0,0" />
-        <Setter Property="Background" Value="{DynamicResource DefaultWindowBodyBrush}"/>
-        <Setter Property="Foreground" Value="{DynamicResource WindowForegroundBrush}"/>
-        <Setter Property="FontFamily" Value="Selawik"/>
+        <Setter Property="BorderThickness" Value="{Binding Converter={StaticResource CombinedClassicFrameSizeConverter}, FallbackValue={x:Static SystemParameters.WindowResizeBorderThickness}}"/>
+        <Setter Property="Background" Value="{x:Static SystemColors.WindowBrush}"/>
+        <Setter Property="Foreground" Value="{x:Static SystemColors.WindowTextBrush}"/>
+        <Setter Property="FontFamily" Value="Tahoma"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="ShadowOffsetThickness" Value="49,14,14,60"/>
+        <Setter Property="ShadowOffsetThickness" Value="20,10,20,30"/>
+        <Setter Property="Padding" Value="{x:Static SystemParameters.WindowResizeBorderThickness}"/>
         <Setter Property="ShadowStyle">
             <Setter.Value>
                 <Style TargetType="Window">
@@ -50,106 +50,78 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="Window">
                                 <Grid x:Name="ShadowGrid" ClipToBounds="True">
+                                    <Grid.Resources>
+                                        <GradientStopCollection x:Key="ShadowGradientStops">
+                                            <GradientStop Offset="0" Color="#7F000000"/>
+                                            <GradientStop Offset="1" Color="#00000000"/>
+                                        </GradientStopCollection>
+                                    </Grid.Resources>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="30"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="30"/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="30"/>
+                                    </Grid.RowDefinitions>
                                     <Grid.OpacityMask>
                                         <VisualBrush>
                                             <VisualBrush.Visual>
-                                                <Grid Background="#01000000" Margin="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                                                    <Border BorderThickness="49,14,14,60" CornerRadius="12" BorderBrush="Black" Background="Transparent"/>
-                                                    <Border Margin="39,4,4,50" BorderThickness="10" CornerRadius="16" BorderBrush="Black" Background="Transparent"/>
-                                                </Grid>
+                                                <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderThickness="20,10,20,30" BorderBrush="Black">
+                                                    <Border.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <LinearGradientBrush.GradientStops>
+                                                                <GradientStop Offset="0" Color="#C0000000"/>
+                                                                <GradientStop Offset="1" Color="Black"/>
+                                                            </LinearGradientBrush.GradientStops>
+                                                        </LinearGradientBrush>
+                                                    </Border.OpacityMask>
+                                                </Border>
                                             </VisualBrush.Visual>
                                         </VisualBrush>
                                     </Grid.OpacityMask>
-                                    <Grid.Background>
-                                        <VisualBrush>
-                                            <VisualBrush.Visual>
-                                                <Grid Background="#01000000" Margin="0" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-                                                    <!--Diagonal size is 67.19-->
-                                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Width="58" Height="58">
-                                                        <Canvas.Background>
-                                                            <RadialGradientBrush GradientOrigin="1,1" Center="1,1" RadiusX="1" RadiusY="1">
-                                                                <RadialGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#7F000000" />
-                                                                    <GradientStop Offset="1" Color="#00000000" />
-                                                                </RadialGradientBrush.GradientStops>
-                                                            </RadialGradientBrush>
-                                                        </Canvas.Background>
-                                                    </Canvas>
-                                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="58,0" Height="58">
-                                                        <Canvas.Background>
-                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                                <LinearGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#00000000" />
-                                                                    <GradientStop Offset="1" Color="#7F000000" />
-                                                                </LinearGradientBrush.GradientStops>
-                                                            </LinearGradientBrush>
-                                                        </Canvas.Background>
-                                                    </Canvas>
-                                                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Top" Width="58" Height="58">
-                                                        <Canvas.Background>
-                                                            <RadialGradientBrush GradientOrigin="0,1" Center="0,1" RadiusX="1" RadiusY="1">
-                                                                <RadialGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#7F000000" />
-                                                                    <GradientStop Offset="1" Color="#00000000" />
-                                                                </RadialGradientBrush.GradientStops>
-                                                            </RadialGradientBrush>
-                                                        </Canvas.Background>
-                                                    </Canvas>
-                                                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,58" Width="58">
-                                                        <Canvas.Background>
-                                                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
-                                                                <LinearGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#00000000" />
-                                                                    <GradientStop Offset="1" Color="#7F000000" />
-                                                                </LinearGradientBrush.GradientStops>
-                                                            </LinearGradientBrush>
-                                                        </Canvas.Background>
-                                                    </Canvas>
-                                                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="58" Height="58">
-                                                        <Canvas.Background>
-                                                            <RadialGradientBrush GradientOrigin="0,0" Center="0,0" RadiusX="1" RadiusY="1">
-                                                                <RadialGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#7F000000" />
-                                                                    <GradientStop Offset="1" Color="#00000000" />
-                                                                </RadialGradientBrush.GradientStops>
-                                                            </RadialGradientBrush>
-                                                        </Canvas.Background>
-                                                    </Canvas>
-                                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Margin="58,0" Height="58">
-                                                        <Canvas.Background>
-                                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
-                                                                <LinearGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#00000000" />
-                                                                    <GradientStop Offset="1" Color="#7F000000" />
-                                                                </LinearGradientBrush.GradientStops>
-                                                            </LinearGradientBrush>
-                                                        </Canvas.Background>
-                                                    </Canvas>
-                                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="58" Height="58">
-                                                        <Canvas.Background>
-                                                            <RadialGradientBrush GradientOrigin="1,0" Center="1,0" RadiusX="1" RadiusY="1">
-                                                                <RadialGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#7F000000" />
-                                                                    <GradientStop Offset="1" Color="#00000000" />
-                                                                </RadialGradientBrush.GradientStops>
-                                                            </RadialGradientBrush>
-                                                        </Canvas.Background>
-                                                    </Canvas>
-                                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Stretch" Margin="0,58" Width="58">
-                                                        <Canvas.Background>
-                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                                <LinearGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#00000000" />
-                                                                    <GradientStop Offset="1" Color="#7F000000" />
-                                                                </LinearGradientBrush.GradientStops>
-                                                            </LinearGradientBrush>
-                                                        </Canvas.Background>
-                                                    </Canvas>
-                                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="58,58" Background="#7F000000" />
-                                                </Grid>
-                                            </VisualBrush.Visual>
-                                        </VisualBrush>
-                                    </Grid.Background>
+                                    <Rectangle Grid.Column="0" Grid.Row="1">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="0" Grid.Row="0">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush GradientOrigin="1,1" Center="1,1" GradientStops="{DynamicResource ShadowGradientStops}" RadiusX="1" RadiusY="1"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="1" Grid.Row="0">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="2" Grid.Row="0">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush GradientOrigin="0,1" Center="0,1" GradientStops="{DynamicResource ShadowGradientStops}" RadiusX="1" RadiusY="1"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="2" Grid.Row="1">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="2" Grid.Row="2">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush GradientOrigin="0,0" Center="0,0" GradientStops="{DynamicResource ShadowGradientStops}" RadiusX="1" RadiusY="1"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="1" Grid.Row="2">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="0" Grid.Row="2">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush GradientOrigin="1,0" Center="1,0" GradientStops="{DynamicResource ShadowGradientStops}" RadiusX="1" RadiusY="1"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsEnabled" Value="False">
@@ -182,527 +154,172 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type win:DecoratableWindow}">
                     <ControlTemplate.Resources>
-                        <ResourceDictionary>
-                            <Style x:Key="BorderThumb" TargetType="Thumb">
-                                <Setter Property="SnapsToDevicePixels" Value="true" />
-                                <Setter Property="OverridesDefaultStyle" Value="true" />
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Thumb">
-                                            <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0">
+                        <Style x:Key="BorderThumb" TargetType="Thumb">
+                            <Setter Property="SnapsToDevicePixels" Value="true" />
+                            <Setter Property="OverridesDefaultStyle" Value="true" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Thumb">
+                                        <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="#01000000" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style x:Key="ResizeGripThumbStyle" TargetType="Thumb" BasedOn="{StaticResource BorderThumb}">
+                            <Setter Property="SnapsToDevicePixels" Value="True" />
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Width" Value="18" />
+                            <Setter Property="Height" Value="18" />
+                            <Setter Property="Margin" Value="0,0,5,5" />
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                            <Setter Property="VerticalAlignment" Value="Bottom" />
+                            <Setter Property="Cursor" Value="SizeNWSE"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Thumb">
+                                        <ControlTemplate.Resources>
+
+                                            <Style x:Key="{x:Type ResizeGrip}" TargetType="{x:Type ResizeGrip}">
+                                                <Setter Property="OverridesDefaultStyle" Value="True" />
+                                                <Setter Property="Foreground" Value="Blue" />
+                                                <Setter Property="Background" Value="#01000000" />
+                                                <Setter Property="IsHitTestVisible" Value="True" />
+                                                <Setter Property="Width" Value="18" />
+                                                <Setter Property="Height" Value="18" />
+                                                <Setter Property="Margin" Value="0" />
+                                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                                <Setter Property="VerticalAlignment" Value="Bottom" />
+                                                <Setter Property="Cursor" Value="SizeNWSE"/>
+                                                <Setter Property="FontFamily" Value="Marlett"/>
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ResizeGrip}">
+                                                            <Grid>
+                                                                <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                                    <TextBlock Foreground="{x:Static SystemColors.GrayTextBrush}">o</TextBlock>
+                                                                    <TextBlock Foreground="{x:Static SystemColors.HighlightTextBrush}">p</TextBlock>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ControlTemplate.Resources>
+                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Rectangle StrokeThickness="0">
                                                 <Rectangle.Fill>
                                                     <SolidColorBrush Color="#01000000" />
                                                 </Rectangle.Fill>
                                             </Rectangle>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-
-                            <Style x:Key="PlexCaptionButtonStyle" TargetType="Button">
-                                <Setter Property="OverridesDefaultStyle" Value="True" />
-                                <Setter Property="Background" Value="Transparent" />
-                                <Setter Property="Margin" Value="0" />
-                                <Setter Property="Padding" Value="0" />
-                                <Setter Property="Foreground" Value="{DynamicResource CaptionButtonActiveIdleBrush}" />
-                                <Setter Property="BorderThickness" Value="0" />
-                                <Setter Property="BorderBrush" Value="Transparent" />
-                                <Setter Property="FontFamily" Value="Marlett"/>
-                                <Setter Property="FontSize" Value="12"/>
-                                <Setter Property="Focusable" Value="False" />
-                                <Setter Property="IsTabStop" Value="False" />
-                                <Setter Property="IsHitTestVisible" Value="True"/>
-                                <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
-                                <Setter Property="SnapsToDevicePixels" Value="True" />
-                                <Setter Property="UseLayoutRounding" Value="True" />
-                                <Setter Property="Width" Value="20"/>
-                                <Setter Property="VerticalAlignment" Value="Stretch"/>
-                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                                <Setter Property="VerticalContentAlignment" Value="Center"/>
-                                <Setter Property="Effect">
-                                    <Setter.Value>
-                                        <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320" ShadowDepth="3"
-                                              BlurRadius="10" Opacity="0.5" />
-                                    </Setter.Value>
-                                </Setter>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Margin="{TemplateBinding Padding}">
-                                                <ContentControl x:Name="Glyph" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                               Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
-                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
-                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" />
-                                                <ContentControl x:Name="InactiveGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonInactiveIdleBrush}"
-                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
-                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
-                                                <ContentControl x:Name="HoverGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActiveHoverBrush}"
-                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
-                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
-                                                <ContentControl x:Name="PressedGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActivePressedBrush}"
-                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
-                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
-                                                    <DataTrigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.ExitActions>
-                                                </DataTrigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-
-                            <Style x:Key="MinimizeButtonStyle" TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Grid Background="#01000000" IsHitTestVisible="True">
-                                                <Border x:Name="Glyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <Border x:Name="InactiveGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <Border x:Name="HoverGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <Border x:Name="PressedGlyph" Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
-                                                    <DataTrigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.ExitActions>
-                                                </DataTrigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-
-                            <Style x:Key="MaximizeButtonStyle" TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Grid Background="#01000000" IsHitTestVisible="True" Margin="0.25,1,-0.25,-1">
-                                                <Border x:Name="Glyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{TemplateBinding Foreground}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <Border x:Name="InactiveGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <Border x:Name="HoverGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                <Border x:Name="PressedGlyph" Width="10" Height="9" BorderThickness="1,2,1,1" Background="Transparent" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
-                                                    <DataTrigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.ExitActions>
-                                                </DataTrigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-
-                            <Style x:Key="RestoreButtonStyle" TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
-                                <!--Setter Property="Content">
-                                <Setter.Value>
-                                    <Grid Width="9" Height="9">
-                                        <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
-                                        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/>
-                                    </Grid>
+                                            <ResizeGrip x:Name="PART_ResizeGrip"/>
+                                        </Grid>
+                                    </ControlTemplate>
                                 </Setter.Value>
-                            </Setter-->
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <Grid Background="#01000000" IsHitTestVisible="True" Margin="0.25,1,-0.25,-1">
-                                                <Grid x:Name="Glyph" Width="9" Height="9" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{TemplateBinding Foreground}"/>
-                                                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{TemplateBinding Foreground}"/>
-                                                </Grid>
-                                                <Grid x:Name="InactiveGlyph" Width="9" Height="9" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
-                                                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
-                                                </Grid>
-                                                <Grid x:Name="HoverGlyph" Width="9" Height="9" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}"/>
-                                                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{DynamicResource CaptionButtonActiveHoverBrush}"/>
-                                                </Grid>
-                                                <Grid x:Name="PressedGlyph" Width="9" Height="9" Opacity="0" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="7" Height="6" Background="Transparent" BorderThickness="1,2,1,1" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}"/>
-                                                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" Width="7" Height="6" Background="Transparent" BorderThickness="0,2,1,0" BorderBrush="{DynamicResource CaptionButtonActivePressedBrush}"/>
-                                                </Grid>
-                                            </Grid>
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
-                                                    <DataTrigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.ExitActions>
-                                                </DataTrigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
+                            </Setter>
+                        </Style>
 
-                            <Style x:Key="CloseButtonStyle" TargetType="Button" BasedOn="{StaticResource PlexCaptionButtonStyle}">
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Button">
-                                            <ControlTemplate.Resources>
-                                                <!--PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 1 0 L 4 3 L 7 0 L 8 0 L 8 1 L 5 4 L 8 7 L 8 8 L 7 8 L 4 5 L 1 8 L 0 8 L 0 7 L 3 4 L 0 1 Z"/-->
-                                                <!--PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 2 0 L 4 2 L 6 0 L 8 0 L 8 2 L 6 4 L 8 6 L 8 8 L 6 8 L 4 6 L 2 8 L 0 8 L 0 6 L 2 4 L 0 2 Z"/-->
-                                                <!--PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 1.5 0 L 4 2.5 L 6.5 0 L 8 0 L 8 1.5 L 5.5 4 L 8 6.5 L 8 8 L 6.5 8 L 4 5.5 L 1.5 8 L 0 8 L 0 6.5 L 2.5 4 L 0 1.5 Z"/-->
-                                                <PathGeometry x:Key="CloseIconPathGeometry" Figures="M 0 0 L 1.5 0 L 4.5 3 L 7.5 0 L 9 0 L 9 1.5 L 6 4.5 L 9 7.5 L 9 9 L 7.5 9 L 4.5 6 L 1.5 9 L 0 9 L 0 7.5 L 3 4.5 L 0 1.5 Z"/>
-                                            </ControlTemplate.Resources>
-                                            <Border Background="Transparent" BorderBrush="Transparent" BorderThickness="0" Margin="{TemplateBinding Padding}">
-                                                <Grid Background="#01000000" IsHitTestVisible="True" Margin="0,0.5,0,-0.5">
-                                                    <Path x:Name="Glyph" Fill="{TemplateBinding Foreground}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    <Path x:Name="InactiveGlyph" Fill="{DynamicResource CaptionButtonInactiveIdleBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
-                                                    <Path x:Name="HoverGlyph" Fill="{DynamicResource CaptionButtonActiveHoverBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
-                                                    <Path x:Name="PressedGlyph" Fill="{DynamicResource CaptionButtonActivePressedBrush}" Data="{DynamicResource CloseIconPathGeometry}" HorizontalAlignment="Center" VerticalAlignment="Center" Opacity="0"/>
-                                                </Grid>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
-                                                    <DataTrigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.EnterActions>
-                                                    <DataTrigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </DataTrigger.ExitActions>
-                                                </DataTrigger>
-                                                <Trigger Property="IsMouseOver" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                                <Trigger Property="IsPressed" Value="True">
-                                                    <Trigger.EnterActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.EnterActions>
-                                                    <Trigger.ExitActions>
-                                                        <BeginStoryboard>
-                                                            <Storyboard>
-                                                                <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                                            </Storyboard>
-                                                        </BeginStoryboard>
-                                                    </Trigger.ExitActions>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-
-                            <Style x:Key="ResizeGripThumbStyle" TargetType="Thumb" BasedOn="{StaticResource BorderThumb}">
-                                <Setter Property="SnapsToDevicePixels" Value="True" />
-                                <Setter Property="OverridesDefaultStyle" Value="True" />
-                                <Setter Property="Width" Value="18" />
-                                <Setter Property="Height" Value="18" />
-                                <Setter Property="Margin" Value="2" />
-                                <Setter Property="HorizontalAlignment" Value="Right" />
-                                <Setter Property="VerticalAlignment" Value="Bottom" />
-                                <Setter Property="Cursor" Value="SizeNWSE"/>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="Thumb">
-                                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <ResizeGrip x:Name="PART_ResizeGrip" Style="{DynamicResource {x:Type ResizeGrip}}" Visibility="Visible"/>
-                                                <Rectangle StrokeThickness="0">
-                                                    <Rectangle.Fill>
-                                                        <SolidColorBrush Color="#01000000" />
-                                                    </Rectangle.Fill>
-                                                </Rectangle>
+                        <Style x:Key="TitleBarButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="VerticalAlignment" Value="Top"/>
+                            <Setter Property="Width" Value="{x:Static SystemParameters.CaptionWidth}"/>
+                            <Setter Property="Height" Value="{x:Static SystemParameters.CaptionHeight}"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                            <Setter Property="VerticalContentAlignment" Value="Center"/>
+                            <Setter Property="Padding" Value="2,4,0,0"/>
+                            <Setter Property="Margin" Value="-2,-4,0,0"/>
+                            <Setter Property="Background" Value="{x:Static SystemColors.ControlBrush}"/>
+                            <Setter Property="Foreground" Value="{x:Static SystemColors.ControlTextBrush}"/>
+                            <Setter Property="FontFamily" Value="Marlett"/>
+                            <Setter Property="FontSize" Value="12"/>
+                            <Setter Property="TextOptions.TextRenderingMode" Value="Aliased"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Grid Background="#01000000">
+                                            <Grid Margin="{TemplateBinding Padding}">
+                                                <theme:ClassicBorderDecorator x:Name="BorderDecorator" BorderStyle="Raised" BorderThickness="3" Background="{TemplateBinding Background}"/>
+                                                <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Focusable="False" IsTabStop="False" Padding="0" RenderOptions.EdgeMode="Aliased"/>
                                             </Grid>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </ResourceDictionary>
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="BorderDecorator" Property="BorderStyle" Value="RaisedPressed"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
                     </ControlTemplate.Resources>
-                    <Grid x:Name="WindowRoot" Margin="{TemplateBinding Padding}">
-                        <DockPanel LastChildFill="True" Background="Transparent">
-                            <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" Margin="0" Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}" Visibility="Visible" Opacity="1" DockPanel.Dock="Top">
-                                <Grid x:Name="ActiveTitlebarBackground" Visibility="Visible">
-                                    <Border x:Name="ActiveTitlebarBorder" CornerRadius="12,12,0,0"
-                                            BorderThickness="0,1,0,0"
-                                            Background="{DynamicResource ActiveTitlebarBackgroundBrush}"
-                                            BorderBrush="{DynamicResource ActiveTitlebarBorderBrush}"
-                                            Margin="0,0,0,-12" Padding="0" />
-                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1"
-                                            Margin="12,2,12,0" Background="{DynamicResource ActiveTitlebarBorderBrush}" />
-                                </Grid>
-                                <Grid x:Name="InactiveTitlebarBackground" Visibility="Hidden">
-                                    <Border x:Name="InactiveTitlebarBorder" CornerRadius="12,12,0,0"
-                                            BorderThickness="0,1,0,0"
-                                            Background="{DynamicResource InactiveTitlebarBackgroundBrush}"
-                                            BorderBrush="{DynamicResource InactiveTitlebarBorderBrush}"
-                                            Margin="0,0,0,-12" Padding="0" />
-                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="1"
-                                            Margin="12,2,12,0"
-                                            Background="{DynamicResource InactiveTitlebarBorderBrush}" />
-                                </Grid>
-                                <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16"
-                                        Margin="3">
+                    <Grid x:Name="WindowRoot" Background="{x:Static SystemColors.ActiveBorderBrush}">
+                        <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{Binding BorderThickness, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t, FallbackValue=18}" Margin="4,4,4,-4" Visibility="Visible" Opacity="1">
+                            <Border x:Name="ActiveTitlebarBackground" Visibility="Visible">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="{x:Static SystemColors.ActiveCaptionColor}"/>
+                                            <GradientStop Offset="1" Color="{x:Static SystemColors.GradientActiveCaptionColor}"/>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <Border x:Name="InactiveTitlebarBackground" Visibility="Hidden">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <LinearGradientBrush.GradientStops>
+                                            <GradientStop Offset="0" Color="{x:Static SystemColors.InactiveCaptionColor}"/>
+                                            <GradientStop Offset="1" Color="{x:Static SystemColors.GradientInactiveCaptionColor}"/>
+                                        </LinearGradientBrush.GradientStops>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <Grid Height="{x:Static SystemParameters.CaptionHeight}">
+                                <Canvas HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="2">
                                     <Canvas.Background>
                                         <ImageBrush ImageSource="{TemplateBinding Icon}" />
                                     </Canvas.Background>
                                 </Canvas>
-                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Stretch"
-                                       VerticalAlignment="Top" HorizontalContentAlignment="Center"
-                                       VerticalContentAlignment="Center" Height="26" Margin="0,-2" FontSize="12" Foreground="White">
-                                    <Label.Effect>
-                                        <!--DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320"
-                                                          ShadowDepth="3" BlurRadius="10" Opacity="0.5" /-->
-                                        <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="230" ShadowDepth="3" BlurRadius="3" Opacity="0.375"/>
-                                    </Label.Effect>
-                                </Label>
+                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="20,0,0,0" FontSize="12" Foreground="{x:Static SystemColors.ActiveCaptionTextBrush}"/>
                                 <ContentPresenter Content="{TemplateBinding TitleBarContent}" />
-                                <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Top"
-                                            Orientation="Horizontal" Height="22">
+                                <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="-2,2,2,-2">
                                     <!--RenderTransformOrigin="1,0">
                                         <StackPanel.RenderTransform>
                                             <ScaleTransform ScaleX="2" ScaleY="2"/>
                                         </StackPanel.RenderTransform-->
                                     <!--Width="18" VerticalAlignment="Stretch" -->
-                                    <Button x:Name="PART_MinimizeButton" Margin="-0.5,0,0.5,0" Style="{DynamicResource MinimizeButtonStyle}"/>
-                                    <!--Border Width="6" Height="9" Background="Transparent" BorderThickness="0,0,0,2" BorderBrush="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=ContentControl}}"/-->
-                                    <!--0-->
-                                    <Grid x:Name="MaxRestButtonGrid" Margin="-1,0,1,0">
-                                        <!--Margin="-1,0,1,0"-->
-                                        <Button x:Name="PART_MaximizeButton" Style="{DynamicResource MaximizeButtonStyle}"/>
-                                        <!--Border Width="10" Height="9" BorderThickness="1,2,1,1" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}"/-->
-                                        <!--1-->
-                                        <Button x:Name="PART_RestoreButton" Visibility="Hidden" Style="{DynamicResource RestoreButtonStyle}"/>
+                                    <Button x:Name="PART_MinimizeButton" Style="{DynamicResource TitleBarButtonStyle}">
+                                        <Grid Width="7" Height="9">
+                                            <Rectangle HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="6" Height="2"/>
+                                        </Grid>
+                                    </Button>
+                                    <Grid x:Name="MaxRestButtonGrid" Margin="0,0,2,0">
+                                        <Button x:Name="PART_MaximizeButton" Style="{DynamicResource TitleBarButtonStyle}">
+                                            <Border BorderBrush="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="9" Height="9" BorderThickness="1,2,1,1"/>
+                                        </Button>
+                                        <Button x:Name="PART_RestoreButton" Visibility="Hidden" Style="{DynamicResource TitleBarButtonStyle}">
+                                            <Grid Width="8" Height="9">
+                                                <Border HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="6" Height="6" BorderThickness="1,2,1,1"/>
+                                                <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="{Binding Background,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" BorderBrush="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="6" Height="6" BorderThickness="1,2,1,1"/>
+                                            </Grid>
+                                        </Button>
                                     </Grid>
-                                    <Button x:Name="PART_CloseButton" Padding="-3.25,0.625,3.25,-0.625" Style="{DynamicResource CloseButtonStyle}"/>
+                                    <Button x:Name="PART_CloseButton" Style="{DynamicResource TitleBarButtonStyle}" Margin="0,-4,-2,0" Padding="0,4,2,0">r</Button>
                                 </StackPanel>
-                                <Border x:Name="DialogFilm" CornerRadius="12,12,0,0" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
                             </Grid>
-                            <Border x:Name="Body" CornerRadius="12" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="0" Padding="0" Background="{TemplateBinding Background}">
-                                <Border.Clip>
-                                    <RectangleGeometry RadiusX="{Binding CornerRadius.TopLeft, RelativeSource={RelativeSource AncestorType={x:Type Border}}}" RadiusY="{Binding RadiusX, RelativeSource={RelativeSource Self}}">
-                                        <RectangleGeometry.Rect>
-                                            <MultiBinding Converter="{StaticResource WidthAndHeightToRectConverter}" >
-                                                <Binding Path="ActualWidth" RelativeSource="{RelativeSource AncestorType={x:Type Border}}" />
-                                                <Binding Path="ActualHeight" RelativeSource="{RelativeSource AncestorType={x:Type Border}}"/>
-                                            </MultiBinding>
-                                        </RectangleGeometry.Rect>
-                                    </RectangleGeometry>
-                                </Border.Clip>
-                                <Grid>
-                                    <!--Rectangle x:Name="BodySizingAid"/-->
-                                    <ContentPresenter Content="{TemplateBinding Content}">
-                                        <!--ContentPresenter.OpacityMask>
-                                            <VisualBrush>
-                                                <VisualBrush.Visual>
-                                                    <Border Width="{Binding ActualWidth, Source={x:Reference BodySizingAid}}" Height="{Binding ActualHeight, Source={x:Reference BodySizingAid}}" Background="Black" BorderBrush="Transparent" BorderThickness="0" CornerRadius="12"/>
-                                                </VisualBrush.Visual>
-                                            </VisualBrush>
-                                        </ContentPresenter.OpacityMask-->
-                                    </ContentPresenter>
-                                </Grid>
+                            <Border x:Name="DialogFilm" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
+                        </Grid>
+                        <theme:ClassicBorderDecorator BorderStyle="AltRaised" BorderThickness="2"/>
+                        <Grid Margin="0,6,0,0">
+                            <Border x:Name="Body" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                <ContentPresenter Content="{TemplateBinding Content}"/>
                             </Border>
-                        </DockPanel>
+                        </Grid>
                         <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
                             <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
                         </Grid>
@@ -743,7 +360,7 @@
                                    Grid.Row="3" Grid.Column="0" Background="{x:Null}"
                                    Style="{DynamicResource BorderThumb}" />
                             </Grid>
-                            <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumb}" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="3"/>
+                            <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumbStyle}" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="3"/>
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
@@ -766,8 +383,8 @@
                         <Trigger Property="WindowStyle" Value="None">
                             <Setter TargetName="PART_Titlebar" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
-                        <Trigger Property="ResizeMode" Value="NoResize">
-                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                        <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
+                            <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -801,113 +418,52 @@
         </Style.Triggers>
     </Style>
 
-    <Style x:Key="PlexCaptionButtonStyle" TargetType="Button">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Margin" Value="0" />
-        <Setter Property="Padding" Value="0" />
-        <Setter Property="Foreground" Value="{DynamicResource CaptionButtonActiveIdleBrush}" />
-        <Setter Property="BorderThickness" Value="0" />
+    <!--#endregion Window Styles-->
+
+    <!--#region ToggleSwitch Styles-->
+
+    <Style x:Key="{x:Type local:ToggleSwitch}" TargetType="{x:Type local:ToggleSwitch}">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="MinWidth" Value="200"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="FontFamily" Value="Marlett"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="Focusable" Value="False" />
-        <Setter Property="IsTabStop" Value="False" />
-        <Setter Property="IsHitTestVisible" Value="True"/>
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
-        <Setter Property="SnapsToDevicePixels" Value="True" />
-        <Setter Property="UseLayoutRounding" Value="True" />
-        <Setter Property="Width" Value="20"/>
-        <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Effect">
-            <Setter.Value>
-                <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320" ShadowDepth="3"
-                                              BlurRadius="10" Opacity="0.5" />
-            </Setter.Value>
-        </Setter>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Visibility" Value="Visible" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
-                    <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Background="Transparent" Margin="{TemplateBinding Padding}">
-                        <ContentControl x:Name="Glyph" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                               Content="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}"
-                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
-                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" />
-                        <ContentControl x:Name="InactiveGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonInactiveIdleBrush}"
-                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
-                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
-                        <ContentControl x:Name="HoverGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActiveHoverBrush}"
-                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
-                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
-                        <ContentControl x:Name="PressedGlyph" HorizontalAlignment="Center" VerticalAlignment="Center"
-                               HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
-                               Content="{TemplateBinding Content}" Foreground="{DynamicResource CaptionButtonActivePressedBrush}"
-                               FontFamily="{TemplateBinding FontFamily}" FontSize="{TemplateBinding FontSize}" IsTabStop="False"
-                               Margin="0" Padding="0" UseLayoutRounding="True" SnapsToDevicePixels="True" Opacity="0" />
+                <ControlTemplate TargetType="{x:Type local:ToggleSwitch}">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition MinHeight="25"/>
+                            <RowDefinition Height="25"/>
+                        </Grid.RowDefinitions>
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center" IsHitTestVisible="False" TextBlock.FontSize="14" Grid.ColumnSpan="2" Grid.Row="0"/>
+                        <TextBlock x:Name="PART_StateText" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" IsHitTestVisible="False" FontSize="14" Grid.Column="0" Grid.Row="1"/>
+                        <Grid Grid.Column="1" Grid.Row="1" Background="#01000000" Margin="0,1">
+                            <theme:ClassicBorderDecorator BorderStyle="Sunken" BorderThickness="2" Background="{x:Static SystemColors.InfoBrush}"/>
+                            <!--Border Name="Border" BorderThickness="1" Padding="0" BorderBrush="Black" HorizontalAlignment="Stretch" Height="24" VerticalAlignment="Center" Margin="-3,-2" IsHitTestVisible="False">
+                                <Border BorderThickness="1" Padding="0" Background="White" BorderBrush="Transparent" ClipToBounds="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  IsHitTestVisible="False"/>
+                            </Border-->
+                            <StackPanel x:Name="PART_GripContainer" Orientation="Horizontal" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="2">
+                                <Canvas x:Name="PART_Offsetter" Width="{TemplateBinding OffsetterWidth}" MinWidth="0" MaxWidth="32"/>
+                                <Button x:Name="PART_Grip" IsTabStop="False" Width="25" VerticalAlignment="Stretch" Margin="0" IsHitTestVisible="True"/>
+                            </StackPanel>
+                        </Grid>
                     </Grid>
-                    <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
-                            <DataTrigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.EnterActions>
-                            <DataTrigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="InactiveGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </DataTrigger.ExitActions>
-                        </DataTrigger>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="HoverGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="PressedGlyph" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.25" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <!--#endregion Window Styles -->
+    <!--#endregion ToggleSwitch Styles-->
 
     <!--#region Command Link Styles-->
 

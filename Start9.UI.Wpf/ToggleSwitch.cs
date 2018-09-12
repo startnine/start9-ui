@@ -57,8 +57,7 @@ namespace Start9.UI.Wpf
         }
 
         public static readonly DependencyProperty OffsetterWidthProperty =
-            DependencyProperty.RegisterAttached("OffsetterWidth", typeof(double), typeof(ToggleSwitch),
-                new PropertyMetadata((double)0));
+            DependencyProperty.RegisterAttached("OffsetterWidth", typeof(double), typeof(ToggleSwitch), new PropertyMetadata((double)0));
 
         static ToggleSwitch()
         {

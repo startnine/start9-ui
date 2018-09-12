@@ -31,6 +31,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework.Classic" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -70,6 +71,8 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Converters\CombinedClassicFrameSizeConverter.cs" />
+    <Compile Include="Converters\ThicknessInvertFilterConverter.cs" />
     <Compile Include="Converters\WidthAndHeightToRectConverter.cs" />
     <Compile Include="MonitorInfo.cs" />
     <Compile Include="NavigationView.cs" />
