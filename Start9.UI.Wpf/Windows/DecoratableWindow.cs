@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Start9.UI.Wpf.Statics;
+using System;
 using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
@@ -215,6 +216,40 @@ namespace Start9.UI.Wpf.Windows
                 Converter = new WindowStateIsMaximizedToBoolConverter()
             };
             BindingOperations.SetBinding(_shadowWindow, Window.IsHitTestVisibleProperty, shadowIsHitTestVisibleBinding);
+
+            Binding shadowBorderThicknessBinding = new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath("ShadowOffsetThickness"),
+                Mode = BindingMode.OneWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+            BindingOperations.SetBinding(_shadowWindow, Window.BorderThicknessProperty, shadowBorderThicknessBinding);
+
+            StateChanged += (sneder, args) =>
+            {
+                if (WindowState == WindowState.Maximized)
+                {
+                    System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
+                    MaxWidth = s.WorkingArea.Width;
+                    MaxHeight = s.WorkingArea.Height;
+                }
+                else
+                {
+                    MaxWidth = Int32.MaxValue;
+                    MaxHeight = Int32.MaxValue;
+                }
+
+                if (WindowState == WindowState.Normal)
+                    _shadowWindow.Show();
+                else
+                    _shadowWindow.Hide();
+            };
+
+            Initialized += (sneder, args) =>
+            {
+                Style = (Style)(FindResource(DefaultStyleKey));
+            };
 
             Closed += (sneder, args) =>
             {

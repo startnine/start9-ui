@@ -36,7 +36,7 @@
         <Setter Property="Foreground" Value="{x:Static SystemColors.WindowTextBrush}"/>
         <Setter Property="FontFamily" Value="Tahoma"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="ShadowOffsetThickness" Value="20,10,20,30"/>
+        <Setter Property="ShadowOffsetThickness" Value="25,15,25,40"/>
         <Setter Property="Padding" Value="{x:Static SystemParameters.WindowResizeBorderThickness}"/>
         <Setter Property="ShadowStyle">
             <Setter.Value>
@@ -57,19 +57,19 @@
                                         </GradientStopCollection>
                                     </Grid.Resources>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="45"/>
                                         <ColumnDefinition/>
-                                        <ColumnDefinition Width="30"/>
+                                        <ColumnDefinition Width="45"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="45"/>
                                         <RowDefinition/>
-                                        <RowDefinition Height="30"/>
+                                        <RowDefinition Height="45"/>
                                     </Grid.RowDefinitions>
                                     <Grid.OpacityMask>
                                         <VisualBrush>
                                             <VisualBrush.Visual>
-                                                <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderThickness="20,10,20,30" BorderBrush="Black">
+                                                <Border Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="Black">
                                                     <Border.OpacityMask>
                                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                             <LinearGradientBrush.GradientStops>
@@ -280,12 +280,12 @@
                                 </Border.Background>
                             </Border>
                             <Grid Height="{x:Static SystemParameters.CaptionHeight}">
-                                <Canvas HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="2">
+                                <Canvas x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="2">
                                     <Canvas.Background>
                                         <ImageBrush ImageSource="{TemplateBinding Icon}" />
                                     </Canvas.Background>
                                 </Canvas>
-                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="20,0,0,0" FontSize="12" Foreground="{x:Static SystemColors.ActiveCaptionTextBrush}"/>
+                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="20,0,0,0" FontWeight="Bold" FontSize="11" Foreground="{x:Static SystemColors.ActiveCaptionTextBrush}"/>
                                 <ContentPresenter Content="{TemplateBinding TitleBarContent}" />
                                 <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="-2,2,2,-2">
                                     <!--RenderTransformOrigin="1,0">
@@ -364,6 +364,10 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="{x:Null}">
+                            <Setter TargetName="WindowIcon" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="TitleText" Property="Margin" Value="0"/>
+                        </DataTrigger>
                         <Trigger Property="WindowState" Value="Maximized">
                             <Setter Property="Margin" Value="7"/>
                             <Setter Property="MaxWidth" Value="{x:Static SystemParameters.PrimaryScreenWidth}"/>
