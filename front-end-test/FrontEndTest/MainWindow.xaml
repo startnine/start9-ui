@@ -7,13 +7,21 @@
         xmlns:win="clr-namespace:Start9.UI.Wpf.Windows;assembly=Start9.UI.Wpf"
         xmlns:local="clr-namespace:FrontEndTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" ResizeMode="CanResizeWithGrip">
+        Title="MainWindow" Height="450" Width="800" ResizeMode="CanResize">
     <win:DecoratableWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--ResourceDictionary Source="/PresentationFramework.Aero;component/themes/Aero.NormalColor.xaml" /-->
+                <!--LIGHT BLUE PLEX-->
                 <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/>
+                
+                <!--DARK BLUE PLEX-->
+                <!--ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/DarkPlexBlue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/-->
+
+                <!--AERO-->
+                <!--ResourceDictionary Source="/PresentationFramework.Aero;V3.0.0.0;31bf3856ad364e35;component\themes/aero.normalcolor.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Aero.NormalColor.xaml"/-->
             </ResourceDictionary.MergedDictionaries>
             
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
@@ -238,7 +246,15 @@
                     <Button Width="200">Excessively wide Button</Button></ToolBar>
             </ToolBarTray>
             <Grid DockPanel.Dock="Top" Background="Gray">
-                <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True">Current Theme</ui:ToggleSwitch>
+                <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True">
+                    <ui:ToggleSwitch.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="AAAA"/>
+                            <MenuItem Header="BBBB"/>
+                            <MenuItem Header="CCCC"/>
+                        </ContextMenu>
+</ui:ToggleSwitch.ContextMenu>
+                    Current Theme</ui:ToggleSwitch>
             </Grid>
             <TabControl>
                 <TabItem Header="Buttons">
@@ -294,6 +310,7 @@
                                     <ComboBoxItem>Read-Only ComboBox</ComboBoxItem>
                                 </ComboBox>
                                 <TextBox>TextBox</TextBox>
+                                <TextBox Height="50">TextBox with non-standard height</TextBox>
                                 <ListBox>
                                     <ListBoxItem>ListBox</ListBoxItem>
                                     <ListBoxItem>ListBox</ListBoxItem>
@@ -312,6 +329,7 @@
                                     <ComboBoxItem>Disabled Read-Only ComboBox</ComboBoxItem>
                                 </ComboBox>
                                 <TextBox>Disabled TextBox</TextBox>
+                                <TextBox Height="50">Disabled TextBox with non-standard height</TextBox>
                                 <ListBox>
                                     <ListBoxItem>Disabled ListBox</ListBoxItem>
                                     <ListBoxItem>Disabled ListBox</ListBoxItem>

@@ -26,6 +26,13 @@ namespace Start9.UI.Wpf.Windows
     [TemplatePart(Name = PartThumbRight, Type = typeof(Thumb))]
     [TemplatePart(Name = PartThumbLeft, Type = typeof(Thumb))]
 
+    [TemplatePart(Name = PartSystemMenuRestore, Type = typeof(MenuItem))]
+    [TemplatePart(Name = PartSystemMenuMove, Type = typeof(MenuItem))]
+    [TemplatePart(Name = PartSystemMenuSize, Type = typeof(MenuItem))]
+    [TemplatePart(Name = PartSystemMenuMinimize, Type = typeof(MenuItem))]
+    [TemplatePart(Name = PartSystemMenuMaximize, Type = typeof(MenuItem))]
+    [TemplatePart(Name = PartSystemMenuClose, Type = typeof(MenuItem))]
+
     [ContentProperty("Content")]
     public partial class DecoratableWindow : CompositingWindow
     {
@@ -44,6 +51,13 @@ namespace Start9.UI.Wpf.Windows
         const String PartThumbRight = "PART_ThumbRight";
         const String PartThumbLeft = "PART_ThumbLeft";
 
+        const String PartSystemMenuRestore = "PART_SystemMenuRestore";
+        const String PartSystemMenuMove = "PART_SystemMenuMove";
+        const String PartSystemMenuSize = "PART_SystemMenuSize";
+        const String PartSystemMenuMinimize = "PART_SystemMenuMinimize";
+        const String PartSystemMenuMaximize = "PART_SystemMenuMaximize";
+        const String PartSystemMenuClose = "PART_SystemMenuClose";
+
         Button _closeButton;
         Button _maxButton;
         Button _minButton;
@@ -60,6 +74,13 @@ namespace Start9.UI.Wpf.Windows
         Thumb _thumbTopRightCorner;
 
         Grid _titlebar;
+
+        MenuItem _systemMenuRestore;
+        MenuItem _systemMenuMove;
+        MenuItem _systemMenuSize;
+        MenuItem _systemMenuMinimize;
+        MenuItem _systemMenuMaximize;
+        MenuItem _systemMenuClose;
 
         new public WindowStyle WindowStyle
         {
@@ -162,14 +183,14 @@ namespace Start9.UI.Wpf.Windows
             };
             BindingOperations.SetBinding(_shadowWindow, Window.StyleProperty, shadowStyleBinding);
 
-            Binding shadowTopmostBinding = new Binding()
+            /*Binding shadowTopmostBinding = new Binding()
             {
                 Source = this,
                 Path = new PropertyPath("IsActive"),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
-            BindingOperations.SetBinding(_shadowWindow, Window.TopmostProperty, shadowTopmostBinding);
+            BindingOperations.SetBinding(_shadowWindow, Window.TopmostProperty, shadowTopmostBinding);*/
 
             Binding shadowVisibilityBinding = new Binding()
             {
@@ -205,7 +226,7 @@ namespace Start9.UI.Wpf.Windows
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
-            BindingOperations.SetBinding(_shadowWindow, Window.IsEnabledProperty, shadowTopmostBinding);
+            BindingOperations.SetBinding(_shadowWindow, Window.IsEnabledProperty, shadowIsEnabledBinding);
 
             Binding shadowIsHitTestVisibleBinding = new Binding()
             {
@@ -244,6 +265,8 @@ namespace Start9.UI.Wpf.Windows
                     _shadowWindow.Show();
                 else
                     _shadowWindow.Hide();
+
+                ValidateSystemMenuItemStates();
             };
 
             Initialized += (sneder, args) =>
@@ -251,11 +274,31 @@ namespace Start9.UI.Wpf.Windows
                 Style = (Style)(FindResource(DefaultStyleKey));
             };
 
+            /*Loaded += (sneder, args) =>
+            {
+                SyncShadowToWindowSize();
+            };*/
+
+            Activated += (sneder, args) =>
+            {
+                _shadowWindow.Topmost = true;
+                _shadowWindow.Topmost = false;
+            };
+
             Closed += (sneder, args) =>
             {
                 _shadowWindow.Close();
             };
         }
+
+        /*protected override void OnChildDesiredSizeChanged(UIElement child)
+        {
+            base.OnChildDesiredSizeChanged(child);
+            if (this.SizeToContent != SizeToContent.Manual)
+            {
+                SyncShadowToWindowSize();
+            }
+        }*/
 
         public void SyncShadowToWindow()
         {
@@ -265,8 +308,8 @@ namespace Start9.UI.Wpf.Windows
 
         public void SyncShadowToWindowSize()
         {
-            _shadowWindow.Width = Width + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
-            _shadowWindow.Height = Height + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
+            _shadowWindow.Width = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
+            _shadowWindow.Height = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
             /*if (CompositionState != WindowCompositionState.Alpha)
                 SetCompositionState();*/
         }
@@ -287,113 +330,157 @@ namespace Start9.UI.Wpf.Windows
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            try
-            {
-                _titlebar = GetTemplateChild(PartTitlebar) as Grid;
+            _titlebar = GetTemplateChild(PartTitlebar) as Grid;
+            if (_titlebar != null)
                 _titlebar.MouseLeftButtonDown += Titlebar_MouseLeftButtonDown;
-            }
-            catch (NullReferenceException ex)
-            {
-                Debug.WriteLine("TITLEBAR \n" + ex);
-            }
 
-            try
-            {
-                _minButton = GetTemplateChild(PartMinimizeButton) as Button;
-                _minButton.Click += delegate { WindowState = WindowState.Minimized; };
-            }
-            catch (NullReferenceException ex)
-            {
-                Debug.WriteLine("MINBUTTON \n" + ex);
-            }
+            _minButton = GetTemplateChild(PartMinimizeButton) as Button;
+            if (_minButton != null)
+                _minButton.Click += (sneder, args) =>
+                {
+                    WindowState = WindowState.Minimized;
+                };
 
-            try
-            {
-                _maxButton = GetTemplateChild(PartMaximizeButton) as Button;
-                _maxButton.Click += delegate
+
+            _maxButton = GetTemplateChild(PartMaximizeButton) as Button;
+            if (_maxButton != null)
+                _maxButton.Click += (sneder, args) =>
                 {
                     WindowState = WindowState.Maximized;
                 };
-            }
-            catch (NullReferenceException ex)
-            {
-                Debug.WriteLine("MAXBUTTON \n" + ex);
-            }
 
-            try
-            {
-                _restButton = GetTemplateChild(PartRestoreButton) as Button;
-                _restButton.Click += delegate
+
+            _restButton = GetTemplateChild(PartRestoreButton) as Button;
+            if (_restButton != null)
+                _restButton.Click += (sneder, args) =>
                 {
                     WindowState = WindowState.Normal;
                 };
-            }
-            catch (NullReferenceException ex)
-            {
-                Debug.WriteLine("RESTBUTTON \n" + ex);
-            }
 
-            try
-            {
-                _closeButton = GetTemplateChild(PartCloseButton) as Button;
-                _closeButton.Click += delegate
+            _closeButton = GetTemplateChild(PartCloseButton) as Button;
+            if (_closeButton != null)
+                _closeButton.Click += (sneder, args) =>
                 {
                     Close();
                 };
-            }
-            catch (NullReferenceException ex)
-            {
-                Debug.WriteLine("CLOSEBUTTON \n" + ex);
-            }
 
 
-            try
-            {
-                _thumbBottom = GetTemplateChild(PartThumbBottom) as Thumb;
+            _thumbBottom = GetTemplateChild(PartThumbBottom) as Thumb;
+            if (_thumbBottom != null)
                 _thumbBottom.DragDelta += ThumbBottom_DragDelta;
 
 
-                _thumbTop = GetTemplateChild(PartThumbTop) as Thumb;
+            _thumbTop = GetTemplateChild(PartThumbTop) as Thumb;
+            if (_thumbTop != null)
                 _thumbTop.DragDelta += ThumbTop_DragDelta;
 
 
-                _thumbBottomRightCorner = GetTemplateChild(PartThumbBottomRightCorner) as Thumb;
+            _thumbBottomRightCorner = GetTemplateChild(PartThumbBottomRightCorner) as Thumb;
+            if (_thumbBottomRightCorner != null)
                 _thumbBottomRightCorner.DragDelta += ThumbBottomRightCorner_DragDelta;
 
 
-                _thumbTopRightCorner = GetTemplateChild(PartThumbTopRightCorner) as Thumb;
+            _thumbTopRightCorner = GetTemplateChild(PartThumbTopRightCorner) as Thumb;
+            if (_thumbTopRightCorner != null)
                 _thumbTopRightCorner.DragDelta += ThumbTopRightCorner_DragDelta;
 
 
-                _thumbTopLeftCorner = GetTemplateChild(PartThumbTopLeftCorner) as Thumb;
+            _thumbTopLeftCorner = GetTemplateChild(PartThumbTopLeftCorner) as Thumb;
+            if (_thumbTopLeftCorner != null)
                 _thumbTopLeftCorner.DragDelta += ThumbTopLeftCorner_DragDelta;
 
 
-                _thumbBottomLeftCorner = GetTemplateChild(PartThumbBottomLeftCorner) as Thumb;
+            _thumbBottomLeftCorner = GetTemplateChild(PartThumbBottomLeftCorner) as Thumb;
+            if (_thumbBottomLeftCorner != null)
                 _thumbBottomLeftCorner.DragDelta += ThumbBottomLeftCorner_DragDelta;
 
 
-                _thumbRight = GetTemplateChild(PartThumbRight) as Thumb;
+            _thumbRight = GetTemplateChild(PartThumbRight) as Thumb;
+            if (_thumbRight != null)
                 _thumbRight.DragDelta += ThumbRight_DragDelta;
 
 
-                _thumbLeft = GetTemplateChild(PartThumbLeft) as Thumb;
+            _thumbLeft = GetTemplateChild(PartThumbLeft) as Thumb;
+            if (_thumbLeft != null)
+            {
+                /*_thumbLeft.MouseLeftButtonDown += (sneder, args) =>
+                {
+                    NativeMethods.SendMessage(new WindowInteropHelper(this).Handle, 0xA1, 0xF000 + NativeMethods.ScSizeHtLeft, 0);
+                };*/
                 _thumbLeft.DragDelta += ThumbLeft_DragDelta;
             }
-            catch (NullReferenceException ex)
+
+            _resizeGrip = GetTemplateChild(PartResizeGrip) as Thumb;
+            if (_resizeGrip != null)
+                _resizeGrip.DragDelta += ThumbBottomRightCorner_DragDelta;
+
+            _systemMenuRestore = GetTemplateChild(PartSystemMenuRestore) as MenuItem;
+            if (_systemMenuRestore != null)
+                _systemMenuRestore.Click += (sneder, args) =>
+                {
+                    WindowState = WindowState.Normal;
+                };
+
+            _systemMenuMove = GetTemplateChild(PartSystemMenuMove) as MenuItem;
+            /*if (_systemMenuMove != null)
+                _systemMenuMove.Click += (sneder, args) =>
+                {
+                };*/
+
+            _systemMenuSize = GetTemplateChild(PartSystemMenuSize) as MenuItem;
+            /*if (_systemMenuSize != null)
+                _systemMenuSize.Click += (sneder, args) =>
+                {
+                };*/
+
+            _systemMenuMinimize = GetTemplateChild(PartSystemMenuMinimize) as MenuItem;
+            if (_systemMenuMinimize != null)
+                _systemMenuMinimize.Click += (sneder, args) =>
+                {
+                    WindowState = WindowState.Minimized;
+                };
+
+            _systemMenuMaximize = GetTemplateChild(PartSystemMenuMaximize) as MenuItem;
+            if (_systemMenuMaximize != null)
+                _systemMenuMaximize.Click += (sneder, args) =>
+                {
+                    WindowState = WindowState.Maximized;
+                };
+
+            _systemMenuClose = GetTemplateChild(PartSystemMenuClose) as MenuItem;
+            if (_systemMenuClose != null)
+                _systemMenuClose.Click += (sneder, args) =>
+                {
+                    Close();
+                };
+
+            ValidateSystemMenuItemStates();
+        }
+
+        void ValidateSystemMenuItemStates()
+        {
+            if (WindowState == WindowState.Maximized)
             {
-                Debug.WriteLine("THUMBS \n" + ex);
+                if (_systemMenuRestore != null)
+                    _systemMenuRestore.IsEnabled = true;
+
+                if (_systemMenuMaximize != null)
+                    _systemMenuMaximize.IsEnabled = false;
+            }
+            else
+            {
+                if (_systemMenuRestore != null)
+                    _systemMenuRestore.IsEnabled = false;
+
+                if (_systemMenuMaximize != null)
+                    _systemMenuMaximize.IsEnabled = true;
             }
 
-            try
-            {
-                _resizeGrip = GetTemplateChild(PartResizeGrip) as Thumb;
-                _resizeGrip.DragDelta += ThumbBottomRightCorner_DragDelta;
-            }
-            catch (NullReferenceException ex)
-            {
-                Debug.WriteLine("RESIZEGRIP \n" + ex);
-            }
+            if (_systemMenuMove != null)
+                _systemMenuMove.IsEnabled = false;
+
+            if (_systemMenuSize != null)
+                _systemMenuSize.IsEnabled = false;
         }
 
         void Titlebar_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)

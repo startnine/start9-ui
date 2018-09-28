@@ -24,6 +24,13 @@ namespace FrontEndTest
     /// </summary>
     public partial class MainWindow : DecoratableWindow
     {
+        enum TestEnum
+        {
+            OK,
+            No_u,
+            Cancel
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -39,6 +46,11 @@ namespace FrontEndTest
                 }));
             };
             //timer.Start();
+
+            /*Start9.UI.Wpf.Windows.MessageBox<TestEnum>.Show("Body Text", "Caption", new ResourceDictionary()
+            {
+                Source = new Uri("/Start9.UI.Wpf;component/Themes/Plex.xaml", UriKind.RelativeOrAbsolute)
+            });*/
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)

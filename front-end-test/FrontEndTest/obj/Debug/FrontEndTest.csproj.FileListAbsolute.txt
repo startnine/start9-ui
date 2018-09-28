@@ -17,3 +17,5 @@ C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-t
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\obj\Debug\FrontEndTest.exe
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\obj\Debug\FrontEndTest.pdb
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\PresentationFramework.Aero.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\obj\Debug\ChromeTestWindow.g.cs
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\obj\Debug\ChromeTestWindow.baml

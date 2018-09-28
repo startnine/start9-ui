@@ -376,13 +376,23 @@
                             <Setter TargetName="PART_RestoreButton" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
+                        <Trigger Property="ResizeMode" Value="NoResize">
+                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanMinimize">
+                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
                         <Trigger Property="IsActive" Value="False">
                             <Setter TargetName="ActiveTitlebarBackground" Property="Visibility" Value="Hidden"/>
                             <Setter TargetName="InactiveTitlebarBackground" Property="Visibility" Value="Visible"/>
-                            <Setter TargetName="PART_MinimizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                            <Setter TargetName="TitleText" Property="Foreground" Value="{x:Static SystemColors.InactiveCaptionTextBrush}"/>
+                            <!--Setter TargetName="PART_MinimizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
                             <Setter TargetName="PART_MaximizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
                             <Setter TargetName="PART_RestoreButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
-                            <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                            <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/-->
                         </Trigger>
                         <Trigger Property="WindowStyle" Value="None">
                             <Setter TargetName="PART_Titlebar" Property="Visibility" Value="Collapsed"/>

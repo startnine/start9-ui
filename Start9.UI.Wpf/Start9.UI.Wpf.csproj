@@ -50,6 +50,9 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\Aero.NormalColor.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\AeroConcept.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -69,10 +72,16 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Windows\MessageBoxContent.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\CombinedClassicFrameSizeConverter.cs" />
+    <Compile Include="Converters\DoubleComparisonConverter.cs" />
+    <Compile Include="Converters\IconToImageBrushConverter.cs" />
     <Compile Include="Converters\ThicknessInvertFilterConverter.cs" />
+    <Compile Include="Converters\TreeViewItemPaddingConverter.cs" />
     <Compile Include="Converters\WidthAndHeightToRectConverter.cs" />
     <Compile Include="MonitorInfo.cs" />
     <Compile Include="NavigationView.cs" />
@@ -102,6 +111,10 @@
     <Compile Include="Statics\SystemScaling.cs" />
     <Compile Include="ToggleSwitch.cs" />
     <Compile Include="TouchableContextMenu.cs" />
+    <Compile Include="Windows\MessageBox.cs" />
+    <Compile Include="Windows\MessageBoxContent.xaml.cs">
+      <DependentUpon>MessageBoxContent.xaml</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

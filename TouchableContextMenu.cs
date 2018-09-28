@@ -60,8 +60,7 @@ namespace Start9.UI.Wpf
                     {
                         OpenedWithTouch = true;
                     }
-
-                    if (!((e.OriginalSource as UIElement).AreAnyTouchesOver))
+                    else if (!((e.OriginalSource as UIElement).AreAnyTouchesOver))
                     {
                         touchTimer.Stop();
                     }

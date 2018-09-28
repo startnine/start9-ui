@@ -40,6 +40,24 @@ namespace Start9.UI.Wpf.Windows
         public static readonly DependencyProperty CompositionStateProperty =
             DependencyProperty.Register("CompositionState", typeof(WindowCompositionState), typeof(CompositingWindow), new FrameworkPropertyMetadata(WindowCompositionState.Alpha, OnCompositionStatePropertyChangedCallback));
 
+        public bool CanActivate
+        {
+            get => (bool)GetValue(CanActivateProperty);
+            set => SetValue(CanActivateProperty, value);
+        }
+
+        public static readonly DependencyProperty CanActivateProperty =
+            DependencyProperty.Register("CanActivate", typeof(bool), typeof(CompositingWindow), new FrameworkPropertyMetadata(true, OnCanActivatePropertyChangedCallback));
+
+        static void OnCanActivatePropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var win = (sender as CompositingWindow);
+            if ((bool)(e.NewValue))
+                NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & ~NativeMethods.WsExNoActivate);
+            else
+                NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & NativeMethods.WsExNoActivate);
+        }
+
         public bool IsWindowVisible
         {
             get => (bool)GetValue(IsWindowVisibleProperty);
@@ -150,6 +168,7 @@ namespace Start9.UI.Wpf.Windows
 
         protected override void OnSourceInitialized(EventArgs e)
         {
+            base.OnSourceInitialized(e);
             SetCompositionState(CompositionState);
         }
 
@@ -303,6 +322,7 @@ namespace Start9.UI.Wpf.Windows
                     }
                     else //TODO: Figure something out for unmodified Windows 8.x
                     {
+                        //HwndSource.FromHwnd(_handle).CompositionTarget.BackgroundColor = System.Windows.Media.Colors.Transparent;
                         IntPtr windowRegion = IntPtr.Zero;
                         if (NativeMethods.GetWindowRect(_handle, out NativeMethods.RECT rect))
                         {
@@ -310,6 +330,17 @@ namespace Start9.UI.Wpf.Windows
                             _blurInfo.hRgnBlur = windowRegion;
                             NativeMethods.DwmEnableBlurBehindWindow(_handle, ref _blurInfo);
                         }
+
+                        /*Int32 refValue = (Int32)NativeMethods.DwmNCRenderingPolicy.Enabled;
+                        NativeMethods.DwmSetWindowAttribute(_handle, (Int32)NativeMethods.DwmWindowAttribute.NCRenderingPolicy, ref refValue, sizeof(Int32));
+                        NativeMethods.MARGINS margins = new NativeMethods.MARGINS()
+                        {
+                            leftWidth = -1,
+                            rightWidth = -1,
+                            topHeight = -1,
+                            bottomHeight = -1
+                        };
+                        NativeMethods.DwmExtendFrameIntoClientArea(_handle, ref margins);*/
                     }
                 }
                 else if (targetState == WindowCompositionState.Accent)
@@ -430,9 +461,65 @@ namespace Start9.UI.Wpf.Windows
                 ACCENT_INVALID_STATE = 4
             }*/
 
+            [DllImport("dwmapi.dll", PreserveSig = true)]
+            public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS margins);
+
+            [StructLayout(LayoutKind.Sequential)]
+            public struct MARGINS
+            {
+                public int leftWidth;
+                public int rightWidth;
+                public int topHeight;
+                public int bottomHeight;
+            }
+
+            [DllImport("dwmapi.dll", PreserveSig = true)]
+            public static extern int DwmSetWindowAttribute(IntPtr hwnd, Int32 attr, ref Int32 attrValue, Int32 attrSize);
+
+            [Flags]
+            public enum DwmWindowAttribute
+            {
+                NCRenderingEnabled = 1,
+                NCRenderingPolicy,
+                TransitionsForceDisabled,
+                AllowNCPaint,
+                CaptionButtonBounds,
+                NonClientRtlLayout,
+                ForceIconicRepresentation,
+                Flip3DPolicy,
+                ExtendedFrameBounds,
+                HasIconicBitmap,
+                DisallowPeek,
+                ExcludedFromPeek,
+                Last
+            }
+
+            [Flags]
+            public enum DwmNCRenderingPolicy
+            {
+                UseWindowStyle,
+                Disabled,
+                Enabled,
+                Last
+            }
+
+            [DllImport("user32.dll", CharSet = CharSet.Auto, SetLastError = false)]
+            public static extern IntPtr SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+
+            public static Int32 ScSizeHtLeft = 1;
+            public static Int32 ScSizeHtRight = 2;
+            public static Int32 ScSizeHtTop = 3;
+            public static Int32 ScSizeHtTopLeft = 4;
+            public static Int32 ScSizeHtTopRight = 5;
+            public static Int32 ScSizeHtBottom = 6;
+            public static Int32 ScSizeHtBottomLeft = 7;
+            public static Int32 ScSizeHtBottomRight = 8;
+
+            public static Int32 WmSysCommand = 0x0112;
+
             [return: MarshalAs(UnmanagedType.Bool)]
             [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
-            public static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+            public static extern bool PostMessage(IntPtr hWnd, uint Msg, int wParam, int lParam);
 
             public static uint WmClose = 0x0010;
 
@@ -509,6 +596,7 @@ namespace Start9.UI.Wpf.Windows
 
             public const Int32 WsExToolwindow = 0x00000080;
             public const Int32 WsExTransparent = 0x00000020;
+            public const Int32 WsExNoActivate = 0x08000000;
 
 
             public static IntPtr GetWindowLong(IntPtr hWnd, Int32 nIndex) => IntPtr.Size == 8

@@ -126,7 +126,7 @@ namespace Start9.UI.Wpf.Windows
             base.OnSourceInitialized(e);
 
             // add the hook, setup the appbar
-            var source = (HwndSource)PresentationSource.FromVisual(this);
+            var source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle); //HwndSource.FromHwnd(new WindowInteropHelper(this).EnsureHandle()); // (HwndSource)PresentationSource.FromVisual(this);
             source.AddHook(WndProc);
 
             var abd = GetAppBarData();
