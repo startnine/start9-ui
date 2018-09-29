@@ -18,3 +18,15 @@ C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.W
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Themes\Aero.NormalColor.baml
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Windows\MessageBoxContent.g.cs
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Windows\MessageBoxContent.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\de\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\en\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\es\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\it\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Start9.UI.Wpf.csproj.CopyComplete

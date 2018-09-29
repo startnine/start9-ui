@@ -3,7 +3,9 @@
                     xmlns:local="clr-namespace:Start9.UI.Wpf"
     xmlns:win="clr-namespace:Start9.UI.Wpf.Windows"
                     xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters"
-                    xmlns:sys="clr-namespace:System;assembly=System">
+                    xmlns:sys="clr-namespace:System;assembly=System"
+                    xmlns:beh="clr-namespace:Start9.UI.Wpf.Behaviors"
+                    xmlns:inter="http://schemas.microsoft.com/expression/2010/interactivity">
     <ResourceDictionary.MergedDictionaries>
         <!--ResourceDictionary Source="pack://application:,,,/Start9.Api;component/Themes/Generic.xaml"/-->
         <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml"/>
@@ -644,10 +646,56 @@
                         </ResourceDictionary>
                     </ControlTemplate.Resources>
                     <Grid x:Name="WindowRoot">
+                        <Grid.OpacityMask>
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Border Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}" Background="Black" BorderBrush="Transparent" BorderThickness="0" CornerRadius="12"/>
+                                </VisualBrush.Visual>
+                            </VisualBrush>
+                        </Grid.OpacityMask>
                         <DockPanel LastChildFill="True" Background="Transparent">
                             <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" Margin="0" Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}" Visibility="Visible" Opacity="1" DockPanel.Dock="Top">
                                 <Grid.ContextMenu>
                                     <local:TouchableContextMenu>
+                                        <!--ContextMenu.Resources>
+                                            <Style TargetType="{x:Type MenuItem}">
+                                                <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                                <Setter Property="Height" Value="25" />
+                                                <Setter Property="MinWidth" Value="175"/>
+                                                <Setter Property="Background" Value="#01000000" />
+                                                <Setter Property="Foreground" Value="White" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left"/>
+                                                <Setter Property="VerticalContentAlignment" Value="Center"/>
+                                                <Setter Property="FontSize" Value="12" />
+                                                <Setter Property="FontStyle" Value="Normal" />
+                                                <Setter Property="FontWeight" Value="Normal" />
+                                                <Setter Property="BorderThickness" Value="0" />
+                                                <Setter Property="BorderBrush" Value="#01000000" />
+                                                <Setter Property="Padding" Value="10,0" />
+                                                <Setter Property="Margin" Value="0,0,0,3" />
+                                                <Style.Triggers>
+                                                    <Trigger Property="Role" Value="TopLevelHeader">
+                                                        <Setter Property="Template" Value="{DynamicResource {x:Static MenuItem.TopLevelHeaderTemplateKey}}"/>
+                                                        <Setter Property="Grid.IsSharedSizeScope" Value="true"/>
+                                                    </Trigger>
+                                                    <Trigger Property="Role" Value="TopLevelItem">
+                                                        <Setter Property="Template" Value="{DynamicResource {x:Static MenuItem.TopLevelItemTemplateKey}}"/>
+                                                    </Trigger>
+                                                    <Trigger Property="Role" Value="SubmenuHeader">
+                                                        <Setter Property="Template" Value="{DynamicResource {x:Static MenuItem.TopLevelHeaderTemplateKey}}"/>
+                                                    </Trigger>
+                                                    <Trigger Property="Role" Value="SubmenuItem">
+                                                        <Setter Property="Template" Value="{DynamicResource {x:Static MenuItem.TopLevelItemTemplateKey}}"/>
+                                                    </Trigger>
+                                                    <Trigger Property="beh:TouchableContextMenuBehavior.OpenedWithTouch" Value="True">
+                                                        <Setter Property="Height" Value="46.590925" />
+                                                    </Trigger>
+                                                    <!-DataTrigger Binding="{Binding Path=TouchableBehaviour.OpenedWithTouch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}" Value="True">
+                                                        <Setter Property="Height" Value="46.590925" />
+                                                    </DataTrigger->
+                                                </Style.Triggers>
+                                            </Style>
+                                        </ContextMenu.Resources-->
                                         <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
                                         <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
                                         <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
@@ -726,7 +774,7 @@
                                 </Border.Clip-->
                                 <Grid>
                                     <Rectangle x:Name="BodySizingAid"/>
-                                    <ContentPresenter Content="{TemplateBinding Content}" ClipToBounds="True">
+                                    <ContentPresenter Content="{TemplateBinding Content}">
                                         <ContentPresenter.OpacityMask>
                                             <VisualBrush>
                                                 <VisualBrush.Visual>
@@ -739,13 +787,13 @@
                             </Border>
                         </DockPanel>
                         <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}" ClipToBounds="True">
-                            <Grid.OpacityMask>
+                            <!--Grid.OpacityMask>
                                 <VisualBrush>
                                     <VisualBrush.Visual>
                                         <Border Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}" Background="Black" BorderBrush="Transparent" BorderThickness="0" CornerRadius="12"/>
                                     </VisualBrush.Visual>
                                 </VisualBrush>
-                            </Grid.OpacityMask>
+                            </Grid.OpacityMask-->
                             <!--Grid.Clip>
                                 <RectangleGeometry RadiusX="12" RadiusY="12">
                                     <RectangleGeometry.Rect>
@@ -2523,7 +2571,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Separator">
-                    <Border BorderBrush="White" BorderThickness="2"/>
+                    <Border BorderBrush="{DynamicResource SeparatorHorizontalBackgroundBrush}" BorderThickness="2"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -2639,6 +2687,11 @@
         <Setter Property="BorderBrush" Value="#01000000" />
         <Setter Property="Padding" Value="10,0" />
         <Setter Property="Margin" Value="0,0,0,3" />
+        <!--Setter Property="inter:Interaction.Behaviors">
+            <Setter.Value>
+                <beh:TouchableContextMenuBehavior x:Name="TouchableBehaviour"/>
+            </Setter.Value>
+        </Setter-->
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.TopLevelHeaderTemplateKey}}"/>
@@ -2691,11 +2744,10 @@
             <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource PlexMenuItemStyle}">
                 <Style.Triggers>
                     <DataTrigger Binding="{Binding Path=OpenedWithTouch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TouchableContextMenu}}}" Value="True">
-                        <Setter Property="Height" Value="46.590925" />
+                        <Setter Property="Height" Value="46" />
                     </DataTrigger>
                 </Style.Triggers>
             </Style>
-            <!--Style TargetType="Separator" BasedOn="{x:Type Separator}"/-->
         </Style.Resources>
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Grid.IsSharedSizeScope" Value="True" />
@@ -2706,11 +2758,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">
                     <Grid Margin="{TemplateBinding Margin}">
-                        <!--Border IsHitTestVisible="False" Background="Black" BorderBrush="Transparent">
-                            <Border.Effect>
-                                <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="230" ShadowDepth="3" BlurRadius="3" Opacity="0.375"/>
-                            </Border.Effect>
-                        </Border-->
                         <Border BorderThickness="1" CornerRadius="2" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ContextMenuBackgroundBrush}" BorderBrush="{DynamicResource ContextMenuBorderBrush}" UseLayoutRounding="True">
                             <Border.Effect>
                                 <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="230" ShadowDepth="3" BlurRadius="3" Opacity="0.375"/>
@@ -2719,11 +2766,6 @@
                                 <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                             </ScrollViewer>
                         </Border>
-                        <!--Border BorderThickness="1" CornerRadius="0" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ContextMenuBackgroundBrush}" BorderBrush="{DynamicResource ContextMenuBorderBrush}">
-                            <ScrollViewer SnapsToDevicePixels="True" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden" ClipToBounds="True">
-                                <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                            </ScrollViewer>
-                        </Border-->
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

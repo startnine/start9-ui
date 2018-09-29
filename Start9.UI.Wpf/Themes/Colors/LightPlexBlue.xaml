@@ -491,14 +491,14 @@
 
     <!--#region ContextMenu Brushes-->
 
-    <LinearGradientBrush x:Key="ContextMenuBackgroundBrush" StartPoint="0.25,0" EndPoint="0.75,1">
+    <LinearGradientBrush x:Key="ContextMenuBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="#FF67A4E7"/>
             <GradientStop Offset="0.75" Color="#FF17283D"/>
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="ContextMenuBorderBrush" StartPoint="0.25,0" EndPoint="0.75,1">
+    <LinearGradientBrush x:Key="ContextMenuBorderBrush" StartPoint="0,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="#FF3B5774"/>
             <GradientStop Offset="0.75" Color="#FF010101"/>

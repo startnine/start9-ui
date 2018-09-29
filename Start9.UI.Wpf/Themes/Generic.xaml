@@ -258,8 +258,18 @@
                         </Style>
                     </ControlTemplate.Resources>
                     <Grid x:Name="WindowRoot" Background="{x:Static SystemColors.ActiveBorderBrush}">
-                        <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{Binding BorderThickness, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t, FallbackValue=18}" Margin="4,4,4,-4" Visibility="Visible" Opacity="1">
-                            <Border x:Name="ActiveTitlebarBackground" Visibility="Visible">
+                        <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{Binding BorderThickness, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t, FallbackValue=18}" Margin="4,4,4,-4" Visibility="Visible" Opacity="1" Background="#01000000">
+                            <Grid.ContextMenu>
+                                <local:TouchableContextMenu>
+                                    <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
+                                    <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
+                                    <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
+                                    <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
+                                    <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
+                                    <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
+                                </local:TouchableContextMenu>
+                            </Grid.ContextMenu>
+                            <Border x:Name="ActiveTitlebarBackground" Visibility="Visible" IsHitTestVisible="False">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                         <LinearGradientBrush.GradientStops>
@@ -269,7 +279,7 @@
                                     </LinearGradientBrush>
                                 </Border.Background>
                             </Border>
-                            <Border x:Name="InactiveTitlebarBackground" Visibility="Hidden">
+                            <Border x:Name="InactiveTitlebarBackground" Visibility="Hidden" IsHitTestVisible="False">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                                         <LinearGradientBrush.GradientStops>
@@ -280,13 +290,13 @@
                                 </Border.Background>
                             </Border>
                             <Grid Height="{x:Static SystemParameters.CaptionHeight}">
-                                <Canvas x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="2">
+                                <Canvas x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="2" IsHitTestVisible="False">
                                     <Canvas.Background>
                                         <ImageBrush ImageSource="{TemplateBinding Icon}" />
                                     </Canvas.Background>
                                 </Canvas>
-                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="20,0,0,0" FontWeight="Bold" FontSize="11" Foreground="{x:Static SystemColors.ActiveCaptionTextBrush}"/>
-                                <ContentPresenter Content="{TemplateBinding TitleBarContent}" />
+                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="20,0,0,0" FontWeight="Bold" FontSize="11" Foreground="{x:Static SystemColors.ActiveCaptionTextBrush}" IsHitTestVisible="False"/>
+                                <ContentPresenter Content="{TemplateBinding TitleBarContent}" IsHitTestVisible="False"/>
                                 <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="-2,2,2,-2">
                                     <!--RenderTransformOrigin="1,0">
                                         <StackPanel.RenderTransform>
@@ -478,7 +488,68 @@
     </Style>
 
     <!--#endregion ToggleSwitch Styles-->
+    
+    
+    <!--#region TouchableContextMenu Styles-->
 
+    <Style x:Key="{x:Type local:TouchableContextMenu}" TargetType="{x:Type local:TouchableContextMenu}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Control.Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
+        <Setter Property="Control.BorderBrush" Value="{x:Static theme:ClassicBorderDecorator.ClassicBorderBrush}" />
+        <Setter Property="Control.BorderThickness" Value="2" />
+        <Setter Property="Control.FontFamily" Value="{DynamicResource {x:Static SystemFonts.MenuFontFamilyKey}}" />
+        <Setter Property="Control.FontSize" Value="{DynamicResource {x:Static SystemFonts.MenuFontSizeKey}}" />
+        <Setter Property="Control.FontStyle" Value="{DynamicResource {x:Static SystemFonts.MenuFontStyleKey}}" />
+        <Setter Property="Control.FontWeight" Value="{DynamicResource {x:Static SystemFonts.MenuFontWeightKey}}" />
+        <Setter Property="Control.Foreground" Value="{DynamicResource {x:Static SystemColors.MenuTextBrushKey}}" />
+        <Setter Property="Control.VerticalContentAlignment" Value="Center" />
+        <Setter Property="Grid.IsSharedSizeScope" Value="True" />
+        <Setter Property="ContextMenu.HasDropShadow" Value="{DynamicResource {x:Static SystemParameters.DropShadowKey}}" />
+        <Setter Property="ScrollViewer.PanningMode" Value="Both" />
+        <Setter Property="Stylus.IsFlicksEnabled" Value="False" />
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ContextMenu}">
+                    <ControlTemplate.Resources>
+                        <Style x:Key="{x:Type MenuItem}" TargetType="{x:Type MenuItem}" BasedOn="{StaticResource {x:Type MenuItem}}">
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding Path=OpenedWithTouch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:TouchableContextMenu}}}" Value="True">
+                                    <Setter Property="Height" Value="45" />
+                                    <Setter Property="Padding" Value="19,1,20,2" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ControlTemplate.Resources>
+                    <theme:SystemDropShadowChrome x:Name="Shdw" Color="Transparent" SnapsToDevicePixels="True">
+                        <theme:ClassicBorderDecorator x:Name="Border" BorderStyle="AltRaised" Background="{TemplateBinding Control.Background}" BorderBrush="{TemplateBinding Control.BorderBrush}" BorderThickness="{TemplateBinding Control.BorderThickness}">
+                            <ScrollViewer Name="ContextMenuScrollViewer" Style="{DynamicResource {ComponentResourceKey TypeInTargetAssembly={x:Type FrameworkElement}, ResourceId=MenuScrollViewer}}">
+                                <Grid RenderOptions.ClearTypeHint="Enabled">
+                                    <Canvas Height="0" Width="0" HorizontalAlignment="Left" VerticalAlignment="Top">
+                                        <Rectangle Name="OpaqueRect" Height="{Binding ElementName=Border, Path=ActualHeight}" Width="{Binding ElementName=Border, Path=ActualWidth}" Fill="{Binding ElementName=Border, Path=Background}" />
+                                    </Canvas>
+                                    <ItemsPresenter Name="ItemsPresenter" Margin="{TemplateBinding Control.Padding}" KeyboardNavigation.DirectionalNavigation="Cycle" SnapsToDevicePixels="{TemplateBinding UIElement.SnapsToDevicePixels}" />
+                                </Grid>
+                            </ScrollViewer>
+                        </theme:ClassicBorderDecorator>
+                    </theme:SystemDropShadowChrome>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="ContextMenu.HasDropShadow" Value="True">
+                            <Setter TargetName="Shdw" Property="FrameworkElement.Margin" Value="0,0,5,5" />
+                            <Setter TargetName="Shdw" Property="theme:SystemDropShadowChrome.Color" Value="#71000000" />
+                        </Trigger>
+                        <Trigger SourceName="ContextMenuScrollViewer" Property="ScrollViewer.CanContentScroll" Value="False">
+                            <Setter TargetName="OpaqueRect" Value="{Binding ElementName=ContextMenuScrollViewer, Path=VerticalOffset}" Property="Canvas.Top" />
+                            <Setter TargetName="OpaqueRect" Value="{Binding ElementName=ContextMenuScrollViewer, Path=HorizontalOffset}" Property="Canvas.Left" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion TouchableContextMenu Styles-->
+
+    
     <!--#region Command Link Styles-->
 
     <!--Style x:Key="{x:Type controls:CommandLinkButton}" TargetType="{x:Type controls:CommandLinkButton}">

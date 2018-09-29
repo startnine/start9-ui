@@ -19,3 +19,14 @@ C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-t
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\PresentationFramework.Aero.dll
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\obj\Debug\ChromeTestWindow.g.cs
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\obj\Debug\ChromeTestWindow.baml
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\System.Windows.Interactivity.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\de\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\en\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\es\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\fr\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\it\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\ja\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\ko\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\ru\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll

@@ -36,6 +36,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -77,6 +78,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Behaviors\TouchableContextMenuBehavior.cs" />
     <Compile Include="Converters\CombinedClassicFrameSizeConverter.cs" />
     <Compile Include="Converters\DoubleComparisonConverter.cs" />
     <Compile Include="Converters\IconToImageBrushConverter.cs" />

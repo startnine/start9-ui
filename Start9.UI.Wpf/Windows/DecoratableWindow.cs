@@ -332,7 +332,10 @@ namespace Start9.UI.Wpf.Windows
             base.OnApplyTemplate();
             _titlebar = GetTemplateChild(PartTitlebar) as Grid;
             if (_titlebar != null)
+            {
                 _titlebar.MouseLeftButtonDown += Titlebar_MouseLeftButtonDown;
+                //_titlebar.double
+            }
 
             _minButton = GetTemplateChild(PartMinimizeButton) as Button;
             if (_minButton != null)
