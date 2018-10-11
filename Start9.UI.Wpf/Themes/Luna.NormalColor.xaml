@@ -1,0 +1,817 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Start9.UI.Wpf"
+                    xmlns:win="clr-namespace:Start9.UI.Wpf.Windows"
+                    xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters">
+
+    <!--#region Converters-->
+
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <conv:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
+
+    <!--#endregion Converters-->
+    
+    
+    <!--#region Brushes-->
+
+    <LinearGradientBrush x:Key="LunaButtonBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#FFFAFAFA"/>
+        <GradientStop Offset="0.3333333333333333333333333333333333333333333333" Color="#FFF6F6F3"/>
+        <GradientStop Offset="1" Color="#FFEFEEE8"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaButtonTopShadingBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="White"/>
+        <GradientStop Offset="1" Color="#00FFFFFF"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaButtonRightShadingBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0" Color="#00E6E3DD"/>
+        <GradientStop Offset="1" Color="#FFE6E3DD"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaButtonBottomShadingBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#00D6D0C5"/>
+        <GradientStop Offset="1" Color="#FFD6D0C5"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaButtonPressedBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#FFE2E0D8"/>
+        <GradientStop Offset="1" Color="#FFE6E5DF"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaButtonPressedTopShadingBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FFD1CCC0"/>
+        <GradientStop Offset="1" Color="#00D1CCC0"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaButtonPressedLeftShadingBrush" StartPoint="0,0" EndPoint="1,0">
+        <GradientStop Offset="0" Color="#FFD7D4CA"/>
+        <GradientStop Offset="1" Color="#00D7D4CA"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaButtonPressedBottomShadingBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#00F2F1EE"/>
+        <GradientStop Offset="1" Color="#FFF2F1EE"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="LunaButtonBorderBrush">#FF003C74</SolidColorBrush>
+
+    <LinearGradientBrush x:Key="LunaButtonPrimaryHoverBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FFFDD889"/>
+        <GradientStop Offset="1" Color="#FFF8B330"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaButtonSecondaryHoverBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FFFFF0CF"/>
+        <GradientStop Offset="0.5" Color="#00FFF0CF"/>
+        <GradientStop Offset="0.9" Color="#00E59700"/>
+        <GradientStop Offset="1" Color="#FFE59700"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaCheckBoxBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#FFDCDCD7"/>
+        <GradientStop Offset="1" Color="White"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="LunaCheckBoxPressedBackgroundBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#FFB0B0A7"/>
+        <GradientStop Offset="1" Color="#FFF1EFDF"/>
+    </LinearGradientBrush>
+
+    <SolidColorBrush x:Key="LunaCheckBoxBorderBrush">#FF1C5180</SolidColorBrush>
+
+    <LinearGradientBrush x:Key="LunaCheckBoxHoverBorderBrush" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Offset="0" Color="#FFFFF0CF"/>
+        <GradientStop Offset="1" Color="#FFF8B330"/>
+    </LinearGradientBrush>
+
+    <!--#endregion Brushes-->
+
+
+    <!--#region Window Styles-->
+    <Style TargetType="win:DecoratableWindow">
+        <Style.Resources>
+            <ResourceDictionary>
+                <QuarticEase x:Key="WindowVisibleEase" EasingMode="EaseOut"/>
+                <QuinticEase x:Key="WindowHiddenEase" EasingMode="EaseIn"/>
+            </ResourceDictionary>
+        </Style.Resources>
+        <Setter Property="RenderTransform">
+            <Setter.Value>
+                <ScaleTransform x:Name="RootScaleTransform" ScaleX="1" ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Mode=Self}}"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="CompositionState" Value="Alpha"/>
+        <Setter Property="HideTransitionDuration" Value="50"/>
+        <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="4,30,4,4"/>
+        <Setter Property="Background" Value="White"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="FontFamily" Value="Tahoma"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="ShadowOffsetThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="ShadowStyle">
+            <Setter.Value>
+                <Style TargetType="Window">
+                    <Setter Property="WindowStyle" Value="None"/>
+                    <Setter Property="ResizeMode" Value="NoResize"/>
+                    <Setter Property="AllowsTransparency" Value="True"/>
+                    <Setter Property="Visibility" Value="Visible"/>
+                    <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                    <Setter Property="Background" Value="Transparent"/>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type win:DecoratableWindow}">
+                    <ControlTemplate.Resources>
+                        <LinearGradientBrush x:Key="CaptionButtonGlyphFillBrush" StartPoint="0,0" EndPoint="0,1">
+                            <LinearGradientBrush.GradientStops>
+                                <GradientStop Offset="0" Color="White"/>
+                                <GradientStop Offset="1" Color="#FFDADADA"/>
+                            </LinearGradientBrush.GradientStops>
+                        </LinearGradientBrush>
+                        <SolidColorBrush x:Key="CaptionButtonGlyphStrokeBrush">#FF535666</SolidColorBrush>
+
+                        <Style x:Key="BorderThumb" TargetType="Thumb">
+                            <Setter Property="SnapsToDevicePixels" Value="true" />
+                            <Setter Property="OverridesDefaultStyle" Value="true" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Thumb">
+                                        <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0">
+                                            <Rectangle.Fill>
+                                                <SolidColorBrush Color="#01000000" />
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style x:Key="ResizeGripThumbStyle" TargetType="Thumb" BasedOn="{StaticResource BorderThumb}">
+                            <Setter Property="SnapsToDevicePixels" Value="True" />
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Width" Value="18" />
+                            <Setter Property="Height" Value="18" />
+                            <Setter Property="Margin" Value="0,0,5,5" />
+                            <Setter Property="HorizontalAlignment" Value="Right" />
+                            <Setter Property="VerticalAlignment" Value="Bottom" />
+                            <Setter Property="Cursor" Value="SizeNWSE"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Thumb">
+                                        <ControlTemplate.Resources>
+
+                                            <Style x:Key="{x:Type ResizeGrip}" TargetType="{x:Type ResizeGrip}">
+                                                <Setter Property="OverridesDefaultStyle" Value="True" />
+                                                <Setter Property="Foreground" Value="Blue" />
+                                                <Setter Property="Background" Value="#01000000" />
+                                                <Setter Property="IsHitTestVisible" Value="True" />
+                                                <Setter Property="Width" Value="18" />
+                                                <Setter Property="Height" Value="18" />
+                                                <Setter Property="Margin" Value="0" />
+                                                <Setter Property="HorizontalAlignment" Value="Right" />
+                                                <Setter Property="VerticalAlignment" Value="Bottom" />
+                                                <Setter Property="Cursor" Value="SizeNWSE"/>
+                                                <Setter Property="FontFamily" Value="Marlett"/>
+                                                <Setter Property="FontSize" Value="12"/>
+                                                <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="{x:Type ResizeGrip}">
+                                                            <Grid>
+                                                                <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                                    <TextBlock Foreground="{x:Static SystemColors.GrayTextBrush}">o</TextBlock>
+                                                                    <TextBlock Foreground="{x:Static SystemColors.HighlightTextBrush}">p</TextBlock>
+                                                                </Grid>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ControlTemplate.Resources>
+                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <Rectangle StrokeThickness="0">
+                                                <Rectangle.Fill>
+                                                    <SolidColorBrush Color="#01000000" />
+                                                </Rectangle.Fill>
+                                            </Rectangle>
+                                            <ResizeGrip x:Name="PART_ResizeGrip"/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
+                        <Style x:Key="CaptionButtonStyle" TargetType="{x:Type Button}">
+                            <Setter Property="OverridesDefaultStyle" Value="True" />
+                            <Setter Property="Width" Value="21"/>
+                            <Setter Property="Height" Value="27"/>
+                            <Setter Property="Background" Value="#FF3C7AF6" />
+                            <Setter Property="Foreground" Value="White" />
+                            <Setter Property="BorderBrush" Value="#FF40B4FF"/>
+                            <Setter Property="HorizontalContentAlignment" Value="Center" />
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                            <Setter Property="Padding" Value="0" />
+                            <Setter Property="Margin" Value="1,0"/>
+                            <Setter Property="VerticalAlignment" Value="Top"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#01000000">
+                                            <Border x:Name="RootBorder" Background="{TemplateBinding Background}" BorderBrush="White" BorderThickness="1" CornerRadius="3" Margin="0,3">
+                                                <Grid>
+                                                    <Grid x:Name="IdleShading" ClipToBounds="True">
+                                                        <Border BorderThickness="1" CornerRadius="3">
+                                                            <Border.Background>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                    <LinearGradientBrush.GradientStops>
+                                                                        <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                                                                        <GradientStop Offset="0.375" Color="#00FFFFFF"/>
+                                                                        <GradientStop Offset="0.625" Color="#00000000"/>
+                                                                        <GradientStop Offset="1" Color="#20000000"/>
+                                                                    </LinearGradientBrush.GradientStops>
+                                                                </LinearGradientBrush>
+                                                            </Border.Background>
+                                                            <Border.Effect>
+                                                                <BlurEffect Radius="1" KernelType="Gaussian"/>
+                                                            </Border.Effect>
+                                                            <Grid>
+                                                                <Ellipse Fill="#7FFFFFFF" Width="2.5" Height="2.5" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0.75">
+                                                                    <Ellipse.Effect>
+                                                                        <BlurEffect Radius="2" KernelType="Gaussian"/>
+                                                                    </Ellipse.Effect>
+                                                                </Ellipse>
+                                                                <Rectangle x:Name="HoverFilm" Margin="-1" Fill="#40FFFFFF" Visibility="Collapsed"/>
+                                                                <Ellipse x:Name="HoverShine" Width="14" Height="14" HorizontalAlignment="Right" VerticalAlignment="Bottom" Fill="{TemplateBinding BorderBrush}" Visibility="Collapsed">
+                                                                    <Ellipse.OpacityMask>
+                                                                        <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                                                            <GradientStop Offset="0.25" Color="Black"/>
+                                                                            <GradientStop Offset="1" Color="Transparent"/>
+                                                                        </RadialGradientBrush>
+                                                                    </Ellipse.OpacityMask>
+                                                                </Ellipse>
+                                                            </Grid>
+                                                        </Border>
+                                                        <Border BorderThickness="0,0,1,1" BorderBrush="#50000000" CornerRadius="3" UseLayoutRounding="True" ClipToBounds="True">
+                                                            <Border.Effect>
+                                                                <DropShadowEffect Direction="135" Color="#40000000" ShadowDepth="1" BlurRadius="3" Opacity="1"/>
+                                                            </Border.Effect>
+                                                        </Border>
+                                                    </Grid>
+                                                    <Grid x:Name="PressedShading" Visibility="Collapsed">
+                                                        <Grid.Background>
+                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                                                <GradientStop Offset="0" Color="#06000000"/>
+                                                                <GradientStop Offset="1" Color="#00000000"/>
+                                                            </LinearGradientBrush>
+                                                        </Grid.Background>
+                                                        <Rectangle HorizontalAlignment="Left" Width="3">
+                                                            <Rectangle.Fill>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                    <GradientStop Offset="0" Color="#40000000"/>
+                                                                    <GradientStop Offset="1" Color="#00000000"/>
+                                                                </LinearGradientBrush>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <Rectangle VerticalAlignment="Top" Height="2">
+                                                            <Rectangle.Fill>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                    <GradientStop Offset="0" Color="#40000000"/>
+                                                                    <GradientStop Offset="1" Color="#00000000"/>
+                                                                </LinearGradientBrush>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <Rectangle HorizontalAlignment="Right" Width="3">
+                                                            <Rectangle.Fill>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                    <GradientStop Offset="0" Color="#00000000"/>
+                                                                    <GradientStop Offset="1" Color="#06000000"/>
+                                                                </LinearGradientBrush>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                        <Rectangle VerticalAlignment="Bottom" Height="2">
+                                                            <Rectangle.Fill>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                    <GradientStop Offset="0" Color="#00000000"/>
+                                                                    <GradientStop Offset="1" Color="#06000000"/>
+                                                                </LinearGradientBrush>
+                                                            </Rectangle.Fill>
+                                                        </Rectangle>
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+                                            <Border x:Name="ContentBorder" BorderBrush="White" BorderThickness="0" Background="Transparent" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}">
+                                                <ContentPresenter x:Name="ContentControl" Content="{TemplateBinding Content}" Focusable="False" TextElement.Foreground="White" TextBlock.Foreground="White"/>
+                                            </Border>
+                                            <!--TextElement.Foreground="{TemplateBinding Foreground}" TextBlock.Foreground="{TemplateBinding Foreground}"-->
+                                        </Grid>
+                                        <ControlTemplate.Triggers>
+                                            <MultiTrigger>
+                                                <MultiTrigger.Conditions>
+                                                    <Condition Property="IsMouseOver" Value="True"/>
+                                                    <Condition Property="IsPressed" Value="False"/>
+                                                </MultiTrigger.Conditions>
+                                                <Setter TargetName="HoverFilm" Property="Visibility" Value="Visible"/>
+                                                <Setter TargetName="HoverShine" Property="Visibility" Value="Visible"/>
+                                            </MultiTrigger>
+                                            <Trigger Property="IsPressed" Value="True">
+                                                <Setter TargetName="IdleShading" Property="Visibility" Value="Collapsed"/>
+                                                <Setter TargetName="PressedShading" Property="Visibility" Value="Visible"/>
+                                            </Trigger>
+                                            <MultiDataTrigger>
+                                                <MultiDataTrigger.Conditions>
+                                                    <Condition Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False"/>
+                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="False"/>
+                                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="False"/>
+                                                </MultiDataTrigger.Conditions>
+                                                <Setter TargetName="RootBorder" Property="Opacity" Value="0.5"/>
+                                            </MultiDataTrigger>
+                                            <Trigger Property="IsEnabled" Value="False">
+                                                <Setter TargetName="RootBorder" Property="Opacity" Value="0.5"/>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                        <Condition Property="IsPressed" Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" Value="#FF498BFF"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#FF005BC0"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+
+                        <Style x:Key="CloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyle}">
+                            <Setter Property="Background" Value="#FFE5572C"/>
+                            <Setter Property="BorderBrush" Value="#FFFF9E7B"/>
+                            <Style.Triggers>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                        <Condition Property="IsPressed" Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter Property="Background" Value="#FFFF7462"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter Property="Background" Value="#FFCA4821"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ControlTemplate.Resources>
+                    <Border x:Name="RootBorder" ClipToBounds="True">
+                        <Grid x:Name="WindowRoot" Background="#01000000">
+                            <Border x:Name="BaseBorder" Background="#FF0058EE" CornerRadius="6,6,0,0">
+                                <Grid>
+                                    <Border x:Name="OuterEdgeBorder" Background="Transparent" BorderThickness="0,1" CornerRadius="6,6,0,0">
+                                        <Border.BorderBrush>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                <GradientStop Offset="0" Color="#FF0058EE"/>
+                                                <GradientStop Offset="1" Color="#FF00138C"/>
+                                            </LinearGradientBrush>
+                                        </Border.BorderBrush>
+                                        <Border x:Name="InnerEdgeBorder" Background="Transparent" BorderBrush="#FF0019CF" BorderThickness="1,0" CornerRadius="6,6,0,0">
+                                            <Grid Margin="0,0,0,-1">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=l}"/>
+                                                    <ColumnDefinition/>
+                                                    <ColumnDefinition Width="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=r}"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}"/>
+                                                    <RowDefinition/>
+                                                    <RowDefinition Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=b}"/>
+                                                </Grid.RowDefinitions>
+                                                <Rectangle x:Name="TitlebarBottomShading" VerticalAlignment="Bottom" Height="15" Grid.Row="0" Grid.Column="1">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <!--00026AFE-->
+                                                            <GradientStop Offset="0" Color="#00FFFFFF"/>
+                                                            <GradientStop Offset="0.69230769230769230769230769230769" Color="#30FFFFFF"/>
+                                                            <GradientStop Offset="0.84615384615384615384615384615385" Color="#20FFFFFF"/>
+                                                            <GradientStop Offset="1" Color="#20000000"/>
+                                                            <!--FF0144D0-->
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <Rectangle VerticalAlignment="Top" Height="5" Grid.Row="0" Grid.Column="1">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Offset="0" Color="#40FFFFFF"/>
+                                                            <GradientStop Offset="1" Color="#00FFFFFF"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <Rectangle Fill="{Binding Fill, ElementName=LeftShine}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="3" Height="10" Grid.Row="0" Grid.Column="0">
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Offset="0" Color="Transparent"/>
+                                                            <GradientStop Offset="1" Color="Black"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <Rectangle Fill="{Binding Fill, ElementName=RightShine}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="3" Height="10" Grid.Row="0" Grid.Column="2">
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Offset="0" Color="Transparent"/>
+                                                            <GradientStop Offset="1" Color="Black"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <Rectangle Fill="{Binding Fill, ElementName=TitlebarBottomShading}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="4" Height="15" Grid.Row="0" Grid.Column="0">
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <GradientStop Offset="0" Color="Transparent"/>
+                                                            <GradientStop Offset="1" Color="Black"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <Rectangle Fill="{Binding Fill, ElementName=TitlebarBottomShading}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="4" Height="15" Grid.Row="0" Grid.Column="2">
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <GradientStop Offset="0" Color="Black"/>
+                                                            <GradientStop Offset="1" Color="Transparent"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <Rectangle HorizontalAlignment="Right" Width="4" Grid.Row="1" Grid.Column="0">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <GradientStop Offset="0" Color="#00000000"/>
+                                                            <GradientStop Offset="1" Color="#20000000"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <Rectangle HorizontalAlignment="Left" Width="3" Grid.RowSpan="3" Grid.Column="0">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <GradientStop Offset="0" Color="#40000000"/>
+                                                            <GradientStop Offset="1" Color="#00000000"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <Rectangle HorizontalAlignment="Right" Width="3" Grid.RowSpan="3" Grid.Column="2">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                                                            <GradientStop Offset="0" Color="#40000000"/>
+                                                            <GradientStop Offset="1" Color="#00000000"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <Rectangle HorizontalAlignment="Left" Width="4" Grid.Row="1" Grid.Column="2">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                                                            <GradientStop Offset="0" Color="#20000000"/>
+                                                            <GradientStop Offset="1" Color="#00000000"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <Rectangle x:Name="LeftShine" HorizontalAlignment="Left" Width="3" Grid.Row="1" Grid.Column="0">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <GradientStop Offset="0" Color="#00FFFFFF"/>
+                                                            <GradientStop Offset="0.5" Color="#40FFFFFF"/>
+                                                            <GradientStop Offset="1" Color="#00FFFFFF"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <Rectangle x:Name="RightShine" HorizontalAlignment="Right" Width="3" Grid.Row="1" Grid.Column="2">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,0">
+                                                            <GradientStop Offset="0" Color="#00FFFFFF"/>
+                                                            <GradientStop Offset="0.5" Color="#40FFFFFF"/>
+                                                            <GradientStop Offset="1" Color="#00FFFFFF"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <Rectangle x:Name="BottomShadow" Margin="0,0,0,1" VerticalAlignment="Bottom" Height="3" Grid.ColumnSpan="3" Grid.Row="2">
+                                                    <Rectangle.Fill>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Offset="0" Color="#00000000"/>
+                                                            <GradientStop Offset="1" Color="#60000000"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.Fill>
+                                                </Rectangle>
+                                                <!--Rectangle Margin="0,0,0,1" Fill="{Binding Fill, ElementName=BottomShadow}" VerticalAlignment="Bottom" Height="3" Grid.Column="0" Grid.Row="2">
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <GradientStop Offset="0" Color="Transparent"/>
+                                                            <GradientStop Offset="1" Color="Black"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <Rectangle Margin="0,0,0,1" Fill="{Binding Fill, ElementName=BottomShadow}" VerticalAlignment="Bottom" Height="3" Grid.Column="2" Grid.Row="2">
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <GradientStop Offset="0" Color="Black"/>
+                                                            <GradientStop Offset="1" Color="Transparent"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle-->
+                                                <Rectangle Margin="0,0,0,1" Fill="{Binding Fill, ElementName=LeftShine}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="3" Height="3" Grid.Row="2" Grid.Column="0">
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Offset="0" Color="Black"/>
+                                                            <GradientStop Offset="1" Color="Transparent"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <Rectangle Margin="0,0,0,1" Fill="{Binding Fill, ElementName=RightShine}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="3" Height="3" Grid.Row="2" Grid.Column="2">
+                                                    <Rectangle.OpacityMask>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                            <GradientStop Offset="0" Color="Black"/>
+                                                            <GradientStop Offset="1" Color="Transparent"/>
+                                                        </LinearGradientBrush>
+                                                    </Rectangle.OpacityMask>
+                                                </Rectangle>
+                                                <Border CornerRadius="5,5,0,0" Grid.Row="0" Grid.ColumnSpan="3" Margin="-1">
+                                                    <Border BorderBrush="#60FFFFFF" BorderThickness="0,3,0,0" CornerRadius="5,5,0,0" Height="10" Margin="1" VerticalAlignment="Top">
+                                                        <Border.Effect>
+                                                            <BlurEffect Radius="2" KernelType="Gaussian"/>
+                                                        </Border.Effect>
+                                                    </Border>
+                                                </Border>
+                                            </Grid>
+                                        </Border>
+                                    </Border>
+                                    <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Margin="0" Visibility="Visible" Opacity="1" Background="#01000000">
+                                        <Grid>
+                                            <StackPanel Height="30" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="4,0">
+                                                <Canvas x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0">
+                                                    <Canvas.Background>
+                                                        <ImageBrush ImageSource="{TemplateBinding Icon}" />
+                                                    </Canvas.Background>
+                                                </Canvas>
+                                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" Margin="4,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="12" Foreground="White" FontWeight="Bold" UseLayoutRounding="True"/>
+                                            </StackPanel>
+                                            <ContentPresenter Content="{TemplateBinding TitleBarContent}"/>
+                                            <StackPanel x:Name="CaptionButtons" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,3,5,0">
+                                                <Button x:Name="PART_MinimizeButton" Style="{DynamicResource CaptionButtonStyle}">
+                                                    <Rectangle Fill="{Binding BorderBrush, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}}" Width="7" Height="3" Margin="0,8,4,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                                </Button>
+                                                <Grid x:Name="MaxRestButtonGrid">
+                                                    <Button x:Name="PART_MaximizeButton" Style="{DynamicResource CaptionButtonStyle}">
+                                                        <Border Width="11" Height="11" Background="Transparent" BorderBrush="{Binding BorderBrush, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}}" BorderThickness="1,3,1,1"/>
+                                                    </Button>
+                                                    <Button x:Name="PART_RestoreButton" Visibility="Hidden" Style="{DynamicResource CaptionButtonStyle}"/>
+                                                </Grid>
+                                                <Button x:Name="PART_CloseButton" Style="{DynamicResource CloseButtonStyle}">
+                                                    <!--FFE65324-->
+                                                    <Grid Width="11" Height="11">
+                                                        <Path Data="M 0 0 L 11 11 M 0 11 L 11 0" Fill="Transparent" Stroke="{Binding BorderBrush, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}}" StrokeThickness="2"/>
+                                                    </Grid>
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                        <Border x:Name="DialogFilm" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
+                                    </Grid>
+                                    <Grid Margin="{TemplateBinding BorderThickness}">
+                                        <Border x:Name="Body" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="0">
+                                            <ContentPresenter Content="{TemplateBinding Content}"/>
+                                        </Border>
+                                    </Grid>
+                                    <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
+                                        <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
+                                    </Grid>
+                                    <Grid>
+                                        <Grid x:Name="ResizeGrid">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Thumb x:Name="PART_ThumbBottom" HorizontalAlignment="Stretch" Cursor="SizeNS"
+                                   Grid.Column="0" Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Grid.Row="3"
+                                   Style="{DynamicResource BorderThumb}" />
+                                            <Thumb x:Name="PART_ThumbTop" HorizontalAlignment="Stretch" Cursor="SizeNS" Grid.Column="0"
+                                   Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Height="4"
+                                   Style="{DynamicResource BorderThumb}" />
+                                            <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.RowSpan="4"
+                                   Background="{x:Null}" Margin="0,3" Style="{DynamicResource BorderThumb}" />
+                                            <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.RowSpan="4"
+                                   HorizontalContentAlignment="Right" Background="{x:Null}" Margin="0,3"
+                                   Style="{DynamicResource BorderThumb}" />
+                                            <Thumb x:Name="PART_ThumbBottomRightCorner" HorizontalAlignment="Right" Cursor="SizeNWSE"
+                                   Grid.Row="3" Grid.Column="3" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                            <Thumb x:Name="PART_ThumbTopRightCorner" HorizontalAlignment="Right" Cursor="SizeNESW"
+                                   Grid.Row="0" Grid.Column="2" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                            <Thumb x:Name="PART_ThumbTopLeftCorner" HorizontalAlignment="Left" Cursor="SizeNWSE"
+                                   Grid.Row="0" Grid.Column="0" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                            <Thumb x:Name="PART_ThumbBottomLeftCorner" HorizontalAlignment="Left" Cursor="SizeNESW"
+                                   Grid.Row="3" Grid.Column="0" Background="{x:Null}"
+                                   Style="{DynamicResource BorderThumb}" />
+                                        </Grid>
+                                        <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumbStyle}" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="3"/>
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="{x:Null}">
+                            <Setter TargetName="WindowIcon" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="TitleText" Property="Margin" Value="-4,0"/>
+                        </DataTrigger>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter Property="Margin" Value="7"/>
+                            <Setter Property="MaxWidth" Value="{x:Static SystemParameters.PrimaryScreenWidth}"/>
+                            <Setter Property="MaxHeight" Value="{x:Static SystemParameters.PrimaryScreenHeight}"/>
+                            <Setter TargetName="PART_MaximizeButton" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_RestoreButton" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="RootBorder" Property="Margin" Value="9,9,-9,-9"/>
+                            <Setter TargetName="WindowRoot" Property="Margin" Value="-4"/>
+                            <Setter TargetName="PART_Titlebar" Property="Margin" Value="4,4,4,0"/>
+                            <Setter TargetName="PART_Titlebar" Property="Height" Value="26"/>
+                            <Setter TargetName="CaptionButtons" Property="Margin" Value="0,-1,0,0"/>
+                        </Trigger>
+                        <Trigger Property="IsActive" Value="True">
+                            <Setter TargetName="TitleText" Property="Effect">
+                                <Setter.Value>
+                                    <DropShadowEffect Color="#FF0A1883" ShadowDepth="1" Direction="315" BlurRadius="0"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsActive" Value="False">
+                            <Setter TargetName="BaseBorder" Property="Background" Value="#FF7B97E0"/>
+                            <Setter TargetName="OuterEdgeBorder" Property="BorderBrush">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Offset="0" Color="#FF688DE0"/>
+                                        <GradientStop Offset="1" Color="#FF4F53BC"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                            <Setter TargetName="InnerEdgeBorder" Property="BorderBrush" Value="#FF4F53BC"/>
+                            <Setter TargetName="PART_MinimizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                            <Setter TargetName="PART_MaximizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                            <Setter TargetName="PART_RestoreButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                            <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                        </Trigger>
+                        <Trigger Property="WindowStyle" Value="None">
+                            <Setter TargetName="PART_Titlebar" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
+                            <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsWindowVisible" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.75" To="1" Duration="0:0:0.5" EasingFunction="{StaticResource WindowVisibleEase}"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5" EasingFunction="{StaticResource WindowVisibleEase}"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="0.75" Duration="0:0:0.5" EasingFunction="{StaticResource WindowHiddenEase}"/>
+                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5" EasingFunction="{StaticResource WindowHiddenEase}"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--#endregion Window Styles-->
+
+
+    <!--#region ToggleSwitch Styles-->
+
+    <Style x:Key="{x:Type local:ToggleSwitch}" TargetType="{x:Type local:ToggleSwitch}">
+        <Setter Property="SnapsToDevicePixels" Value="true" />
+        <Setter Property="Width" Value="200"/>
+        <Setter Property="Height" Value="50"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="5" />
+        <Setter Property="Padding" Value="0" />
+        <Setter Property="Visibility" Value="Visible" />
+        <Setter Property="Background" Value="{DynamicResource LunaCheckBoxBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource LunaCheckBoxBorderBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type local:ToggleSwitch}">
+                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="50"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition MinHeight="25"/>
+                            <RowDefinition Height="25"/>
+                        </Grid.RowDefinitions>
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center" IsHitTestVisible="False" TextBlock.FontSize="14" Grid.ColumnSpan="2" Grid.Row="0"/>
+                        <TextBlock x:Name="PART_StateText" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" IsHitTestVisible="False" FontSize="14" Grid.Column="0" Grid.Row="1"/>
+                        <Grid Grid.Column="1" Grid.Row="1" Background="#01000000">
+                            <Border Name="Border" CornerRadius="5" BorderThickness="1" Padding="0" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}" HorizontalAlignment="Stretch" Height="22" VerticalAlignment="Center" Margin="-3,-2" IsHitTestVisible="False">
+                                <!--Border Name="HoverBorder" CornerRadius="4" BorderThickness="2" BorderBrush="{DynamicResource LunaCheckBoxHoverBorderBrush}"/-->
+                            </Border>
+                            <StackPanel x:Name="PART_GripContainer" Orientation="Horizontal" Width="50" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <Canvas x:Name="PART_Offsetter" Width="{TemplateBinding OffsetterWidth}" MinWidth="0" MaxWidth="32"/>
+                                <Button x:Name="PART_Grip" IsTabStop="False" Width="32" Height="16" Margin="0" IsHitTestVisible="True">
+                                    <Button.Style>
+                                        <Style TargetType="{x:Type Button}">
+                                            <Setter Property="OverridesDefaultStyle" Value="True"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                        <Grid>
+                                                            <Border x:Name="Border" CornerRadius="3" Background="{DynamicResource LunaButtonBackgroundBrush}" BorderBrush="{DynamicResource LunaButtonBorderBrush}" BorderThickness="1">
+                                                                <Grid>
+                                                                    <Rectangle x:Name="TopShading" Fill="{DynamicResource LunaButtonTopShadingBrush}" Height="2" VerticalAlignment="Top"/>
+                                                                    <Rectangle x:Name="RightShading" Fill="{DynamicResource LunaButtonRightShadingBrush}" Width="2" HorizontalAlignment="Right"/>
+                                                                    <Rectangle x:Name="BottomShading" Fill="{DynamicResource LunaButtonBottomShadingBrush}" Height="2" VerticalAlignment="Bottom"/>
+                                                                    <Border x:Name="HoverBorder" CornerRadius="2" BorderBrush="{DynamicResource LunaButtonPrimaryHoverBorderBrush}" BorderThickness="2" Visibility="Collapsed">
+                                                                        <Border CornerRadius="2" BorderBrush="{DynamicResource LunaButtonSecondaryHoverBorderBrush}" BorderThickness="1" Margin="-2"/>
+                                                                    </Border>
+                                                                </Grid>
+                                                            </Border>
+                                                        </Grid>
+                                                        <ControlTemplate.Triggers>
+                                                            <MultiDataTrigger>
+                                                                <MultiDataTrigger.Conditions>
+                                                                    <Condition Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ToggleSwitch}}}" Value="True"/>
+                                                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ToggleSwitch}}}" Value="False"/>
+                                                                    <Condition Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=Self}}" Value="False"/>
+                                                                </MultiDataTrigger.Conditions>
+                                                                <Setter TargetName="HoverBorder" Property="Visibility" Value="Visible"/>
+                                                            </MultiDataTrigger>
+                                                            <DataTrigger Binding="{Binding IsPressed, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType={x:Type local:ToggleSwitch}}}" Value="True">
+                                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource LunaButtonPressedBackgroundBrush}"/>
+                                                                <Setter TargetName="TopShading" Property="Fill" Value="{DynamicResource LunaButtonPressedTopShadingBrush}"/>
+                                                                <Setter TargetName="RightShading" Property="HorizontalAlignment" Value="Left"/>
+                                                                <Setter TargetName="RightShading" Property="Fill" Value="{DynamicResource LunaButtonPressedLeftShadingBrush}"/>
+                                                                <Setter TargetName="BottomShading" Property="Fill" Value="{DynamicResource LunaButtonPressedBottomShadingBrush}"/>
+                                                            </DataTrigger>
+                                                            <Trigger Property="IsPressed" Value="True">
+                                                                <Setter TargetName="Border" Property="Background" Value="{DynamicResource LunaButtonPressedBackgroundBrush}"/>
+                                                                <Setter TargetName="TopShading" Property="Fill" Value="{DynamicResource LunaButtonPressedTopShadingBrush}"/>
+                                                                <Setter TargetName="RightShading" Property="HorizontalAlignment" Value="Left"/>
+                                                                <Setter TargetName="RightShading" Property="Fill" Value="{DynamicResource LunaButtonPressedLeftShadingBrush}"/>
+                                                                <Setter TargetName="BottomShading" Property="Fill" Value="{DynamicResource LunaButtonPressedBottomShadingBrush}"/>
+                                                            </Trigger>
+                                                        </ControlTemplate.Triggers>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </Button.Style>
+                                </Button>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="False"/>
+                                <Condition SourceName="PART_Grip" Property="IsMouseOver" Value="False"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.Setters>
+                                <Setter TargetName="HoverBorder" Property="Visibility" Value="Collapsed"/>
+                            </MultiTrigger.Setters>
+                        </MultiTrigger-->
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource LunaCheckBoxPressedBackgroundBrush}"/>
+                            <!--Setter TargetName="HoverBorder" Property="BorderBrush" Value="Transparent"/-->
+                        </Trigger>
+                        <Trigger SourceName="PART_Grip" Property="IsPressed" Value="True">
+                            <Setter TargetName="Border" Property="Background" Value="{DynamicResource LunaCheckBoxPressedBackgroundBrush}"/>
+                            <!--Setter TargetName="HoverBorder" Property="BorderBrush" Value="Transparent"/-->
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!--#endregion ToggleSwitch Styles-->
+</ResourceDictionary>

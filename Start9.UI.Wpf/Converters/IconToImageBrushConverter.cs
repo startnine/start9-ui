@@ -27,12 +27,19 @@ namespace Start9.UI.Wpf.Converters
                 /*if (parameter != null)
                     Debug.WriteLine("parameter type: " + parameter.GetType().ToString());*/
 
+                int validateParam = param;
+
                 if (parameter != null)
-                    /*Debug.WriteLine("param parse outcome: " + */int.TryParse((string)parameter, out param)/* + " " + param.ToString())*/;
+                    /*Debug.WriteLine("param parse outcome: " + */int.TryParse((string)parameter, out validateParam)/* + " " + param.ToString())*/;
+
+                if (validateParam > 0)
+                    param = validateParam;
 
                 int targetSize = param;
+
                 if (param >= 256)//Start9.UI.Wpf.Statics.SystemScaling.ScalingFactor > 1)
                     targetSize = WpfUnitsToRealPixels(param);
+
                 return new ImageBrush(Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(targetSize, targetSize)));
                 //BitmapSizeOptions.FromWidthAndHeight(WpfUnitsToRealPixels(param), WpfUnitsToRealPixels(param))
             }

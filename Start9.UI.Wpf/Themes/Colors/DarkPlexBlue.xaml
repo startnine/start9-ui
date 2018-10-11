@@ -363,23 +363,23 @@
     </RadialGradientBrush>
     <LinearGradientBrush x:Key="RoundButtonDisabledPrimaryFillBrush" StartPoint="0,0" EndPoint="1,1">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#C0E3E8EF" />
-            <GradientStop Offset="0.5" Color="#C098ACC8" />
-            <GradientStop Offset="1" Color="#C0C0CCDD" />
+            <GradientStop Offset="0" Color="#40838383" />
+            <GradientStop Offset="0.5" Color="#403B3B3B" />
+            <GradientStop Offset="1" Color="#406D6D6D" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
     <RadialGradientBrush x:Key="RoundButtonDisabledSecondaryFillBrush" GradientOrigin="0.625,0.375" Center="0.625,0.375">
         <RadialGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="Transparent" />
-            <GradientStop Offset="1.25" Color="#50B7C4D9" />
+            <GradientStop Offset="1.25" Color="#18838383" />
         </RadialGradientBrush.GradientStops>
     </RadialGradientBrush>
 
     <RadialGradientBrush x:Key="RoundButtonDisabledTertiaryFillBrush" GradientOrigin="1,0.875" Center="0.5,0.5625">
         <RadialGradientBrush.GradientStops>
             <GradientStop Offset="0.75" Color="Transparent" />
-            <GradientStop Offset="1" Color="#50E4E8EF" />
+            <GradientStop Offset="1" Color="#18969696" />
         </RadialGradientBrush.GradientStops>
     </RadialGradientBrush>
     <SolidColorBrush x:Key="ToolbarButtonHoverPrimaryBorderBrush">#40FFFFFF</SolidColorBrush>
@@ -537,6 +537,25 @@
     </LinearGradientBrush>
 
     <!--#endregion TextBox Brushes-->
+
+
+    <!--#region ContextMenu Brushes-->
+
+    <LinearGradientBrush x:Key="ContextMenuBackgroundBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FF666666"/>
+            <GradientStop Offset="0.75" Color="#FF212121"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ContextMenuBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <LinearGradientBrush.GradientStops>
+            <GradientStop Offset="0" Color="#FF4C4C4C"/>
+            <GradientStop Offset="0.75" Color="Black"/>
+        </LinearGradientBrush.GradientStops>
+    </LinearGradientBrush>
+
+    <!--#endregion ContextMenu Brushes-->
 
 
     <!--#region CheckBox Brushes-->

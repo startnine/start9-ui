@@ -27,6 +27,6 @@ C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-t
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\it\System.Windows.Interactivity.resources.dll
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\ja\System.Windows.Interactivity.resources.dll
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\ko\System.Windows.Interactivity.resources.dll
-C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\ru\System.Windows.Interactivity.resources.dll
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\front-end-test\FrontEndTest\bin\Debug\ru\System.Windows.Interactivity.resources.dll

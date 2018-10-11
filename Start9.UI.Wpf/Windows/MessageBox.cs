@@ -7,6 +7,33 @@ using System.Windows;
 
 namespace Start9.UI.Wpf.Windows
 {
+    public static class MessageBoxEnums
+    {
+        public enum OkButton
+        {
+            OK
+        }
+
+        public enum OkCancelButtons
+        {
+            OK,
+            Cancel
+        }
+
+        public enum IgnoreRetryAbortButtons
+        {
+            Ignore,
+            Retry,
+            Abort
+        }
+
+        public enum YesNoButtons
+        {
+            Yes,
+            No
+        }
+    }
+
     public static class MessageBox<T>
     {
         public enum TargetContainer
@@ -14,30 +41,6 @@ namespace Start9.UI.Wpf.Windows
             Client,
             Title,
             FullWindow
-        }
-
-        internal enum OkButton
-        {
-            OK
-        }
-
-        internal enum OkCancelButtons
-        {
-            OK,
-            Cancel
-        }
-
-        internal enum IgnoreRetryAbortButtons
-        {
-            Ignore,
-            Retry,
-            Abort
-        }
-
-        internal enum YesNoButtons
-        {
-            Yes,
-            No
         }
 
         public static T Show()

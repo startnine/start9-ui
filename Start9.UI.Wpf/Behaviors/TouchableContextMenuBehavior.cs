@@ -26,7 +26,61 @@ namespace Start9.UI.Wpf.Behaviors
 
         public static readonly DependencyProperty OpenedWithTouchProperty = DependencyProperty.Register("OpenedWithTouch",
             typeof(Boolean), typeof(TouchableContextMenuBehavior),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnOpenedWithTouchChanged));
+
+        static void OnOpenedWithTouchChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            SetMenuOpenedWithTouch((d as TouchableContextMenuBehavior)._targetMenu, (bool)(e.NewValue));
+            Debug.WriteLine("OnOpenedWithTouchChanged " + e.NewValue.ToString());
+        }
+
+        public static readonly DependencyProperty MenuOpenedWithTouchProperty = DependencyProperty.RegisterAttached("MenuOpenedWithTouch", typeof(bool), typeof(ContextMenu), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender));
+
+        public static bool GetMenuOpenedWithTouch(ContextMenu element)
+        {
+            var retrievedValue = (bool)(element.GetValue(MenuOpenedWithTouchProperty));
+            Debug.WriteLine("GetMenuOpenedWithTouch " + retrievedValue.ToString());
+            return retrievedValue;
+        }
+
+        public static void SetMenuOpenedWithTouch(ContextMenu element, bool value)
+        {
+            element.SetValue(MenuOpenedWithTouchProperty, value);
+            Debug.WriteLine("SetMenuOpenedWithTouch " + value.ToString());
+        }
+
+        /*, OnAttachedTouchableBehaviorChanged*/
+
+        /*static void OnAttachedTouchableBehaviorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //SetAttachedTouchableBehavior((d as TouchableContextMenuBehavior)._targetMenu, (bool)e.NewValue);
+            Interaction.GetBehaviors((d as TouchableContextMenuBehavior)._targetMenu).Add(new TouchableContextMenuBehavior());
+        }*/
+
+        public static readonly DependencyProperty AttachedTouchableBehaviorProperty =
+            DependencyProperty.RegisterAttached("AttachedTouchableBehavior", typeof(bool), typeof(ContextMenu),
+                new FrameworkPropertyMetadata(false,
+                                              FrameworkPropertyMetadataOptions.AffectsArrange |
+                                              FrameworkPropertyMetadataOptions.AffectsMeasure |
+                                              FrameworkPropertyMetadataOptions.AffectsRender |
+                                              FrameworkPropertyMetadataOptions.AffectsParentArrange |
+                                              FrameworkPropertyMetadataOptions.AffectsParentMeasure,
+                                              OnAttachedTouchableBehaviorChanged));
+
+        public static void SetAttachedTouchableBehavior(DependencyObject element, bool value)
+        {
+            element.SetValue(AttachedTouchableBehaviorProperty, (bool)value);
+        }
+
+        public static bool GetAttachedTouchableBehavior(DependencyObject element)
+        {
+            return (bool)element.GetValue(AttachedTouchableBehaviorProperty);
+        }
+
+        private static void OnAttachedTouchableBehaviorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            //////Interaction.GetBehaviors((d as TouchableContextMenuBehavior)._targetMenu).Add(new TouchableContextMenuBehavior());
+        }
 
         public TouchableContextMenuBehavior()
         {
@@ -94,5 +148,10 @@ namespace Start9.UI.Wpf.Behaviors
             };
             touchTimer.Start();
         }
+    }
+
+    public static class ContextMenuProperties
+    {
+
     }
 }

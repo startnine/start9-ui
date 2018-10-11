@@ -217,7 +217,9 @@ namespace Start9.UI.Wpf
                             isDragging = true;
                         }
 
-                        OffsetterWidth = offsetter + cursorChange;
+                        var newWidth = offsetter + cursorChange;
+                        if (_gripContainer.ActualWidth - _grip.ActualWidth >= newWidth)
+                            OffsetterWidth = newWidth;
                     }
                     else
                     {

@@ -129,6 +129,15 @@ namespace Start9.UI.Wpf.Windows
 
         readonly Window _shadowWindow;
 
+        public bool ShowTitlebarText
+        {
+            get => (bool)GetValue(ShowTitlebarTextProperty);
+            set => SetValue(ShowTitlebarTextProperty, value);
+        }
+
+        public static readonly DependencyProperty ShowTitlebarTextProperty =
+            DependencyProperty.Register("ShowTitlebarText", typeof(bool), typeof(DecoratableWindow), new PropertyMetadata(true));
+
         public object TitleBarContent
         {
             get => GetValue(TitleBarContentProperty);
@@ -154,9 +163,13 @@ namespace Start9.UI.Wpf.Windows
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata("{x:Type apictrl:DecoratableWindow}"));
         }*/
 
+        static DecoratableWindow()
+        {
+            //DefaultStyleKeyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata(typeof(DecoratableWindow)));
+        }
+
         public DecoratableWindow()
         {
-            DefaultStyleKey = typeof(DecoratableWindow);
             /*base.WindowStyle = WindowStyle.None;
             base.AllowsTransparency = true;*/
 
@@ -269,9 +282,16 @@ namespace Start9.UI.Wpf.Windows
                 ValidateSystemMenuItemStates();
             };
 
+            DefaultStyleKey = typeof(DecoratableWindow);
+            //Style = (Style)Resources[typeof(DecoratableWindow)];
+            SetResourceReference(StyleProperty, typeof(DecoratableWindow));
+
             Initialized += (sneder, args) =>
             {
-                Style = (Style)(FindResource(DefaultStyleKey));
+                //UpdateDefaultStyle();
+                //Style = (Style)(FindResource(typeof(DecoratableWindow)));
+                //UpdateDefaultStyle();
+                //Style = (Style)Resources[typeof(DecoratableWindow)];
             };
 
             /*Loaded += (sneder, args) =>

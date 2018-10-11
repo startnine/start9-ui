@@ -30,3 +30,4 @@ C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.W
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\zh-Hans\System.Windows.Interactivity.resources.dll
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\bin\Debug\zh-Hant\System.Windows.Interactivity.resources.dll
 C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Start9.UI.Wpf.csproj.CopyComplete
+C:\Users\Splitwirez\Documents\Important\Start9\Development\start9-ui\Start9.UI.Wpf\obj\Debug\Themes\Luna.NormalColor.baml

@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Timers;
 using System.ComponentModel;
+using Start9.UI.Wpf.Statics;
 
 namespace Start9.UI.Wpf.Windows
 {
@@ -82,10 +83,15 @@ namespace Start9.UI.Wpf.Windows
             (sender as CompositingWindow).SetCompositionState((WindowCompositionState)(e.NewValue));
         }
 
+        static CompositingWindow()
+        {
+            //AllowsTransparencyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata(true));
+        }
+
         public CompositingWindow()
         {
             base.WindowStyle = WindowStyle.None;
-            base.AllowsTransparency = true;
+            AllowsTransparency = true;
 
             _blurInfo = new NativeMethods.DWM_BLURBEHIND()
             {
@@ -104,10 +110,15 @@ namespace Start9.UI.Wpf.Windows
             };
 
             base.WindowStyle = WindowStyle.None;
-            base.AllowsTransparency = true;
+            //base.AllowsTransparency = true;
             _handle = new WindowInteropHelper(this).EnsureHandle();
 
             Loaded += CompositingWindow_Loaded;
+
+            /*StateChanged += (sneder, args) =>
+            {
+                SetCompositionState();
+            };*/
         }
 
         private void CompositingWindow_Loaded(object sender, RoutedEventArgs e)
@@ -326,7 +337,8 @@ namespace Start9.UI.Wpf.Windows
                         IntPtr windowRegion = IntPtr.Zero;
                         if (NativeMethods.GetWindowRect(_handle, out NativeMethods.RECT rect))
                         {
-                            windowRegion = NativeMethods.CreateRectRgn(0, 0, rect.Right - rect.Left, rect.Bottom - rect.Top);
+                            //windowRegion = NativeMethods.CreateRectRgn(0, 0, rect.Right - rect.Left, rect.Bottom - rect.Top);
+                            windowRegion = NativeMethods.CreateRectRgn(0, 0, (int)(SystemScaling.WpfUnitsToRealPixels(ActualWidth)), (int)(SystemScaling.WpfUnitsToRealPixels(ActualHeight)));
                             _blurInfo.hRgnBlur = windowRegion;
                             NativeMethods.DwmEnableBlurBehindWindow(_handle, ref _blurInfo);
                         }

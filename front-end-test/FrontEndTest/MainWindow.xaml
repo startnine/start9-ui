@@ -6,29 +6,37 @@
         xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf"
         xmlns:win="clr-namespace:Start9.UI.Wpf.Windows;assembly=Start9.UI.Wpf"
         xmlns:local="clr-namespace:FrontEndTest"
+        
+        xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:beh="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" ResizeMode="CanResize">
     <win:DecoratableWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <!--LIGHT BLUE PLEX-->
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/>
-                
-                <!--DARK BLUE PLEX-->
+                <!--BRIGHT SKY PLEX-->
+                <!--ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/-->
+
+                <!--OCEAN ABYSS PLEX-->
                 <!--ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/DarkPlexBlue.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/-->
 
                 <!--AERO-->
                 <!--ResourceDictionary Source="/PresentationFramework.Aero;V3.0.0.0;31bf3856ad364e35;component\themes/aero.normalcolor.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Aero.NormalColor.xaml"/-->
+
+                <!--LUNA BLUE-->
+                <ResourceDictionary Source="/PresentationFramework.Luna;V3.0.0.0;31bf3856ad364e35;component\themes/luna.normalcolor.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Luna.NormalColor.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-            
+
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         </ResourceDictionary>
     </win:DecoratableWindow.Resources>
     <win:DecoratableWindow.FullWindowContent>
-        <ui:NavigationView x:Name="NavigationView" Visibility="Collapsed"><!--DisplayMode="Minimal"-->
+        <ui:NavigationView x:Name="NavigationView" Visibility="Collapsed">
+            <!--DisplayMode="Minimal"-->
             <ui:NavigationView.Style>
                 <Style TargetType="{x:Type ui:NavigationView}">
                     <Setter Property="Template">
@@ -58,7 +66,8 @@
                                                         </Grid.RenderTransform>
                                                         <Border x:Name="HoverBackground" Background="#407F7F7F" Visibility="Hidden"/>
                                                         <Border x:Name="SelectedBackground" BorderBrush="#FF0175D3" BorderThickness="3,0,0,0" Visibility="Hidden"/>
-                                                        <DockPanel x:Name="ContentDockPanel" Background="#01000000"><!--HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}"-->
+                                                        <DockPanel x:Name="ContentDockPanel" Background="#01000000">
+                                                            <!--HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}"-->
                                                             <!--Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="Auto"/>
                                                                 <ColumnDefinition Width="*"/>
@@ -188,24 +197,6 @@
                     </Setter>
                 </Style>
             </ui:NavigationView.Style>
-            <!--MenuItem Header="A">
-                <MenuItem.Icon>
-                    <Rectangle Width="16" Height="16" Fill="Red"/>
-                </MenuItem.Icon>
-            </>
-            <MenuItem Header="B">
-                <MenuItem.Icon>
-                    <Rectangle Width="16" Height="16" Fill="Green"/>
-                </MenuItem.Icon>
-            </MenuItem>
-            <MenuItem Header="C">
-                <MenuItem.Icon>
-                    <Rectangle Width="16" Height="16" Fill="Blue"/>
-                </MenuItem.Icon>
-            </MenuItem-->
-            <!--ListViewItem>ListViewItem A</>
-            <ListViewItem>ListViewItem B</ListViewItem>
-            <ListViewItem>ListViewItem C</ListViewItem-->
             <ListViewItem Content="ListViewItem A">
                 <ui:NavigationView.Icon>
                     <Rectangle Width="16" Height="16" Fill="Red"/>
@@ -221,7 +212,7 @@
                     <Rectangle Width="16" Height="16" Fill="Blue"/>
                 </ui:NavigationView.Icon>
             </ListViewItem>
-            </ui:NavigationView>
+        </ui:NavigationView>
     </win:DecoratableWindow.FullWindowContent>
     <Grid>
         <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
@@ -232,29 +223,38 @@
             <StatusBar DockPanel.Dock="Bottom">
                 <StatusBarItem>StatusBar</StatusBarItem>
             </StatusBar>
-            <ToolBarTray DockPanel.Dock="Top">
-                <ToolBar>
-                    <Button>Button</Button>
-                    <ToggleButton>ToggleButton</ToggleButton>
-                    <TextBox>TextBox</TextBox>
-                    <TextBlock>TextBlock</TextBlock>
-                    <ui:ToggleSwitch>ToggleSwitch</ui:ToggleSwitch>
-                    <Button Width="200">Excessively wide Button</Button>
-                </ToolBar>
-                <ToolBar>
-                    <Button Width="200">Excessively wide Button</Button>
-                    <Button Width="200">Excessively wide Button</Button></ToolBar>
-            </ToolBarTray>
-            <Grid DockPanel.Dock="Top" Background="Gray">
-                <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True">
+            <Grid DockPanel.Dock="Top">
+                <Control Style="{DynamicResource ToolbarBackgroundControlStyle}"/>
+                <ToolBarTray Style="{DynamicResource TransparentToolBarTray}">
+                    <ToolBar>
+                        <Button>Button</Button>
+                        <ToggleButton>ToggleButton</ToggleButton>
+                        <TextBox>TextBox</TextBox>
+                        <TextBlock>TextBlock</TextBlock>
+                        <ui:ToggleSwitch>ToggleSwitch</ui:ToggleSwitch>
+                        <Button Width="200">Excessively wide Button</Button>
+                    </ToolBar>
+                    <ToolBar>
+                        <Button Width="200">Excessively wide Button</Button>
+                        <Button Width="200">Excessively wide Button</Button>
+                    </ToolBar>
+                </ToolBarTray>
+            </Grid>
+            <Grid DockPanel.Dock="Top" Background="White">
+                <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True" Visibility="Collapsed">
                     <ui:ToggleSwitch.ContextMenu>
                         <ContextMenu>
+                            <!--e:Interaction.Behaviors>
+                                <beh:TouchableContextMenuBehavior/>
+                            </e:Interaction.Behaviors-->
                             <MenuItem Header="AAAA"/>
                             <MenuItem Header="BBBB"/>
                             <MenuItem Header="CCCC"/>
                         </ContextMenu>
-</ui:ToggleSwitch.ContextMenu>
-                    Current Theme</ui:ToggleSwitch>
+                    </ui:ToggleSwitch.ContextMenu>
+                    Current Theme
+                </ui:ToggleSwitch>
+                <ui:ToggleSwitch TrueText="True" FalseText="False" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True">Title</ui:ToggleSwitch>
             </Grid>
             <TabControl>
                 <TabItem Header="Buttons">

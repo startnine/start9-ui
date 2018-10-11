@@ -75,7 +75,7 @@ namespace Start9.UI.Wpf.Windows
 
     public class MessageBoxEventArgs : EventArgs
     {
-        Type _type;
+        //Type _type;
 
         internal MessageBoxEventArgs(Type type, object value)
         {

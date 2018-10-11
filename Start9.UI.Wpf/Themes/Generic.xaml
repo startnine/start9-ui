@@ -11,6 +11,7 @@
     <conv:WidthAndHeightToRectConverter x:Key="WidthAndHeightToRectConverter"/>
     <conv:CombinedClassicFrameSizeConverter x:Key="CombinedClassicFrameSizeConverter"/>
     <conv:ThicknessInvertFilterConverter x:Key="ThicknessInvertFilterConverter"/>
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
     <!--#endregion Converters-->
 
@@ -295,7 +296,7 @@
                                         <ImageBrush ImageSource="{TemplateBinding Icon}" />
                                     </Canvas.Background>
                                 </Canvas>
-                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="20,0,0,0" FontWeight="Bold" FontSize="11" Foreground="{x:Static SystemColors.ActiveCaptionTextBrush}" IsHitTestVisible="False"/>
+                                <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="20,0,0,0" FontWeight="Bold" FontSize="11" Foreground="{x:Static SystemColors.ActiveCaptionTextBrush}" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
                                 <ContentPresenter Content="{TemplateBinding TitleBarContent}" IsHitTestVisible="False"/>
                                 <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="-2,2,2,-2">
                                     <!--RenderTransformOrigin="1,0">
