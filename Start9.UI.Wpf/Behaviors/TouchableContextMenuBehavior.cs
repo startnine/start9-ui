@@ -58,18 +58,12 @@ namespace Start9.UI.Wpf.Behaviors
         }*/
 
         public static readonly DependencyProperty AttachedTouchableBehaviorProperty =
-            DependencyProperty.RegisterAttached("AttachedTouchableBehavior", typeof(bool), typeof(ContextMenu),
-                new FrameworkPropertyMetadata(false,
-                                              FrameworkPropertyMetadataOptions.AffectsArrange |
-                                              FrameworkPropertyMetadataOptions.AffectsMeasure |
-                                              FrameworkPropertyMetadataOptions.AffectsRender |
-                                              FrameworkPropertyMetadataOptions.AffectsParentArrange |
-                                              FrameworkPropertyMetadataOptions.AffectsParentMeasure,
-                                              OnAttachedTouchableBehaviorChanged));
+            DependencyProperty.RegisterAttached("AttachedTouchableBehavior", typeof(bool), typeof(ContextMenu), new PropertyMetadata(false));
+        //new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsArrange | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsParentArrange | FrameworkPropertyMetadataOptions.AffectsParentMeasure, OnAttachedTouchableBehaviorChanged)
 
         public static void SetAttachedTouchableBehavior(DependencyObject element, bool value)
         {
-            element.SetValue(AttachedTouchableBehaviorProperty, (bool)value);
+            element.SetValue(AttachedTouchableBehaviorProperty, value);
         }
 
         public static bool GetAttachedTouchableBehavior(DependencyObject element)

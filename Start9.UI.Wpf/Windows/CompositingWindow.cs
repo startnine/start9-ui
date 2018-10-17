@@ -52,8 +52,8 @@ namespace Start9.UI.Wpf.Windows
 
         static void OnCanActivatePropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
-            var win = (sender as CompositingWindow);
-            if ((bool)(e.NewValue))
+            var win = sender as CompositingWindow;
+            if ((bool)e.NewValue)
                 NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & ~NativeMethods.WsExNoActivate);
             else
                 NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & NativeMethods.WsExNoActivate);
@@ -75,7 +75,7 @@ namespace Start9.UI.Wpf.Windows
         }
 
         public static readonly DependencyProperty HideTransitionDurationProperty =
-            DependencyProperty.Register("HideTransitionDuration", typeof(int), typeof(CompositingWindow), new FrameworkPropertyMetadata(3500));
+            DependencyProperty.Register("HideTransitionDuration", typeof(int), typeof(CompositingWindow), new FrameworkPropertyMetadata(0));
 
         static void OnCompositionStatePropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -170,7 +170,6 @@ namespace Start9.UI.Wpf.Windows
                     else
                     {
                         interval++;
-                        //Debug.WriteLine("interval: " + interval);
                     }
                 }));
             };

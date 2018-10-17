@@ -10,13 +10,13 @@
         xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:beh="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" ResizeMode="CanResize">
+        Title="MainWindow" Height="450" Width="800" ResizeMode="CanResize"><!--BorderThickness="4,75,4,4"-->
     <win:DecoratableWindow.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <!--BRIGHT SKY PLEX-->
-                <!--ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/-->
+                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/>
 
                 <!--OCEAN ABYSS PLEX-->
                 <!--ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/DarkPlexBlue.xaml"/>
@@ -27,8 +27,8 @@
                 <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Aero.NormalColor.xaml"/-->
 
                 <!--LUNA BLUE-->
-                <ResourceDictionary Source="/PresentationFramework.Luna;V3.0.0.0;31bf3856ad364e35;component\themes/luna.normalcolor.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Luna.NormalColor.xaml"/>
+                <!--ResourceDictionary Source="/PresentationFramework.Luna;V3.0.0.0;31bf3856ad364e35;component\themes/luna.normalcolor.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Luna.NormalColor.xaml"/-->
             </ResourceDictionary.MergedDictionaries>
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>

@@ -680,7 +680,8 @@
                             <DockPanel LastChildFill="True" Background="Transparent">
                                 <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" Margin="0" Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}" Visibility="Visible" Opacity="1" DockPanel.Dock="Top">
                                     <Grid.ContextMenu>
-                                        <local:TouchableContextMenu>
+                                        <ContextMenu>
+                                            <!--local:TouchableContextMenu-->
                                             <!--ContextMenu.Resources>
                                             <Style TargetType="{x:Type MenuItem}">
                                                 <Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -726,7 +727,7 @@
                                             <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
                                             <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
                                             <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
-                                        </local:TouchableContextMenu>
+                                        </ContextMenu>
                                     </Grid.ContextMenu>
                                     <Grid x:Name="ActiveTitlebarBackground" Visibility="Visible">
                                         <Border x:Name="ActiveTitlebarBorder"
@@ -2850,7 +2851,6 @@
         <Setter Property="BorderBrush" Value="#01000000" />
         <Setter Property="Padding" Value="10,0" />
         <Setter Property="Margin" Value="0,0,0,3" />
-        <!--Setter Property="beh:TouchableContextMenuBehavior.AttachedTouchableBehavior" Value="True"/-->
         <!--Setter Property="{Binding AttachedTouchableBehavior, RelativeSource={RelativeSource Mode=Self}}" Value="True"/-->
         <!--Setter Property="inter:Interaction.Behaviors">
             <Setter.Value>
@@ -2889,6 +2889,7 @@
         <Setter Property="HasDropShadow" Value="False" />
         <Setter Property="MinWidth" Value="50"/>
         <!--Setter Property="ItemContainerStyle" Value="{DynamicResource PlexMenuItemStyle}"/-->
+        <!--Setter Property="beh:TouchableContextMenuBehavior.AttachedTouchableBehavior" Value="True"/-->
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">

@@ -8,15 +8,26 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
+using Orientation = System.Windows.Controls.Orientation;
 using static Start9.UI.Wpf.MonitorInfo.NativeMethods;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
 //using static Start9.UI.Wpf.Windows.AppBarWindow.NativeMethods;
 //using Rect = Start9.UI.Wpf.Windows.AppBarWindow.NativeMethods.Rect;
 //using SysWinRect = System.Windows.Rect;
 
 namespace Start9.UI.Wpf.Windows
 {
+
+    [TemplatePart(Name = PartDragMoveGrid, Type = typeof(Grid))]
+    [TemplatePart(Name = PartResizeThumb, Type = typeof(Thumb))]
     public class AppBarWindow : CompositingWindow
     {
+        const String PartDragMoveGrid = "PART_DragMoveGrid";
+        const String PartResizeThumb = "PART_ResizeThumb";
+
         private Boolean IsAppBarRegistered;
         private Boolean IsInAppBarResize;
 
@@ -36,6 +47,256 @@ namespace Start9.UI.Wpf.Windows
             Topmost = true;
         }
 
+        Grid _dragMoveGrid;
+        Thumb _resizeThumb;
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            _dragMoveGrid = GetTemplateChild(PartDragMoveGrid) as Grid;
+            if (_dragMoveGrid != null)
+            {
+                _dragMoveGrid.MouseLeftButtonDown += DragMoveGrid_PreviewMouseLeftButtonDown;
+            }
+
+            _resizeThumb = GetTemplateChild(PartResizeThumb) as Thumb;
+            if (_resizeThumb != null)
+            {
+                _resizeThumb.PreviewMouseLeftButtonDown += ResizeThumb_PreviewMouseLeftButtonDown;
+            }
+        }
+
+        private void DragMoveGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            AppBarDockMode targetMode = DockMode;
+            var timer = new System.Timers.Timer(10);
+
+            Window highlightWindow = new Window()
+            {
+                Topmost = true,
+                ShowInTaskbar = false,
+                WindowStyle = WindowStyle.None,
+                ResizeMode = ResizeMode.NoResize,
+                Background = new SolidColorBrush(Colors.Red)
+            };
+            //highlightWindow.Show();
+            timer.Elapsed += (sneder, args) =>
+            {
+                Dispatcher.Invoke(new Action(() =>
+                {
+                    if (Mouse.LeftButton == MouseButtonState.Pressed)
+                    {
+                        var curPos = System.Windows.Forms.Cursor.Position;
+                        var winPoint = PointToScreen(new Point(0, 0));
+                        if ((curPos.X > winPoint.X)
+                        && (curPos.Y > winPoint.Y)
+                        && (curPos.X <= SystemScaling.WpfUnitsToRealPixels(Left + ActualWidth))
+                        && (curPos.Y <= SystemScaling.WpfUnitsToRealPixels(Top + ActualHeight))
+                        )
+                        {
+                            targetMode = DockMode;
+                            highlightWindow.Hide();
+                        }
+                        else
+                        {
+                            highlightWindow.Show();
+
+                            var screen = System.Windows.Forms.Screen.FromPoint(curPos);
+                            double horizontal = (double)(curPos.X) / (double)(screen.Bounds.Width);
+                            double vertical = (double)(curPos.Y) / (double)(screen.Bounds.Height);
+
+                            if (horizontal > 0.5)
+                            {
+                                if (vertical > 0.5)
+                                {
+                                    if (horizontal > vertical)
+                                        targetMode = AppBarDockMode.Right;
+                                    else
+                                        targetMode = AppBarDockMode.Bottom;
+                                }
+                                else
+                                {
+                                    if (vertical > horizontal)
+                                        targetMode = AppBarDockMode.Right;
+                                    else
+                                        targetMode = AppBarDockMode.Top;
+                                }
+                            }
+                            else
+                            {
+                                if (vertical > 0.5)
+                                {
+                                    if (horizontal > vertical)
+                                        targetMode = AppBarDockMode.Left;
+                                    else
+                                        targetMode = AppBarDockMode.Bottom;
+                                }
+                                else
+                                {
+                                    if (vertical > horizontal)
+                                        targetMode = AppBarDockMode.Left;
+                                    else
+                                        targetMode = AppBarDockMode.Top;
+                                }
+                            }
+
+                        if (targetMode == AppBarDockMode.Left)
+                        {
+                            highlightWindow.Left = screen.WorkingArea.Left;
+                            highlightWindow.Top = screen.WorkingArea.Top;
+                            highlightWindow.Width = DockedWidthOrHeight;
+                            highlightWindow.Height = screen.WorkingArea.Height;
+                        }
+                        else if (targetMode == AppBarDockMode.Top)
+                        {
+                            highlightWindow.Left = screen.WorkingArea.Left;
+                            highlightWindow.Top = screen.WorkingArea.Top;
+                            highlightWindow.Width = screen.WorkingArea.Width;
+                            highlightWindow.Height = DockedWidthOrHeight;
+                        }
+                        else if (targetMode == AppBarDockMode.Right)
+                        {
+                            highlightWindow.Left = screen.WorkingArea.Right - DockedWidthOrHeight;
+                            highlightWindow.Top = screen.WorkingArea.Top;
+                            highlightWindow.Width = DockedWidthOrHeight;
+                            highlightWindow.Height = screen.WorkingArea.Height;
+                        }
+                        else
+                        {
+                            highlightWindow.Left = screen.WorkingArea.Left;
+                            highlightWindow.Top = screen.WorkingArea.Bottom - DockedWidthOrHeight;
+                            highlightWindow.Width = screen.WorkingArea.Width;
+                            highlightWindow.Height = DockedWidthOrHeight;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        DockMode = targetMode;
+                        highlightWindow.Close();
+                        timer.Stop();
+                    }
+                }));
+            };
+
+            if (IsUnlocked)
+                timer.Start();
+        }
+
+        private void ResizeThumb_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (UseIntervalResizing)
+            {
+                var timer = new System.Timers.Timer(10);
+                double targetWidthOrHeight = DockedWidthOrHeight;
+                var initialCurPos = System.Windows.Forms.Cursor.Position;
+                double xChange = 0;
+                double yChange = 0;
+
+                timer.Elapsed += (sneder, args) =>
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        if (Mouse.LeftButton == MouseButtonState.Pressed)
+                        {
+                            var curPos = System.Windows.Forms.Cursor.Position;
+                            xChange = curPos.X - initialCurPos.X;
+                            yChange = curPos.Y - initialCurPos.Y;
+
+                            if (Orientation == Orientation.Vertical)
+                            {
+                                if (xChange > ResizeIntervalDistance)
+                                {
+                                    if (DockMode == AppBarDockMode.Left)
+                                    {
+                                        targetWidthOrHeight += ResizeIntervalDistance;
+                                        //xChange -= ResizeIntervalDistance;
+                                        //initialCurPos.X -= (int)ResizeIntervalDistance;
+                                    }
+                                    else
+                                    {
+                                        targetWidthOrHeight -= ResizeIntervalDistance;
+                                        //xChange += ResizeIntervalDistance;
+                                    }
+                                    initialCurPos.X += (int)ResizeIntervalDistance;
+                                }
+                                else if (xChange <= (ResizeIntervalDistance * -1))
+                                {
+                                    if (DockMode == AppBarDockMode.Left)
+                                    {
+                                        targetWidthOrHeight -= ResizeIntervalDistance;
+                                        //xChange += ResizeIntervalDistance;
+                                        //initialCurPos.X += (int)ResizeIntervalDistance;
+                                    }
+                                    else
+                                    {
+                                        targetWidthOrHeight += ResizeIntervalDistance;
+                                        //xChange -= ResizeIntervalDistance;
+                                    }
+                                    initialCurPos.X -= (int)ResizeIntervalDistance;
+                                }
+                            }
+                            else
+                            {
+                                if (yChange > ResizeIntervalDistance)
+                                {
+                                    if (DockMode == AppBarDockMode.Top)
+                                    {
+                                        targetWidthOrHeight += ResizeIntervalDistance;
+                                        //yChange -= ResizeIntervalDistance;
+                                        //yChange = curPos.Y - (Top + Height);
+                                        //initialCurPos.Y -= (int)ResizeIntervalDistance;
+                                    }
+                                    else
+                                    {
+                                        targetWidthOrHeight -= ResizeIntervalDistance;
+                                        //yChange += ResizeIntervalDistance;
+                                        //yChange = curPos.Y - Top;
+                                    }
+                                    initialCurPos.Y += (int)ResizeIntervalDistance;
+                                }
+                                else if (yChange <= (ResizeIntervalDistance * -1))
+                                {
+                                    if (DockMode == AppBarDockMode.Top)
+                                    {
+                                        targetWidthOrHeight -= ResizeIntervalDistance;
+                                        //yChange += ResizeIntervalDistance;
+                                        //yChange = curPos.Y - (Top + Height);
+                                        //initialCurPos.Y += (int)ResizeIntervalDistance;
+                                    }
+                                    else
+                                    {
+                                        targetWidthOrHeight += ResizeIntervalDistance;
+                                        //yChange -= ResizeIntervalDistance;
+                                        //yChange = curPos.Y - Top;
+                                    }
+                                    initialCurPos.Y -= (int)ResizeIntervalDistance;
+                                }
+                            }
+
+                            DockedWidthOrHeight = (int)targetWidthOrHeight;
+                        }
+                        else
+                            timer.Stop();
+                    }));
+                };
+
+                if (IsUnlocked)
+                    timer.Start();
+            }
+        }
+
+        public bool IsUnlocked
+        {
+            get => (bool)GetValue(IsUnlockedProperty);
+            set => SetValue(IsUnlockedProperty, value);
+        }
+
+        public static readonly DependencyProperty IsUnlockedProperty =
+            DependencyProperty.Register("IsUnlocked", typeof(bool), typeof(AppBarWindow),
+                new FrameworkPropertyMetadata(true));
+
         public AppBarDockMode DockMode
         {
             get { return (AppBarDockMode)GetValue(DockModeProperty); }
@@ -46,6 +307,15 @@ namespace Start9.UI.Wpf.Windows
             DependencyProperty.Register("DockMode", typeof(AppBarDockMode), typeof(AppBarWindow),
                 new FrameworkPropertyMetadata(AppBarDockMode.Left, DockLocation_Changed));
 
+        public Orientation Orientation
+        {
+            get => (Orientation)GetValue(OrientationProperty);
+            private set => SetValue(OrientationProperty, value);
+        }
+
+        public static readonly DependencyProperty OrientationProperty =
+            DependencyProperty.Register("Orientation", typeof(Orientation), typeof(AppBarWindow), new FrameworkPropertyMetadata(Orientation.Vertical));
+
         public MonitorInfo Monitor
         {
             get { return (MonitorInfo)GetValue(MonitorProperty); }
@@ -55,6 +325,25 @@ namespace Start9.UI.Wpf.Windows
         public static readonly DependencyProperty MonitorProperty =
             DependencyProperty.Register("Monitor", typeof(MonitorInfo), typeof(AppBarWindow),
                 new FrameworkPropertyMetadata(null, DockLocation_Changed));
+
+        public bool UseIntervalResizing
+        {
+            get => (bool)GetValue(UseIntervalResizingProperty);
+            set => SetValue(UseIntervalResizingProperty, value);
+        }
+
+        public static readonly DependencyProperty UseIntervalResizingProperty =
+            DependencyProperty.Register("UseIntervalResizing", typeof(bool), typeof(AppBarWindow), new FrameworkPropertyMetadata(true));
+
+        public double ResizeIntervalDistance
+        {
+            get { return (double)GetValue(ResizeIntervalDistanceProperty); }
+            set { SetValue(ResizeIntervalDistanceProperty, value); }
+        }
+
+        public static readonly DependencyProperty ResizeIntervalDistanceProperty =
+            DependencyProperty.Register("ResizeIntervalDistance", typeof(double), typeof(AppBarWindow),
+                new FrameworkPropertyMetadata(30.0));
 
         public Int32 DockedWidthOrHeight
         {
@@ -188,6 +477,11 @@ namespace Start9.UI.Wpf.Windows
                     break;
                 default: throw new NotSupportedException();
             }
+
+            if (DockMode == AppBarDockMode.Top || DockMode == AppBarDockMode.Bottom)
+                Orientation = Orientation.Horizontal;
+            else
+                Orientation = Orientation.Vertical;
 
             SHAppBarMessage(ABM.SetPos, ref abd);
             IsInAppBarResize = true;
