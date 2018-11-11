@@ -184,6 +184,10 @@ _pkginfo.txt
 !*.[Cc]ache/
 
 # Others
+bin
+obj
+Debug
+packages
 ClientBin/
 ~$*
 *~
