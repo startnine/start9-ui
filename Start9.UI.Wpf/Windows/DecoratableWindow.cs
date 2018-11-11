@@ -178,7 +178,8 @@ namespace Start9.UI.Wpf.Windows
                 WindowStyle = WindowStyle.None,
                 AllowsTransparency = true,
                 ShowInTaskbar = false,
-                ShowActivated = false
+                ShowActivated = false,
+                Tag = this
             };
 
             _shadowWindow.SourceInitialized += (sneder, args) =>
@@ -232,14 +233,23 @@ namespace Start9.UI.Wpf.Windows
             };
             BindingOperations.SetBinding(_shadowWindow, Window.OpacityProperty, shadowOpacityBinding);
 
-            Binding shadowIsEnabledBinding = new Binding()
+            Binding shadowIsFocusedBinding = new Binding()
             {
                 Source = this,
                 Path = new PropertyPath("IsActive"),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
-            BindingOperations.SetBinding(_shadowWindow, Window.IsEnabledProperty, shadowIsEnabledBinding);
+            BindingOperations.SetBinding(_shadowWindow, Window.IsManipulationEnabledProperty, shadowIsFocusedBinding);
+
+            Binding shadowIEnabledBinding = new Binding()
+            {
+                Source = this,
+                Path = new PropertyPath("IsWindowVisible"),
+                Mode = BindingMode.OneWay,
+                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+            };
+            BindingOperations.SetBinding(_shadowWindow, Window.IsEnabledProperty, shadowIEnabledBinding);
 
             Binding shadowIsHitTestVisibleBinding = new Binding()
             {
@@ -288,6 +298,8 @@ namespace Start9.UI.Wpf.Windows
 
             Initialized += (sneder, args) =>
             {
+                if (WindowState == WindowState.Normal)
+                    _shadowWindow.Show();
                 //UpdateDefaultStyle();
                 //Style = (Style)(FindResource(typeof(DecoratableWindow)));
                 //UpdateDefaultStyle();

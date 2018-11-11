@@ -82,6 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Behaviors\TouchableContextMenuBehavior.cs" />
+    <Compile Include="Converters\BoolInverterConverter.cs" />
     <Compile Include="Converters\CombinedClassicFrameSizeConverter.cs" />
     <Compile Include="Converters\DoubleComparisonConverter.cs" />
     <Compile Include="Converters\IconToImageBrushConverter.cs" />

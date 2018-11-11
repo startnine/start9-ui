@@ -45,6 +45,18 @@ namespace Start9.UI.Wpf.Windows
             WindowStyle = WindowStyle.None;
             ResizeMode = ResizeMode.NoResize;
             Topmost = true;
+
+            IntPtr handle = new WindowInteropHelper(this).EnsureHandle();
+            int exStyle = NativeMethods.GetWindowLong(handle, NativeMethods.GwlExstyle).ToInt32();
+
+            exStyle |= NativeMethods.WsExToolwindow;
+
+            NativeMethods.SetWindowLong(handle, NativeMethods.GwlExstyle, exStyle);
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
         }
 
         Grid _dragMoveGrid;
@@ -180,11 +192,110 @@ namespace Start9.UI.Wpf.Windows
                 }));
             };
 
-            if (IsUnlocked)
+            if (!IsLocked)
                 timer.Start();
         }
 
         private void ResizeThumb_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            if (UseIntervalResizing)
+            {
+                var timer = new System.Timers.Timer(10);
+                //double targetWidthOrHeight = DockedWidthOrHeight;
+                var initialCurPos = System.Windows.Forms.Cursor.Position;
+                double xChange = 0;
+                double yChange = 0;
+
+                timer.Elapsed += (sneder, args) =>
+                {
+                    Dispatcher.Invoke(new Action(() =>
+                    {
+                        if (Mouse.LeftButton == MouseButtonState.Pressed)
+                        {
+                            var curPos = System.Windows.Forms.Cursor.Position;
+                            xChange = curPos.X - initialCurPos.X;
+                            yChange = curPos.Y - initialCurPos.Y;
+
+                            if (Orientation == Orientation.Vertical)
+                            {
+                                if (xChange > ResizeIntervalDistance)
+                                {
+                                    if (DockMode == AppBarDockMode.Left)
+                                    {
+                                        //targetWidthOrHeight += ResizeIntervalDistance;
+                                        ResizeIntervals++;
+                                    }
+                                    else
+                                    {
+                                        //targetWidthOrHeight -= ResizeIntervalDistance;
+                                        if (ResizeIntervals > 1)
+                                            ResizeIntervals--;
+                                    }
+                                    initialCurPos.X += (int)ResizeIntervalDistance;
+                                }
+                                else if (xChange <= (ResizeIntervalDistance * -1))
+                                {
+                                    if (DockMode == AppBarDockMode.Left)
+                                    {
+                                        //targetWidthOrHeight -= ResizeIntervalDistance;
+                                        if (ResizeIntervals > 1)
+                                            ResizeIntervals--;
+                                    }
+                                    else
+                                    {
+                                        //targetWidthOrHeight += ResizeIntervalDistance;
+                                        ResizeIntervals++;
+                                    }
+                                    initialCurPos.X -= (int)ResizeIntervalDistance;
+                                }
+                            }
+                            else
+                            {
+                                if (yChange > ResizeIntervalDistance)
+                                {
+                                    if (DockMode == AppBarDockMode.Top)
+                                    {
+                                        //targetWidthOrHeight += ResizeIntervalDistance;
+                                        ResizeIntervals++;
+                                    }
+                                    else
+                                    {
+                                        //targetWidthOrHeight -= ResizeIntervalDistance;
+                                        if (ResizeIntervals > 1)
+                                            ResizeIntervals--;
+                                    }
+                                    initialCurPos.Y += (int)ResizeIntervalDistance;
+                                }
+                                else if (yChange <= (ResizeIntervalDistance * -1))
+                                {
+                                    if (DockMode == AppBarDockMode.Top)
+                                    {
+                                        //targetWidthOrHeight -= ResizeIntervalDistance;
+                                        if (ResizeIntervals > 1)
+                                            ResizeIntervals--;
+                                    }
+                                    else
+                                    {
+                                        //targetWidthOrHeight += ResizeIntervalDistance;
+                                        ResizeIntervals++;
+                                    }
+                                    initialCurPos.Y -= (int)ResizeIntervalDistance;
+                                }
+                            }
+
+                            //DockedWidthOrHeight = (int)targetWidthOrHeight;
+                        }
+                        else
+                            timer.Stop();
+                    }));
+                };
+
+                if (!IsLocked)
+                    timer.Start();
+            }
+        }
+
+        private void OldResizeThumb_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (UseIntervalResizing)
             {
@@ -282,19 +393,19 @@ namespace Start9.UI.Wpf.Windows
                     }));
                 };
 
-                if (IsUnlocked)
+                if (!IsLocked)
                     timer.Start();
             }
         }
 
-        public bool IsUnlocked
+        public bool IsLocked
         {
-            get => (bool)GetValue(IsUnlockedProperty);
-            set => SetValue(IsUnlockedProperty, value);
+            get => (bool)GetValue(IsLockedProperty);
+            set => SetValue(IsLockedProperty, value);
         }
 
-        public static readonly DependencyProperty IsUnlockedProperty =
-            DependencyProperty.Register("IsUnlocked", typeof(bool), typeof(AppBarWindow),
+        public static readonly DependencyProperty IsLockedProperty =
+            DependencyProperty.Register("IsLocked", typeof(bool), typeof(AppBarWindow),
                 new FrameworkPropertyMetadata(true));
 
         public AppBarDockMode DockMode
@@ -326,25 +437,6 @@ namespace Start9.UI.Wpf.Windows
             DependencyProperty.Register("Monitor", typeof(MonitorInfo), typeof(AppBarWindow),
                 new FrameworkPropertyMetadata(null, DockLocation_Changed));
 
-        public bool UseIntervalResizing
-        {
-            get => (bool)GetValue(UseIntervalResizingProperty);
-            set => SetValue(UseIntervalResizingProperty, value);
-        }
-
-        public static readonly DependencyProperty UseIntervalResizingProperty =
-            DependencyProperty.Register("UseIntervalResizing", typeof(bool), typeof(AppBarWindow), new FrameworkPropertyMetadata(true));
-
-        public double ResizeIntervalDistance
-        {
-            get { return (double)GetValue(ResizeIntervalDistanceProperty); }
-            set { SetValue(ResizeIntervalDistanceProperty, value); }
-        }
-
-        public static readonly DependencyProperty ResizeIntervalDistanceProperty =
-            DependencyProperty.Register("ResizeIntervalDistance", typeof(double), typeof(AppBarWindow),
-                new FrameworkPropertyMetadata(30.0));
-
         public Int32 DockedWidthOrHeight
         {
             get { return (Int32)GetValue(DockedWidthOrHeightProperty); }
@@ -372,6 +464,49 @@ namespace Start9.UI.Wpf.Windows
 
                 default: throw new NotSupportedException();
             }
+        }
+
+        public bool UseIntervalResizing
+        {
+            get => (bool)GetValue(UseIntervalResizingProperty);
+            set => SetValue(UseIntervalResizingProperty, value);
+        }
+
+        public static readonly DependencyProperty UseIntervalResizingProperty =
+            DependencyProperty.Register("UseIntervalResizing", typeof(bool), typeof(AppBarWindow), new FrameworkPropertyMetadata(true));
+
+        public int ResizeIntervals
+        {
+            get { return (int)GetValue(ResizeIntervalsProperty); }
+            set { SetValue(ResizeIntervalsProperty, value); }
+        }
+
+        public static readonly DependencyProperty ResizeIntervalsProperty =
+            DependencyProperty.Register("ResizeIntervals", typeof(int), typeof(AppBarWindow),
+                new FrameworkPropertyMetadata(1, OnResizeIntervalPropertiesChangedCallback));
+
+        public double ResizeIntervalDistance
+        {
+            get { return (double)GetValue(ResizeIntervalDistanceProperty); }
+            set { SetValue(ResizeIntervalDistanceProperty, value); }
+        }
+
+        public static readonly DependencyProperty ResizeIntervalDistanceProperty =
+            DependencyProperty.Register("ResizeIntervalDistance", typeof(double), typeof(AppBarWindow),
+                new FrameworkPropertyMetadata(30.0, FrameworkPropertyMetadataOptions.AffectsRender, OnResizeIntervalPropertiesChangedCallback));
+
+        static void OnResizeIntervalPropertiesChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var win = sender as AppBarWindow;
+            if (win.UseIntervalResizing)
+            {
+                win.DockedWidthOrHeight = win.CalculateIntervalSize();
+            }
+        }
+
+        public int CalculateIntervalSize()
+        {
+            return (int)(ResizeIntervalDistance * ResizeIntervals);
         }
 
         private static Int32 BoundIntToDouble(Int32 value, Double min, Double max)
@@ -423,6 +558,7 @@ namespace Start9.UI.Wpf.Windows
 
             // set our initial location
             this.IsAppBarRegistered = true;
+
             OnDockLocationChanged();
         }
 
@@ -459,6 +595,9 @@ namespace Start9.UI.Wpf.Windows
             abd.rc = GetSelectedMonitor().ViewportBounds;
 
             SHAppBarMessage(ABM.QueryPos, ref abd);
+
+            if (UseIntervalResizing)
+                DockedWidthOrHeight = CalculateIntervalSize();
 
             var dockedWidthOrHeightInDesktopPixels = WpfDimensionToDesktop(DockedWidthOrHeight);
             switch (DockMode)

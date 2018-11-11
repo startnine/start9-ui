@@ -29,7 +29,9 @@ namespace Start9.UI.Wpf.Converters
             if (opr == "g")
                 return val > param;
             else if (opr == "l")
-                return val < param;
+            return val < param;
+            else if (opr == "e")
+                return val == param;
             else if (opr == "ge")
                 return val >= param;
             else if (opr == "le")
