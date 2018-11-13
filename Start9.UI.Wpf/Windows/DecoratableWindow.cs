@@ -186,6 +186,9 @@ namespace Start9.UI.Wpf.Windows
             {
                 var helper = new WindowInteropHelper(_shadowWindow);
                 NativeMethods.SetWindowLong(helper.Handle, NativeMethods.GwlExstyle, (Int32)(NativeMethods.GetWindowLong(helper.Handle, NativeMethods.GwlExstyle)) | NativeMethods.WsExToolwindow | NativeMethods.WsExTransparent); ////WinApi
+
+                if (!IsWindowVisible)
+                    _shadowWindow.Hide();
             };
 
             Binding shadowStyleBinding = new Binding()
@@ -298,7 +301,7 @@ namespace Start9.UI.Wpf.Windows
 
             Initialized += (sneder, args) =>
             {
-                if (WindowState == WindowState.Normal)
+                if (WindowState == WindowState.Normal && IsVisible)
                     _shadowWindow.Show();
                 //UpdateDefaultStyle();
                 //Style = (Style)(FindResource(typeof(DecoratableWindow)));
