@@ -679,6 +679,15 @@
                         <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
                             <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible"/>
                         </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanMinimize">
+                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="NoResize">
+                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_MaximizeButton" Property="IsEnabled" Value="False"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>

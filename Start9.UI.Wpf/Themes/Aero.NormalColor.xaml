@@ -861,6 +861,15 @@
                         <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
                             <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible"/>
                         </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanMinimize">
+                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="NoResize">
+                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="PART_MaximizeButton" Property="IsEnabled" Value="False"/>
+                        </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
@@ -916,8 +925,8 @@
                             <RowDefinition MinHeight="25"/>
                             <RowDefinition Height="25"/>
                         </Grid.RowDefinitions>
-                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center" IsHitTestVisible="False" TextBlock.FontSize="14" Grid.ColumnSpan="2" Grid.Row="0"/>
-                        <TextBlock x:Name="PART_StateText" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" IsHitTestVisible="False" FontSize="14" Grid.Column="0" Grid.Row="1"/>
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Stretch" VerticalAlignment="Center" TextBlock.TextAlignment="Center" IsHitTestVisible="False" Grid.ColumnSpan="2" Grid.Row="0"/>
+                        <TextBlock x:Name="PART_StateText" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" IsHitTestVisible="False" Grid.Column="0" Grid.Row="1"/>
                         <Grid Grid.Column="1" Grid.Row="1" Background="#01000000">
                             <!--Grid Visibility="Collapsed">
                                 <Border Name="MaskBorder" CornerRadius="{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}" BorderThickness="0" Padding="0" Background="Black" HorizontalAlignment="Stretch" Height="22" VerticalAlignment="Center" Margin="-2,-1" IsHitTestVisible="False"/>

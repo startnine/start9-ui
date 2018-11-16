@@ -34,7 +34,7 @@ namespace Start9.UI.Wpf.Windows
     [TemplatePart(Name = PartSystemMenuClose, Type = typeof(MenuItem))]
 
     [ContentProperty("Content")]
-    public partial class DecoratableWindow : CompositingWindow
+    public partial class DecoratableWindow : ShadowedWindow
     {
         const String PartTitlebar = "PART_Titlebar";
         const String PartMinimizeButton = "PART_MinimizeButton";
@@ -91,24 +91,6 @@ namespace Start9.UI.Wpf.Windows
         new public static readonly DependencyProperty WindowStyleProperty =
             DependencyProperty.Register("WindowStyle", typeof(WindowStyle), typeof(DecoratableWindow), new PropertyMetadata(WindowStyle.SingleBorderWindow));
 
-        public Thickness ShadowOffsetThickness
-        {
-            get => (Thickness)GetValue(ShadowOffsetThicknessProperty);
-            set => SetValue(ShadowOffsetThicknessProperty, value);
-        }
-
-        public static readonly DependencyProperty ShadowOffsetThicknessProperty =
-            DependencyProperty.Register("ShadowOffsetThickness", typeof(Thickness), typeof(DecoratableWindow), new PropertyMetadata(new Thickness(50)));
-
-        public Style ShadowStyle
-        {
-            get => (Style)GetValue(ShadowStyleProperty);
-            set => SetValue(ShadowStyleProperty, value);
-        }
-
-        public static readonly DependencyProperty ShadowStyleProperty =
-            DependencyProperty.Register("ShadowStyle", typeof(Style), typeof(DecoratableWindow), new PropertyMetadata());
-
         /*public double ShadowOpacity
         {
             get => (double)GetValue(ShadowOpacityProperty);
@@ -126,8 +108,6 @@ namespace Start9.UI.Wpf.Windows
 
         public static readonly DependencyProperty ShadowVisibilityProperty =
             DependencyProperty.Register("ShadowVisibility", typeof(Visibility), typeof(DecoratableWindow), new PropertyMetadata(Visibility.Visible));*/
-
-        readonly Window _shadowWindow;
 
         public bool ShowTitlebarText
         {
@@ -173,106 +153,6 @@ namespace Start9.UI.Wpf.Windows
             /*base.WindowStyle = WindowStyle.None;
             base.AllowsTransparency = true;*/
 
-            _shadowWindow = new Window()
-            {
-                WindowStyle = WindowStyle.None,
-                AllowsTransparency = true,
-                ShowInTaskbar = false,
-                ShowActivated = false,
-                Tag = this
-            };
-
-            _shadowWindow.SourceInitialized += (sneder, args) =>
-            {
-                var helper = new WindowInteropHelper(_shadowWindow);
-                NativeMethods.SetWindowLong(helper.Handle, NativeMethods.GwlExstyle, (Int32)(NativeMethods.GetWindowLong(helper.Handle, NativeMethods.GwlExstyle)) | NativeMethods.WsExToolwindow | NativeMethods.WsExTransparent); ////WinApi
-
-                if (!IsWindowVisible)
-                    _shadowWindow.Hide();
-            };
-
-            Binding shadowStyleBinding = new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("ShadowStyle"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
-            BindingOperations.SetBinding(_shadowWindow, Window.StyleProperty, shadowStyleBinding);
-
-            /*Binding shadowTopmostBinding = new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("IsActive"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
-            BindingOperations.SetBinding(_shadowWindow, Window.TopmostProperty, shadowTopmostBinding);*/
-
-            Binding shadowVisibilityBinding = new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("Visibility"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
-            BindingOperations.SetBinding(_shadowWindow, Window.VisibilityProperty, shadowVisibilityBinding);
-
-            Binding shadowRenderTransformBinding = new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("RenderTransform"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
-            BindingOperations.SetBinding(_shadowWindow, Window.RenderTransformProperty, shadowRenderTransformBinding);
-
-            Binding shadowOpacityBinding = new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("Opacity"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
-            BindingOperations.SetBinding(_shadowWindow, Window.OpacityProperty, shadowOpacityBinding);
-
-            Binding shadowIsFocusedBinding = new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("IsActive"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
-            BindingOperations.SetBinding(_shadowWindow, Window.IsManipulationEnabledProperty, shadowIsFocusedBinding);
-
-            Binding shadowIEnabledBinding = new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("IsWindowVisible"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
-            BindingOperations.SetBinding(_shadowWindow, Window.IsEnabledProperty, shadowIEnabledBinding);
-
-            Binding shadowIsHitTestVisibleBinding = new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("WindowState"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged,
-                Converter = new WindowStateIsMaximizedToBoolConverter()
-            };
-            BindingOperations.SetBinding(_shadowWindow, Window.IsHitTestVisibleProperty, shadowIsHitTestVisibleBinding);
-
-            Binding shadowBorderThicknessBinding = new Binding()
-            {
-                Source = this,
-                Path = new PropertyPath("ShadowOffsetThickness"),
-                Mode = BindingMode.OneWay,
-                UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
-            };
-            BindingOperations.SetBinding(_shadowWindow, Window.BorderThicknessProperty, shadowBorderThicknessBinding);
-
             StateChanged += (sneder, args) =>
             {
                 if (WindowState == WindowState.Maximized)
@@ -287,43 +167,17 @@ namespace Start9.UI.Wpf.Windows
                     MaxHeight = Int32.MaxValue;
                 }
 
-                if (WindowState == WindowState.Normal)
-                    _shadowWindow.Show();
-                else
-                    _shadowWindow.Hide();
-
                 ValidateSystemMenuItemStates();
             };
 
-            DefaultStyleKey = typeof(DecoratableWindow);
+            ////DefaultStyleKey = typeof(DecoratableWindow);
             //Style = (Style)Resources[typeof(DecoratableWindow)];
-            SetResourceReference(StyleProperty, typeof(DecoratableWindow));
-
-            Initialized += (sneder, args) =>
-            {
-                if (WindowState == WindowState.Normal && IsVisible)
-                    _shadowWindow.Show();
-                //UpdateDefaultStyle();
-                //Style = (Style)(FindResource(typeof(DecoratableWindow)));
-                //UpdateDefaultStyle();
-                //Style = (Style)Resources[typeof(DecoratableWindow)];
-            };
+            ////SetResourceReference(StyleProperty, typeof(DecoratableWindow));
 
             /*Loaded += (sneder, args) =>
             {
                 SyncShadowToWindowSize();
             };*/
-
-            Activated += (sneder, args) =>
-            {
-                _shadowWindow.Topmost = true;
-                _shadowWindow.Topmost = false;
-            };
-
-            Closed += (sneder, args) =>
-            {
-                _shadowWindow.Close();
-            };
         }
 
         /*protected override void OnChildDesiredSizeChanged(UIElement child)
@@ -334,33 +188,6 @@ namespace Start9.UI.Wpf.Windows
                 SyncShadowToWindowSize();
             }
         }*/
-
-        public void SyncShadowToWindow()
-        {
-            _shadowWindow.Left = Left - ShadowOffsetThickness.Left;
-            _shadowWindow.Top = Top - ShadowOffsetThickness.Top;
-        }
-
-        public void SyncShadowToWindowSize()
-        {
-            _shadowWindow.Width = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
-            _shadowWindow.Height = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
-            /*if (CompositionState != WindowCompositionState.Alpha)
-                SetCompositionState();*/
-        }
-
-        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
-        {
-            base.OnRenderSizeChanged(sizeInfo);
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
-        }
-
-        protected override void OnLocationChanged(EventArgs e)
-        {
-            base.OnLocationChanged(e);
-            SyncShadowToWindow();
-        }
 
         public override void OnApplyTemplate()
         {

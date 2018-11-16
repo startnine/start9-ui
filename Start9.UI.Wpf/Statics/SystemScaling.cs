@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Windows;
 using Graphics = System.Drawing.Graphics;
 using Point = System.Windows.Point;
 
@@ -79,6 +80,43 @@ namespace Start9.UI.Wpf.Statics
                 var p = System.Windows.Forms.Cursor.Position;
                 return new Point(RealPixelsToWpfUnits(p.X), RealPixelsToWpfUnits(p.Y));
             }
+        }
+
+        /// <summary>
+        /// Determines whether the cursor is within the bounds of a FrameworkElement, independent of WPF mouse events.
+        /// </summary>
+        /// <value>
+        /// A point representing whether the cursor is within the bounds of a FrameworkElement, independent of WPF mouse events.
+        /// </value>
+        public static bool IsMouseWithin(FrameworkElement target)
+        {
+            var targetPoint = target.PointToScreen(new Point(0, 0));
+            var cur = CursorPosition;
+
+            double width = target.ActualWidth;
+            if (width == 0)
+                try
+                {
+                    width = target.Width;
+                }
+                catch (Exception ex)
+                {
+                }
+
+            double height = target.ActualHeight;
+            if (height == 0)
+                try
+                {
+                    height = target.Height;
+                }
+                catch (Exception ex)
+                {
+                }
+            
+            return (cur.X >= targetPoint.X)
+                && (cur.Y >= targetPoint.Y)
+                && (cur.X < targetPoint.X + width)
+                && (cur.Y < targetPoint.Y + height);
         }
     }
 }
