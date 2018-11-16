@@ -24,6 +24,15 @@ namespace Start9.UI.Wpf.Windows
         NativeMethods.DWM_BLURBEHIND _blurInfo;
         NativeMethods.DWM_BLURBEHIND _unblurInfo;
 
+        public bool IsGlassAvailable
+        {
+            get => (bool)GetValue(IsGlassAvailableProperty);
+            set => SetValue(IsGlassAvailableProperty, value);
+        }
+
+        public static readonly DependencyProperty IsGlassAvailableProperty =
+            DependencyProperty.Register("IsGlassAvailable", typeof(bool), typeof(CompositingWindow), new FrameworkPropertyMetadata(false, OnCompositionStatePropertyChangedCallback));
+
         public enum WindowCompositionState
         {
             Alpha,
@@ -80,7 +89,8 @@ namespace Start9.UI.Wpf.Windows
         static void OnCompositionStatePropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
             //Debug.WriteLine("CompositionState: " + (sender as CompositingWindow).CompositionState.ToString());
-            (sender as CompositingWindow).SetCompositionState((WindowCompositionState)(e.NewValue));
+            var win = sender as CompositingWindow;
+            win.SetCompositionState(win.CompositionState);
         }
 
         static CompositingWindow()
@@ -92,6 +102,18 @@ namespace Start9.UI.Wpf.Windows
         {
             base.WindowStyle = WindowStyle.None;
             AllowsTransparency = true;
+
+            if (System.IO.File.Exists(Environment.ExpandEnvironmentVariables(@"%appdata%\Start9\noglass.txt")))
+                IsGlassAvailable = false;
+            else
+            {
+                if (Environment.OSVersion.Version >= new Version(6, 2, 8400, 0))
+                    IsGlassAvailable = NativeMethods.DwmIsCompositionEnabled() && ((System.IO.File.Exists(@"C:\AeroGlass\aerohost.exe")) || (System.IO.File.Exists(Environment.ExpandEnvironmentVariables(@"%systemdrive%\AeroGlass\aerohost.exe"))));
+                else if (Environment.OSVersion.Version >= new Version(6, 0, 5112, 0))
+                    IsGlassAvailable = NativeMethods.DwmIsCompositionEnabled();
+                else
+                    IsGlassAvailable = false;
+            }
 
             _blurInfo = new NativeMethods.DWM_BLURBEHIND()
             {

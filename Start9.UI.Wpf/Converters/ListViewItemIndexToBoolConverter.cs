@@ -33,7 +33,7 @@ namespace Start9.UI.Wpf.Converters
                     returnValue = (panel.Children.Count == 1) && (index == 0);
             }
 
-            Debug.WriteLine("conditions: " + (position.ToLowerInvariant() == "first").ToString() + ", " + (position.ToLowerInvariant() == "last").ToString() + ", " + (position.ToLowerInvariant() == "only").ToString() + "; values: " + (item != null).ToString() + ", " + (panel != null).ToString() + "; parameter: " + position.ToLowerInvariant() + "; returnValue: " + returnValue.ToString());
+            //Debug.WriteLine("conditions: " + (position.ToLowerInvariant() == "first").ToString() + ", " + (position.ToLowerInvariant() == "last").ToString() + ", " + (position.ToLowerInvariant() == "only").ToString() + "; values: " + (item != null).ToString() + ", " + (panel != null).ToString() + "; parameter: " + position.ToLowerInvariant() + "; returnValue: " + returnValue.ToString());
             //conditions: False, True; values: True, True; parameter:last; returnValue: False
             return returnValue;
         }

@@ -40,6 +40,15 @@ namespace Start9.UI.Wpf.Windows
             MaxWidthProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(MinMaxHeightWidth_Changed));
         }
 
+        public Style DragIndicatorStyle
+        {
+            get => (Style)GetValue(DragIndicatorProperty);
+            set => SetValue(StyleProperty, value);
+        }
+
+        public static readonly DependencyProperty DragIndicatorProperty =
+            DependencyProperty.Register("DragIndicatorStyle", typeof(Style), typeof(AppBarWindow), new PropertyMetadata(null));
+
         public AppBarWindow()
         {
             WindowStyle = WindowStyle.None;
@@ -81,17 +90,28 @@ namespace Start9.UI.Wpf.Windows
 
         private void DragMoveGrid_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
+            DragDockMove();
+        }
+
+        public void DragDockMove()
+        {
             AppBarDockMode targetMode = DockMode;
             var timer = new System.Timers.Timer(10);
 
-            Window highlightWindow = new Window()
+            Window dragIndicatorWindow = new ShadowedWindow()
             {
                 Topmost = true,
                 ShowInTaskbar = false,
                 WindowStyle = WindowStyle.None,
-                ResizeMode = ResizeMode.NoResize,
-                Background = new SolidColorBrush(Colors.Red)
+                ResizeMode = ResizeMode.NoResize/*,
+                Background = new SolidColorBrush(Colors.Red)*/
             };
+
+            if (DragIndicatorStyle != null)
+                dragIndicatorWindow.Style = DragIndicatorStyle;
+            else
+                dragIndicatorWindow.Background = new SolidColorBrush(Colors.Red);
+
             //highlightWindow.Show();
             timer.Elapsed += (sneder, args) =>
             {
@@ -108,11 +128,14 @@ namespace Start9.UI.Wpf.Windows
                         )
                         {
                             targetMode = DockMode;
-                            highlightWindow.Hide();
+                            dragIndicatorWindow.Hide();
                         }
                         else
                         {
-                            highlightWindow.Show();
+                            if (targetMode != DockMode)
+                                dragIndicatorWindow.Show();
+                            else
+                                dragIndicatorWindow.Hide();
 
                             var screen = System.Windows.Forms.Screen.FromPoint(curPos);
                             double horizontal = (double)(curPos.X) / (double)(screen.Bounds.Width);
@@ -153,40 +176,43 @@ namespace Start9.UI.Wpf.Windows
                                 }
                             }
 
-                        if (targetMode == AppBarDockMode.Left)
-                        {
-                            highlightWindow.Left = screen.WorkingArea.Left;
-                            highlightWindow.Top = screen.WorkingArea.Top;
-                            highlightWindow.Width = DockedWidthOrHeight;
-                            highlightWindow.Height = screen.WorkingArea.Height;
-                        }
-                        else if (targetMode == AppBarDockMode.Top)
-                        {
-                            highlightWindow.Left = screen.WorkingArea.Left;
-                            highlightWindow.Top = screen.WorkingArea.Top;
-                            highlightWindow.Width = screen.WorkingArea.Width;
-                            highlightWindow.Height = DockedWidthOrHeight;
-                        }
-                        else if (targetMode == AppBarDockMode.Right)
-                        {
-                            highlightWindow.Left = screen.WorkingArea.Right - DockedWidthOrHeight;
-                            highlightWindow.Top = screen.WorkingArea.Top;
-                            highlightWindow.Width = DockedWidthOrHeight;
-                            highlightWindow.Height = screen.WorkingArea.Height;
-                        }
-                        else
-                        {
-                            highlightWindow.Left = screen.WorkingArea.Left;
-                            highlightWindow.Top = screen.WorkingArea.Bottom - DockedWidthOrHeight;
-                            highlightWindow.Width = screen.WorkingArea.Width;
-                            highlightWindow.Height = DockedWidthOrHeight;
+                            if (targetMode == AppBarDockMode.Left)
+                            {
+                                dragIndicatorWindow.Left = screen.WorkingArea.Left;
+                                dragIndicatorWindow.Top = screen.WorkingArea.Top;
+                                dragIndicatorWindow.Width = DockedWidthOrHeight;
+                                dragIndicatorWindow.Height = screen.WorkingArea.Height;
                             }
+                            else if (targetMode == AppBarDockMode.Top)
+                            {
+                                dragIndicatorWindow.Left = screen.WorkingArea.Left;
+                                dragIndicatorWindow.Top = screen.WorkingArea.Top;
+                                dragIndicatorWindow.Width = screen.WorkingArea.Width;
+                                dragIndicatorWindow.Height = DockedWidthOrHeight;
+                            }
+                            else if (targetMode == AppBarDockMode.Right)
+                            {
+                                dragIndicatorWindow.Left = screen.WorkingArea.Right - DockedWidthOrHeight;
+                                dragIndicatorWindow.Top = screen.WorkingArea.Top;
+                                dragIndicatorWindow.Width = DockedWidthOrHeight;
+                                dragIndicatorWindow.Height = screen.WorkingArea.Height;
+                            }
+                            else
+                            {
+                                dragIndicatorWindow.Left = screen.WorkingArea.Left;
+                                dragIndicatorWindow.Top = screen.WorkingArea.Bottom - DockedWidthOrHeight;
+                                dragIndicatorWindow.Width = screen.WorkingArea.Width;
+                                dragIndicatorWindow.Height = DockedWidthOrHeight;
+                            }
+
+                            /*if (targetMode == DockMode)
+                                dragIndicatorWindow.Hide();*/
                         }
                     }
                     else
                     {
                         DockMode = targetMode;
-                        highlightWindow.Close();
+                        dragIndicatorWindow.Close();
                         timer.Stop();
                     }
                 }));
