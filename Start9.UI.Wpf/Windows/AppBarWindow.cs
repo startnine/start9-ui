@@ -38,6 +38,7 @@ namespace Start9.UI.Wpf.Windows
             MinWidthProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(20d, MinMaxHeightWidth_Changed));
             MaxHeightProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(MinMaxHeightWidth_Changed));
             MaxWidthProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(MinMaxHeightWidth_Changed));
+            IgnorePeekProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(true, CompositingWindow.OnIgnorePeekChangedCallback));
         }
 
         public Style DragIndicatorStyle

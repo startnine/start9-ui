@@ -163,6 +163,21 @@ namespace Start9.UI.Wpf.Windows
             };
         }
 
+        internal override void SetPeekState()
+        {
+            base.SetPeekState();
+
+            if (NativeMethods.DwmIsCompositionEnabled())
+            {
+                int peekValue = 0;
+
+                if (IgnorePeek)
+                    peekValue = 1;
+
+                NativeMethods.DwmSetWindowAttribute(new WindowInteropHelper(_shadowWindow).EnsureHandle(), 12, ref peekValue, sizeof(int));
+            }
+        }
+
         public void SyncShadowToWindow()
         {
             _shadowWindow.Left = Left - ShadowOffsetThickness.Left;

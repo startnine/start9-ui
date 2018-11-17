@@ -33,6 +33,33 @@ namespace Start9.UI.Wpf.Windows
         public static readonly DependencyProperty IsGlassAvailableProperty =
             DependencyProperty.Register("IsGlassAvailable", typeof(bool), typeof(CompositingWindow), new FrameworkPropertyMetadata(false, OnCompositionStatePropertyChangedCallback));
 
+        public bool IgnorePeek
+        {
+            get => (bool)GetValue(IgnorePeekProperty);
+            set => SetValue(IgnorePeekProperty, value);
+        }
+
+        public static readonly DependencyProperty IgnorePeekProperty =
+            DependencyProperty.Register("IgnorePeek", typeof(bool), typeof(CompositingWindow), new FrameworkPropertyMetadata(false, OnIgnorePeekChangedCallback));
+
+        internal static void OnIgnorePeekChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            (sender as CompositingWindow).SetPeekState();
+        }
+
+        internal virtual void SetPeekState()
+        {
+            if (NativeMethods.DwmIsCompositionEnabled())
+            {
+                int peekValue = 0;
+
+                if (IgnorePeek)
+                    peekValue = 1;
+
+                NativeMethods.DwmSetWindowAttribute(_handle, 12, ref peekValue, sizeof(int));
+            }
+        }
+
         public enum WindowCompositionState
         {
             Alpha,
@@ -150,6 +177,8 @@ namespace Start9.UI.Wpf.Windows
                 IsWindowVisible = false;
                 Show();
             }
+
+            SetPeekState();
 
             Loaded -= CompositingWindow_Loaded;
         }
