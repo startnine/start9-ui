@@ -14,6 +14,7 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Diagnostics;
 //using static Start9.UI.Wpf.Windows.AppBarWindow.NativeMethods;
 //using Rect = Start9.UI.Wpf.Windows.AppBarWindow.NativeMethods.Rect;
 //using SysWinRect = System.Windows.Rect;
@@ -65,6 +66,18 @@ namespace Start9.UI.Wpf.Windows
 
             Loaded += (sneder, args) =>
             {
+                if (Monitor == null)
+                {
+                    foreach (MonitorInfo m in MonitorInfo.AllMonitors)
+                    {
+                        if (m.DeviceId == System.Windows.Forms.Screen.FromHandle(handle).DeviceName)
+                        {
+                            Monitor = m;
+                            break;
+                        }
+                    }
+                }
+
                 SetPeekState();
             };
         }
@@ -134,18 +147,21 @@ namespace Start9.UI.Wpf.Windows
                         )
                         {
                             targetMode = DockMode;
-                            dragIndicatorWindow.Hide();
+
+                            //if ((Monitor != null) && (Monitor.DeviceId == System.Windows.Forms.Screen.FromPoint(curPos).DeviceName))
+                                dragIndicatorWindow.Hide();
                         }
                         else
                         {
-                            if (targetMode != DockMode)
-                                dragIndicatorWindow.Show();
-                            else
+                            if ((targetMode == DockMode) && (Monitor != null) && (Monitor.DeviceId == System.Windows.Forms.Screen.FromPoint(curPos).DeviceName))
                                 dragIndicatorWindow.Hide();
+                            else
+                                dragIndicatorWindow.Show();
 
                             var screen = System.Windows.Forms.Screen.FromPoint(curPos);
-                            double horizontal = (double)(curPos.X) / (double)(screen.Bounds.Width);
-                            double vertical = (double)(curPos.Y) / (double)(screen.Bounds.Height);
+                            double horizontal = ((double)(curPos.X) / (double)(screen.Bounds.Width)) - ((double)screen.Bounds.Left / (double)(screen.Bounds.Width));
+                            double vertical = ((double)(curPos.Y) / (double)(screen.Bounds.Height)) - ((double)screen.Bounds.Top / (double)(screen.Bounds.Height));
+                            //Debug.WriteLine(horizontal.ToString() + ", " + vertical.ToString());
 
                             if (horizontal > 0.5)
                             {
@@ -218,6 +234,16 @@ namespace Start9.UI.Wpf.Windows
                     else
                     {
                         DockMode = targetMode;
+                        var screen = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
+                        foreach (MonitorInfo m in MonitorInfo.AllMonitors)
+                        {
+                            Debug.WriteLine("m.DeviceId: " + m.DeviceId + ", screen.DeviceName: " + screen.DeviceName);
+                            if (m.DeviceId == screen.DeviceName)
+                            {
+                                Monitor = m;
+                                break;
+                            }
+                        }
                         dragIndicatorWindow.Close();
                         timer.Stop();
                     }
@@ -466,8 +492,7 @@ namespace Start9.UI.Wpf.Windows
         }
 
         public static readonly DependencyProperty MonitorProperty =
-            DependencyProperty.Register("Monitor", typeof(MonitorInfo), typeof(AppBarWindow),
-                new FrameworkPropertyMetadata(null, DockLocation_Changed));
+            DependencyProperty.Register("Monitor", typeof(MonitorInfo), typeof(AppBarWindow), new FrameworkPropertyMetadata(null, DockLocation_Changed));
 
         public Int32 DockedWidthOrHeight
         {
