@@ -62,6 +62,11 @@ namespace Start9.UI.Wpf.Windows
             exStyle |= NativeMethods.WsExToolwindow;
 
             NativeMethods.SetWindowLong(handle, NativeMethods.GwlExstyle, exStyle);
+
+            Loaded += (sneder, args) =>
+            {
+                SetPeekState();
+            };
         }
 
         protected override void OnInitialized(EventArgs e)

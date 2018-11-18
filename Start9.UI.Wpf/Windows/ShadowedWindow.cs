@@ -31,6 +31,11 @@ namespace Start9.UI.Wpf.Windows
 
         readonly Window _shadowWindow;
 
+        static ShadowedWindow()
+        {
+            IgnorePeekProperty.OverrideMetadata(typeof(ShadowedWindow), new FrameworkPropertyMetadata(false, ShadowedWindow.OnIgnorePeekChangedCallback));
+        }
+
         public ShadowedWindow()
         {
             _shadowWindow = new Window()
@@ -161,6 +166,11 @@ namespace Start9.UI.Wpf.Windows
             {
                 _shadowWindow.Close();
             };
+        }
+
+        new internal static void OnIgnorePeekChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            (sender as ShadowedWindow).SetPeekState();
         }
 
         internal override void SetPeekState()

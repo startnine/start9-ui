@@ -275,32 +275,32 @@ namespace Start9.UI.Wpf.Windows
 
         void ClearCompositionState()
         {
-            NativeMethods.DwmEnableBlurBehindWindow(_handle, ref _unblurInfo);
-
-            if (Environment.OSVersion.Version >= new Version(10, 0, 17134, 0))
+            if (NativeMethods.DwmIsCompositionEnabled())
             {
-                var accent = new NativeMethods.AccentPolicy();
-                var accentStructSize = Marshal.SizeOf(accent);
-                accent.GradientColor = (0x990000 << 24) | (0x990000 /* BGR */ & 0xFFFFFF);
-                accent.AccentState = NativeMethods.AccentState.ACCENT_DISABLED;
+                NativeMethods.DwmEnableBlurBehindWindow(_handle, ref _unblurInfo);
 
-                var accentPtr = Marshal.AllocHGlobal(accentStructSize);
-                Marshal.StructureToPtr(accent, accentPtr, false);
-
-                var data = new NativeMethods.WindowCompositionAttributeData
+                if (Environment.OSVersion.Version >= new Version(10, 0, 17134, 0))
                 {
-                    Attribute = NativeMethods.WindowCompositionAttribute.WCA_ACCENT_POLICY,
-                    SizeOfData = accentStructSize,
-                    Data = accentPtr
-                };
+                    var accent = new NativeMethods.AccentPolicy();
+                    var accentStructSize = Marshal.SizeOf(accent);
+                    accent.GradientColor = (0x990000 << 24) | (0x990000 /* BGR */ & 0xFFFFFF);
+                    accent.AccentState = NativeMethods.AccentState.ACCENT_DISABLED;
 
-                NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+                    var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+                    Marshal.StructureToPtr(accent, accentPtr, false);
 
-                Marshal.FreeHGlobal(accentPtr);
-            }
-            else
-            {
-                if (Environment.OSVersion.Version >= new Version(6, 2, 9200, 0))
+                    var data = new NativeMethods.WindowCompositionAttributeData
+                    {
+                        Attribute = NativeMethods.WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                        SizeOfData = accentStructSize,
+                        Data = accentPtr
+                    };
+
+                    NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+
+                    Marshal.FreeHGlobal(accentPtr);
+                }
+                else if (Environment.OSVersion.Version >= new Version(6, 2, 9200, 0))
                 {
                     var accent = new NativeMethods.AccentPolicy();
                     var accentStructSize = Marshal.SizeOf(accent);
@@ -330,6 +330,8 @@ namespace Start9.UI.Wpf.Windows
         {
             if (CompositionState != WindowCompositionState.Alpha)
                 SetCompositionState(CompositionState);
+            else
+                ClearCompositionState();
         }
 
         void SetCompositionState(WindowCompositionState targetState)
