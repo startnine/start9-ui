@@ -95,6 +95,36 @@ namespace Start9.UI.Wpf.Windows
                 NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & NativeMethods.WsExNoActivate);
         }
 
+        public bool ShowInAltTab
+        {
+            get => (bool)GetValue(ShowInAltTabProperty);
+            set => SetValue(ShowInAltTabProperty, value);
+        }
+
+        public static readonly DependencyProperty ShowInAltTabProperty =
+            DependencyProperty.Register("ShowInAltTab", typeof(bool), typeof(CompositingWindow), new FrameworkPropertyMetadata(true, OnShowInAltTabPropertyChangedCallback));
+
+        internal static void OnShowInAltTabPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
+        {
+            UpdateShowInAltTabPropertyValue(sender as CompositingWindow);
+        }
+
+        static void UpdateShowInAltTabPropertyValue(CompositingWindow win)
+        {
+            int exStyle = NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32();
+
+            if (win.ShowInAltTab)
+                exStyle |= ~NativeMethods.WsExToolwindow;
+            //NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & ~NativeMethods.WsExToolwindow);
+            else
+                exStyle |= NativeMethods.WsExToolwindow;
+            //NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & NativeMethods.WsExToolwindow);
+
+            NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, exStyle);
+
+            Debug.WriteLine("win.ShowInAltTab: " + win.ShowInAltTab.ToString());
+        }
+
         public bool IsWindowVisible
         {
             get => (bool)GetValue(IsWindowVisibleProperty);
@@ -177,6 +207,9 @@ namespace Start9.UI.Wpf.Windows
                 IsWindowVisible = false;
                 Show();
             }
+
+            if (!ShowInAltTab)
+                UpdateShowInAltTabPropertyValue(this);
 
             SetPeekState();
 

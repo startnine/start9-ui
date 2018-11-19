@@ -172,7 +172,24 @@ namespace Start9.UI.Wpf.Windows
 
             ////DefaultStyleKey = typeof(DecoratableWindow);
             //Style = (Style)Resources[typeof(DecoratableWindow)];
+
             ////SetResourceReference(StyleProperty, typeof(DecoratableWindow));
+
+            bool windowResourceIsNull = TryFindResource(GetType()) == null;
+            bool appResourceIsNull = TryFindResource(GetType()) == null;
+
+            bool defaultStyleFallback = false;
+
+            if (Application.Current == null)
+                defaultStyleFallback = windowResourceIsNull;
+            else
+                defaultStyleFallback = windowResourceIsNull && appResourceIsNull;
+
+            if ((Style == null) && defaultStyleFallback)
+            {
+                Debug.WriteLine("DecoratableWindow type: " + GetType().FullName);
+                SetResourceReference(StyleProperty, typeof(DecoratableWindow));
+            }
 
             /*Loaded += (sneder, args) =>
             {

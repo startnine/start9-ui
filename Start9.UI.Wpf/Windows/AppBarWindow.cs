@@ -39,7 +39,8 @@ namespace Start9.UI.Wpf.Windows
             MinWidthProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(20d, MinMaxHeightWidth_Changed));
             MaxHeightProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(MinMaxHeightWidth_Changed));
             MaxWidthProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(MinMaxHeightWidth_Changed));
-            IgnorePeekProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(true, CompositingWindow.OnIgnorePeekChangedCallback));
+            IgnorePeekProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(true, OnIgnorePeekChangedCallback));
+            ShowInAltTabProperty.OverrideMetadata(typeof(AppBarWindow), new FrameworkPropertyMetadata(false, OnShowInAltTabPropertyChangedCallback));
         }
 
         public Style DragIndicatorStyle
@@ -58,11 +59,11 @@ namespace Start9.UI.Wpf.Windows
             Topmost = true;
 
             IntPtr handle = new WindowInteropHelper(this).EnsureHandle();
-            int exStyle = NativeMethods.GetWindowLong(handle, NativeMethods.GwlExstyle).ToInt32();
+            /*int exStyle = NativeMethods.GetWindowLong(handle, NativeMethods.GwlExstyle).ToInt32();
 
             exStyle |= NativeMethods.WsExToolwindow;
 
-            NativeMethods.SetWindowLong(handle, NativeMethods.GwlExstyle, exStyle);
+            NativeMethods.SetWindowLong(handle, NativeMethods.GwlExstyle, exStyle);*/
 
             Loaded += (sneder, args) =>
             {
