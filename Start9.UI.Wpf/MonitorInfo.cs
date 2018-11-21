@@ -6,7 +6,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 //using System.Windows;
-using static Start9.UI.Wpf.MonitorInfo.NativeMethods;
+//using static Start9.UI.Wpf.MonitorInfo.NativeMethods;
+using static Start9.UI.Wpf.Statics.NativeMethods;
 
 namespace Start9.UI.Wpf
 {
@@ -96,137 +97,5 @@ namespace Start9.UI.Wpf
         }
 
         public static Boolean operator !=(MonitorInfo a, MonitorInfo b) => !(a == b);
-
-        public static class NativeMethods
-        {
-            public delegate Boolean MonitorEnumDelegate(IntPtr hMonitor, IntPtr hdcMonitor, ref Rect lprcMonitor, IntPtr dwData);
-
-            [DllImport("user32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-            public static extern Boolean GetMonitorInfo(IntPtr hMonitor, ref MonitorInfoEx lpmi);
-
-            [DllImport("user32.dll")]
-            public static extern Boolean EnumDisplayMonitors(IntPtr hdc, IntPtr lprcClip, MonitorEnumDelegate lpfnEnum, IntPtr dwData);
-
-            private const Int32 CchDeviceName = 32;
-
-            [Flags]
-            public enum MonitorInfoF
-            {
-                Primary = 0x1
-            }
-
-            [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-            public struct MonitorInfoEx
-            {
-                public Int32 cbSize;
-                public Rect rcMonitor;
-                public Rect rcWork;
-                public MonitorInfoF dwFlags;
-                [MarshalAs(UnmanagedType.ByValTStr, SizeConst = CchDeviceName)]
-                public String szDevice;
-            }
-
-            public enum ABM
-            {
-                New = 0,
-                Remove,
-                QueryPos,
-                SetPos,
-                GetState,
-                GetTaskbarPos,
-                Activate,
-                GetAutoHideBar,
-                SetAutoHideBar,
-                WindowPosChanged,
-                SetState
-            }
-
-            public enum ABN
-            {
-                StateChange = 0,
-                PosChanged,
-                FullScreenApp,
-                WindowArrange
-            }
-
-            [StructLayout(LayoutKind.Sequential)]
-            public struct WindowPos
-            {
-                public IntPtr hwnd;
-                public IntPtr hwndInsertAfter;
-                public Int32 x;
-                public Int32 y;
-                public Int32 cx;
-                public Int32 cy;
-                public Int32 flags;
-
-                public System.Windows.Rect Bounds
-                {
-                    get { return new System.Windows.Rect(x, y, cx, cy); }
-                    set
-                    {
-                        x = (Int32)value.X;
-                        y = (Int32)value.Y;
-                        cx = (Int32)value.Width;
-                        cy = (Int32)value.Height;
-                    }
-                }
-            }
-
-            public const Int32
-                SwpNoMove = 0x0002,
-                SwpNoSize = 0x0001;
-
-            public const Int32
-                WmActivate = 0x0006,
-                WmWindowPosChanged = 0x0047,
-                WmSysCommand = 0x0112,
-                WmWindowPosChanging = 0x0046;
-
-            public const Int32
-                ScMove = 0xF010;
-
-            [DllImport("shell32.dll", ExactSpelling = true)]
-            public static extern UInt32 SHAppBarMessage(ABM dwMessage, ref AppBarData pData);
-
-            [StructLayout(LayoutKind.Sequential)]
-            public struct Rect
-            {
-                public Rect(Int32 left, Int32 top, Int32 right, Int32 bottom)
-                {
-                    Left = left;
-                    Top = top;
-                    Right = right;
-                    Bottom = bottom;
-                }
-
-                public Int32 Left;
-                public Int32 Top;
-                public Int32 Right;
-                public Int32 Bottom;
-            }
-
-            [StructLayout(LayoutKind.Sequential)]
-            public struct AppBarData
-            {
-                public Int32 cbSize;
-                public IntPtr hWnd;
-                public Int32 uCallbackMessage;
-                public Int32 uEdge;
-                public Rect rc;
-                public IntPtr lParam;
-            }
-
-            [DllImport("user32.dll", CharSet = CharSet.Unicode)]
-            public static extern Int32 RegisterWindowMessage(String msg);
-
-            [DllImport("user32.dll", CharSet = CharSet.Auto)]
-            public static extern IntPtr SendMessage(IntPtr hWnd, Int32 Msg, Int32 wParam, Int32 lParam);
-
-            /*public static Rect SysWinRectToNativeRect(SysWinRect rect)
-            {
-                return new Rect((int)rect.Left, (int)rect.Top, (int)rect.Right, (int)rect.Bottom);
-            }*/
-        }
     }
 }

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using Orientation = System.Windows.Controls.Orientation;
-using static Start9.UI.Wpf.MonitorInfo.NativeMethods;
+using static Start9.UI.Wpf.Statics.NativeMethods;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
@@ -238,7 +238,7 @@ namespace Start9.UI.Wpf.Windows
                         var screen = System.Windows.Forms.Screen.FromPoint(System.Windows.Forms.Cursor.Position);
                         foreach (MonitorInfo m in MonitorInfo.AllMonitors)
                         {
-                            Debug.WriteLine("m.DeviceId: " + m.DeviceId + ", screen.DeviceName: " + screen.DeviceName);
+                            //Debug.WriteLine("m.DeviceId: " + m.DeviceId + ", screen.DeviceName: " + screen.DeviceName);
                             if (m.DeviceId == screen.DeviceName)
                             {
                                 Monitor = m;

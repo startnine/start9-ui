@@ -87,11 +87,16 @@
     <Compile Include="Converters\DoubleComparisonConverter.cs" />
     <Compile Include="Converters\IconToImageBrushConverter.cs" />
     <Compile Include="Converters\ListViewItemIndexToBoolConverter.cs" />
+    <Compile Include="Converters\RectangleToAspectRatioConverter.cs" />
+    <Compile Include="Converters\SysDrawingImageToImageBrushConverter.cs" />
     <Compile Include="Converters\ThicknessInvertFilterConverter.cs" />
     <Compile Include="Converters\TreeViewItemPaddingConverter.cs" />
     <Compile Include="Converters\WidthAndHeightToRectConverter.cs" />
     <Compile Include="MonitorInfo.cs" />
+    <Compile Include="Statics\NativeMethods.cs" />
     <Compile Include="NavigationView.cs" />
+    <Compile Include="Statics\Extensions.cs" />
+    <Compile Include="Statics\SystemState.cs" />
     <Compile Include="Windows\AppBarWindow.cs" />
     <Compile Include="Windows\CompositingWindow.cs" />
     <Compile Include="Converters\DoubleToFractionOfDoubleConverter.cs" />

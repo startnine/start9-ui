@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Interop;
+using Start9.UI.Wpf.Statics;
 
 namespace Start9.UI.Wpf.Windows
 {
