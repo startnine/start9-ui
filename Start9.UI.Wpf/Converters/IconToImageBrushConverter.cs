@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -40,7 +41,23 @@ namespace Start9.UI.Wpf.Converters
                 if (param >= 256)//Start9.UI.Wpf.Statics.SystemScaling.ScalingFactor > 1)
                     targetSize = WpfUnitsToRealPixels(param);
 
-                return new ImageBrush(Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(targetSize, targetSize)));
+                try
+                {
+                    return new ImageBrush(Imaging.CreateBitmapSourceFromHIcon(icon.Handle, Int32Rect.Empty, BitmapSizeOptions.FromWidthAndHeight(targetSize, targetSize)));
+                }
+                catch (COMException ex)
+                {
+                    Debug.WriteLine("IconToImageBrushConverter.Convert machine broke: \n" + ex);
+                    try
+                    {
+                        return new ImageBrush(Imaging.CreateBitmapSourceFromHIcon(icon.Handle, new Int32Rect(0, 0, 16, 16), BitmapSizeOptions.FromEmptyOptions()));
+                    }
+                    catch (COMException exc)
+                    {
+                        Debug.WriteLine("IconToImageBrushConverter.Convert machine broke again: \n" + exc);
+                        return new ImageBrush();
+                    }
+                }
                 //BitmapSizeOptions.FromWidthAndHeight(WpfUnitsToRealPixels(param), WpfUnitsToRealPixels(param))
             }
             else return new ImageBrush();
