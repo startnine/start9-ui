@@ -9,6 +9,20 @@ namespace Start9.UI.Wpf.Statics
 {
     public static class NativeMethods
     {
+        [DllImport("dwmapi.dll", EntryPoint = "#127")]
+        internal static extern void DwmGetColorizationParameters(ref DwmColorizationParams param);
+
+        public struct DwmColorizationParams
+        {
+            public UInt32 ColorizationColor,
+                ColorizationAfterglow,
+                ColorizationColorBalance,
+                ColorizationAfterglowBalance,
+                ColorizationBlurBalance,
+                ColorizationGlassReflectionIntensity,
+                ColorizationOpaqueBlend;
+        }
+
         ///Extensions
         [DllImport("gdi32.dll")]
         internal static extern bool DeleteObject(IntPtr hObject);
