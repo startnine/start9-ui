@@ -69,4 +69,18 @@ namespace Start9.UI.Wpf.Converters
             throw new NotImplementedException();
         }
     }
+
+    public static class ConversionInputHelper
+    {
+        public static double GetDouble(object val)
+        {
+            if (val is double)
+                return (double)val;
+            else if (val is int)
+                return (int)val;
+            else if (val is string)
+                return Double.Parse(val.ToString());
+            else return 0.0;
+        }
+    }
 }

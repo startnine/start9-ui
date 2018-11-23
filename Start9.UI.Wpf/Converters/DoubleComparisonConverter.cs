@@ -11,7 +11,7 @@ namespace Start9.UI.Wpf.Converters
             object parameter, CultureInfo culture)
         {
             //double val = double.Parse(value.ToString());
-            double val = (double)value;
+            double val = ConversionInputHelper.GetDouble(value);
             int paramFirstNumerical = 0;
             for (int i = 0; i < parameter.ToString().Length; i++)
             {
