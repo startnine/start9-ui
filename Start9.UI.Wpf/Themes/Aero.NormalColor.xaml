@@ -734,17 +734,17 @@
                                     </Rectangle.Fill>
                                 </Rectangle>
                             </Grid>
-                            <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="30" Margin="6,0" Visibility="Visible" Opacity="1" Background="#01000000">
-                                <Grid>
-                                    <Canvas x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="2">
+                            <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}" Margin="6,0" Visibility="Visible" Opacity="1" Background="#01000000">
+                                <Grid x:Name="TitlebarRootGrid">
+                                    <Canvas x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16" Margin="2">
                                         <Canvas.Background>
                                             <ImageBrush ImageSource="{TemplateBinding Icon}" />
                                         </Canvas.Background>
                                     </Canvas>
-                                    <Grid x:Name="TitleTextGrid" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="20,0,0,0">
-                                        <Border Background="White" CornerRadius="10" Opacity="0.75">
+                                    <Grid x:Name="TitleTextGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0">
+                                        <Border Background="White" CornerRadius="10" Opacity="0.5">
                                             <Border.Effect>
-                                                <BlurEffect Radius="15"/>
+                                                <BlurEffect Radius="10"/>
                                             </Border.Effect>
                                         </Border>
                                         <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="12" Foreground="Black"/>
@@ -754,7 +754,9 @@
                                         </Label.Effect>
                                     </Label-->
                                     </Grid>
-                                    <ContentPresenter Content="{TemplateBinding TitleBarContent}"/>
+                                    <Grid x:Name="TitleBarContentGrid">
+                                        <ContentPresenter Content="{TemplateBinding TitleBarContent}"/>
+                                    </Grid>
                                     <Border x:Name="CaptionButtons" BorderBrush="#C0FFFFFF" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,1,0,0">
                                         <Border BorderBrush="#C0000000" BorderThickness="1,0,1,1" CornerRadius="0,0,3,3">
                                             <StackPanel x:Name="CaptionButtonStack" Orientation="Horizontal" Height="18">
@@ -772,6 +774,7 @@
                             </Grid>
                             <Grid Margin="{TemplateBinding BorderThickness}">
                                 <Border x:Name="Body" BorderThickness="1" BorderBrush="#F2FEFEFE" CornerRadius="1" Margin="-2">
+                                    <!-- Margin="-2,-10,-2,-2-"-->
                                     <Border BorderBrush="#AF000000" BorderThickness="1" HorizontalAlignment="Stretch" Background="{TemplateBinding Background}">
                                         <ContentPresenter Content="{TemplateBinding Content}"/>
                                     </Border>
@@ -839,8 +842,10 @@
                             <Setter TargetName="RootBorder" Property="Margin" Value="9,9,-9,-9"/>
                             <Setter TargetName="WindowRoot" Property="Margin" Value="-8"/>
                             <Setter TargetName="PART_Titlebar" Property="Margin" Value="10,8,10,0"/>
-                            <Setter TargetName="PART_Titlebar" Property="Height" Value="22"/>
-                            <Setter TargetName="CaptionButtons" Property="Margin" Value="0,-1,0,0"/>
+                            <Setter TargetName="TitlebarRootGrid" Property="Margin" Value="0,-8,0,8"/>
+                            <!--TitleBarContentGrid-->
+                            <!--Setter TargetName="PART_Titlebar" Property="Height" Value="22"/-->
+                            <Setter TargetName="CaptionButtons" Property="Margin" Value="0,7,0,-8"/>
                             <!--Setter TargetName="CaptionButtonStack" Property="Height" Value="17"/-->
                         </Trigger>
                         <Trigger Property="IsActive" Value="False">

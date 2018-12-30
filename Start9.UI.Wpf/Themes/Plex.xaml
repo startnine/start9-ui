@@ -2361,7 +2361,8 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Effect">
             <Setter.Value>
-                <DropShadowEffect Color="Black" Direction="230" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
+                <!--DropShadowEffect Color="Black" Direction="230" ShadowDepth="3" BlurRadius="10" Opacity="0.5" /-->
+                <DropShadowEffect Color="Black" Direction="0" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
             </Setter.Value>
         </Setter>
     </Style>
@@ -4681,7 +4682,7 @@
         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
-        <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonForegroundBrush}"/>
+        <!--Setter Property="Foreground" Value="{DynamicResource ToolbarButtonForegroundBrush}"/-->
         <Setter Property="Height" Value="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=UniformGrid}}"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -4707,7 +4708,7 @@
                                 </LinearGradientBrush>
                             </Border.OpacityMask>
                         </Border>
-                        <ContentPresenter x:Name="ContentSite" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"/>
+                        <ContentPresenter x:Name="ContentSite" TextElement.Foreground="{DynamicResource ToolbarButtonForegroundBrush}" VerticalAlignment="Center" HorizontalAlignment="Center" ContentSource="Header" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
