@@ -14,7 +14,7 @@ namespace Start9.UI.Wpf.Converters
         {
             Thickness val = (Thickness)value;
             var param = parameter.ToString().ToLower();
-            Debug.WriteLine("val: " + val);
+            //Debug.WriteLine("val: " + val);
             if (param == "t")
             {
                 return val.Top;

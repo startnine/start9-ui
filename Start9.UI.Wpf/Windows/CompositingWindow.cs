@@ -150,10 +150,10 @@ namespace Start9.UI.Wpf.Windows
             win.SetCompositionState(win.CompositionState);
         }
 
-        static CompositingWindow()
+        /*static CompositingWindow()
         {
-            //AllowsTransparencyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata(true));
-        }
+            AllowsTransparencyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata(true));
+        }*/
 
         public CompositingWindow()
         {
@@ -188,16 +188,20 @@ namespace Start9.UI.Wpf.Windows
                 fTransitionOnMaximized = true
             };
 
-            base.WindowStyle = WindowStyle.None;
+            //base.WindowStyle = WindowStyle.None;
             //base.AllowsTransparency = true;
-            _handle = new WindowInteropHelper(this).EnsureHandle();
-
             Loaded += CompositingWindow_Loaded;
 
             /*StateChanged += (sneder, args) =>
             {
                 SetCompositionState();
             };*/
+        }
+
+        protected override void OnInitialized(EventArgs e)
+        {
+            base.OnInitialized(e);
+            _handle = new WindowInteropHelper(this).EnsureHandle();
         }
 
         private void CompositingWindow_Loaded(object sender, RoutedEventArgs e)

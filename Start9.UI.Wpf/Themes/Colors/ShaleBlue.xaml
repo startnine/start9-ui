@@ -1,0 +1,39 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mod="clr-namespace:ModApi.UI"
+            xmlns:win="clr-namespace:ModApi.UI.Windows"
+            xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <SolidColorBrush x:Key="ButtonPressedBorderBrush">#FF82B0B5</SolidColorBrush>
+    <!--FF83A6B6-->
+    <GradientStopCollection x:Key="ButtonPressedBackgroundGradientStops">
+        <GradientStop Offset="0" Color="#FFD4F2F4"/>
+        <GradientStop Offset="1" Color="#FFA5DDE2"/>
+        <!--GradientStop Offset="0" Color="#FFD6ECF6"/>
+        <GradientStop Offset="1" Color="#FFA5D1E4"/-->
+    </GradientStopCollection>
+    <GradientStopCollection x:Key="ButtonPressedSecondaryBackgroundGradientStops">
+        <GradientStop Offset="0" Color="#FFB1E8ED"/>
+        <GradientStop Offset="1" Color="#FF9ED3D8"/>
+        <!--GradientStop Offset="0" Color="#FFB1DAEE"/>
+        <GradientStop Offset="1" Color="#FF9DC6DA"/-->
+    </GradientStopCollection>
+
+    <GradientStopCollection x:Key="CardListViewSelectedBackgroundGradientStops">
+        <GradientStop Offset="0" Color="#FFD4F2F4"/>
+        <GradientStop Offset="1" Color="#FF9ED3D8"/>
+        <!--GradientStop Offset="0" Color="#FFD6ECF6"/>
+        <GradientStop Offset="1" Color="#FF9DC6DA"/-->
+    </GradientStopCollection>
+
+    <SolidColorBrush x:Key="HoverHighlightBrush">#C09ED3D8</SolidColorBrush>
+    <!--C09DC6DA-->
+    <SolidColorBrush x:Key="SelectedHighlightBrush">#FFA6D9DD</SolidColorBrush>
+    <!--FFA5D1E4-->
+    <SolidColorBrush x:Key="TabItemPressedFlashBackground">#7FB1E8ED</SolidColorBrush>
+    <!--7FB1DAEE-->
+    <SolidColorBrush x:Key="TabItemPressedFlashBorderBrush">#FFB1E8ED</SolidColorBrush>
+    <!--FFB1DAEE-->
+
+    <SolidColorBrush x:Key="CheckBoxTickBrush">#FF005159</SolidColorBrush>
+    <!--FF00405B-->
+</ResourceDictionary>

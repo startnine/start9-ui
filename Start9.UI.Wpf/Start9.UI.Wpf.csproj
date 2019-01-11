@@ -62,6 +62,18 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Shale.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Colors\ShaleBaseLight.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Themes\Colors\ShaleBlue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Colors\DarkPlexBlue.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -89,19 +101,24 @@
     <Compile Include="CommandBar.cs" />
     <Compile Include="Converters\BoolInverterConverter.cs" />
     <Compile Include="Converters\CombinedClassicFrameSizeConverter.cs" />
+    <Compile Include="Converters\CornerCurvesToCornerRadiusConverter.cs" />
     <Compile Include="Converters\DoubleComparisonConverter.cs" />
+    <Compile Include="Converters\GetMaximizeBorderThicknessConverter.cs" />
     <Compile Include="Converters\IconToImageBrushConverter.cs" />
     <Compile Include="Converters\ListViewItemIndexToBoolConverter.cs" />
     <Compile Include="Converters\RectangleToAspectRatioConverter.cs" />
+    <Compile Include="Converters\SolidColorBrushToColorConverter.cs" />
     <Compile Include="Converters\SysDrawingImageToImageBrushConverter.cs" />
     <Compile Include="Converters\ThicknessInvertFilterConverter.cs" />
     <Compile Include="Converters\TreeViewItemPaddingConverter.cs" />
     <Compile Include="Converters\WidthAndHeightToRectConverter.cs" />
     <Compile Include="MonitorInfo.cs" />
+    <Compile Include="Statics\AttachedProperties.cs" />
     <Compile Include="Statics\NativeMethods.cs" />
     <Compile Include="NavigationView.cs" />
     <Compile Include="Statics\Extensions.cs" />
     <Compile Include="Statics\SystemState.cs" />
+    <Compile Include="TravellingSelector.cs" />
     <Compile Include="Windows\AppBarWindow.cs" />
     <Compile Include="Windows\CompositingWindow.cs" />
     <Compile Include="Converters\DoubleToFractionOfDoubleConverter.cs" />
@@ -137,6 +154,14 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <Resource Include="Fonts\Ubuntu-Bold.ttf" />
+    <Resource Include="Fonts\Ubuntu-BoldItalic.ttf" />
+    <Resource Include="Fonts\Ubuntu-Italic.ttf" />
+    <Resource Include="Fonts\Ubuntu-Light.ttf" />
+    <Resource Include="Fonts\Ubuntu-LightItalic.ttf" />
+    <Resource Include="Fonts\Ubuntu-Medium.ttf" />
+    <Resource Include="Fonts\Ubuntu-MediumItalic.ttf" />
+    <Resource Include="Fonts\Ubuntu-Regular.ttf" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -144,6 +169,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Metro\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Fonts\UFL.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

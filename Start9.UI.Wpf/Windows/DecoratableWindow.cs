@@ -73,7 +73,7 @@ namespace Start9.UI.Wpf.Windows
         Thumb _thumbTopLeftCorner;
         Thumb _thumbTopRightCorner;
 
-        Grid _titlebar;
+        FrameworkElement _titlebar;
 
         MenuItem _systemMenuRestore;
         MenuItem _systemMenuMove;
@@ -153,22 +153,7 @@ namespace Start9.UI.Wpf.Windows
             /*base.WindowStyle = WindowStyle.None;
             base.AllowsTransparency = true;*/
 
-            StateChanged += (sneder, args) =>
-            {
-                if (WindowState == WindowState.Maximized)
-                {
-                    System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
-                    MaxWidth = s.WorkingArea.Width;
-                    MaxHeight = s.WorkingArea.Height;
-                }
-                else
-                {
-                    MaxWidth = Int32.MaxValue;
-                    MaxHeight = Int32.MaxValue;
-                }
-
-                ValidateSystemMenuItemStates();
-            };
+            StateChanged += DecoratableWindow_StateChanged;
 
             ////DefaultStyleKey = typeof(DecoratableWindow);
             //Style = (Style)Resources[typeof(DecoratableWindow)];
@@ -197,6 +182,27 @@ namespace Start9.UI.Wpf.Windows
             };*/
         }
 
+        double _maxWidth = double.PositiveInfinity;
+        double _maxHeight = double.PositiveInfinity;
+        private void DecoratableWindow_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                _maxWidth = MaxWidth;
+                _maxHeight = MaxHeight;
+                System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
+                MaxWidth = s.WorkingArea.Width;
+                MaxHeight = s.WorkingArea.Height;
+            }
+            else
+            {
+                MaxWidth = _maxWidth;
+                MaxHeight = _maxHeight;
+            }
+
+            ValidateSystemMenuItemStates();
+        }
+
         /*protected override void OnChildDesiredSizeChanged(UIElement child)
         {
             base.OnChildDesiredSizeChanged(child);
@@ -209,11 +215,26 @@ namespace Start9.UI.Wpf.Windows
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            _titlebar = GetTemplateChild(PartTitlebar) as Grid;
+            /*_titlebar = GetTemplateChild(PartTitlebar) as Grid;
             if (_titlebar != null)
             {
                 _titlebar.MouseLeftButtonDown += Titlebar_MouseLeftButtonDown;
                 //_titlebar.double
+            }*/
+            _titlebar = GetTemplateChild(PartTitlebar) as FrameworkElement;
+            if (_titlebar != null)
+            {
+                _titlebar.PreviewMouseLeftButtonDown += Titlebar_MouseLeftButtonDown;
+                if (_titlebar is Thumb)
+                {
+                    (_titlebar as Thumb).PreviewMouseDoubleClick += (sneder, args) =>
+                    {
+                        if ((WindowState != WindowState.Maximized) && ((ResizeMode == ResizeMode.CanResize) || (ResizeMode == ResizeMode.CanResizeWithGrip)))
+                            WindowState = WindowState.Maximized;
+                        else
+                            WindowState = WindowState.Normal;
+                    };
+                }
             }
 
             _minButton = GetTemplateChild(PartMinimizeButton) as Button;
