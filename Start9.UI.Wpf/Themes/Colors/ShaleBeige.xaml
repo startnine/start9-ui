@@ -1,0 +1,24 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <SolidColorBrush x:Key="ButtonPressedBorderBrush">#FFB29C80</SolidColorBrush>
+    <GradientStopCollection x:Key="ButtonPressedBackgroundGradientStops">
+        <GradientStop Offset="0" Color="#FFF2E4D2"/>
+        <GradientStop Offset="1" Color="#FFE0C6A6"/>
+    </GradientStopCollection>
+    <GradientStopCollection x:Key="ButtonPressedSecondaryBackgroundGradientStops">
+        <GradientStop Offset="0" Color="#FFEAD0AF"/>
+        <GradientStop Offset="1" Color="#FFD6BD9E"/>
+    </GradientStopCollection>
+
+    <GradientStopCollection x:Key="CardListViewSelectedBackgroundGradientStops">
+        <GradientStop Offset="0" Color="#FFF2E4D2"/>
+        <GradientStop Offset="1" Color="#FFD6BD9E"/>
+    </GradientStopCollection>
+
+    <SolidColorBrush x:Key="HoverHighlightBrush">#C0D6BD9E</SolidColorBrush>
+    <SolidColorBrush x:Key="SelectedHighlightBrush">#FFDBC3A6</SolidColorBrush>
+    <SolidColorBrush x:Key="TabItemPressedFlashBackground">#7FEAD0AF</SolidColorBrush>
+    <SolidColorBrush x:Key="TabItemPressedFlashBorderBrush">#FFEAD0AF</SolidColorBrush>
+
+    <SolidColorBrush x:Key="CheckBoxTickBrush">#FF562F00</SolidColorBrush>
+</ResourceDictionary>

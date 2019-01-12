@@ -62,6 +62,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Themes\Colors\ShaleBeige.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Themes\Shale.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -113,6 +117,7 @@
     <Compile Include="Converters\TreeViewItemPaddingConverter.cs" />
     <Compile Include="Converters\WidthAndHeightToRectConverter.cs" />
     <Compile Include="MonitorInfo.cs" />
+    <Compile Include="SpinBox.cs" />
     <Compile Include="Statics\AttachedProperties.cs" />
     <Compile Include="Statics\NativeMethods.cs" />
     <Compile Include="NavigationView.cs" />
