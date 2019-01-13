@@ -190,12 +190,32 @@ namespace Start9.UI.Wpf.Windows
 
             //base.WindowStyle = WindowStyle.None;
             //base.AllowsTransparency = true;
+            StateChanged += CompositingWindow_StateChanged;
             Loaded += CompositingWindow_Loaded;
 
             /*StateChanged += (sneder, args) =>
             {
                 SetCompositionState();
             };*/
+        }
+
+        double _maxWidth = double.PositiveInfinity;
+        double _maxHeight = double.PositiveInfinity;
+        private void CompositingWindow_StateChanged(object sender, EventArgs e)
+        {
+            if (WindowState == WindowState.Maximized)
+            {
+                _maxWidth = MaxWidth;
+                _maxHeight = MaxHeight;
+                System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromHandle(_handle); //System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
+                MaxWidth = s.WorkingArea.Width;
+                MaxHeight = s.WorkingArea.Height;
+            }
+            else
+            {
+                MaxWidth = _maxWidth;
+                MaxHeight = _maxHeight;
+            }
         }
 
         protected override void OnInitialized(EventArgs e)

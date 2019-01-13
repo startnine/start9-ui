@@ -278,18 +278,6 @@
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{Binding BorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t, FallbackValue=24}" Opacity="1" Background="#01000000">
                                 <Border x:Name="TitlebarBorder" BorderBrush="{DynamicResource TitlebarBorderBrush}" BorderThickness="1" CornerRadius="2,2,0,0" VerticalAlignment="Stretch">
                                     <Grid>
-                                        <Thumb x:Name="PART_Titlebar" Style="{DynamicResource BorderThumb}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <Thumb.ContextMenu>
-                                                <ContextMenu>
-                                                    <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
-                                                    <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
-                                                    <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
-                                                    <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
-                                                    <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
-                                                    <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
-                                                </ContextMenu>
-                                            </Thumb.ContextMenu>
-                                        </Thumb>
                                         <Border x:Name="ActiveTitlebarBackground" IsHitTestVisible="False">
                                             <Border.Background>
                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TitlebarActiveGradientStops}"/>
@@ -301,6 +289,18 @@
                                             </Border.Background>
                                         </Border>
                                         <Grid UseLayoutRounding="True" VerticalAlignment="Stretch">
+                                            <Thumb x:Name="PART_Titlebar" Style="{DynamicResource BorderThumb}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                <Thumb.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
+                                                        <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
+                                                        <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
+                                                        <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
+                                                        <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
+                                                        <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
+                                                    </ContextMenu>
+                                                </Thumb.ContextMenu>
+                                            </Thumb>
                                             <ContentPresenter Content="{TemplateBinding TitleBarContent}" IsHitTestVisible="False"/>
                                             <StackPanel x:Name="CaptionButtons" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Height="24">
                                                 <Button x:Name="PART_MinimizeButton" Style="{DynamicResource CaptionButtonStyle}">
@@ -3690,7 +3690,7 @@
                                         <Setter.Value>
                                             <ControlTemplate TargetType="{x:Type TextBoxBase}">
                                                 <Grid>
-                                                    <Border x:Name="IdleBackground" CornerRadius="{Binding Path=(tic:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,0,0,3;0,0,0,0'}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonIdleBorderBrush}" BorderThickness="1">
+                                                    <Border x:Name="IdleBackground" CornerRadius="{Binding Path=(tic:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,0,0,3;0,0,0,0'}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonIdleBorderBrush}" BorderThickness="1,1,0,1">
                                                         <Border.Background>
                                                             <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" GradientStops="{DynamicResource ButtonIdleBackgroundGradientStops}"/>
                                                         </Border.Background>
@@ -3700,7 +3700,7 @@
                                                             </Border.Background>
                                                         </Border>
                                                     </Border>
-                                                    <Border x:Name="HoverBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonHoverBorderBrush}" BorderThickness="1" Opacity="0">
+                                                    <Border x:Name="HoverBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonHoverBorderBrush}" BorderThickness="1,1,0,1" Opacity="0">
                                                         <Border.Background>
                                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1"  GradientStops="{DynamicResource ButtonHoverBackgroundGradientStops}"/>
                                                         </Border.Background>
@@ -3710,14 +3710,14 @@
                                                             </Border.Background>
                                                         </Border>
                                                     </Border>
-                                                    <Border x:Name="PressedBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonPressedBorderBrush}" BorderThickness="1" Opacity="0">
+                                                    <Border x:Name="PressedBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonPressedBorderBrush}" BorderThickness="1,1,0,1" Opacity="0">
                                                         <Border CornerRadius="{Binding CornerRadius, ElementName=IdleInnerBackground}" Margin="0" Padding="0" Background="Transparent" BorderThickness="1">
                                                             <Border.BorderBrush>
                                                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ButtonPressedBackgroundGradientStops}"/>
                                                             </Border.BorderBrush>
                                                         </Border>
                                                     </Border>
-                                                    <Border x:Name="DisabledBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" Background="{DynamicResource ButtonDisabledBackgroundBrush}" BorderBrush="{DynamicResource ButtonDisabledBorderBrush}" BorderThickness="1" Opacity="0">
+                                                    <Border x:Name="DisabledBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" Background="{DynamicResource ButtonDisabledBackgroundBrush}" BorderBrush="{DynamicResource ButtonDisabledBorderBrush}" BorderThickness="1,1,0,1" Opacity="0">
                                                         <Border CornerRadius="{Binding CornerRadius, ElementName=IdleInnerBackground}" Margin="1" Padding="0" BorderBrush="Transparent" BorderThickness="0" Background="{DynamicResource ButtonDisabledSecondaryBackgroundBrush}"/>
                                                     </Border>
                                                     <ScrollViewer Margin="0" Padding="{TemplateBinding Padding}" x:Name="PART_ContentHost" VerticalAlignment="Center"/>

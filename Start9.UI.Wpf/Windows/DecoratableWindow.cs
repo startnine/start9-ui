@@ -12,7 +12,7 @@ using System.Windows.Markup;
 
 namespace Start9.UI.Wpf.Windows
 {
-    [TemplatePart(Name = PartTitlebar, Type = typeof(Grid))]
+    [TemplatePart(Name = PartTitlebar, Type = typeof(Thumb))]
     [TemplatePart(Name = PartMinimizeButton, Type = typeof(Button))]
     [TemplatePart(Name = PartMaximizeButton, Type = typeof(Button))]
     [TemplatePart(Name = PartRestoreButton, Type = typeof(Button))]
@@ -73,7 +73,7 @@ namespace Start9.UI.Wpf.Windows
         Thumb _thumbTopLeftCorner;
         Thumb _thumbTopRightCorner;
 
-        FrameworkElement _titlebar;
+        Thumb/*FrameworkElement*/ _titlebar;
 
         MenuItem _systemMenuRestore;
         MenuItem _systemMenuMove;
@@ -182,15 +182,15 @@ namespace Start9.UI.Wpf.Windows
             };*/
         }
 
-        double _maxWidth = double.PositiveInfinity;
-        double _maxHeight = double.PositiveInfinity;
+        /*double _maxWidth = double.PositiveInfinity;
+        double _maxHeight = double.PositiveInfinity;*/
         private void DecoratableWindow_StateChanged(object sender, EventArgs e)
         {
-            if (WindowState == WindowState.Maximized)
+            /*if (WindowState == WindowState.Maximized)
             {
                 _maxWidth = MaxWidth;
                 _maxHeight = MaxHeight;
-                System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
+                System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromHandle(_handle); //System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
                 MaxWidth = s.WorkingArea.Width;
                 MaxHeight = s.WorkingArea.Height;
             }
@@ -199,7 +199,7 @@ namespace Start9.UI.Wpf.Windows
                 MaxWidth = _maxWidth;
                 MaxHeight = _maxHeight;
             }
-
+            */
             ValidateSystemMenuItemStates();
         }
 
@@ -221,20 +221,21 @@ namespace Start9.UI.Wpf.Windows
                 _titlebar.MouseLeftButtonDown += Titlebar_MouseLeftButtonDown;
                 //_titlebar.double
             }*/
-            _titlebar = GetTemplateChild(PartTitlebar) as FrameworkElement;
+            _titlebar = GetTemplateChild(PartTitlebar) as Thumb;
             if (_titlebar != null)
             {
                 _titlebar.PreviewMouseLeftButtonDown += Titlebar_MouseLeftButtonDown;
-                if (_titlebar is Thumb)
+                /*if (_titlebar is Thumb)
                 {
-                    (_titlebar as Thumb).PreviewMouseDoubleClick += (sneder, args) =>
+                    (_titlebar as Thumb)*/
+                /*_titlebar.MouseDoubleClick += (sneder, args) =>
                     {
+                        Debug.WriteLine("_titlebar.MouseDoubleClick");
                         if ((WindowState != WindowState.Maximized) && ((ResizeMode == ResizeMode.CanResize) || (ResizeMode == ResizeMode.CanResizeWithGrip)))
                             WindowState = WindowState.Maximized;
                         else
                             WindowState = WindowState.Normal;
-                    };
-                }
+                    };*/
             }
 
             _minButton = GetTemplateChild(PartMinimizeButton) as Button;
@@ -388,8 +389,57 @@ namespace Start9.UI.Wpf.Windows
 
         void Titlebar_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
         {
-            DragMove();
-            SyncShadowToWindow();
+            if (e.ClickCount == 2)
+            {
+                //Debug.WriteLine("(e.ClickCount == 2)");
+                if ((WindowState != WindowState.Maximized) && (ResizeMode != ResizeMode.CanMinimize) && (ResizeMode != ResizeMode.NoResize))
+                {
+                    /*Debug.WriteLine("(WindowState != WindowState.Maximized)");
+                    Debug.WriteLine("(ResizeMode != ResizeMode.CanMinimize): " + (ResizeMode != ResizeMode.CanMinimize).ToString());
+                    Debug.WriteLine("(ResizeMode != ResizeMode.NoResize): " + (ResizeMode != ResizeMode.NoResize).ToString());
+                    if ()*/
+                    WindowState = WindowState.Maximized;
+                }
+                else
+                    WindowState = WindowState.Normal;
+            }
+            else
+            {
+                if (WindowState == WindowState.Maximized)
+                {
+                    var newPos = SystemScaling.CursorPosition; //e.GetPosition(_titlebar);
+                    System.Timers.Timer timer = new System.Timers.Timer(1);
+                    timer.Elapsed += (sneder, args) =>
+                    {
+                        Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            if (Mouse.LeftButton == MouseButtonState.Released)
+                                timer.Stop();
+                            else if (
+                                (SystemScaling.CursorPosition.X > newPos.X + 10)
+                                || (SystemScaling.CursorPosition.X < newPos.X - 10)
+                                || (SystemScaling.CursorPosition.Y > newPos.Y + 10)
+                                || (SystemScaling.CursorPosition.Y < newPos.Y - 10)
+                                )
+                            {
+                                //var offset = e.GetPosition(_titlebar);
+                                WindowState = WindowState.Normal;
+                                //Left = SystemScaling.CursorPosition.X - offset.X;
+                                //Top = SystemScaling.CursorPosition.Y - offset.Y;
+                                DragMove();
+                                SyncShadowToWindow();
+                                timer.Stop();
+                            }
+                        }));
+                    };
+                    timer.Start();
+                }
+                else
+                {
+                    DragMove();
+                    SyncShadowToWindow();
+                }
+            }
         }
 
         void ThumbBottomRightCorner_DragDelta(Object sender, DragDeltaEventArgs e)

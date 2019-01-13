@@ -120,7 +120,7 @@ namespace Start9.UI.Wpf
                     if (Value != val)
                         Value = val;
                 }
-                Debug.WriteLine("New value: " + Value.ToString());
+                //Debug.WriteLine("New value: " + Value.ToString());
             }
         }
 

@@ -10,7 +10,7 @@
         xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:beh="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
         mc:Ignorable="d"
-        Title="MainWindow" ResizeMode="NoResize" BorderThickness="0,52,0,0">
+        Title="MainWindow" BorderThickness="0,52,0,0">
     <!--CompositionState="Glass" Background="#7FFFFFFF"-->
     <!--BorderThickness="4,75,4,4"-->
     <!--win:DecoratableWindow.Style>
