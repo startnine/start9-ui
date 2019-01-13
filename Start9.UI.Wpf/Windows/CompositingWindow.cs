@@ -15,7 +15,7 @@ namespace Start9.UI.Wpf.Windows
 {
     public partial class CompositingWindow : Window
     {
-        IntPtr _handle;
+        public IntPtr Handle;
         /*NativeMethods.DWM_BLURBEHIND _blurInfo = new NativeMethods.DWM_BLURBEHIND();
         NativeMethods.DWM_BLURBEHIND _unblurInfo = new NativeMethods.DWM_BLURBEHIND();*/
         /*{
@@ -56,7 +56,7 @@ namespace Start9.UI.Wpf.Windows
                 if (IgnorePeek)
                     peekValue = 1;
 
-                NativeMethods.DwmSetWindowAttribute(_handle, 12, ref peekValue, sizeof(int));
+                NativeMethods.DwmSetWindowAttribute(Handle, 12, ref peekValue, sizeof(int));
             }
         }
 
@@ -90,9 +90,9 @@ namespace Start9.UI.Wpf.Windows
         {
             var win = sender as CompositingWindow;
             if ((bool)e.NewValue)
-                NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & ~NativeMethods.WsExNoActivate);
+                NativeMethods.SetWindowLong(win.Handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win.Handle, NativeMethods.GwlExstyle).ToInt32() & ~NativeMethods.WsExNoActivate);
             else
-                NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & NativeMethods.WsExNoActivate);
+                NativeMethods.SetWindowLong(win.Handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win.Handle, NativeMethods.GwlExstyle).ToInt32() & NativeMethods.WsExNoActivate);
         }
 
         public bool ShowInAltTab
@@ -111,7 +111,7 @@ namespace Start9.UI.Wpf.Windows
 
         static void UpdateShowInAltTabPropertyValue(CompositingWindow win)
         {
-            int exStyle = NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32();
+            int exStyle = NativeMethods.GetWindowLong(win.Handle, NativeMethods.GwlExstyle).ToInt32();
 
             if (win.ShowInAltTab)
                 exStyle |= ~NativeMethods.WsExToolwindow;
@@ -120,7 +120,7 @@ namespace Start9.UI.Wpf.Windows
                 exStyle |= NativeMethods.WsExToolwindow;
             //NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(win._handle, NativeMethods.GwlExstyle).ToInt32() & NativeMethods.WsExToolwindow);
 
-            NativeMethods.SetWindowLong(win._handle, NativeMethods.GwlExstyle, exStyle);
+            NativeMethods.SetWindowLong(win.Handle, NativeMethods.GwlExstyle, exStyle);
 
             //Debug.WriteLine("win.ShowInAltTab: " + win.ShowInAltTab.ToString());
         }
@@ -150,15 +150,24 @@ namespace Start9.UI.Wpf.Windows
             win.SetCompositionState(win.CompositionState);
         }
 
-        /*static CompositingWindow()
+        static CompositingWindow()
         {
-            AllowsTransparencyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata(true));
-        }*/
+            //BackgroundProperty.OverrideMetadata(typeof(CompositingWindow), new FrameworkPropertyMetadata(new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Transparent)));
+            //AllowsTransparencyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata(true));
+        }
 
         public CompositingWindow()
         {
             base.WindowStyle = WindowStyle.None;
             AllowsTransparency = true;
+            /*System.Windows.Shell.WindowChrome.SetWindowChrome(this, new System.Windows.Shell.WindowChrome()// );
+            {
+                GlassFrameThickness = new Thickness(0),
+                ResizeBorderThickness = new Thickness(0),
+                CaptionHeight = 0,
+                CornerRadius = new CornerRadius(0),
+                UseAeroCaptionButtons = false
+            });*/
 
             if (SystemState.FakeCompositionOff)
                 IsGlassAvailable = false;
@@ -207,7 +216,7 @@ namespace Start9.UI.Wpf.Windows
             {
                 _maxWidth = MaxWidth;
                 _maxHeight = MaxHeight;
-                System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromHandle(_handle); //System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
+                System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromHandle(Handle); //System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
                 MaxWidth = s.WorkingArea.Width;
                 MaxHeight = s.WorkingArea.Height;
             }
@@ -221,8 +230,21 @@ namespace Start9.UI.Wpf.Windows
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            _handle = new WindowInteropHelper(this).EnsureHandle();
+            Handle = new WindowInteropHelper(this).EnsureHandle();
+            //NativeMethods.SetWindowLong(Handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(Handle, NativeMethods.GwlExstyle).ToInt32() & 0x00000020 & 0x00080000);
+            //System.Windows.Media.CompositionTarget = 
+            //System.Windows.Media.RenderOptions.com
+            var source = HwndSource.FromHwnd(Handle); //PresentationSource.FromVisual(this) as HwndSource;
+            //source.CompositionTarget.BackgroundColor = System.Windows.Media.Colors.Transparent;
+            source.CompositionTarget.RenderMode = RenderMode.Default;
+            //source.CompositionTarget.UsesPerPixelOpacity = true;
+            //source.UsesPerPixelOpacity = true;
         }
+
+        /*HwndSourceParameters CreateHwndSourceParameters()
+        {
+            new HwndSourceParameters
+        }*/
 
         private void CompositingWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -334,7 +356,7 @@ namespace Start9.UI.Wpf.Windows
         {
             if (NativeMethods.DwmIsCompositionEnabled())
             {
-                NativeMethods.DwmEnableBlurBehindWindow(_handle, ref _unblurInfo);
+                NativeMethods.DwmEnableBlurBehindWindow(Handle, ref _unblurInfo);
 
                 if (Environment.OSVersion.Version >= new Version(10, 0, 17134, 0))
                 {
@@ -353,7 +375,7 @@ namespace Start9.UI.Wpf.Windows
                         Data = accentPtr
                     };
 
-                    NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+                    NativeMethods.SetWindowCompositionAttribute(Handle, ref data);
 
                     Marshal.FreeHGlobal(accentPtr);
                 }
@@ -376,7 +398,7 @@ namespace Start9.UI.Wpf.Windows
                         Data = accentPtr
                     };
 
-                    NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+                    NativeMethods.SetWindowCompositionAttribute(Handle, ref data);
 
                     Marshal.FreeHGlobal(accentPtr);
                 }
@@ -415,7 +437,7 @@ namespace Start9.UI.Wpf.Windows
                             Data = accentPtr
                         };
 
-                        NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+                        NativeMethods.SetWindowCompositionAttribute(Handle, ref data);
 
                         Marshal.FreeHGlobal(accentPtr);
                     }
@@ -436,7 +458,7 @@ namespace Start9.UI.Wpf.Windows
                             Data = accentPtr
                         };
 
-                        NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+                        NativeMethods.SetWindowCompositionAttribute(Handle, ref data);
 
                         Marshal.FreeHGlobal(accentPtr);
                     }
@@ -444,12 +466,12 @@ namespace Start9.UI.Wpf.Windows
                     {
                         //HwndSource.FromHwnd(_handle).CompositionTarget.BackgroundColor = System.Windows.Media.Colors.Transparent;
                         IntPtr windowRegion = IntPtr.Zero;
-                        if (NativeMethods.GetWindowRect(_handle, out NativeMethods.RECT rect))
+                        if (NativeMethods.GetWindowRect(Handle, out NativeMethods.RECT rect))
                         {
                             //windowRegion = NativeMethods.CreateRectRgn(0, 0, rect.Right - rect.Left, rect.Bottom - rect.Top);
                             windowRegion = NativeMethods.CreateRectRgn(0, 0, (int)(SystemScaling.WpfUnitsToRealPixels(ActualWidth)), (int)(SystemScaling.WpfUnitsToRealPixels(ActualHeight)));
                             _blurInfo.hRgnBlur = windowRegion;
-                            NativeMethods.DwmEnableBlurBehindWindow(_handle, ref _blurInfo);
+                            NativeMethods.DwmEnableBlurBehindWindow(Handle, ref _blurInfo);
                         }
 
                         /*Int32 refValue = (Int32)NativeMethods.DwmNCRenderingPolicy.Enabled;
@@ -483,7 +505,7 @@ namespace Start9.UI.Wpf.Windows
                             Data = accentPtr
                         };
 
-                        NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+                        NativeMethods.SetWindowCompositionAttribute(Handle, ref data);
 
                         Marshal.FreeHGlobal(accentPtr);
                     }
@@ -506,7 +528,7 @@ namespace Start9.UI.Wpf.Windows
                             Data = accentPtr
                         };
 
-                        NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+                        NativeMethods.SetWindowCompositionAttribute(Handle, ref data);
 
                         Marshal.FreeHGlobal(accentPtr);
                     }
@@ -534,7 +556,7 @@ namespace Start9.UI.Wpf.Windows
                             Data = accentPtr
                         };
 
-                        NativeMethods.SetWindowCompositionAttribute(_handle, ref data);
+                        NativeMethods.SetWindowCompositionAttribute(Handle, ref data);
 
                         Marshal.FreeHGlobal(accentPtr);
                     }
@@ -544,7 +566,7 @@ namespace Start9.UI.Wpf.Windows
                     }
                 }
                 else
-                    NativeMethods.DwmEnableBlurBehindWindow(_handle, ref _unblurInfo);
+                    NativeMethods.DwmEnableBlurBehindWindow(Handle, ref _unblurInfo);
             }
         }
 

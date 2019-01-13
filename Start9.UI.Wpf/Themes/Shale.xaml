@@ -379,15 +379,15 @@
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="{x:Null}">
+                        <!--DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="{x:Null}">
                             <Setter TargetName="WindowIcon" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="TitleText" Property="Margin" Value="0"/>
-                        </DataTrigger>
+                        </DataTrigger-->
                         <Trigger Property="WindowState" Value="Maximized">
                             <!--Setter Property="Margin" Value="7"/-->
                             <!--Setter TargetName="WindowRoot" Property="TranslateTransform.X" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GetMaximizeOffsetDoubleConverter}}"/>
                             <Setter TargetName="WindowRoot" Property="TranslateTransform.Y" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GetMaximizeOffsetDoubleConverter}, ConverterParameter=vertical}"/-->
-                            <Setter TargetName="WindowRoot" Property="Margin" Value="{Binding Converter={StaticResource GetMaximizeBorderThicknessConverter}}"/>
+                            <Setter TargetName="WindowRoot" Property="Margin" Value="{Binding Converter={StaticResource GetMaximizeBorderThicknessConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             <Setter TargetName="WindowRoot" Property="BorderThickness" Value="0"/>
                             <Setter TargetName="WindowRoot" Property="CornerRadius" Value="0"/>
                             <Setter TargetName="TitlebarBorder" Property="BorderThickness" Value="0,0,0,1"/>
@@ -398,6 +398,14 @@
                             <Setter TargetName="PART_MaximizeButton" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="PART_RestoreButton" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                            <!--Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.75" To="1" Duration="0:0:0.5" EasingFunction="{StaticResource WindowVisibleEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions/-->
                         </Trigger>
                         <Trigger Property="ResizeMode" Value="NoResize">
                             <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
@@ -3001,7 +3009,7 @@
                     </Border>
                 </Border>
                 <DockPanel Margin="{TemplateBinding Padding}">
-                    <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                    <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" TextElement.Foreground="{TemplateBinding Foreground}"/>
                     <Path HorizontalAlignment="Right" VerticalAlignment="Center" Data="M 0 0 L 4 4 L 0 8 Z" Fill="{DynamicResource CheckBoxTickBrush}" StrokeThickness="0" Margin="7,0,0,0"/>
                 </DockPanel>
                 <Popup Name="Popup" Placement="Right" IsOpen="{TemplateBinding IsSubmenuOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade">
@@ -3044,9 +3052,6 @@
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonDisabledForegroundBrush}" />
             </Trigger>
         </ControlTemplate.Triggers>
     </ControlTemplate>
@@ -3093,7 +3098,7 @@
             <!--x:Name="CheckOffsetGrid"-->
             <DockPanel Margin="{TemplateBinding Padding}">
                 <Path x:Name="Check" Data="M 2 5 L 4 9 L 8 0" HorizontalAlignment="Left" VerticalAlignment="Center" Stroke="{DynamicResource CheckBoxTickBrush}" StrokeThickness="1.125" Margin="0,0,7,0" Visibility="Collapsed" Opacity="0"/>
-                <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"/>
+                <ContentPresenter ContentSource="Header" RecognizesAccessKey="True" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" TextElement.Foreground="{TemplateBinding Foreground}"/>
                 <!--Name="Content"-->
             </DockPanel>
         </Grid>
@@ -3113,9 +3118,6 @@
                         </Storyboard>
                     </BeginStoryboard>
                 </Trigger.ExitActions>
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonDisabledForegroundBrush}" />
             </Trigger>
             <Trigger Property="IsChecked" Value="True">
                 <Setter TargetName="Check" Property="Visibility" Value="Visible"/>
@@ -3137,7 +3139,6 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Padding" Value="10,5" />
         <Setter Property="Margin" Value="0,0,0,3" />
-
         <Style.Triggers>
             <Trigger Property="Role" Value="TopLevelHeader">
                 <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.TopLevelHeaderTemplateKey}}"/>
@@ -3151,6 +3152,9 @@
             </Trigger>
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.TopLevelItemTemplateKey}}"/>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
             </Trigger>
             <DataTrigger Binding="{Binding Path=(tic:AttachedProperties.OpenedWithTouch), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}" Value="True">
                 <!--Setter Property="Height" Value="45"/-->
