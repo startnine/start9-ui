@@ -10,6 +10,7 @@ using System.Windows.Interop;
 using System.Timers;
 using System.ComponentModel;
 using Start9.UI.Wpf.Statics;
+using System.Windows.Media;
 
 namespace Start9.UI.Wpf.Windows
 {
@@ -208,6 +209,11 @@ namespace Start9.UI.Wpf.Windows
             };*/
         }
 
+        /*private static object CoerceAllowsTransparency(DependencyObject d, object value)
+        {
+            return (d as Window).GetValue(AllowsTransparencyProperty);
+        }*/
+
         double _maxWidth = double.PositiveInfinity;
         double _maxHeight = double.PositiveInfinity;
         private void CompositingWindow_StateChanged(object sender, EventArgs e)
@@ -235,11 +241,24 @@ namespace Start9.UI.Wpf.Windows
             //System.Windows.Media.CompositionTarget = 
             //System.Windows.Media.RenderOptions.com
             var source = HwndSource.FromHwnd(Handle); //PresentationSource.FromVisual(this) as HwndSource;
+            //source.ContentRendered += Source_ContentRendered;
             //source.CompositionTarget.BackgroundColor = System.Windows.Media.Colors.Transparent;
-            source.CompositionTarget.RenderMode = RenderMode.Default;
+            //source.CompositionTarget.RenderMode = RenderMode.Default;
+            //source.CompositionTarget
+            //System.Windows.Media.CompositionTarget.Rendering += CompositionTarget_Rendering;
             //source.CompositionTarget.UsesPerPixelOpacity = true;
             //source.UsesPerPixelOpacity = true;
         }
+
+        /*private void CompositionTarget_Rendering(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void Source_ContentRendered(object sender, EventArgs e)
+        {
+            throw new NotImplementedException();
+        }*/
 
         /*HwndSourceParameters CreateHwndSourceParameters()
         {

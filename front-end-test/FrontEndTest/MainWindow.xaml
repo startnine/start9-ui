@@ -1,4 +1,4 @@
-﻿<win:DecoratableWindow x:Class="FrontEndTest.MainWindow"
+﻿<win:DecoratableWindow
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -9,8 +9,9 @@
         
         xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:beh="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
+        x:Class="FrontEndTest.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" BorderThickness="0,52,0,0">
+        Title="MainWindow" BorderThickness="0,52,0,0" Background="#40000000">
     <!--CompositionState="Glass" Background="#7FFFFFFF"-->
     <!--BorderThickness="4,75,4,4"-->
     <!--win:DecoratableWindow.Style>
@@ -21,27 +22,6 @@
     </win:DecoratableWindow.Style-->
     <win:DecoratableWindow.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <!--BRIGHT SKY PLEX-->
-                <!--ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/-->
-
-                <!--OCEAN ABYSS PLEX-->
-                <!--ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/DarkPlexBlue.xaml"/>
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Plex.xaml"/-->
-
-                <!--AERO-->
-                <!--ResourceDictionary Source="/PresentationFramework.Aero;V3.0.0.0;31bf3856ad364e35;component\themes/aero.normalcolor.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Aero.NormalColor.xaml"/-->
-
-                <!--LUNA BLUE-->
-                <!--ResourceDictionary Source="/PresentationFramework.Luna;V3.0.0.0;31bf3856ad364e35;component\themes/luna.normalcolor.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Luna.NormalColor.xaml"/-->
-
-                <!--AERO2-->
-                <!--ResourceDictionary Source="/PresentationFramework.Aero2;V3.0.0.0;31bf3856ad364e35;component\themes/aero2.normalcolor.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Aero2.NormalColor.xaml"/-->
-            </ResourceDictionary.MergedDictionaries>
 
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
         </ResourceDictionary>
@@ -80,6 +60,8 @@
                                                         <Border x:Name="SelectedBackground" BorderBrush="#FF0175D3" BorderThickness="3,0,0,0" Visibility="Hidden"/>
                                                         <DockPanel x:Name="ContentDockPanel" Background="#01000000">
                                                             <!--HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}"-->
+                                                            <!--ContentPresenter x:Name="HeaderHost" Grid.Column="1" ContentSource="Header" RecognizesAccessKey="True" />
+                                                            <TextBlock x:Name="InputGestureText" Grid.Column="2" Text="{TemplateBinding InputGestureText}" Margin="5,2,0,2" DockPanel.Dock="Right" /-->
                                                             <!--Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="Auto"/>
                                                                 <ColumnDefinition Width="*"/>
@@ -90,8 +72,6 @@
                                                                 <ContentPresenter x:Name="PART_ContentPresenter" Visibility="Collapsed"/>
                                                                 <GridViewRowPresenter x:Name="PART_GridViewRowPesenter" Visibility="Visible"/>
                                                             </Grid>
-                                                            <!--ContentPresenter x:Name="HeaderHost" Grid.Column="1" ContentSource="Header" RecognizesAccessKey="True" />
-                                                            <TextBlock x:Name="InputGestureText" Grid.Column="2" Text="{TemplateBinding InputGestureText}" Margin="5,2,0,2" DockPanel.Dock="Right" /-->
                                                         </DockPanel>
                                                     </Grid>
                                                     <ControlTemplate.Triggers>
@@ -130,8 +110,8 @@
                                                         </Trigger>
                                                         <MultiDataTrigger>
                                                             <MultiDataTrigger.Conditions>
-                                                                <Condition Binding="{Binding DisplayMode, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ui:NavigationView}}}" Value="Compact"/>
-                                                                <Condition Binding="{Binding IsPaneOpen, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ui:NavigationView}}}" Value="False"/>
+                                                                <Condition Binding="{Binding DisplayMode, RelativeSource={RelativeSource AncestorType={x:Type ui:NavigationView}, Mode=FindAncestor}}" Value="Compact"/>
+                                                                <Condition Binding="{Binding IsPaneOpen, RelativeSource={RelativeSource AncestorType={x:Type ui:NavigationView}, Mode=FindAncestor}}" Value="False"/>
                                                             </MultiDataTrigger.Conditions>
                                                             <Setter TargetName="MainContentGrid" Property="Visibility" Value="Collapsed"/>
                                                             <!--Setter TargetName="ContentDockPanel" Property="Width" Value="45"/>
@@ -154,8 +134,8 @@
                                         <RowDefinition Height="Auto"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <ToggleButton x:Name="PART_HamburgerToggleButton" Width="45" Height="45" IsChecked="False" IsThreeState="False" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1">=</ToggleButton>
-                                    <Border x:Name="PART_ItemsPane" Background="LightGray" Visibility="{Binding Path=IsChecked, Source={x:Reference PART_HamburgerToggleButton}, Converter={StaticResource BooleanToVisibilityConverter}}" Width="250" Grid.Column="0" Grid.Row="2">
+                                    <ToggleButton x:Name="PART_HamburgerToggleButton" Width="45" Height="45" IsChecked="False" IsThreeState="False" HorizontalAlignment="Left" Grid.Column="0" Grid.Row="1" Content="="/>
+                                    <Border x:Name="PART_ItemsPane" Background="LightGray" Visibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, Source={x:Reference PART_HamburgerToggleButton}}" Width="250" Grid.Column="0" Grid.Row="2">
                                         <StackPanel x:Name="ItemsHostStackPanel" Orientation="Vertical" IsItemsHost="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                     </Border>
                                 </Grid>
@@ -168,18 +148,14 @@
                                             <Condition Property="PaneDisplayMode" Value="Top"/>
                                             <Condition Property="IsBackButtonVisible" Value="True"/>
                                         </MultiTrigger.Conditions>
-                                        <MultiTrigger.Setters>
-                                            <Setter TargetName="PART_ItemsPane" Property="Grid.Column" Value="1"/>
-                                        </MultiTrigger.Setters>
+                                        <Setter TargetName="PART_ItemsPane" Property="Grid.Column" Value="1"/>
                                     </MultiTrigger>
                                     <MultiTrigger>
                                         <MultiTrigger.Conditions>
                                             <Condition Property="PaneDisplayMode" Value="Top"/>
                                             <Condition Property="IsBackButtonVisible" Value="False"/>
                                         </MultiTrigger.Conditions>
-                                        <MultiTrigger.Setters>
-                                            <Setter TargetName="PART_ItemsPane" Property="Grid.ColumnSpan" Value="2"/>
-                                        </MultiTrigger.Setters>
+                                        <Setter TargetName="PART_ItemsPane" Property="Grid.ColumnSpan" Value="2"/>
                                     </MultiTrigger>
                                     <Trigger Property="DisplayMode" Value="Compact">
                                         <Setter TargetName="PART_ItemsPane" Property="Visibility" Value="Visible"/>
@@ -236,7 +212,7 @@
                     </Grid.ColumnDefinitions>
                     <GroupBox Header="Enabled Controls" Grid.Column="0">
                         <StackPanel>
-                            <Button>Normal Button
+                            <Button Content="Normal Button">
                                 <Button.ContextMenu>
                                     <ContextMenu>
                                         <MenuItem Header="AAAA"/>
@@ -248,36 +224,36 @@
                                     </ContextMenu>
                                 </Button.ContextMenu>
                             </Button>
-                            <RepeatButton>RepeatButton</RepeatButton>
-                            <Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30">Round Button</Button>
-                            <Button IsDefault="True">Default Button</Button>
-                            <ToggleButton>ToggleButton</ToggleButton>
-                            <ToggleButton IsChecked="True">Checked ToggleButton</ToggleButton>
+                            <RepeatButton Content="RepeatButton"/>
+                            <Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Round Button"/>
+                            <Button IsDefault="True" Content="Default Button"/>
+                            <ToggleButton Content="ToggleButton"/>
+                            <ToggleButton IsChecked="True" Content="Checked ToggleButton"/>
                             <Rectangle Width="1" Height="40"/>
-                            <CheckBox>Normal CheckBox</CheckBox>
-                            <CheckBox IsChecked="True">Checked CheckBox</CheckBox>
-                            <CheckBox IsThreeState="True" IsChecked="{x:Null}">Null CheckBox</CheckBox>
+                            <CheckBox Content="Normal CheckBox"/>
+                            <CheckBox IsChecked="True" Content="Checked CheckBox"/>
+                            <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Null CheckBox"/>
                             <Rectangle Width="1" Height="40"/>
-                            <RadioButton GroupName="NormalRadio">Normal RadioButton</RadioButton>
-                            <RadioButton GroupName="NormalRadio" IsChecked="True">Checked RadioButton</RadioButton>
+                            <RadioButton GroupName="NormalRadio" Content="Normal RadioButton"/>
+                            <RadioButton GroupName="NormalRadio" IsChecked="True" Content="Checked RadioButton"/>
                             <ui:SpinBox/>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Disabled Controls" Grid.Column="1" IsEnabled="False">
                         <StackPanel>
-                            <Button>Disabled Button</Button>
-                            <RepeatButton>Disabled RepeatButton</RepeatButton>
-                            <Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30">Disabled Round Button</Button>
-                            <Button Visibility="Hidden">Hidden Button</Button>
-                            <ToggleButton>Disabled ToggleButton</ToggleButton>
-                            <ToggleButton IsChecked="True">Disabled Checked ToggleButton</ToggleButton>
+                            <Button Content="Disabled Button"/>
+                            <RepeatButton Content="Disabled RepeatButton"/>
+                            <Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Disabled Round Button"/>
+                            <Button Visibility="Hidden" Content="Hidden Button"/>
+                            <ToggleButton Content="Disabled ToggleButton"/>
+                            <ToggleButton IsChecked="True" Content="Disabled Checked ToggleButton"/>
                             <Rectangle Width="1" Height="40"/>
-                            <CheckBox>Disabled CheckBox</CheckBox>
-                            <CheckBox IsChecked="True">Disabled Checked CheckBox</CheckBox>
-                            <CheckBox IsThreeState="True" IsChecked="{x:Null}">Disabled Null CheckBox</CheckBox>
+                            <CheckBox Content="Disabled CheckBox"/>
+                            <CheckBox IsChecked="True" Content="Disabled Checked CheckBox"/>
+                            <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Disabled Null CheckBox"/>
                             <Rectangle Width="1" Height="40"/>
-                            <RadioButton GroupName="DisabledRadio">Disabled RadioButton</RadioButton>
-                            <RadioButton GroupName="DisabledRadio" IsChecked="True">Disabled Checked RadioButton</RadioButton>
+                            <RadioButton GroupName="DisabledRadio" Content="Disabled RadioButton"/>
+                            <RadioButton GroupName="DisabledRadio" IsChecked="True" Content="Disabled Checked RadioButton"/>
                             <ui:SpinBox IsEnabled="False"/>
                         </StackPanel>
                     </GroupBox>
@@ -292,40 +268,40 @@
                         </Grid.ColumnDefinitions>
                         <StackPanel Grid.Column="0">
                             <ComboBox IsEditable="True" SelectedIndex="0">
-                                <ComboBoxItem>Editable ComboBox</ComboBoxItem>
-                                <ComboBoxItem>Editable ComboBox</ComboBoxItem>
-                                <ComboBoxItem>Editable ComboBox</ComboBoxItem>
+                                <ComboBoxItem Content="Editable ComboBox"/>
+                                <ComboBoxItem Content="Editable ComboBox"/>
+                                <ComboBoxItem Content="Editable ComboBox"/>
                             </ComboBox>
                             <ComboBox IsEditable="False" SelectedIndex="0">
-                                <ComboBoxItem>Read-Only ComboBox</ComboBoxItem>
-                                <ComboBoxItem>Read-Only ComboBox</ComboBoxItem>
-                                <ComboBoxItem>Read-Only ComboBox</ComboBoxItem>
+                                <ComboBoxItem Content="Read-Only ComboBox"/>
+                                <ComboBoxItem Content="Read-Only ComboBox"/>
+                                <ComboBoxItem Content="Read-Only ComboBox"/>
                             </ComboBox>
-                            <TextBox>TextBox</TextBox>
-                            <TextBox Height="50">TextBox with non-standard height</TextBox>
+                            <TextBox Text="TextBox"/>
+                            <TextBox Height="50" Text="TextBox with non-standard height"/>
                             <ListBox>
-                                <ListBoxItem>ListBox</ListBoxItem>
-                                <ListBoxItem>ListBox</ListBoxItem>
-                                <ListBoxItem>ListBox</ListBoxItem>
+                                <ListBoxItem Content="ListBox"/>
+                                <ListBoxItem Content="ListBox"/>
+                                <ListBoxItem Content="ListBox"/>
                             </ListBox>
                         </StackPanel>
                         <StackPanel Grid.Column="1" IsEnabled="False">
                             <ComboBox IsEditable="True" SelectedIndex="0">
-                                <ComboBoxItem>Disabled Editable ComboBox</ComboBoxItem>
-                                <ComboBoxItem>Disabled Editable ComboBox</ComboBoxItem>
-                                <ComboBoxItem>Disabled Editable ComboBox</ComboBoxItem>
+                                <ComboBoxItem Content="Disabled Editable ComboBox"/>
+                                <ComboBoxItem Content="Disabled Editable ComboBox"/>
+                                <ComboBoxItem Content="Disabled Editable ComboBox"/>
                             </ComboBox>
                             <ComboBox IsEditable="False" SelectedIndex="0">
-                                <ComboBoxItem>Disabled Read-Only ComboBox</ComboBoxItem>
-                                <ComboBoxItem>Disabled Read-Only ComboBox</ComboBoxItem>
-                                <ComboBoxItem>Disabled Read-Only ComboBox</ComboBoxItem>
+                                <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
+                                <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
+                                <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
                             </ComboBox>
-                            <TextBox>Disabled TextBox</TextBox>
-                            <TextBox Height="50">Disabled TextBox with non-standard height</TextBox>
+                            <TextBox Text="Disabled TextBox"/>
+                            <TextBox Height="50" Text="Disabled TextBox with non-standard height"/>
                             <ListBox>
-                                <ListBoxItem>Disabled ListBox</ListBoxItem>
-                                <ListBoxItem>Disabled ListBox</ListBoxItem>
-                                <ListBoxItem>Disabled ListBox</ListBoxItem>
+                                <ListBoxItem Content="Disabled ListBox"/>
+                                <ListBoxItem Content="Disabled ListBox"/>
+                                <ListBoxItem Content="Disabled ListBox"/>
                             </ListBox>
                         </StackPanel>
                     </Grid>
@@ -338,33 +314,33 @@
         </TabControl>
         <Grid Visibility="Collapsed">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
-                <Button x:Name="CycleCompositionStateButton" Click="CycleCompositionStateButton_Click">Cycle Composition State</Button>
-                <TextBlock Background="White" Foreground="Red" x:Name="CurrentCompositionStateTextBlock">Alpha</TextBlock>
+                <Button x:Name="CycleCompositionStateButton" Click="CycleCompositionStateButton_Click" Content="Cycle Composition State"/>
+                <TextBlock Background="White" Foreground="Red" x:Name="CurrentCompositionStateTextBlock"><Run Text="Alpha"/></TextBlock>
             </StackPanel>
             <DockPanel>
                 <StatusBar DockPanel.Dock="Bottom">
-                    <StatusBarItem>StatusBar</StatusBarItem>
+                    <StatusBarItem Content="StatusBar"/>
                 </StatusBar>
                 <Grid DockPanel.Dock="Bottom">
                     <Control Style="{DynamicResource ToolbarBackgroundControlStyle}"/>
                     <ToolBarTray Style="{DynamicResource TransparentToolBarTray}">
                         <ToolBar>
-                            <Button>Button</Button>
-                            <ToggleButton>ToggleButton</ToggleButton>
-                            <TextBox>TextBox</TextBox>
-                            <TextBlock>TextBlock</TextBlock>
-                            <ui:ToggleSwitch>ToggleSwitch</ui:ToggleSwitch>
-                            <Button Width="200">Excessively wide Button</Button>
+                            <Button Content="Button"/>
+                            <ToggleButton Content="ToggleButton"/>
+                            <TextBox Text="TextBox"/>
+                            <TextBlock><Run Text="TextBlock"/></TextBlock>
+                            <ui:ToggleSwitch Content="ToggleSwitch"/>
+                            <Button Width="200" Content="Excessively wide Button"/>
                         </ToolBar>
                         <ToolBar>
-                            <Button Width="200">Excessively wide Button</Button>
-                            <Button Width="200">Excessively wide Button</Button>
+                            <Button Width="200" Content="Excessively wide Button"/>
+                            <Button Width="200" Content="Excessively wide Button"/>
                         </ToolBar>
                     </ToolBarTray>
                 </Grid>
                 <Grid DockPanel.Dock="Bottom" Background="White">
-                    <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True" Visibility="Collapsed">Current Theme</ui:ToggleSwitch>
-                    <ui:ToggleSwitch TrueText="True" FalseText="False" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True">Title</ui:ToggleSwitch>
+                    <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True" Visibility="Collapsed" Content="Current Theme"/>
+                    <ui:ToggleSwitch TrueText="True" FalseText="False" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True" Content="Title"/>
                 </Grid>
 
             </DockPanel>

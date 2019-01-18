@@ -131,4 +131,29 @@
         <GradientStop Offset="0" Color="#FF333333"/>
         <GradientStop Offset="1" Color="Black"/>
     </GradientStopCollection>
+
+    <GradientStopCollection x:Key="DarkIconGradientStops2">
+        <GradientStop Offset="0" Color="#FF666666"/>
+        <GradientStop Offset="1" Color="#FF333333"/>
+    </GradientStopCollection>
+
+    <GradientStopCollection x:Key="DarkIconGradientStops3">
+        <GradientStop Offset="0" Color="#FF999999"/>
+        <GradientStop Offset="1" Color="#FF666666"/>
+    </GradientStopCollection>
+
+    <GradientStopCollection x:Key="LightIconGradientStops">
+        <GradientStop Offset="0" Color="White"/>
+        <GradientStop Offset="1" Color="#FFCCCCCC"/>
+    </GradientStopCollection>
+
+    <GradientStopCollection x:Key="RedIconGradientStops">
+        <GradientStop Offset="0" Color="#FF990000"/>
+        <GradientStop Offset="1" Color="#FF660000"/>
+    </GradientStopCollection>
+
+    <GradientStopCollection x:Key="GreenIconGradientStops">
+        <GradientStop Offset="0" Color="#FF006600"/>
+        <GradientStop Offset="1" Color="#FF003300"/>
+    </GradientStopCollection>
 </ResourceDictionary>
