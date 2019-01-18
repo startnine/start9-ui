@@ -4240,13 +4240,28 @@
         </Style.Triggers>
     </Style>
 
+    <Style TargetType="{x:Type Separator}" BasedOn="{StaticResource {x:Type Separator}}">
+        <Setter Property="Margin" Value="0,0,0,3"/>
+        <Setter Property="MinHeight" Value="5"/>
+        <Setter Property="MinWidth" Value="50"/>
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Separator}">
+                    <Grid>
+                        <Rectangle Height="1" Margin="3,1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Fill="{DynamicResource HorizontalPanelBorderBrush}"/>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="{x:Type ContextMenu}" TargetType="ContextMenu">
         <!--Style.Resources>
             <Style TargetType="{x:Type MenuItem}" BasedOn="{StaticResource PlexMenuItemStyle}"/>
         </Style.Resources-->
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Grid.IsSharedSizeScope" Value="True" />
-        <Setter Property="Margin" Value="4,3,4,5"/>
         <Setter Property="Padding" Value="3,3,3,0"/>
         <Setter Property="HasDropShadow" Value="False" />
         <Setter Property="MinWidth" Value="50"/>
@@ -4254,7 +4269,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">
-                    <Grid Margin="{TemplateBinding Margin}">
+                    <Grid Margin="4,3,4,5">
                         <!--Border BorderThickness="1" CornerRadius="2" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ContextMenuBackgroundBrush}" BorderBrush="{DynamicResource ContextMenuBorderBrush}" UseLayoutRounding="True">
                             <Border.Effect>
                                 <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="230" ShadowDepth="3" BlurRadius="3" Opacity="0.375"/>
