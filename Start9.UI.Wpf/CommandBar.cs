@@ -182,7 +182,7 @@ namespace Start9.UI.Wpf
             get => (bool)GetValue(IsVisibleProperty);
             set
             {
-                bool old = (bool)GetValue(IdentifierProperty);
+                bool old = (bool)GetValue(IsVisibleProperty);
                 SetValue(IsVisibleProperty, value);
                 IsVisibleChanged?.Invoke(this, new LayerChangedEventArgs(old, value));
             }
