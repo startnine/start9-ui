@@ -323,7 +323,7 @@
                                                 <!--Rectangle Fill="Transparent" Stroke="Transparent" StrokeThickness="0" Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=StackPanel}, Converter={StaticResource PercentageDoubleConverter}, ConverterParameter=45 44}" Margin="0,0,-45,0"/-->
                                             </StackPanel>
                                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="24" Margin="5,0">
-                                                <Image x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}"/>
+                                                <Image x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}" Visibility="{Binding ShowTitlebarIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                                 <!--Rectangle x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0">
                                                     <Rectangle.Fill>
                                                         <ImageBrush ImageSource="{TemplateBinding Icon}"/>
@@ -1893,6 +1893,39 @@
                     <Border x:Name="Border" Style="{DynamicResource HorizontalBarBorderStyle}" tic:AttachedProperties.CornerCurves="{Binding Path=(tic:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                         <ItemsPresenter/>
                     </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="DockPanel.Dock" Value="Left">
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
+                        </Trigger>
+                        <Trigger Property="DockPanel.Dock" Value="Top">
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0,0,0,1"/>
+                        </Trigger>
+                        <Trigger Property="DockPanel.Dock" Value="Right">
+                            <Setter TargetName="Border" Property="BorderThickness" Value="1,0,0,0"/>
+                        </Trigger>
+                        <Trigger Property="DockPanel.Dock" Value="Bottom">
+                            <Setter TargetName="Border" Property="BorderThickness" Value="0,1,0,0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ShadowedStatusBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource {x:Type StatusBar}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type StatusBar}">
+                    <Grid>
+                        <Rectangle VerticalAlignment="Top" Height="9" IsHitTestVisible="False" Margin="0,-9">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush Opacity="0.625" StartPoint="0,1" EndPoint="0,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Border x:Name="Border" Style="{DynamicResource HorizontalBarBorderStyle}" tic:AttachedProperties.CornerCurves="{Binding Path=(tic:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <ItemsPresenter/>
+                        </Border>
+                    </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="DockPanel.Dock" Value="Left">
                             <Setter TargetName="Border" Property="BorderThickness" Value="0,0,1,0"/>
@@ -5127,6 +5160,25 @@
                         <Border Style="{DynamicResource HorizontalBarBorderStyle}" HorizontalAlignment="Stretch" BorderThickness="{TemplateBinding BorderThickness}" tic:AttachedProperties.CornerCurves="{Binding Path=(tic:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                             <StackPanel Orientation="Horizontal" IsItemsHost="True" Margin="{TemplateBinding Padding}"/>
                         </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ShadowedCommandBarStyle" TargetType="{x:Type ui:CommandBar}" BasedOn="{StaticResource {x:Type ui:CommandBar}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ui:CommandBar}">
+                    <Grid>
+                        <Border Style="{DynamicResource HorizontalBarBorderStyle}" HorizontalAlignment="Stretch" BorderThickness="{TemplateBinding BorderThickness}" tic:AttachedProperties.CornerCurves="{Binding Path=(tic:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                            <StackPanel Orientation="Horizontal" IsItemsHost="True" Margin="{TemplateBinding Padding}"/>
+                        </Border>
+                        <Rectangle x:Name="ShadowRectangle" VerticalAlignment="Bottom" Margin="0,-18" Height="18" IsHitTestVisible="False">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>

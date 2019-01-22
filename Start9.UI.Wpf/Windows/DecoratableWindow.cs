@@ -118,6 +118,15 @@ namespace Start9.UI.Wpf.Windows
         public static readonly DependencyProperty ShowTitlebarTextProperty =
             DependencyProperty.Register("ShowTitlebarText", typeof(bool), typeof(DecoratableWindow), new PropertyMetadata(true));
 
+        public bool ShowTitlebarIcon
+        {
+            get => (bool)GetValue(ShowTitlebarIconProperty);
+            set => SetValue(ShowTitlebarIconProperty, value);
+        }
+
+        public static readonly DependencyProperty ShowTitlebarIconProperty =
+            DependencyProperty.Register("ShowTitlebarIcon", typeof(bool), typeof(DecoratableWindow), new PropertyMetadata(true));
+
         public object TitleBarContent
         {
             get => GetValue(TitleBarContentProperty);
@@ -212,6 +221,8 @@ namespace Start9.UI.Wpf.Windows
             }
         }*/
 
+        Cursor _prevCursor = null;
+
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
@@ -225,6 +236,7 @@ namespace Start9.UI.Wpf.Windows
             if (_titlebar != null)
             {
                 _titlebar.PreviewMouseLeftButtonDown += Titlebar_MouseLeftButtonDown;
+                _titlebar.MouseLeave += (sneder, args) => ResetTitlebarCursor();
                 /*if (_titlebar is Thumb)
                 {
                     (_titlebar as Thumb)*/
@@ -326,10 +338,21 @@ namespace Start9.UI.Wpf.Windows
                 };
 
             _systemMenuMove = GetTemplateChild(PartSystemMenuMove) as MenuItem;
-            /*if (_systemMenuMove != null)
+            if (_systemMenuMove != null)
                 _systemMenuMove.Click += (sneder, args) =>
                 {
-                };*/
+                    if (_titlebar != null)
+                    {
+                        var titlebarPoint = _titlebar.PointToScreen(new Point(0, 0));
+                        SystemScaling.CursorPosition = new Point(titlebarPoint.X + (_titlebar.ActualWidth / 2), titlebarPoint.Y + 10);
+                        //(_titlebar.ActualHeight / 2)
+                        if (_titlebar.Cursor != Cursors.SizeAll)
+                        {
+                            _prevCursor = _titlebar.Cursor;
+                            _titlebar.Cursor = Cursors.SizeAll;
+                        }
+                    }
+                };
 
             _systemMenuSize = GetTemplateChild(PartSystemMenuSize) as MenuItem;
             /*if (_systemMenuSize != null)
@@ -370,6 +393,9 @@ namespace Start9.UI.Wpf.Windows
 
                 if (_systemMenuMaximize != null)
                     _systemMenuMaximize.IsEnabled = false;
+
+                if (_systemMenuMove != null)
+                    _systemMenuMove.IsEnabled = false;
             }
             else
             {
@@ -378,17 +404,26 @@ namespace Start9.UI.Wpf.Windows
 
                 if (_systemMenuMaximize != null)
                     _systemMenuMaximize.IsEnabled = true;
-            }
 
-            if (_systemMenuMove != null)
-                _systemMenuMove.IsEnabled = false;
+                if ((_systemMenuMove != null) && (_titlebar != null))
+                    _systemMenuMove.IsEnabled = true;
+                else
+                    _systemMenuMove.IsEnabled = false;
+            }
 
             if (_systemMenuSize != null)
                 _systemMenuSize.IsEnabled = false;
         }
 
+        void ResetTitlebarCursor()
+        {
+            if ((_titlebar.Cursor == Cursors.SizeAll) && (_prevCursor != Cursors.SizeAll))
+                _titlebar.Cursor = _prevCursor;
+        }
+
         void Titlebar_MouseLeftButtonDown(Object sender, MouseButtonEventArgs e)
         {
+            ResetTitlebarCursor();
             if (e.ClickCount == 2)
             {
                 //Debug.WriteLine("(e.ClickCount == 2)");

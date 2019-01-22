@@ -55,14 +55,14 @@ namespace Start9.UI.Wpf
         public static Visibility GetAnyLayerVisible(DependencyObject element)
         {
             var returnValue = (Visibility)element.GetValue(AnyLayerVisibleProperty);
-            Debug.WriteLine("GetAnyLayerVisible: " + returnValue.ToString());
+            //Debug.WriteLine("GetAnyLayerVisible: " + returnValue.ToString());
             return returnValue;
         }
 
         public static void SetAnyLayerVisible(DependencyObject element, Visibility value)
         {
             element.SetValue(AnyLayerVisibleProperty, value);
-            Debug.WriteLine("SetAnyLayerVisible: " + value.ToString());
+            //Debug.WriteLine("SetAnyLayerVisible: " + value.ToString());
         }
 
         public ObservableCollection<CommandBarLayer> CommandBarLayers
@@ -120,17 +120,17 @@ namespace Start9.UI.Wpf
             foreach (DependencyObject item in Items)
             {
                 string layerString = GetLayers(item);
-                Debug.WriteLine("layerString: " + layerString);
+                //Debug.WriteLine("layerString: " + layerString);
                 if (string.IsNullOrWhiteSpace(layerString))
                     SetAnyLayerVisible(item, Visibility.Visible);
                 else if (CommandBarLayers.Count == 0)
                 {
-                    Debug.WriteLine("(CommandBarLayers.Count == 0)");
+                    //Debug.WriteLine("(CommandBarLayers.Count == 0)");
                     SetAnyLayerVisible(item, Visibility.Collapsed);
                 }
                 else
                 {
-                    Debug.WriteLine("Evaluating...");
+                    //Debug.WriteLine("Evaluating...");
                     //string[] layers = layerString.Split(',');
                     bool isAnyLayerVisible = false;
                     foreach (CommandBarLayer l in CommandBarLayers)

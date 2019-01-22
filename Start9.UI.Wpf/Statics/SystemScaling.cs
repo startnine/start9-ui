@@ -80,6 +80,10 @@ namespace Start9.UI.Wpf.Statics
                 var p = System.Windows.Forms.Cursor.Position;
                 return new Point(RealPixelsToWpfUnits(p.X), RealPixelsToWpfUnits(p.Y));
             }
+            set
+            {
+                System.Windows.Forms.Cursor.Position = new System.Drawing.Point((int)WpfUnitsToRealPixels(value.X), (int)WpfUnitsToRealPixels(value.Y));
+            }
         }
 
         /// <summary>
