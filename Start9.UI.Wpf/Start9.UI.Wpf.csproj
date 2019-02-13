@@ -1,164 +1,22 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{727669AC-3F83-41E1-AEFD-13A8F0C1FDAD}</ProjectGuid>
-    <OutputType>library</OutputType>
-    <RootNamespace>Start9.UI.Wpf</RootNamespace>
-    <AssemblyName>Start9.UI.Wpf</AssemblyName>
-    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
+    <AssemblyTitle>Start9.UI.Wpf</AssemblyTitle>
+    <Product>Start9.UI.Wpf</Product>
+    <Copyright>Copyright © Start9 Contributors 2019</Copyright>
+    <OutputPath>bin\$(Configuration)\</OutputPath>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationFramework.Classic" />
-    <Reference Include="System" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Aero.NormalColor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Aero2.NormalColor.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\AeroConcept.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Colors\ShaleBeige.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Shale.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Colors\ShaleBaseLight.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Colors\ShaleBlue.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Colors\DarkPlexBlue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Colors\LightPlexBlue.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Generic.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Themes\Luna.NormalColor.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Themes\Plex.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\MessageBoxContent.xaml">
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Behaviors\TouchableContextMenuBehavior.cs" />
-    <Compile Include="CommandBar.cs" />
-    <Compile Include="Converters\BoolInverterConverter.cs" />
-    <Compile Include="Converters\CombinedClassicFrameSizeConverter.cs" />
-    <Compile Include="Converters\CornerCurvesToCornerRadiusConverter.cs" />
-    <Compile Include="Converters\DoubleComparisonConverter.cs" />
-    <Compile Include="Converters\GetMaximizeBorderThicknessConverter.cs" />
-    <Compile Include="Converters\IconToImageBrushConverter.cs" />
-    <Compile Include="Converters\ListViewItemIndexToBoolConverter.cs" />
-    <Compile Include="Converters\RectangleToAspectRatioConverter.cs" />
-    <Compile Include="Converters\SolidColorBrushToColorConverter.cs" />
-    <Compile Include="Converters\SysDrawingImageToImageBrushConverter.cs" />
-    <Compile Include="Converters\ThicknessInvertFilterConverter.cs" />
-    <Compile Include="Converters\TreeViewItemPaddingConverter.cs" />
-    <Compile Include="Converters\WidthAndHeightToRectConverter.cs" />
-    <Compile Include="MonitorInfo.cs" />
-    <Compile Include="SpinBox.cs" />
-    <Compile Include="Statics\AttachedProperties.cs" />
-    <Compile Include="Statics\NativeMethods.cs" />
-    <Compile Include="NavigationView.cs" />
-    <Compile Include="Statics\Extensions.cs" />
-    <Compile Include="Statics\SystemState.cs" />
-    <Compile Include="TravellingSelector.cs" />
-    <Compile Include="Windows\AppBarWindow.cs" />
-    <Compile Include="Windows\CompositingWindow.cs" />
-    <Compile Include="Converters\DoubleToFractionOfDoubleConverter.cs" />
-    <Compile Include="Converters\DoubleToThicknessConverter.cs" />
-    <Compile Include="Converters\ThicknessToDoubleConverter.cs" />
-    <Compile Include="Converters\WidthToOffsetMarginConverter.cs" />
-    <Compile Include="CutCornerBorder.cs" />
-    <Compile Include="Windows\DecoratableWindow.cs" />
-    <Compile Include="Planerator.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
-    <Compile Include="Reveal.cs" />
-    <Compile Include="Statics\SystemScaling.cs" />
-    <Compile Include="ToggleSwitch.cs" />
-    <Compile Include="TouchableContextMenu.cs" />
-    <Compile Include="Windows\MessageBox.cs" />
-    <Compile Include="Windows\MessageBoxContent.xaml.cs">
-      <DependentUpon>MessageBoxContent.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\ShadowedWindow.cs" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <Resource Include="Fonts\Ubuntu-Bold.ttf" />
     <Resource Include="Fonts\Ubuntu-BoldItalic.ttf" />
     <Resource Include="Fonts\Ubuntu-Italic.ttf" />
@@ -167,16 +25,15 @@
     <Resource Include="Fonts\Ubuntu-Medium.ttf" />
     <Resource Include="Fonts\Ubuntu-MediumItalic.ttf" />
     <Resource Include="Fonts\Ubuntu-Regular.ttf" />
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Metro\" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Fonts\UFL.txt" />
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+
+  <!--Don't you hate an ugly csproj?-->
+  <ItemGroup>
+    <Page Include="Windows\MessageBoxContent.xaml" />
+    <Page Include="Themes\*.xaml" />
+    <Page Include="Themes\Colors\*.xaml" />
+  </ItemGroup> 
 </Project>

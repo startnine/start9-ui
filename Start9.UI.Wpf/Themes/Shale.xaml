@@ -4,7 +4,6 @@
             xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters"
             xmlns:win="clr-namespace:Start9.UI.Wpf.Windows"
             xmlns:tic="clr-namespace:Start9.UI.Wpf.Statics"
-            xmlns:sys="clr-namespace:System;assembly=mscorlib"
             xmlns:beh="clr-namespace:Start9.UI.Wpf.Behaviors">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/ShaleBaseLight.xaml"/>
