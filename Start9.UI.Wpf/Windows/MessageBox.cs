@@ -112,12 +112,12 @@ namespace Start9.UI.Wpf.Windows
             if (skin != null)
                 window.Resources.MergedDictionaries.Add(skin);
 
-            if (container == TargetContainer.Client)
-                window.Content = content;
-            else if (container == TargetContainer.Title)
+            //if (container == TargetContainer.Client)
+            window.Content = content;
+            /*else if (container == TargetContainer.Title)
                 window.TitleBarContent = content;
             else if (container == TargetContainer.FullWindow)
-                window.FullWindowContent = content;
+                window.FullWindowContent = content;*/
 
             T value = default(T);
 

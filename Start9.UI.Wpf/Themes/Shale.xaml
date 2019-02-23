@@ -81,14 +81,15 @@
         </Setter>
         <Setter Property="HideTransitionDuration" Value="50"/>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="0,24,0,0"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}" />
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="TitleBarHeight" Value="24"/>
         <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowForegroundBrush}"/>
         <Setter Property="FontFamily" Value="pack://application:,,,/Start9.UI.Wpf;component/Fonts/#Ubuntu"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="ShadowOffsetThickness" Value="25,15,25,40"/>
-        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Padding" Value="1,25,1,1"/>
         <Setter Property="CompositionState" Value="Alpha"/>
         <Setter Property="ShadowStyle">
             <Setter.Value>
@@ -98,6 +99,59 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="Window">
+                                <!--Grid x:Name="ShadowGrid" ClipToBounds="True">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="25"/>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="25"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="15"/>
+                                        <RowDefinition/>
+                                        <RowDefinition Height="40"/>
+                                    </Grid.RowDefinitions>
+                                    <Rectangle Grid.Column="0" Grid.Row="1" HorizontalAlignment="Left" Width="45">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="0" Grid.Row="0" HorizontalAlignment="Left" Width="45" VerticalAlignment="Top" Height="45">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush GradientOrigin="1,1" Center="1,1" GradientStops="{DynamicResource ShadowGradientStops}" RadiusX="1" RadiusY="1"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="1" Grid.Row="0" VerticalAlignment="Top" Height="45">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="2" Grid.Row="0" HorizontalAlignment="Right" Width="45" VerticalAlignment="Top" Height="45">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush GradientOrigin="0,1" Center="0,1" GradientStops="{DynamicResource ShadowGradientStops}" RadiusX="1" RadiusY="1"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="2" Grid.Row="1" HorizontalAlignment="Right" Width="45">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="2" Grid.Row="2" HorizontalAlignment="Right" Width="45" VerticalAlignment="Bottom" Height="45">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush GradientOrigin="0,0" Center="0,0" GradientStops="{DynamicResource ShadowGradientStops}" RadiusX="1" RadiusY="1"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="1" Grid.Row="2" VerticalAlignment="Bottom" Height="45">
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Rectangle Grid.Column="0" Grid.Row="2" HorizontalAlignment="Left" Width="45" VerticalAlignment="Bottom" Height="45">
+                                        <Rectangle.Fill>
+                                            <RadialGradientBrush GradientOrigin="1,0" Center="1,0" GradientStops="{DynamicResource ShadowGradientStops}" RadiusX="1" RadiusY="1"/>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                    <Border BorderBrush="{DynamicResource ShadowCornerBorderBrush}" BorderThickness="2" CornerRadius="3" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
+                                </Grid-->
                                 <Grid x:Name="ShadowGrid" ClipToBounds="True">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="45"/>
@@ -200,20 +254,20 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type win:DecoratableWindow}">
                     <ControlTemplate.Resources>
-                        <Style x:Key="BorderThumb" TargetType="Thumb">
+                        <Style x:Key="BorderThumbStyle" TargetType="Thumb">
                             <Setter Property="SnapsToDevicePixels" Value="true" />
                             <Setter Property="OverridesDefaultStyle" Value="true" />
                             <Setter Property="Background" Value="#01000000"/>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Thumb">
-                                        <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0" Fill="{TemplateBinding Background}"/>
+                                        <Rectangle StrokeThickness="0" Fill="{TemplateBinding Background}"/>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
                         </Style>
 
-                        <Style x:Key="ResizeGripThumbStyle" TargetType="Thumb" BasedOn="{StaticResource BorderThumb}">
+                        <Style x:Key="ResizeGripThumbStyle" TargetType="Thumb" BasedOn="{StaticResource BorderThumbStyle}">
                             <Setter Property="SnapsToDevicePixels" Value="True" />
                             <Setter Property="OverridesDefaultStyle" Value="True" />
                             <Setter Property="Width" Value="18" />
@@ -269,117 +323,84 @@
                             </Setter>
                         </Style>
                     </ControlTemplate.Resources>
-                    <Border x:Name="WindowRoot" BorderBrush="{DynamicResource WindowBorderBrush}" BorderThickness="1" CornerRadius="3" Margin="{TemplateBinding Margin}">
-                        <Border.RenderTransform>
-                            <TranslateTransform x:Name="WindowRootTransform" X="0" Y="0"/>
-                        </Border.RenderTransform>
+                    <Border x:Name="WindowRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="3" Margin="{TemplateBinding Margin}">
                         <Grid>
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{Binding BorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t, FallbackValue=24}" Opacity="1" Background="#01000000">
-                                <Border x:Name="TitlebarBorder" BorderBrush="{DynamicResource TitlebarBorderBrush}" BorderThickness="1" CornerRadius="2,2,0,0" VerticalAlignment="Stretch">
-                                    <Grid>
-                                        <Border x:Name="ActiveTitlebarBackground" IsHitTestVisible="False">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TitlebarActiveGradientStops}"/>
-                                            </Border.Background>
-                                        </Border>
-                                        <Border x:Name="InactiveTitlebarBackground" IsHitTestVisible="False" Visibility="Collapsed">
-                                            <Border.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TitlebarInactiveGradientStops}"/>
-                                            </Border.Background>
-                                        </Border>
-                                        <Grid UseLayoutRounding="True" VerticalAlignment="Stretch">
-                                            <Thumb x:Name="PART_Titlebar" Style="{DynamicResource BorderThumb}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                <Thumb.ContextMenu>
-                                                    <ContextMenu>
-                                                        <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
-                                                        <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
-                                                        <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
-                                                        <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
-                                                        <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
-                                                        <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
-                                                    </ContextMenu>
-                                                </Thumb.ContextMenu>
-                                            </Thumb>
-                                            <ContentPresenter Content="{TemplateBinding TitleBarContent}"/>
-                                            <StackPanel x:Name="CaptionButtons" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Height="24">
-                                                <Button x:Name="PART_MinimizeButton" Style="{DynamicResource CaptionButtonStyle}">
-                                                    <Path Data="M 0 0 L 9 0 L 9 2 L 0 2 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Button>
-                                                <Grid x:Name="MaxRestButtonGrid" Width="Auto">
-                                                    <Button x:Name="PART_MaximizeButton" Style="{DynamicResource CaptionButtonStyle}">
-                                                        <Path Data="M 0 0 L 0 7 L 7 7 L 7 0 Z" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,0,-1,0"/>
-                                                    </Button>
-                                                    <Button x:Name="PART_RestoreButton" Style="{DynamicResource CaptionButtonStyle}" Visibility="Hidden">
-                                                        <Grid>
-                                                            <Path Data="M 0 0 L 0 5 L 5 5 L 5 0 Z" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,3,0"/>
-                                                            <Path Data="M -1 0 L 5 0 L 5 6" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,0,0,3"/>
-                                                        </Grid>
-                                                    </Button>
+                            <!--Grid.RowDefinitions>
+                                <RowDefinition Height="{Binding TitleBarHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions-->
+                            <DockPanel>
+                                <Grid Height="{TemplateBinding TitleBarHeight}" HorizontalAlignment="Stretch" DockPanel.Dock="Top">
+                                    <!--{Binding BorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t, FallbackValue=24}-->
+                                    <Border x:Name="TitlebarBorder" BorderBrush="{DynamicResource TitlebarBorderBrush}" BorderThickness="1" CornerRadius="2,2,0,0" VerticalAlignment="Stretch">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TitlebarActiveGradientStops}"/>
+                                        </Border.Background>
+                                    </Border>
+                                    <Thumb x:Name="PART_Titlebar" Style="{DynamicResource BorderThumbStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Thumb.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
+                                                <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
+                                                <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
+                                                <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
+                                                <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
+                                                <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
+                                            </ContextMenu>
+                                        </Thumb.ContextMenu>
+                                    </Thumb>
+                                    <StackPanel x:Name="CaptionButtons" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Height="24">
+                                        <Button x:Name="PART_MinimizeButton" Style="{DynamicResource CaptionButtonStyle}">
+                                            <Path Data="M 0 0 L 9 0 L 9 2 L 0 2 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Button>
+                                        <Grid x:Name="MaxRestButtonGrid" Width="Auto">
+                                            <Button x:Name="PART_MaximizeButton" Style="{DynamicResource CaptionButtonStyle}">
+                                                <Path Data="M 0 0 L 0 7 L 7 7 L 7 0 Z" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="1,0,-1,0"/>
+                                            </Button>
+                                            <Button x:Name="PART_RestoreButton" Style="{DynamicResource CaptionButtonStyle}" Visibility="Hidden">
+                                                <Grid>
+                                                    <Path Data="M 0 0 L 0 5 L 5 5 L 5 0 Z" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,3,0"/>
+                                                    <Path Data="M -1 0 L 5 0 L 5 6" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,0,0,3"/>
                                                 </Grid>
-                                                <Button x:Name="PART_CloseButton" Style="{DynamicResource CaptionButtonStyle}">
-                                                    <Path Data="M 0 -1 L 2 -1 L 4.5 2 L 7 -1 L 9 -1 L 9 1 L 6 3.5 L 9 6 L 9 8 L 7 8 L 4.5 5 L 2 8 L 0 8 L 0 6 L 3 3.5 L 0 1 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                </Button>
-                                                <!--Rectangle Fill="Transparent" Stroke="Transparent" StrokeThickness="0" Width="{Binding Path=ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=StackPanel}, Converter={StaticResource PercentageDoubleConverter}, ConverterParameter=45 44}" Margin="0,0,-45,0"/-->
-                                            </StackPanel>
-                                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="24" Margin="5,0">
-                                                <Image x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}" Visibility="{Binding ShowTitlebarIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                                <!--Rectangle x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0">
-                                                    <Rectangle.Fill>
-                                                        <ImageBrush ImageSource="{TemplateBinding Icon}"/>
-                                                    </Rectangle.Fill>
-                                                </Rectangle-->
-                                                <!--Fill="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource IconToImageBrushConverter}, ConverterParameter='16'}"-->
-                                                <TextBlock x:Name="TitleText" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TitlebarIdleForegroundBrush}" HorizontalAlignment="Center" TextAlignment="Center" Margin="100,0" Effect="{DynamicResource DropShadow}" Text="{Binding Path=Title, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                            </Grid>
+                                            </Button>
                                         </Grid>
+                                        <Button x:Name="PART_CloseButton" Style="{DynamicResource CaptionButtonStyle}">
+                                            <Path Data="M 0 -1 L 2 -1 L 4.5 2 L 7 -1 L 9 -1 L 9 1 L 6 3.5 L 9 6 L 9 8 L 7 8 L 4.5 5 L 2 8 L 0 8 L 0 6 L 3 3.5 L 0 1 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased"/>
+                                        </Button>
+                                    </StackPanel>
+                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="24" Margin="5,0">
+                                        <Image x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}" Visibility="{Binding ShowTitlebarIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <TextBlock x:Name="TitleText" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TitlebarIdleForegroundBrush}" HorizontalAlignment="Center" TextAlignment="Center" Margin="100,0" Effect="{DynamicResource DropShadow}" Text="{Binding Path=Title, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}"/>
                                     </Grid>
-                                </Border>
-                            </Grid>
-                            <Border x:Name="Body" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="0,0,2,2">
-                                <!--Margin="{TemplateBinding BorderThickness}"-->
-                                <ContentPresenter Content="{TemplateBinding Content}"/>
-                            </Border>
-                            <Border x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}" CornerRadius="2">
-                                <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
-                            </Border>
-                            <Grid>
-                                <Grid x:Name="ResizeGrid">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Thumb x:Name="PART_ThumbBottom" HorizontalAlignment="Stretch" Cursor="SizeNS"
-                                   Grid.Column="0" Margin="3,0" Grid.ColumnSpan="3" Grid.Row="3"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbTop" HorizontalAlignment="Stretch" Cursor="SizeNS" Grid.Column="0"
-                                   Margin="3,0" Grid.ColumnSpan="3" Height="4"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.RowSpan="4"
-                                   Margin="0,3" Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.RowSpan="4"
-                                   HorizontalContentAlignment="Right" Margin="0,3"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbBottomRightCorner" HorizontalAlignment="Right" Cursor="SizeNWSE"
-                                   Grid.Row="3" Grid.Column="3"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbTopRightCorner" HorizontalAlignment="Right" Cursor="SizeNESW"
-                                   Grid.Row="0" Grid.Column="2"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbTopLeftCorner" HorizontalAlignment="Left" Cursor="SizeNWSE"
-                                   Grid.Row="0" Grid.Column="0"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbBottomLeftCorner" HorizontalAlignment="Left" Cursor="SizeNESW"
-                                   Grid.Row="3" Grid.Column="0"
-                                   Style="{DynamicResource BorderThumb}" />
                                 </Grid>
-                                <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumbStyle}" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="3"/>
+                                <Border x:Name="Body" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Background="{TemplateBinding Background}" CornerRadius="0,0,2,2"/>
+                            </DockPanel>
+                            <Grid Margin="{TemplateBinding Padding}">
+                                <ContentPresenter Content="{TemplateBinding Content}"/>
+                            </Grid>
+                            <Grid x:Name="ResizeGrid">
+                                <Grid.Resources>
+                                    <Style x:Key="{x:Type Thumb}" TargetType="{x:Type Thumb}" BasedOn="{StaticResource BorderThumbStyle}"/>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="4" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="4" />
+                                    <RowDefinition />
+                                    <RowDefinition Height="4" />
+                                </Grid.RowDefinitions>
+                                <Thumb x:Name="PART_ThumbBottom" Cursor="SizeNS" Grid.Column="1" Grid.Row="2"/>
+                                <Thumb x:Name="PART_ThumbTop" Cursor="SizeNS" Grid.Column="1" Grid.Row="0"/>
+                                <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.Row="1"/>
+                                <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.Row="1"/>
+                                <Thumb x:Name="PART_ThumbBottomRightCorner" Cursor="SizeNWSE" Grid.Column="2" Grid.Row="2"/>
+                                <Thumb x:Name="PART_ThumbTopRightCorner" Cursor="SizeNESW" Grid.Column="2" Grid.Row="0"/>
+                                <Thumb x:Name="PART_ThumbTopLeftCorner" Cursor="SizeNWSE" Grid.Column="0" Grid.Row="0"/>
+                                <Thumb x:Name="PART_ThumbBottomLeftCorner" Cursor="SizeNESW" Grid.Column="0" Grid.Row="2"/>
+                                <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumbStyle}" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="2"/>
                             </Grid>
                         </Grid>
                     </Border>
@@ -423,8 +444,13 @@
                         </Trigger>
                         <Trigger Property="IsActive" Value="False">
                             <Setter TargetName="TitleText" Property="Foreground" Value="{DynamicResource TitlebarInactiveIdleForegroundBrush}"/>
-                            <Setter TargetName="ActiveTitlebarBackground" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="InactiveTitlebarBackground" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="TitlebarBorder" Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TitlebarInactiveGradientStops}"/>
+                                </Setter.Value>
+                            </Setter>
+                            <!--Setter TargetName="ActiveTitlebarBackground" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="InactiveTitlebarBackground" Property="Visibility" Value="Visible"/-->
                         </Trigger>
                         <Trigger Property="WindowStyle" Value="None">
                             <Setter TargetName="PART_Titlebar" Property="Visibility" Value="Collapsed"/>
@@ -765,6 +791,7 @@
         <Setter Property="OverridesDefaultStyle" Value="true" />
         <Setter Property="Focusable" Value="false" />
         <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="5" />
         <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="Background">
@@ -805,7 +832,7 @@
                         <Border x:Name="DisabledBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" Background="{DynamicResource ButtonDisabledBackgroundBrush}" BorderBrush="{DynamicResource ButtonDisabledBorderBrush}" BorderThickness="1" Opacity="0">
                             <Border CornerRadius="{Binding CornerRadius, ElementName=IdleInnerBackground}" Margin="1" Padding="0" BorderBrush="Transparent" BorderThickness="0" Background="{DynamicResource ButtonDisabledSecondaryBackgroundBrush}"/>
                         </Border>
-                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1721,15 +1748,10 @@
                                 </Border.Background>
                             </Border>
                         </Border>
-                        <Border x:Name="PressedBackground" Margin="0,0,0,-1" Padding="0" BorderBrush="{DynamicResource TabItemPressedBorderBrush}" BorderThickness="1,1,1,0" Visibility="Collapsed">
+                        <Border x:Name="PressedBackground" Margin="0" Padding="0" BorderBrush="{DynamicResource TabItemPressedBorderBrush}" BorderThickness="1,1,1,0" Visibility="Collapsed">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TabItemPressedBackgroundGradientStops}"/>
                             </Border.Background>
-                            <Border Margin="1,1,1,0" Padding="0" BorderBrush="Transparent" BorderThickness="0">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TabItemPressedSecondaryBackgroundGradientStops}"/>
-                                </Border.Background>
-                            </Border>
                         </Border>
                         <Border x:Name="PressedFlashBackground" Background="{DynamicResource TabItemPressedFlashBackground}" BorderBrush="{DynamicResource TabItemPressedFlashBorderBrush}" Margin="0" Padding="0" BorderThickness="2,2,2,0" Opacity="0" OpacityMask="{Binding OpacityMask, Source={x:Reference HoverBackground}}"/>
                         <!--Border.Background>
@@ -1832,8 +1854,14 @@
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}"/>
-        <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TabControlSecondaryBackgroundGradientStops}"/>
+            </Setter.Value>
+        </Setter><!-- Value="{DynamicResource TabControlBackgroundBrush}"/-->
         <Setter Property="BorderBrush" Value="{DynamicResource TabControlBorderBrush}"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TabControl}">
@@ -1853,12 +1881,12 @@
                                     </LinearGradientBrush.GradientStops>
                                 </LinearGradientBrush>
                             </Border.Background-->
-                            <Border BorderThickness="1" Background="Transparent" CornerRadius="0">
+                            <!--Border BorderThickness="1" Background="Transparent" CornerRadius="0">
                                 <Border.BorderBrush>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TabControlSecondaryBackgroundGradientStops}"/>
-                                </Border.BorderBrush>
-                                <ContentPresenter Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="-2"/>
-                            </Border>
+                                </Border.BorderBrush-->
+                            <ContentPresenter Name="PART_SelectedContentHost" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                            <!--/Border-->
                         </Border>
                     </Grid>
                     <ControlTemplate.Triggers>

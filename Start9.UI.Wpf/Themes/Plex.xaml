@@ -809,7 +809,7 @@
                                                         <DropShadowEffect Color="Black" Direction="320" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
                                                     </Label.Effect>
                                                 </Label>
-                                                <ContentPresenter Content="{TemplateBinding TitleBarContent}" />
+                                                <!--ContentPresenter Content="{TemplateBinding TitleBarContent}" /-->
                                                 <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Top" Orientation="Horizontal" Height="22">
                                                     <!--RenderTransformOrigin="1,0">
                                         <StackPanel.RenderTransform>
@@ -879,7 +879,7 @@
                                     </RectangleGeometry.Rect>
                                 </RectangleGeometry>
                             </Grid.Clip-->
-                                        <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}"/>
+                                        <!--ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}"/-->
                                         <!--/Grid-->
                                         <Grid x:Name="ResizeGrid">
                                             <Grid.ColumnDefinitions>

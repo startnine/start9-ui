@@ -5,12 +5,13 @@
                     xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters">
     <!--#region Converters-->
 
+    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <conv:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
     <conv:WidthAndHeightToRectConverter x:Key="WidthAndHeightToRectConverter"/>
     <conv:CombinedClassicFrameSizeConverter x:Key="CombinedClassicFrameSizeConverter"/>
-    <conv:ThicknessInvertFilterConverter x:Key="ThicknessInvertFilterConverter"/>
+    <conv:ThicknessFilterConverter x:Key="ThicknessFilterConverter"/>
     <conv:DoubleToFractionOfDoubleConverter x:Key="DoubleToFractionOfDoubleConverter"/>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    <conv:GetMaximizeBorderThicknessConverter x:Key="GetMaximizeBorderThicknessConverter"/>
 
     <!--#endregion Converters-->
     
@@ -24,28 +25,53 @@
                 <QuinticEase x:Key="WindowHiddenEase" EasingMode="EaseIn"/>
             </ResourceDictionary>
         </Style.Resources>
-        <Setter Property="RenderTransform">
-            <Setter.Value>
-                <ScaleTransform x:Name="RootScaleTransform" ScaleX="1" ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Mode=Self}}"/>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="CompositionState" Value="Glass"/>
-        <Setter Property="HideTransitionDuration" Value="50"/>
+        <Style.Triggers>
+            <Trigger Property="IsGlassAvailable" Value="True">
+                <Setter Property="CompositionState" Value="Glass"/>
+                <Setter Property="HideTransitionDuration" Value="50"/>
+                <Setter Property="RenderTransform">
+                    <Setter.Value>
+                        <ScaleTransform x:Name="RootScaleTransform" ScaleX="1" ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Mode=Self}}"/>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="IsGlassAvailable" Value="False">
+                <Setter Property="CompositionState" Value="Alpha"/>
+                <Setter Property="HideTransitionDuration" Value="0"/>
+                <Setter Property="Template" Value="{DynamicResource BasicThemeDecoratableWindowControlTemplate}"/>
+                <Setter Property="ShadowStyle">
+                    <Setter.Value>
+                        <Style TargetType="Window">
+                            <Setter Property="WindowStyle" Value="None"/>
+                            <Setter Property="ResizeMode" Value="NoResize"/>
+                            <!--Setter Property="AllowsTransparency" Value="True"/-->
+                            <Setter Property="Visibility" Value="Visible"/>
+                            <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Window"/>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="BorderThickness" Value="8,30,8,8"/>
         <Setter Property="Background" Value="White"/>
         <Setter Property="Foreground" Value="Black"/>
-        <Setter Property="FontFamily" Value="Selawik"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="ShadowOffsetThickness" Value="14,14,17,17"/>
-        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Padding" Value="8,30,8,8"/>
         <Setter Property="ShadowStyle">
             <Setter.Value>
                 <Style TargetType="Window">
                     <Setter Property="WindowStyle" Value="None"/>
                     <Setter Property="ResizeMode" Value="NoResize"/>
-                    <Setter Property="AllowsTransparency" Value="True"/>
+                    <!--Setter Property="AllowsTransparency" Value="True"/-->
                     <Setter Property="Visibility" Value="Visible"/>
                     <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                     <Setter Property="Template">
@@ -168,7 +194,7 @@
                         </LinearGradientBrush>
                         <SolidColorBrush x:Key="CaptionButtonGlyphStrokeBrush">#FF535666</SolidColorBrush>
 
-                        <Style x:Key="BorderThumb" TargetType="Thumb">
+                        <Style x:Key="BorderThumbStyle" TargetType="Thumb">
                             <Setter Property="SnapsToDevicePixels" Value="true" />
                             <Setter Property="OverridesDefaultStyle" Value="true" />
                             <Setter Property="Template">
@@ -184,7 +210,7 @@
                             </Setter>
                         </Style>
 
-                        <Style x:Key="ResizeGripThumbStyle" TargetType="Thumb" BasedOn="{StaticResource BorderThumb}">
+                        <Style x:Key="ResizeGripThumbStyle" TargetType="Thumb" BasedOn="{StaticResource BorderThumbStyle}">
                             <Setter Property="SnapsToDevicePixels" Value="True" />
                             <Setter Property="OverridesDefaultStyle" Value="True" />
                             <Setter Property="Width" Value="18" />
@@ -384,7 +410,7 @@
                                             <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" Opacity="1"/>
                                         </Grid>
                                         <ControlTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
+                                            <DataTrigger Binding="{Binding IsActive, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
                                                 <DataTrigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
@@ -521,7 +547,8 @@
                         </Style>
 
                         <Style x:Key="CloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyle}">
-                            <Setter Property="Width" Value="46"/>
+                            <Setter Property="Margin" Value="0,0,-3,0"/>
+                            <Setter Property="Width" Value="49"/>
                             <Setter Property="Content">
                                 <Setter.Value>
                                     <Path Fill="{DynamicResource CaptionButtonGlyphFillBrush}" Stroke="{DynamicResource CaptionButtonGlyphStrokeBrush}" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -530,7 +557,7 @@
                                             <!--PathGeometry Figures="M 0 0 L 3 0 L 4.5 2 L 6 0 L 9 0 L 6 3 L 6 5 L 9 8 L 6 8 L 4.5 6 L 3 8 L 0 8 L 3 5 L 3 3 Z"/-->
                                             <!--PathGeometry Figures="M 0 0 L 3 0 L 5 2 L 7 0 L 10 0 L 10 2 L 8 4 L 8 5 L 10 7 L 10 9 L 7 9 L 5 7 L 3 9 L 0 9 L 0 7 L 2 5 L 2 4 L 0 2 Z"/-->
                                             <!--PathGeometry Figures="M 0 0 L 3 0 L 5 2 L 7 0 L 10 0 L 10 1 L 8 3 L 8 4 L 10 6 L 10 7 L 7 7 L 5 6 L 3 7 L 0 7 L 0 6 L 2 4 L 2 3 L 0 1 Z"/-->
-                                               <!--PathGeometry Figures="M 0 0 L 3 0 L 5 2 L 7 0 L 10 0
+                                            <!--PathGeometry Figures="M 0 0 L 3 0 L 5 2 L 7 0 L 10 0
                                                                       L 10 1 L 7 4 L 7 5 L 10 8 L 10 9
                                                                       L 7 9 L 5 7 L 3 9 L 0 9
                                                                       L 0 8 L 3 5 L 3 4 L 0 1 Z"/-->
@@ -549,27 +576,73 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type Button}">
-                                        <Grid>
-                                            <Border x:Name="ActiveIdleBackground" CornerRadius="0,0,3,0">
-                                                <Border.Background>
-                                                    <RadialGradientBrush Center="0.5,1" GradientOrigin="0.5,1">
-                                                        <RadialGradientBrush.GradientStops>
-                                                            <GradientStop Offset="0" Color="#CCDE704D"/>
-                                                            <GradientStop Offset="1" Color="#CCA11A07"/>
-                                                        </RadialGradientBrush.GradientStops>
-                                                    </RadialGradientBrush>
-                                                </Border.Background>
-                                                <Grid>
-                                                    <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                                        <Ellipse.Fill>
-                                                            <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
-                                                                <RadialGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0.375" Color="#FFBD3624"/>
-                                                                    <GradientStop Offset="1" Color="#00BD3624"/>
-                                                                </RadialGradientBrush.GradientStops>
-                                                            </RadialGradientBrush>
-                                                        </Ellipse.Fill>
-                                                    </Ellipse>
+                                        <Grid Background="#01000000">
+                                            <Grid Margin="0,0,3,0">
+                                                <Border x:Name="ActiveIdleBackground" CornerRadius="0,0,3,0">
+                                                    <Border.Background>
+                                                        <RadialGradientBrush Center="0.5,1" GradientOrigin="0.5,1">
+                                                            <RadialGradientBrush.GradientStops>
+                                                                <GradientStop Offset="0" Color="#CCDE704D"/>
+                                                                <GradientStop Offset="1" Color="#CCA11A07"/>
+                                                            </RadialGradientBrush.GradientStops>
+                                                        </RadialGradientBrush>
+                                                    </Border.Background>
+                                                    <Grid>
+                                                        <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                            <Ellipse.Fill>
+                                                                <RadialGradientBrush Center="0.5,0.5" GradientOrigin="0.5,0.5">
+                                                                    <RadialGradientBrush.GradientStops>
+                                                                        <GradientStop Offset="0.375" Color="#FFBD3624"/>
+                                                                        <GradientStop Offset="1" Color="#00BD3624"/>
+                                                                    </RadialGradientBrush.GradientStops>
+                                                                </RadialGradientBrush>
+                                                            </Ellipse.Fill>
+                                                        </Ellipse>
+                                                        <Border BorderThickness="1" CornerRadius="0,0,2,0">
+                                                            <Border.Background>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                    <LinearGradientBrush.GradientStops>
+                                                                        <GradientStop Offset="0.125" Color="#A0FFFFFF"/>
+                                                                        <GradientStop Offset="0.5" Color="#50FFFFFF"/>
+                                                                        <GradientStop Offset="0.5" Color="#10FFFFFF"/>
+                                                                        <GradientStop Offset="1" Color="#30FFFFFF"/>
+                                                                    </LinearGradientBrush.GradientStops>
+                                                                </LinearGradientBrush>
+                                                            </Border.Background>
+                                                            <Border.BorderBrush>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                    <LinearGradientBrush.GradientStops>
+                                                                        <GradientStop Offset="0.125" Color="#C0FFFFFF"/>
+                                                                        <GradientStop Offset="0.5" Color="#A0FFFFFF"/>
+                                                                        <GradientStop Offset="0.5" Color="#50FFFFFF"/>
+                                                                        <GradientStop Offset="1" Color="#80FFFFFF"/>
+                                                                    </LinearGradientBrush.GradientStops>
+                                                                </LinearGradientBrush>
+                                                            </Border.BorderBrush>
+                                                        </Border>
+                                                    </Grid>
+                                                </Border>
+                                                <Border x:Name="InactiveIdleBackground" BorderBrush="#C0000000" CornerRadius="0" Opacity="0">
+                                                    <Border BorderThickness="1" CornerRadius="{TemplateBinding BorderThickness}">
+                                                        <Border.BorderBrush>
+                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                                <LinearGradientBrush.GradientStops>
+                                                                    <GradientStop Offset="0" Color="#70C0C0C0"/>
+                                                                    <GradientStop Offset="1" Color="#40C0C0C0"/>
+                                                                </LinearGradientBrush.GradientStops>
+                                                            </LinearGradientBrush>
+                                                        </Border.BorderBrush>
+                                                    </Border>
+                                                </Border>
+                                                <Border x:Name="HoverBackground" CornerRadius="0,0,3,0" Opacity="0">
+                                                    <Border.Background>
+                                                        <RadialGradientBrush Center="0.5,1" GradientOrigin="0.5,1">
+                                                            <RadialGradientBrush.GradientStops>
+                                                                <GradientStop Offset="0" Color="#FFE6942F"/>
+                                                                <GradientStop Offset="1" Color="#FFA41906"/>
+                                                            </RadialGradientBrush.GradientStops>
+                                                        </RadialGradientBrush>
+                                                    </Border.Background>
                                                     <Border BorderThickness="1" CornerRadius="0,0,2,0">
                                                         <Border.Background>
                                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
@@ -591,68 +664,24 @@
                                                                 </LinearGradientBrush.GradientStops>
                                                             </LinearGradientBrush>
                                                         </Border.BorderBrush>
+                                                        <Canvas VerticalAlignment="Bottom" Height="1" Margin="0,-1">
+                                                            <Canvas.Background>
+                                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                                    <LinearGradientBrush.GradientStops>
+                                                                        <GradientStop Offset="0" Color="#00F5E677"/>
+                                                                        <GradientStop Offset="0.5" Color="#FFF5E677"/>
+                                                                        <GradientStop Offset="1" Color="#00F5E677"/>
+                                                                    </LinearGradientBrush.GradientStops>
+                                                                </LinearGradientBrush>
+                                                            </Canvas.Background>
+                                                        </Canvas>
                                                     </Border>
-                                                </Grid>
-                                            </Border>
-                                            <Border x:Name="InactiveIdleBackground" BorderBrush="#C0000000" CornerRadius="0" Opacity="0">
-                                                <Border BorderThickness="1" CornerRadius="{TemplateBinding BorderThickness}">
-                                                    <Border.BorderBrush>
-                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0" Color="#70C0C0C0"/>
-                                                                <GradientStop Offset="1" Color="#40C0C0C0"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Border.BorderBrush>
                                                 </Border>
-                                            </Border>
-                                            <Border x:Name="HoverBackground" CornerRadius="0,0,3,0" Opacity="0">
-                                                <Border.Background>
-                                                    <RadialGradientBrush Center="0.5,1" GradientOrigin="0.5,1">
-                                                        <RadialGradientBrush.GradientStops>
-                                                            <GradientStop Offset="0" Color="#FFE6942F"/>
-                                                            <GradientStop Offset="1" Color="#FFA41906"/>
-                                                        </RadialGradientBrush.GradientStops>
-                                                    </RadialGradientBrush>
-                                                </Border.Background>
-                                                <Border BorderThickness="1" CornerRadius="0,0,2,0">
-                                                    <Border.Background>
-                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0.125" Color="#A0FFFFFF"/>
-                                                                <GradientStop Offset="0.5" Color="#50FFFFFF"/>
-                                                                <GradientStop Offset="0.5" Color="#10FFFFFF"/>
-                                                                <GradientStop Offset="1" Color="#30FFFFFF"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Border.Background>
-                                                    <Border.BorderBrush>
-                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                            <LinearGradientBrush.GradientStops>
-                                                                <GradientStop Offset="0.125" Color="#C0FFFFFF"/>
-                                                                <GradientStop Offset="0.5" Color="#A0FFFFFF"/>
-                                                                <GradientStop Offset="0.5" Color="#50FFFFFF"/>
-                                                                <GradientStop Offset="1" Color="#80FFFFFF"/>
-                                                            </LinearGradientBrush.GradientStops>
-                                                        </LinearGradientBrush>
-                                                    </Border.BorderBrush>
-                                                    <Canvas VerticalAlignment="Bottom" Height="1" Margin="0,-1">
-                                                        <Canvas.Background>
-                                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                                <LinearGradientBrush.GradientStops>
-                                                                    <GradientStop Offset="0" Color="#00F5E677"/>
-                                                                    <GradientStop Offset="0.5" Color="#FFF5E677"/>
-                                                                    <GradientStop Offset="1" Color="#00F5E677"/>
-                                                                </LinearGradientBrush.GradientStops>
-                                                            </LinearGradientBrush>
-                                                        </Canvas.Background>
-                                                    </Canvas>
-                                                </Border>
-                                            </Border>
-                                            <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" Opacity="1"/>
+                                                <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" Opacity="1"/>
+                                            </Grid>
                                         </Grid>
                                         <ControlTemplate.Triggers>
-                                            <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
+                                            <DataTrigger Binding="{Binding IsActive, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
                                                 <DataTrigger.EnterActions>
                                                     <BeginStoryboard>
                                                         <Storyboard>
@@ -708,198 +737,641 @@
                             </Setter>
                         </Style>
                     </ControlTemplate.Resources>
-                    <Border x:Name="RootBorder" ClipToBounds="True">
-                        <Grid x:Name="WindowRoot" Background="#01000000">
-                            <Grid x:Name="CornerShineGrid" Height="173" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="2">
-                                <Rectangle Width="226" HorizontalAlignment="Left">
-                                    <Rectangle.Fill>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
-                                            <LinearGradientBrush.GradientStops>
-                                                <GradientStop Offset="0" Color="#7FFFFFFF"/>
-                                                <GradientStop Offset="0.35" Color="#60FFFFFF"/>
-                                                <GradientStop Offset="0.5" Color="#00FFFFFF"/>
-                                            </LinearGradientBrush.GradientStops>
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
-                                <Rectangle Width="226" HorizontalAlignment="Right">
-                                    <Rectangle.Fill>
-                                        <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
-                                            <LinearGradientBrush.GradientStops>
-                                                <GradientStop Offset="0" Color="#7FFFFFFF"/>
-                                                <GradientStop Offset="0.35" Color="#60FFFFFF"/>
-                                                <GradientStop Offset="0.5" Color="#00FFFFFF"/>
-                                            </LinearGradientBrush.GradientStops>
-                                        </LinearGradientBrush>
-                                    </Rectangle.Fill>
-                                </Rectangle>
+                    <Border x:Name="TrueWindowRoot" ClipToBounds="True">
+                        <Grid x:Name="WindowRoot" Margin="{TemplateBinding Margin}">
+                            <Border x:Name="OuterBorder1" Background="#01FFFFFF" BorderBrush="#CC000000" BorderThickness="1" CornerRadius="6">
+                                <Border x:Name="OuterBorder2" BorderBrush="#CCFFFFFF" BorderThickness="1" CornerRadius="5"/>
+                            </Border>
+                            <Rectangle x:Name="TopLeftShine" Width="226" Height="125" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                                        <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                                        <GradientStop Offset="0.3" Color="#60FFFFFF"/>
+                                        <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                                <Rectangle.OpacityMask>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Offset="0.5" Color="Black"/>
+                                        <GradientStop Offset="1" Color="Transparent"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <Rectangle x:Name="TopRightShine" Width="226" Height="125" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
+                                        <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                                        <GradientStop Offset="0.3" Color="#60FFFFFF"/>
+                                        <GradientStop Offset="0.5" Color="#00FFFFFF"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                                <Rectangle.OpacityMask>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Offset="0.5" Color="Black"/>
+                                        <GradientStop Offset="1" Color="Transparent"/>
+                                    </LinearGradientBrush>
+                                </Rectangle.OpacityMask>
+                            </Rectangle>
+                            <Border x:Name="SideShine" BorderBrush="Transparent" BorderThickness="1,90,1,0.5" Margin="{Binding BorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ThicknessFilterConverter}, ConverterParameter=zpzz}" VerticalAlignment="Top" Height="180">
+                                <Border.Background>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Offset="0" Color="#00FDFDFD"/>
+                                        <GradientStop Offset="1" Color="#BAFDFDFD"/>
+                                    </LinearGradientBrush>
+                                </Border.Background>
+                            </Border>
+                            <Grid Margin="-2">
+                                <Border x:Name="InnerBorder1" BorderBrush="#91FDFDFD" BorderThickness="1" CornerRadius="2" Margin="{TemplateBinding BorderThickness}" Padding="0">
+                                    <Border x:Name="InnerBorder2" Background="{TemplateBinding Background}" BorderBrush="#92181818" BorderThickness="1" CornerRadius="1" Padding="0"/>
+                                </Border>
                             </Grid>
-                            <Grid x:Name="PART_Titlebar" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}" Margin="6,0" Visibility="Visible" Opacity="1" Background="#01000000">
-                                <Grid x:Name="TitlebarRootGrid">
-                                    <Canvas x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Top" Height="16" Width="16" Margin="2">
-                                        <Canvas.Background>
-                                            <ImageBrush ImageSource="{TemplateBinding Icon}" />
-                                        </Canvas.Background>
-                                    </Canvas>
-                                    <Grid x:Name="TitleTextGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,0,0,0">
-                                        <Border Background="White" CornerRadius="10" Opacity="0.5">
+                            <Grid VerticalAlignment="Top" Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}" UseLayoutRounding="True">
+                                <Thumb x:Name="PART_Titlebar" Style="{DynamicResource BorderThumbStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                    <Thumb.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
+                                            <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
+                                            <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
+                                            <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
+                                            <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
+                                            <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
+                                        </ContextMenu>
+                                    </Thumb.ContextMenu>
+                                </Thumb>
+                                <Border x:Name="CaptionButtonsBorder1" BorderBrush="#CCFFFFFF" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,1,6,0">
+                                    <Border x:Name="CaptionButtonsBorder2" BorderBrush="#C0000000" BorderThickness="1,0,1,1" CornerRadius="0,0,3,3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                        <StackPanel x:Name="CaptionButtons" Orientation="Horizontal">
+                                            <Button x:Name="PART_MinimizeButton" Style="{DynamicResource MinimizeButtonStyle}"/>
+                                            <Button x:Name="PART_MaximizeButton" Style="{DynamicResource MaximizeButtonStyle}"/>
+                                            <Button x:Name="PART_RestoreButton" Style="{DynamicResource RestoreButtonStyle}" Visibility="Collapsed"/>
+                                            <Button x:Name="PART_CloseButton" Style="{DynamicResource CloseButtonStyle}"/>
+                                        </StackPanel>
+                                    </Border>
+                                </Border>
+                                <StackPanel x:Name="CaptionStackPanel" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="8,0">
+                                    <Image x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}" Visibility="{Binding ShowTitlebarIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <Grid Margin="5,1,5,-1" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False">
+                                        <!--Rectangle Fill="#7FFFFFFF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
+                                        <Rectangle.Effect>
+                                            <BlurEffect Radius="5"/>
+                                        </Rectangle.Effect>
+                                    </Rectangle>
+                                    <TextBlock x:Name="TitleText" FontSize="12" Foreground="Black" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Path=Title, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}"/-->
+                                        <Border Background="White" BorderBrush="Transparent" BorderThickness="3.5" CornerRadius="10" Opacity="0.375" IsHitTestVisible="False" Margin="-3.5,0">
                                             <Border.Effect>
                                                 <BlurEffect Radius="10"/>
                                             </Border.Effect>
                                         </Border>
-                                        <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" FontSize="12" Foreground="Black"/>
-                                        <!-->
-                                        <Label.Effect>
-                                            <DropShadowEffect Color="White" BlurRadius="5" Opacity="1" ShadowDepth="0" Direction="0"/>
-                                        </Label.Effect>
-                                    </Label-->
+                                        <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Foreground="Black" IsHitTestVisible="False"/>
                                     </Grid>
-                                    <Grid x:Name="TitleBarContentGrid">
-                                        <ContentPresenter Content="{TemplateBinding TitleBarContent}"/>
-                                    </Grid>
-                                    <Border x:Name="CaptionButtons" BorderBrush="#C0FFFFFF" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,1,0,0">
-                                        <Border BorderBrush="#C0000000" BorderThickness="1,0,1,1" CornerRadius="0,0,3,3">
-                                            <StackPanel x:Name="CaptionButtonStack" Orientation="Horizontal" Height="18">
-                                                <Button x:Name="PART_MinimizeButton" Style="{DynamicResource MinimizeButtonStyle}"/>
-                                                <Grid x:Name="MaxRestButtonGrid">
-                                                    <Button x:Name="PART_MaximizeButton" Style="{DynamicResource MaximizeButtonStyle}"/>
-                                                    <Button x:Name="PART_RestoreButton" Visibility="Hidden" Style="{DynamicResource RestoreButtonStyle}"/>
-                                                </Grid>
-                                                <Button x:Name="PART_CloseButton" Style="{DynamicResource CloseButtonStyle}"/>
-                                            </StackPanel>
-                                        </Border>
-                                    </Border>
-                                </Grid>
-                                <Border x:Name="DialogFilm" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
+                                </StackPanel>
                             </Grid>
-                            <Grid Margin="{TemplateBinding BorderThickness}">
-                                <Border x:Name="Body" BorderThickness="1" BorderBrush="#F2FEFEFE" CornerRadius="1" Margin="-2">
-                                    <!-- Margin="-2,-10,-2,-2-"-->
-                                    <Border BorderBrush="#AF000000" BorderThickness="1" HorizontalAlignment="Stretch" Background="{TemplateBinding Background}">
-                                        <ContentPresenter Content="{TemplateBinding Content}"/>
-                                    </Border>
-                                </Border>
+                            <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"/>
+                            <Grid x:Name="ResizeGrid">
+                                <Grid.Resources>
+                                    <Style x:Key="{x:Type Thumb}" TargetType="{x:Type Thumb}" BasedOn="{StaticResource BorderThumbStyle}"/>
+                                </Grid.Resources>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="4" />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="4" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="4" />
+                                    <RowDefinition />
+                                    <RowDefinition Height="4" />
+                                </Grid.RowDefinitions>
+                                <Thumb x:Name="PART_ThumbBottom" Cursor="SizeNS" Grid.Column="1" Grid.Row="2"/>
+                                <Thumb x:Name="PART_ThumbTop" Cursor="SizeNS" Grid.Column="1" Grid.Row="0"/>
+                                <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.Row="1"/>
+                                <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.Row="1"/>
+                                <Thumb x:Name="PART_ThumbBottomRightCorner" Cursor="SizeNWSE" Grid.Column="2" Grid.Row="2"/>
+                                <Thumb x:Name="PART_ThumbTopRightCorner" Cursor="SizeNESW" Grid.Column="2" Grid.Row="0"/>
+                                <Thumb x:Name="PART_ThumbTopLeftCorner" Cursor="SizeNWSE" Grid.Column="0" Grid.Row="0"/>
+                                <Thumb x:Name="PART_ThumbBottomLeftCorner" Cursor="SizeNESW" Grid.Column="0" Grid.Row="2"/>
+                                <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumbStyle}" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="2"/>
                             </Grid>
-                            <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
-                                <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
-                            </Grid>
-                            <Grid>
-                                <Grid x:Name="ResizeGrid">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-                                    <Thumb x:Name="PART_ThumbBottom" HorizontalAlignment="Stretch" Cursor="SizeNS"
-                                   Grid.Column="0" Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Grid.Row="3"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbTop" HorizontalAlignment="Stretch" Cursor="SizeNS" Grid.Column="0"
-                                   Background="{x:Null}" Margin="3,0" Grid.ColumnSpan="3" Height="4"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.RowSpan="4"
-                                   Background="{x:Null}" Margin="0,3" Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.RowSpan="4"
-                                   HorizontalContentAlignment="Right" Background="{x:Null}" Margin="0,3"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbBottomRightCorner" HorizontalAlignment="Right" Cursor="SizeNWSE"
-                                   Grid.Row="3" Grid.Column="3" Background="{x:Null}"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbTopRightCorner" HorizontalAlignment="Right" Cursor="SizeNESW"
-                                   Grid.Row="0" Grid.Column="2" Background="{x:Null}"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbTopLeftCorner" HorizontalAlignment="Left" Cursor="SizeNWSE"
-                                   Grid.Row="0" Grid.Column="0" Background="{x:Null}"
-                                   Style="{DynamicResource BorderThumb}" />
-                                    <Thumb x:Name="PART_ThumbBottomLeftCorner" HorizontalAlignment="Left" Cursor="SizeNESW"
-                                   Grid.Row="3" Grid.Column="0" Background="{x:Null}"
-                                   Style="{DynamicResource BorderThumb}" />
-                                </Grid>
-                                <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumbStyle}" Visibility="Hidden" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="3" Grid.Row="3"/>
-                            </Grid>
-                            <Border CornerRadius="6" BorderBrush="#AF000000" BorderThickness="1" IsHitTestVisible="False">
-                                <Border x:Name="WhiteBorder" CornerRadius="5" BorderBrush="#F2FEFEFE" BorderThickness="1" IsHitTestVisible="False"/>
-                            </Border>
                         </Grid>
                     </Border>
                     <ControlTemplate.Triggers>
                         <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="{x:Null}">
                             <Setter TargetName="WindowIcon" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="TitleTextGrid" Property="Margin" Value="0"/>
+                            <Setter TargetName="TitleText" Property="Margin" Value="0"/>
                         </DataTrigger>
                         <Trigger Property="WindowState" Value="Maximized">
-                            <Setter Property="Margin" Value="7"/>
-                            <Setter Property="MaxWidth" Value="{x:Static SystemParameters.PrimaryScreenWidth}"/>
-                            <Setter Property="MaxHeight" Value="{x:Static SystemParameters.PrimaryScreenHeight}"/>
+                            <Setter TargetName="TrueWindowRoot" Property="Margin" Value="{Binding Converter={StaticResource GetMaximizeBorderThicknessConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             <Setter TargetName="PART_MaximizeButton" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="PART_RestoreButton" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="RootBorder" Property="Margin" Value="9,9,-9,-9"/>
                             <Setter TargetName="WindowRoot" Property="Margin" Value="-8"/>
-                            <Setter TargetName="PART_Titlebar" Property="Margin" Value="10,8,10,0"/>
-                            <Setter TargetName="TitlebarRootGrid" Property="Margin" Value="0,-8,0,8"/>
-                            <!--TitleBarContentGrid-->
-                            <!--Setter TargetName="PART_Titlebar" Property="Height" Value="22"/-->
-                            <Setter TargetName="CaptionButtons" Property="Margin" Value="0,7,0,-8"/>
-                            <!--Setter TargetName="CaptionButtonStack" Property="Height" Value="17"/-->
+                            <Setter TargetName="CaptionStackPanel" Property="Margin" Value="8,4,8,0"/>
+                            <Setter TargetName="CaptionButtonsBorder1" Property="Margin" Value="0,8,10,0"/>
                         </Trigger>
+                        <!--Trigger Property="IsActive" Value="False"-->
+                        <!--DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="False"-->
                         <Trigger Property="IsActive" Value="False">
-                            <!--Setter TargetName="ActiveTitlebarBackground" Property="Visibility" Value="Hidden"/>
-                            <Setter TargetName="InactiveTitlebarBackground" Property="Visibility" Value="Visible"/-->
-                            <Setter TargetName="CaptionButtons" Property="BorderBrush" Value="#60FFFFFF"/>
-                            <Setter TargetName="Body" Property="BorderBrush" Value="#79FEFEFE"/>
-                            <Setter TargetName="WhiteBorder" Property="BorderBrush" Value="#79FEFEFE"/>
-                            <Setter TargetName="CornerShineGrid" Property="Opacity" Value="0.5"/>
-                            <Setter TargetName="PART_MinimizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
-                            <Setter TargetName="PART_MaximizeButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
-                            <Setter TargetName="PART_RestoreButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
-                            <Setter TargetName="PART_CloseButton" Property="Foreground" Value="{DynamicResource CaptionButtonInactiveIdleBrush}"/>
+                            <Setter TargetName="CaptionButtonsBorder1" Property="BorderBrush" Value="#60FFFFFF"/>
+                            <Setter TargetName="CaptionButtonsBorder2" Property="BorderBrush" Value="#99000000"/>
+                            <Setter TargetName="OuterBorder1" Property="BorderBrush" Value="#99000000"/>
+                            <Setter TargetName="OuterBorder2" Property="BorderBrush" Value="#60FFFFFF"/>
+                            <!--Setter TargetName="InnerBorder1" Property="BorderBrush" Value="#99000000"/>
+                            <Setter TargetName="InnerBorder2" Property="BorderBrush" Value="#60FFFFFF"/-->
+                            <Setter TargetName="TopLeftShine" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="TopRightShine" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="SideShine" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
-                        <Trigger Property="WindowStyle" Value="None">
-                            <Setter TargetName="PART_Titlebar" Property="Visibility" Value="Collapsed"/>
-                        </Trigger>
-                        <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
-                            <Setter TargetName="PART_ResizeGrip" Property="Visibility" Value="Visible"/>
-                        </Trigger>
-                        <Trigger Property="ResizeMode" Value="CanMinimize">
-                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="PART_MinimizeButton" Property="Visibility" Value="Collapsed"/>
-                        </Trigger>
-                        <Trigger Property="ResizeMode" Value="NoResize">
-                            <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
-                            <Setter TargetName="PART_MaximizeButton" Property="IsEnabled" Value="False"/>
+                        <Trigger Property="IsWindowVisible" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.75" To="1" Duration="0:0:0.5" EasingFunction="{StaticResource WindowVisibleEase}"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5" EasingFunction="{StaticResource WindowVisibleEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="0.75" Duration="0:0:0.5" EasingFunction="{StaticResource WindowHiddenEase}"/>
+                                        <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5" EasingFunction="{StaticResource WindowHiddenEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Style.Triggers>
-            <Trigger Property="IsWindowVisible" Value="True">
-                <Trigger.EnterActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="0.75" To="1" Duration="0:0:0.5" EasingFunction="{StaticResource WindowVisibleEase}"/>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="0" To="1" Duration="0:0:0.5" EasingFunction="{StaticResource WindowVisibleEase}"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </Trigger.EnterActions>
-                <Trigger.ExitActions>
-                    <BeginStoryboard>
-                        <Storyboard>
-                            <DoubleAnimation Storyboard.TargetProperty="RenderTransform.ScaleX" From="1" To="0.75" Duration="0:0:0.5" EasingFunction="{StaticResource WindowHiddenEase}"/>
-                            <DoubleAnimation Storyboard.TargetProperty="Opacity" From="1" To="0" Duration="0:0:0.5" EasingFunction="{StaticResource WindowHiddenEase}"/>
-                        </Storyboard>
-                    </BeginStoryboard>
-                </Trigger.ExitActions>
-            </Trigger>
-        </Style.Triggers>
     </Style>
+
+    <ControlTemplate x:Key="BasicThemeDecoratableWindowControlTemplate" TargetType="{x:Type win:DecoratableWindow}">
+        <ControlTemplate.Resources>
+            <LinearGradientBrush x:Key="CaptionButtonGlyphFillBrush" StartPoint="0,0" EndPoint="0,1">
+                <LinearGradientBrush.GradientStops>
+                    <GradientStop Offset="0" Color="White"/>
+                    <GradientStop Offset="1" Color="#FFDADADA"/>
+                </LinearGradientBrush.GradientStops>
+            </LinearGradientBrush>
+            <SolidColorBrush x:Key="CaptionButtonGlyphStrokeBrush">#FF535666</SolidColorBrush>
+
+            <Style x:Key="BorderThumbStyle" TargetType="Thumb">
+                <Setter Property="SnapsToDevicePixels" Value="true" />
+                <Setter Property="OverridesDefaultStyle" Value="true" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Thumb">
+                            <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0">
+                                <Rectangle.Fill>
+                                    <SolidColorBrush Color="#01000000" />
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ResizeGripThumbStyle" TargetType="Thumb" BasedOn="{StaticResource BorderThumbStyle}">
+                <Setter Property="SnapsToDevicePixels" Value="True" />
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Width" Value="18" />
+                <Setter Property="Height" Value="18" />
+                <Setter Property="Margin" Value="0,0,5,5" />
+                <Setter Property="HorizontalAlignment" Value="Right" />
+                <Setter Property="VerticalAlignment" Value="Bottom" />
+                <Setter Property="Cursor" Value="SizeNWSE"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="Thumb">
+                            <ControlTemplate.Resources>
+
+                                <Style x:Key="{x:Type ResizeGrip}" TargetType="{x:Type ResizeGrip}">
+                                    <Setter Property="OverridesDefaultStyle" Value="True" />
+                                    <Setter Property="Foreground" Value="Blue" />
+                                    <Setter Property="Background" Value="#01000000" />
+                                    <Setter Property="IsHitTestVisible" Value="True" />
+                                    <Setter Property="Width" Value="18" />
+                                    <Setter Property="Height" Value="18" />
+                                    <Setter Property="Margin" Value="0" />
+                                    <Setter Property="HorizontalAlignment" Value="Right" />
+                                    <Setter Property="VerticalAlignment" Value="Bottom" />
+                                    <Setter Property="Cursor" Value="SizeNWSE"/>
+                                    <Setter Property="FontFamily" Value="Marlett"/>
+                                    <Setter Property="FontSize" Value="12"/>
+                                    <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="{x:Type ResizeGrip}">
+                                                <Grid>
+                                                    <Grid HorizontalAlignment="Right" VerticalAlignment="Bottom">
+                                                        <TextBlock Foreground="{x:Static SystemColors.GrayTextBrush}">o</TextBlock>
+                                                        <TextBlock Foreground="{x:Static SystemColors.HighlightTextBrush}">p</TextBlock>
+                                                    </Grid>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ControlTemplate.Resources>
+                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Rectangle StrokeThickness="0">
+                                    <Rectangle.Fill>
+                                        <SolidColorBrush Color="#01000000" />
+                                    </Rectangle.Fill>
+                                </Rectangle>
+                                <ResizeGrip x:Name="PART_ResizeGrip"/>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="CaptionButtonStyle" TargetType="{x:Type Button}">
+                <Setter Property="UseLayoutRounding" Value="True"/>
+                <Setter Property="Width" Value="31"/>
+                <Setter Property="Margin" Value="2,0,0,0"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="#01000000">
+                                <Grid Margin="0,9,0,0">
+                                    <Border x:Name="HoverBackground" BorderBrush="Transparent" CornerRadius="2" BorderThickness="1" Visibility="Collapsed">
+                                        <Border BorderThickness="1" CornerRadius="1">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FFAAD5F3"/>
+                                                    <GradientStop Offset="0.5" Color="#FF81C0EA"/>
+                                                    <GradientStop Offset="0.5" Color="#FF2D73A3"/>
+                                                    <GradientStop Offset="1" Color="#FF24C6EB"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <Border.BorderBrush>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FFD6EBFA"/>
+                                                    <GradientStop Offset="0.5" Color="#FFBBDDF3"/>
+                                                    <GradientStop Offset="0.5" Color="#FF8EB4CE"/>
+                                                    <GradientStop Offset="1" Color="#FF85EFF9"/>
+                                                </LinearGradientBrush>
+                                            </Border.BorderBrush>
+                                        </Border>
+                                    </Border>
+                                    <Border x:Name="PressedBackground" BorderBrush="Transparent" CornerRadius="0" BorderThickness="1" Visibility="Collapsed">
+                                        <Border BorderThickness="1" CornerRadius="1">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FF7F9AAC"/>
+                                                    <GradientStop Offset="0.5" Color="#FF5D778C"/>
+                                                    <GradientStop Offset="0.5" Color="#FF203B52"/>
+                                                    <GradientStop Offset="1" Color="#FF27C9C8"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <Border.BorderBrush>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FFACBEC9"/>
+                                                    <GradientStop Offset="0.5" Color="#FF90A2B0"/>
+                                                    <GradientStop Offset="0.5" Color="#FF667888"/>
+                                                    <GradientStop Offset="1" Color="#FF67E6E4"/>
+                                                </LinearGradientBrush>
+                                            </Border.BorderBrush>
+                                        </Border>
+                                    </Border>
+                                    <Border x:Name="IdleBackground" BorderBrush="#FF61728B" BorderThickness="1" CornerRadius="2">
+                                        <Border x:Name="IdleInnerBackground" BorderThickness="1" CornerRadius="1">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#7FFFFFFF"/>
+                                                    <GradientStop Offset="0.5" Color="#7FFFFFFF"/>
+                                                    <GradientStop Offset="0.5" Color="#40000000"/>
+                                                    <GradientStop Offset="1" Color="#40FFFFFF"/>
+                                                    <!--GradientStop Offset="0" Color="#FFBFD3E8"/>
+                                                <GradientStop Offset="0.5" Color="#FFBFD3E8"/>
+                                                <GradientStop Offset="0.5" Color="#FF98B1CC"/>
+                                                <GradientStop Offset="1" Color="#FFB7D0E9"/-->
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <Border.BorderBrush>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FFDFE8F2"/>
+                                                    <GradientStop Offset="0.5" Color="#FFDCE7F3"/>
+                                                    <GradientStop Offset="0.5" Color="#FFC8D5E4"/>
+                                                    <GradientStop Offset="1" Color="#FFD9E7F4"/>
+                                                </LinearGradientBrush>
+                                            </Border.BorderBrush>
+                                        </Border>
+                                    </Border>
+                                    <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" Opacity="1"/>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsActive, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
+                                    <Setter TargetName="IdleInnerBackground" Property="Background" Value="Transparent"/>
+                                    <Setter TargetName="IdleBackground" Property="Opacity" Value="0.75"/>
+                                </DataTrigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="IdleInnerBackground" Property="Visibility" Value="Collapsed"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                        <Condition Property="IsPressed" Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="HoverBackground" Property="Visibility" Value="Visible"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="PressedBackground" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="ContentPresenter" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="CloseButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyle}">
+                <Setter Property="Content">
+                    <Setter.Value>
+                        <Path Fill="{DynamicResource CaptionButtonGlyphFillBrush}" Stroke="{DynamicResource CaptionButtonGlyphStrokeBrush}" StrokeThickness="1" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True">
+                            <Path.Data>
+                                <PathGeometry Figures="M 0.5 0.5 L 3.5 0.5 L 5.5 2.5 L 7.5 0.5 L 10.5 0.5
+                                                                      L 10.5 1.5 L 7.5 4.5 L 10.5 7.5 L 10.5 8.5
+                                                                      L 7.5 8.5 L 5.5 6.5 L 3.5 8.5 L 0.5 8.5
+                                                                      L 0.5 7.5 L 3.5 4.5 L 0.5 1.5 Z"/>
+                            </Path.Data>
+                        </Path>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Width" Value="33"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="{x:Type Button}">
+                            <Border Background="#01000000">
+                                <Grid Margin="0,9,2,0">
+                                    <Border x:Name="HoverBackground" BorderBrush="Transparent" CornerRadius="2" BorderThickness="1" Visibility="Collapsed">
+                                        <Border BorderThickness="1" CornerRadius="1">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FFFCC8BF"/>
+                                                    <GradientStop Offset="0.5" Color="#FFFBA89A"/>
+                                                    <GradientStop Offset="0.5" Color="#FFD22302"/>
+                                                    <GradientStop Offset="1" Color="#FFE5934D"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <Border.BorderBrush>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FFFDE4E0"/>
+                                                    <GradientStop Offset="0.5" Color="#FFFCCEC6"/>
+                                                    <GradientStop Offset="0.5" Color="#FFE78977"/>
+                                                    <GradientStop Offset="1" Color="#FFF7E4B2"/>
+                                                </LinearGradientBrush>
+                                            </Border.BorderBrush>
+                                        </Border>
+                                    </Border>
+                                    <Border x:Name="PressedBackground" BorderBrush="Transparent" CornerRadius="0" BorderThickness="1" Visibility="Collapsed">
+                                        <Border BorderThickness="1" CornerRadius="1">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FFCFA38B"/>
+                                                    <GradientStop Offset="0.5" Color="#FFC1856C"/>
+                                                    <GradientStop Offset="0.5" Color="#FF871900"/>
+                                                    <GradientStop Offset="1" Color="#FFC4954C"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                            <Border.BorderBrush>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#FFE6D0C3"/>
+                                                    <GradientStop Offset="0.5" Color="#FFCCB0A5"/>
+                                                    <GradientStop Offset="0.5" Color="#FFB28176"/>
+                                                    <GradientStop Offset="1" Color="#FFDFD0A6"/>
+                                                </LinearGradientBrush>
+                                            </Border.BorderBrush>
+                                        </Border>
+                                    </Border>
+                                    <Border x:Name="IdleBackground" BorderBrush="#FF431422" BorderThickness="1" CornerRadius="2">
+                                        <Grid>
+                                            <Border x:Name="IdleInnerBackground" BorderThickness="1" CornerRadius="1">
+                                                <Border.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <GradientStop Offset="0" Color="#FFE9A99C"/>
+                                                        <GradientStop Offset="0.5" Color="#FFDF9587"/>
+                                                        <GradientStop Offset="0.5" Color="#FFB8432C"/>
+                                                        <GradientStop Offset="1" Color="#FFD37E6F"/>
+                                                    </LinearGradientBrush>
+                                                </Border.Background>
+                                                <Border.BorderBrush>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <GradientStop Offset="0" Color="#FFF4D3CC"/>
+                                                        <GradientStop Offset="0.5" Color="#FFEDC4BD"/>
+                                                        <GradientStop Offset="0.5" Color="#FFD99A8E"/>
+                                                        <GradientStop Offset="1" Color="#FFECC6C0"/>
+                                                    </LinearGradientBrush>
+                                                </Border.BorderBrush>
+                                            </Border>
+                                            <Border x:Name="IdleInactiveInnerBackground" BorderThickness="1" CornerRadius="1" Visibility="Collapsed">
+                                                <Border.BorderBrush>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                        <GradientStop Offset="0" Color="#FFDFE8F2"/>
+                                                        <GradientStop Offset="0.5" Color="#FFDCE7F3"/>
+                                                        <GradientStop Offset="0.5" Color="#FFC8D5E4"/>
+                                                        <GradientStop Offset="1" Color="#FFD9E7F4"/>
+                                                    </LinearGradientBrush>
+                                                </Border.BorderBrush>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+                                    <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" Opacity="1"/>
+                                </Grid>
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsActive, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False">
+                                    <Setter TargetName="IdleBackground" Property="Opacity" Value="0.75"/>
+                                </DataTrigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="False"/>
+                                        <Condition SourceName="IdleBackground" Property="Opacity" Value="0.75"/>
+                                        <!--Condition Binding="{TemplateBinding IsMouseOver}" Value="False"/-->
+                                        <!--Condition Binding="{Binding IsActive, Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type win:DecoratableWindow}}}" Value="False"/-->
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="IdleInnerBackground" Property="Visibility" Value="Collapsed"/>
+                                    <Setter TargetName="IdleInactiveInnerBackground" Property="Visibility" Value="Visible"/>
+                                    <Setter TargetName="IdleBackground" Property="BorderBrush" Value="#FF61728B"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter TargetName="IdleInnerBackground" Property="Visibility" Value="Collapsed"/>
+                                </Trigger>
+                                <MultiTrigger>
+                                    <MultiTrigger.Conditions>
+                                        <Condition Property="IsMouseOver" Value="True"/>
+                                        <Condition Property="IsPressed" Value="False"/>
+                                    </MultiTrigger.Conditions>
+                                    <Setter TargetName="HoverBackground" Property="Visibility" Value="Visible"/>
+                                </MultiTrigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Setter TargetName="PressedBackground" Property="Visibility" Value="Visible"/>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Setter TargetName="ContentPresenter" Property="Opacity" Value="0.5"/>
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ControlTemplate.Resources>
+        <Border x:Name="TrueWindowRoot" ClipToBounds="True">
+            <Grid x:Name="WindowRoot" Margin="{TemplateBinding Margin}">
+                <Border x:Name="OuterBorder1" BorderBrush="#FF343434" BorderThickness="1" CornerRadius="6,6,0,0" Background="#FFB9D1EA">
+                    <Grid>
+                        <Border x:Name="TopBorder" Background="#FF98B4D0" VerticalAlignment="Top" BorderBrush="Transparent" BorderThickness="0" CornerRadius="5,5,0,0" Height="27">
+                            <Border.OpacityMask>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="Black"/>
+                                    <GradientStop Offset="1" Color="Transparent"/>
+                                </LinearGradientBrush>
+                            </Border.OpacityMask>
+                        </Border>
+                        <Border x:Name="OuterBorder2" BorderBrush="#FFFFFFFF" BorderThickness="1,1,0,0" CornerRadius="5,5,0,0"/>
+                        <Border x:Name="OuterBorder3" BorderBrush="#FF3FCEF2" BorderThickness="0,0,1,1" CornerRadius="5,5,0,0"/>
+                    </Grid>
+                </Border>
+                <Border x:Name="SideShine" BorderBrush="Transparent" BorderThickness="1,90,1,0.5" Margin="{Binding BorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ThicknessFilterConverter}, ConverterParameter=zpzz}" VerticalAlignment="Top" Height="180">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#00FDFDFD"/>
+                            <GradientStop Offset="1" Color="#BAFDFDFD"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+                <Grid Margin="-2">
+                    <Border x:Name="InnerBorder1" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="2" CornerRadius="2" Margin="{TemplateBinding BorderThickness}" Padding="0"/>
+                </Grid>
+                <Grid VerticalAlignment="Top" Height="{TemplateBinding BorderThickness, Converter={StaticResource ThicknessToDoubleConverter}, ConverterParameter=t}" UseLayoutRounding="True">
+                    <Thumb x:Name="PART_Titlebar" Style="{DynamicResource BorderThumbStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Thumb.ContextMenu>
+                            <ContextMenu>
+                                <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
+                                <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
+                                <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
+                                <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
+                                <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
+                                <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
+                            </ContextMenu>
+                        </Thumb.ContextMenu>
+                    </Thumb>
+                    <StackPanel x:Name="CaptionButtons" Orientation="Horizontal" Height="26" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,1,8,0">
+                        <Button x:Name="PART_MinimizeButton" Style="{DynamicResource CaptionButtonStyle}">
+                            <Grid Width="12" Height="8">
+                                <Grid.RenderTransform>
+                                    <TranslateTransform X="0" Y="1"/>
+                                </Grid.RenderTransform>
+                                <Border Background="{DynamicResource CaptionButtonGlyphFillBrush}" BorderBrush="{DynamicResource CaptionButtonGlyphStrokeBrush}" BorderThickness="1" Height="5" VerticalAlignment="Bottom" Margin="0,0,1,0"/>
+                            </Grid>
+                        </Button>
+                        <Button x:Name="PART_MaximizeButton" Style="{DynamicResource CaptionButtonStyle}">
+                            <Border BorderBrush="{DynamicResource CaptionButtonGlyphStrokeBrush}" BorderThickness="1" Width="11" Height="9" Margin="1,0,0,1">
+                                <Border BorderBrush="{DynamicResource CaptionButtonGlyphFillBrush}" BorderThickness="2">
+                                    <Border BorderBrush="{DynamicResource CaptionButtonGlyphStrokeBrush}" BorderThickness="1"/>
+                                </Border>
+                            </Border>
+                        </Button>
+                        <Button x:Name="PART_RestoreButton" Style="{DynamicResource CaptionButtonStyle}" Visibility="Collapsed">
+                            <Grid Width="12" Height="12">
+                                <Grid.RenderTransform>
+                                    <TranslateTransform X="-2" Y="0"/>
+                                </Grid.RenderTransform>
+                                <!--Border BorderBrush="{DynamicResource CaptionButtonGlyphFillBrush}" Width="10" Height="10" HorizontalAlignment="Left" VerticalAlignment="Bottom" BorderThickness="2"/>
+                                        <Border BorderBrush="{DynamicResource CaptionButtonGlyphFillBrush}" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top" BorderThickness="0,2,2,0"/-->
+                                <Border BorderBrush="{DynamicResource CaptionButtonGlyphStrokeBrush}" BorderThickness="0,1,1,0" Width="10" Height="10" HorizontalAlignment="Right" VerticalAlignment="Top">
+                                    <Grid>
+                                        <Rectangle HorizontalAlignment="Left" Width="1" Fill="{DynamicResource CaptionButtonGlyphStrokeBrush}" Margin="0,0,0,6"/>
+                                        <Rectangle VerticalAlignment="Bottom" Height="1" Fill="{DynamicResource CaptionButtonGlyphStrokeBrush}" Margin="6,0,0,0"/>
+                                        <Border BorderBrush="{DynamicResource CaptionButtonGlyphFillBrush}" BorderThickness="0,2,2,0" Margin="1,0,0,1">
+                                            <Border BorderBrush="{DynamicResource CaptionButtonGlyphStrokeBrush}" BorderThickness="0,2,2,0" Margin="2,0,0,2"/>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                                <Border BorderBrush="{DynamicResource CaptionButtonGlyphStrokeBrush}" BorderThickness="1" Width="10" Height="10" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                                    <Border BorderBrush="{DynamicResource CaptionButtonGlyphFillBrush}" BorderThickness="2">
+                                        <Border BorderBrush="{DynamicResource CaptionButtonGlyphStrokeBrush}" BorderThickness="1"/>
+                                    </Border>
+                                </Border>
+                            </Grid>
+                        </Button>
+                        <Button x:Name="PART_CloseButton" Style="{DynamicResource CloseButtonStyle}"/>
+                    </StackPanel>
+                    <StackPanel x:Name="CaptionStackPanel" HorizontalAlignment="Left" VerticalAlignment="Top" Height="30" Margin="8,0">
+                        <Image x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}" Visibility="{Binding ShowTitlebarIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                        <Grid Margin="5,5,5,-1" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False">
+                            <!--Rectangle Fill="#7FFFFFFF" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
+                                        <Rectangle.Effect>
+                                            <BlurEffect Radius="5"/>
+                                        </Rectangle.Effect>
+                                    </Rectangle>
+                                    <TextBlock x:Name="TitleText" FontSize="12" Foreground="Black" HorizontalAlignment="Left" TextAlignment="Left" Text="{Binding Path=Title, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}"/-->
+                            <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" FontSize="12" Foreground="Black" IsHitTestVisible="False"/>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
+                <ContentPresenter x:Name="ContentPresenter" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"/>
+                <Grid x:Name="ResizeGrid">
+                    <Grid.Resources>
+                        <Style x:Key="{x:Type Thumb}" TargetType="{x:Type Thumb}" BasedOn="{StaticResource BorderThumbStyle}"/>
+                    </Grid.Resources>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="4" />
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="4" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="4" />
+                        <RowDefinition />
+                        <RowDefinition Height="4" />
+                    </Grid.RowDefinitions>
+                    <Thumb x:Name="PART_ThumbBottom" Cursor="SizeNS" Grid.Column="1" Grid.Row="2"/>
+                    <Thumb x:Name="PART_ThumbTop" Cursor="SizeNS" Grid.Column="1" Grid.Row="0"/>
+                    <Thumb x:Name="PART_ThumbRight" Cursor="SizeWE" Grid.Column="2" Grid.Row="1"/>
+                    <Thumb x:Name="PART_ThumbLeft" Cursor="SizeWE" Grid.Column="0" Grid.Row="1"/>
+                    <Thumb x:Name="PART_ThumbBottomRightCorner" Cursor="SizeNWSE" Grid.Column="2" Grid.Row="2"/>
+                    <Thumb x:Name="PART_ThumbTopRightCorner" Cursor="SizeNESW" Grid.Column="2" Grid.Row="0"/>
+                    <Thumb x:Name="PART_ThumbTopLeftCorner" Cursor="SizeNWSE" Grid.Column="0" Grid.Row="0"/>
+                    <Thumb x:Name="PART_ThumbBottomLeftCorner" Cursor="SizeNESW" Grid.Column="0" Grid.Row="2"/>
+                    <Thumb x:Name="PART_ResizeGrip" Style="{DynamicResource ResizeGripThumbStyle}" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Grid.Column="2" Grid.Row="2"/>
+                </Grid>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="{x:Null}">
+                <Setter TargetName="WindowIcon" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="TitleText" Property="Margin" Value="0"/>
+            </DataTrigger>
+            <Trigger Property="WindowState" Value="Maximized">
+                <Setter TargetName="TrueWindowRoot" Property="Margin" Value="{Binding Converter={StaticResource GetMaximizeBorderThicknessConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                <Setter TargetName="PART_MaximizeButton" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="PART_RestoreButton" Property="Visibility" Value="Visible"/>
+                <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="WindowRoot" Property="Margin" Value="-8"/>
+                <!--Setter TargetName="CaptionStackPanel" Property="Margin" Value="8,4,8,0"/-->
+                <!--Setter TargetName="CaptionButtonsBorder1" Property="Margin" Value="0,8,10,0"/-->
+            </Trigger>
+            <!--Trigger Property="IsActive" Value="False"-->
+            <!--DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="False"-->
+            <Trigger Property="IsActive" Value="False">
+                <!--Setter TargetName="CaptionButtonsBorder1" Property="BorderBrush" Value="#60FFFFFF"/>
+                <Setter TargetName="CaptionButtonsBorder2" Property="BorderBrush" Value="#99000000"/-->
+                <Setter TargetName="OuterBorder1" Property="Background" Value="#FFD7E4F2"/>
+                <Setter TargetName="OuterBorder1" Property="BorderBrush" Value="#FF4D4D4D"/>
+                <Setter TargetName="TopBorder" Property="Background" Value="#FFBFCDDB"/>
+                <Setter TargetName="OuterBorder2" Property="BorderBrush" Value="#FFE2E6EF"/>
+                <Setter TargetName="OuterBorder3" Property="BorderBrush" Value="#FFE9ECF3"/>
+                <!--Setter TargetName="InnerBorder1" Property="BorderBrush" Value="#99000000"/>
+                            <Setter TargetName="InnerBorder2" Property="BorderBrush" Value="#60FFFFFF"/-->
+                <!--Setter TargetName="TopLeftShine" Property="Opacity" Value="0.5"/>
+                <Setter TargetName="TopRightShine" Property="Opacity" Value="0.5"/-->
+                <Setter TargetName="SideShine" Property="Visibility" Value="Collapsed"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
     <!--#endregion Window Styles-->
 

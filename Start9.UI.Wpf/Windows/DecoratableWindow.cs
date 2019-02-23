@@ -127,7 +127,7 @@ namespace Start9.UI.Wpf.Windows
         public static readonly DependencyProperty ShowTitlebarIconProperty =
             DependencyProperty.Register("ShowTitlebarIcon", typeof(bool), typeof(DecoratableWindow), new PropertyMetadata(true));
 
-        public object TitleBarContent
+        /*public object TitleBarContent
         {
             get => GetValue(TitleBarContentProperty);
             set => SetValue(TitleBarContentProperty, value);
@@ -145,7 +145,16 @@ namespace Start9.UI.Wpf.Windows
 
         public static readonly DependencyProperty FullWindowContentProperty =
                     DependencyProperty.RegisterAttached("FullWindowContent", typeof(object), typeof(DecoratableWindow),
-                        new PropertyMetadata(null));
+                        new PropertyMetadata(null));*/
+
+        public double TitleBarHeight
+        {
+            get => (double)GetValue(TitleBarHeightProperty);
+            set => SetValue(TitleBarHeightProperty, value);
+        }
+
+        public static readonly DependencyProperty TitleBarHeightProperty =
+            DependencyProperty.Register("TitleBarHeight", typeof(double), typeof(DecoratableWindow), new PropertyMetadata(30.0));
 
         /*static DecoratableWindow()
         {

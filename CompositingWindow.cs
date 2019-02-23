@@ -160,7 +160,7 @@ namespace Start9.UI.Wpf.Windows
         public CompositingWindow()
         {
             base.WindowStyle = WindowStyle.None;
-            AllowsTransparency = true;
+            AllowsTransparency = false; //true;
             /*System.Windows.Shell.WindowChrome.SetWindowChrome(this, new System.Windows.Shell.WindowChrome()// );
             {
                 GlassFrameThickness = new Thickness(0),
@@ -237,17 +237,19 @@ namespace Start9.UI.Wpf.Windows
         {
             base.OnInitialized(e);
             Handle = new WindowInteropHelper(this).EnsureHandle();
+            NativeMethods.SetWindowLong(Handle, NativeMethods.GwlStyle, NativeMethods.GetWindowLong(Handle, NativeMethods.GwlStyle).ToInt32() & ~(0x00800000 | 0x00040000));
             //NativeMethods.SetWindowLong(Handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(Handle, NativeMethods.GwlExstyle).ToInt32() & 0x00000020 & 0x00080000);
             //System.Windows.Media.CompositionTarget = 
             //System.Windows.Media.RenderOptions.com
             var source = HwndSource.FromHwnd(Handle); //PresentationSource.FromVisual(this) as HwndSource;
             //source.ContentRendered += Source_ContentRendered;
-            //source.CompositionTarget.BackgroundColor = System.Windows.Media.Colors.Transparent;
+            source.CompositionTarget.BackgroundColor = System.Windows.Media.Colors.Transparent;
             //source.CompositionTarget.RenderMode = RenderMode.Default;
             //source.CompositionTarget
             //System.Windows.Media.CompositionTarget.Rendering += CompositionTarget_Rendering;
             //source.CompositionTarget.UsesPerPixelOpacity = true;
             //source.UsesPerPixelOpacity = true;
+            SetCompositionState(CompositionState);
         }
 
         /*private void CompositionTarget_Rendering(object sender, EventArgs e)
@@ -271,7 +273,6 @@ namespace Start9.UI.Wpf.Windows
             {
                 IsWindowVisible = false;
                 Show();
-                
             }
 
             if (!ShowInAltTab)
@@ -586,7 +587,31 @@ namespace Start9.UI.Wpf.Windows
                     }
                 }
                 else
+                {
+                    Debug.WriteLine("ALPHA");
                     NativeMethods.DwmEnableBlurBehindWindow(Handle, ref _unblurInfo);
+                    if (Environment.OSVersion.Version >= new Version(6, 2, 9200, 0))
+                    {
+                        var accent = new NativeMethods.AccentPolicy();
+                        var accentStructSize = Marshal.SizeOf(accent);
+                        //accent.GradientColor = (0x990000 << 24) | (0x990000 /* BGR */ & 0xFFFFFF);
+                        accent.AccentState = NativeMethods.AccentState.ACCENT_ENABLE_BLURBEHIND;
+
+                        var accentPtr = Marshal.AllocHGlobal(accentStructSize);
+                        Marshal.StructureToPtr(accent, accentPtr, false);
+
+                        var data = new NativeMethods.WindowCompositionAttributeData
+                        {
+                            Attribute = NativeMethods.WindowCompositionAttribute.WCA_ACCENT_POLICY,
+                            SizeOfData = accentStructSize,
+                            Data = accentPtr
+                        };
+
+                        NativeMethods.SetWindowCompositionAttribute(Handle, ref data);
+
+                        Marshal.FreeHGlobal(accentPtr);
+                    }
+                }
             }
         }
 

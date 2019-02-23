@@ -847,7 +847,7 @@
                                         </Grid>
                                         <Button x:Name="PART_CloseButton" Style="{DynamicResource AeroCloseButtonStyle}"/>
                                     </StackPanel>
-                                    <ContentPresenter Content="{TemplateBinding TitleBarContent}" Margin="-2,-2,-2,0"/>
+                                    <!--ContentPresenter Content="{TemplateBinding TitleBarContent}" Margin="-2,-2,-2,0"/-->
                                     <Border x:Name="DialogFilm" CornerRadius="12,12,0,0" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
                                 </Grid>
                             <Border x:Name="BodyBorderOuter" BorderBrush="White" BorderThickness="0,1" Padding="0" CornerRadius="12" Margin="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
@@ -865,9 +865,9 @@
                                     </Border>
                                 </Grid>
                             </Border>
-                            <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible">
+                            <!--Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible">
                                 <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
-                            </Grid>
+                            </Grid-->
                             <!--Grid>
                                     <Grid Height="108" VerticalAlignment="Top" Margin="2,0">
                                         <Rectangle Width="192" HorizontalAlignment="Left">

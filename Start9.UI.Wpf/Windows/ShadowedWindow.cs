@@ -111,14 +111,14 @@ namespace Start9.UI.Wpf.Windows
             };
             BindingOperations.SetBinding(_shadowWindow, Window.IsManipulationEnabledProperty, shadowIsFocusedBinding);
 
-            Binding shadowIEnabledBinding = new Binding()
+            Binding shadowIsEnabledBinding = new Binding()
             {
                 Source = this,
                 Path = new PropertyPath("IsWindowVisible"),
                 Mode = BindingMode.OneWay,
                 UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
             };
-            BindingOperations.SetBinding(_shadowWindow, Window.IsEnabledProperty, shadowIEnabledBinding);
+            BindingOperations.SetBinding(_shadowWindow, Window.IsEnabledProperty, shadowIsEnabledBinding);
 
             Binding shadowIsHitTestVisibleBinding = new Binding()
             {

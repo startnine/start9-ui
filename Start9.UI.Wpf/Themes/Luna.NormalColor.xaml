@@ -560,7 +560,7 @@
                                                 <Label x:Name="TitleText" Content="{TemplateBinding Title}" Margin="4,0" HorizontalAlignment="Left" HorizontalContentAlignment="Left" VerticalAlignment="Center" VerticalContentAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" FontFamily="Trebuchet MS" FontSize="14" Foreground="White" UseLayoutRounding="True"/>
                                                 <!--FontWeight="SemiBold"-->
                                             </StackPanel>
-                                            <ContentPresenter Content="{TemplateBinding TitleBarContent}"/>
+                                            <!--ContentPresenter Content="{TemplateBinding TitleBarContent}"/-->
                                             <StackPanel x:Name="CaptionButtons" Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,3,5,0">
                                                 <Button x:Name="PART_MinimizeButton" Style="{DynamicResource CaptionButtonStyle}">
                                                     <Rectangle Fill="{Binding BorderBrush, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}}" Width="7" Height="3" Margin="0,8,4,0" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
@@ -586,9 +586,9 @@
                                             <ContentPresenter Content="{TemplateBinding Content}"/>
                                         </Border>
                                     </Grid>
-                                    <Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
+                                    <!--Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
                                         <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
-                                    </Grid>
+                                    </Grid-->
                                     <Grid>
                                         <Grid x:Name="ResizeGrid">
                                             <Grid.ColumnDefinitions>
