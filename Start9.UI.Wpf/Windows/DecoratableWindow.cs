@@ -253,15 +253,15 @@ namespace Start9.UI.Wpf.Windows
                 NativeMethods.GetWindowRect(Handle, out NativeMethods.RECT winRect);
 
 
-                double verticalWidth = s.Bounds.Left - winRect.Left;
-                double horizontalHeight = s.Bounds.Top - winRect.Top;
+                double verticalWidth = SystemScaling.RealPixelsToWpfUnits(s.Bounds.Left - winRect.Left);
+                double horizontalHeight = SystemScaling.RealPixelsToWpfUnits(s.Bounds.Top - winRect.Top);
 
                 if (!IsFullscreen)
                 {
                     MaxWidth = s.WorkingArea.Width;
                     MaxHeight = s.WorkingArea.Height;
-                    verticalWidth = s.WorkingArea.Left - winRect.Left;
-                    horizontalHeight = s.WorkingArea.Top - winRect.Top;
+                    verticalWidth = SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Left - winRect.Left);
+                    horizontalHeight = SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Top - winRect.Top);
                 }
                 else
                 {
