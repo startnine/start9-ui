@@ -35,7 +35,7 @@ namespace Start9.UI.Wpf.Windows
     [TemplatePart(Name = PartSystemMenuClose, Type = typeof(MenuItem))]
 
     [ContentProperty("Content")]
-    public partial class DecoratableWindow : ShadowedWindow
+    public partial class DecoratableWindow : CompositingWindow
     {
         const String PartTitlebar = "PART_Titlebar";
         const String PartFullscreenButton = "PART_FullscreenButton";
@@ -93,6 +93,24 @@ namespace Start9.UI.Wpf.Windows
 
         new public static readonly DependencyProperty WindowStyleProperty =
             DependencyProperty.Register("WindowStyle", typeof(WindowStyle), typeof(DecoratableWindow), new PropertyMetadata(WindowStyle.SingleBorderWindow));
+
+        public Style ShadowStyle
+        {
+            get => (Style)GetValue(ShadowStyleProperty);
+            set => SetValue(ShadowStyleProperty, value);
+        }
+
+        public static readonly DependencyProperty ShadowStyleProperty =
+            DependencyProperty.Register("ShadowStyle", typeof(Style), typeof(DecoratableWindow), new PropertyMetadata());
+
+        public Thickness ShadowOffsetThickness
+        {
+            get => (Thickness)GetValue(ShadowOffsetThicknessProperty);
+            set => SetValue(ShadowOffsetThicknessProperty, value);
+        }
+
+        public static readonly DependencyProperty ShadowOffsetThicknessProperty =
+            DependencyProperty.Register("ShadowOffsetThickness", typeof(Thickness), typeof(ShadowedWindow), new PropertyMetadata(new Thickness(50)));
 
         /*public double ShadowOpacity
         {
@@ -551,7 +569,7 @@ namespace Start9.UI.Wpf.Windows
                                 //Left = SystemScaling.CursorPosition.X - offset.X;
                                 //Top = SystemScaling.CursorPosition.Y - offset.Y;
                                 DragMove();
-                                SyncShadowToWindow();
+                                //SyncShadowToWindow();
                                 timer.Stop();
                             }
                         }));
@@ -561,7 +579,7 @@ namespace Start9.UI.Wpf.Windows
                 else
                 {
                     DragMove();
-                    SyncShadowToWindow();
+                    //SyncShadowToWindow();
                 }
             }
         }
@@ -572,8 +590,6 @@ namespace Start9.UI.Wpf.Windows
                 Width += e.HorizontalChange;
             if (Height + e.VerticalChange > 10)
                 Height += e.VerticalChange;
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
         }
 
         void ThumbTopRightCorner_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -585,8 +601,6 @@ namespace Start9.UI.Wpf.Windows
                 Top += e.VerticalChange;
                 Height -= e.VerticalChange;
             }
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
         }
 
         void ThumbTopLeftCorner_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -601,8 +615,6 @@ namespace Start9.UI.Wpf.Windows
                 Top += e.VerticalChange;
                 Height -= e.VerticalChange;
             }
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
         }
 
         void ThumbBottomLeftCorner_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -614,16 +626,12 @@ namespace Start9.UI.Wpf.Windows
             }
             if (Height + e.VerticalChange > 10)
                 Height += e.VerticalChange;
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
         }
 
         void ThumbRight_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Width + e.HorizontalChange > 10)
                 Width += e.HorizontalChange;
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
         }
 
         void ThumbLeft_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -633,16 +641,12 @@ namespace Start9.UI.Wpf.Windows
                 Left += e.HorizontalChange;
                 Width -= e.HorizontalChange;
             }
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
         }
 
         void ThumbBottom_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Height + e.VerticalChange > 10)
                 Height += e.VerticalChange;
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
         }
 
         void ThumbTop_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -652,8 +656,6 @@ namespace Start9.UI.Wpf.Windows
                 Top += e.VerticalChange;
                 Height -= e.VerticalChange;
             }
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
         }
     }
 

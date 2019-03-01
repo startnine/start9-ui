@@ -55,20 +55,18 @@ namespace FrontEndTest
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var win = new Window();
-            win.Show();
-            Timer timer = new Timer(5000);
-            timer.Elapsed += (sneder, args) =>
+            var win = new Window()
             {
-                Dispatcher.Invoke(new Action(() =>
-                {
-                    if (win.IsVisible)
-                        win.Hide();
-                    else
-                        win.Show();
-                }));
+                WindowStyle = WindowStyle.None,
+                AllowsTransparency = true
             };
-            timer.Start();
+            System.Windows.Shell.WindowChrome.SetWindowChrome(win, new System.Windows.Shell.WindowChrome()
+            {
+                ResizeBorderThickness = new Thickness(5),
+                CaptionHeight = 0,
+                UseAeroCaptionButtons = false
+            });
+            win.Show();
         }
 
         private void ToggleGlassToggleButton_Click(object sender, RoutedEventArgs e)

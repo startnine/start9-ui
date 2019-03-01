@@ -6,12 +6,15 @@
         xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf"
         xmlns:win="clr-namespace:Start9.UI.Wpf.Windows;assembly=Start9.UI.Wpf"
         xmlns:local="clr-namespace:FrontEndTest"
-        
+        xmlns:shell="clr-namespace:System.Windows.Shell;assembly=PresentationFramework"
         xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:beh="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
         x:Class="FrontEndTest.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow">
+    <shell:WindowChrome.WindowChrome>
+        <shell:WindowChrome ResizeBorderThickness="5" CaptionHeight="0" UseAeroCaptionButtons="False"/>
+    </shell:WindowChrome.WindowChrome>
     <!--BorderThickness="0,52,0,0"-->
     <!--Background="#40000000"-->
     <!--CompositionState="Glass" Background="#7FFFFFFF"-->

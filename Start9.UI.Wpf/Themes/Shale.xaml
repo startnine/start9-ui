@@ -88,7 +88,6 @@
         <Setter Property="Foreground" Value="{DynamicResource WindowForegroundBrush}"/>
         <Setter Property="FontFamily" Value="pack://application:,,,/Start9.UI.Wpf;component/Fonts/#Ubuntu"/>
         <Setter Property="FontSize" Value="12"/>
-        <Setter Property="ShadowOffsetThickness" Value="25,15,25,40"/>
         <Setter Property="Padding" Value="1,25,1,1"/>
         <Setter Property="CompositionState" Value="Alpha"/>
         <Setter Property="ShadowStyle">
