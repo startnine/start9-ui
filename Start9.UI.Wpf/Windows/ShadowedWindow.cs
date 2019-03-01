@@ -167,6 +167,12 @@ namespace Start9.UI.Wpf.Windows
             {
                 _shadowWindow.Close();
             };
+
+            SizeChanged += (sneder, args) =>
+            {
+                SyncShadowToWindow();
+                SyncShadowToWindowSize();
+            };
         }
 
         new internal static void OnIgnorePeekChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
@@ -203,7 +209,7 @@ namespace Start9.UI.Wpf.Windows
                 SetCompositionState();*/
         }
 
-        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
+        /*protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
             base.OnRenderSizeChanged(sizeInfo);
             SyncShadowToWindow();
@@ -214,6 +220,6 @@ namespace Start9.UI.Wpf.Windows
         {
             base.OnLocationChanged(e);
             SyncShadowToWindow();
-        }
+        }*/
     }
 }
