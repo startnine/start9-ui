@@ -88,6 +88,7 @@
         <Setter Property="Foreground" Value="{DynamicResource WindowForegroundBrush}"/>
         <Setter Property="FontFamily" Value="pack://application:,,,/Start9.UI.Wpf;component/Fonts/#Ubuntu"/>
         <Setter Property="FontSize" Value="12"/>
+        <Setter Property="ShadowOffsetThickness" Value="25,15,25,40"/>
         <Setter Property="Padding" Value="1,25,1,1"/>
         <Setter Property="CompositionState" Value="Alpha"/>
         <Setter Property="ShadowStyle">
@@ -162,7 +163,7 @@
                                         <RowDefinition/>
                                         <RowDefinition Height="45"/>
                                     </Grid.RowDefinitions>
-                                    <Grid.OpacityMask>
+                                    <!--Grid.OpacityMask>
                                         <VisualBrush>
                                             <VisualBrush.Visual>
                                                 <Grid Background="#01000000" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
@@ -179,7 +180,7 @@
                                                 </Grid>
                                             </VisualBrush.Visual>
                                         </VisualBrush>
-                                    </Grid.OpacityMask>
+                                    </Grid.OpacityMask-->
                                     <Rectangle Grid.Column="0" Grid.Row="1">
                                         <Rectangle.Fill>
                                             <LinearGradientBrush StartPoint="1,0" EndPoint="0,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
