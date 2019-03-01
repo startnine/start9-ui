@@ -258,15 +258,15 @@ namespace Start9.UI.Wpf.Windows
 
                 if (!IsFullscreen)
                 {
-                    MaxWidth = SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Width);
-                    MaxHeight = SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Height);
+                    MaxWidth = s.WorkingArea.Width;
+                    MaxHeight = s.WorkingArea.Height;
                     verticalWidth = SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Left - winRect.Left);
                     horizontalHeight = SystemScaling.RealPixelsToWpfUnits(s.WorkingArea.Top - winRect.Top);
                 }
                 else
                 {
-                    MaxWidth = SystemScaling.RealPixelsToWpfUnits(s.Bounds.Width);
-                    MaxHeight = SystemScaling.RealPixelsToWpfUnits(s.Bounds.Height);
+                    MaxWidth = s.Bounds.Width;
+                    MaxHeight = s.Bounds.Height;
                 }
 
                 Margin = new Thickness(verticalWidth, horizontalHeight, (verticalWidth) * -1, (horizontalHeight) * -1);
