@@ -561,7 +561,7 @@ namespace Start9.UI.Wpf.Windows
                 else
                 {
                     DragMove();
-                    SyncShadowToWindow();
+                    //SyncShadowToWindow();
                 }
             }
         }
@@ -572,8 +572,8 @@ namespace Start9.UI.Wpf.Windows
                 Width += e.HorizontalChange;
             if (Height + e.VerticalChange > 10)
                 Height += e.VerticalChange;
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
+            //SyncShadowToWindow();
+            //SyncShadowToWindowSize();
         }
 
         void ThumbTopRightCorner_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -585,8 +585,8 @@ namespace Start9.UI.Wpf.Windows
                 Top += e.VerticalChange;
                 Height -= e.VerticalChange;
             }
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
+            //SyncShadowToWindow();
+            //SyncShadowToWindowSize();
         }
 
         void ThumbTopLeftCorner_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -601,8 +601,8 @@ namespace Start9.UI.Wpf.Windows
                 Top += e.VerticalChange;
                 Height -= e.VerticalChange;
             }
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
+            //SyncShadowToWindow();
+            //SyncShadowToWindowSize();
         }
 
         void ThumbBottomLeftCorner_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -614,16 +614,16 @@ namespace Start9.UI.Wpf.Windows
             }
             if (Height + e.VerticalChange > 10)
                 Height += e.VerticalChange;
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
+            //SyncShadowToWindow();
+            //SyncShadowToWindowSize();
         }
 
         void ThumbRight_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Width + e.HorizontalChange > 10)
                 Width += e.HorizontalChange;
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
+            //SyncShadowToWindow();
+            //SyncShadowToWindowSize();
         }
 
         void ThumbLeft_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -633,16 +633,16 @@ namespace Start9.UI.Wpf.Windows
                 Left += e.HorizontalChange;
                 Width -= e.HorizontalChange;
             }
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
+            //SyncShadowToWindow();
+            //SyncShadowToWindowSize();
         }
 
         void ThumbBottom_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (Height + e.VerticalChange > 10)
                 Height += e.VerticalChange;
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
+            //SyncShadowToWindow();
+            //SyncShadowToWindowSize();
         }
 
         void ThumbTop_DragDelta(Object sender, DragDeltaEventArgs e)
@@ -652,8 +652,8 @@ namespace Start9.UI.Wpf.Windows
                 Top += e.VerticalChange;
                 Height -= e.VerticalChange;
             }
-            SyncShadowToWindow();
-            SyncShadowToWindowSize();
+            //SyncShadowToWindow();
+            //SyncShadowToWindowSize();
         }
     }
 
