@@ -13,6 +13,7 @@ using System.Windows.Markup;
 namespace Start9.UI.Wpf.Windows
 {
     [TemplatePart(Name = PartTitlebar, Type = typeof(Thumb))]
+    [TemplatePart(Name = PartFullscreenButton, Type = typeof(Button))]
     [TemplatePart(Name = PartMinimizeButton, Type = typeof(Button))]
     [TemplatePart(Name = PartMaximizeButton, Type = typeof(Button))]
     [TemplatePart(Name = PartRestoreButton, Type = typeof(Button))]
@@ -37,6 +38,7 @@ namespace Start9.UI.Wpf.Windows
     public partial class DecoratableWindow : ShadowedWindow
     {
         const String PartTitlebar = "PART_Titlebar";
+        const String PartFullscreenButton = "PART_FullscreenButton";
         const String PartMinimizeButton = "PART_MinimizeButton";
         const String PartMaximizeButton = "PART_MaximizeButton";
         const String PartRestoreButton = "PART_RestoreButton";
@@ -58,10 +60,11 @@ namespace Start9.UI.Wpf.Windows
         const String PartSystemMenuMaximize = "PART_SystemMenuMaximize";
         const String PartSystemMenuClose = "PART_SystemMenuClose";
 
-        Button _closeButton;
-        Button _maxButton;
+        Button _fullscreenButton;
         Button _minButton;
+        Button _maxButton;
         Button _restButton;
+        Button _closeButton;
 
         Thumb _thumbBottom;
         Thumb _thumbBottomLeftCorner;
@@ -108,6 +111,21 @@ namespace Start9.UI.Wpf.Windows
 
         public static readonly DependencyProperty ShadowVisibilityProperty =
             DependencyProperty.Register("ShadowVisibility", typeof(Visibility), typeof(DecoratableWindow), new PropertyMetadata(Visibility.Visible));*/
+
+        public bool IsFullscreen
+        {
+            get => (bool)GetValue(IsFullscreenProperty);
+            set => SetValue(IsFullscreenProperty, value);
+        }
+
+        public static readonly DependencyProperty IsFullscreenProperty =
+            DependencyProperty.Register("IsFullscreen", typeof(bool), typeof(DecoratableWindow), new PropertyMetadata(false, OnIsFullscreenPropertyChangedCallback));
+
+        static void OnIsFullscreenPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if ((bool)e.NewValue == false)
+                (sender as DecoratableWindow).WindowState = WindowState.Normal;
+        }
 
         public bool ShowTitlebarText
         {
@@ -171,7 +189,7 @@ namespace Start9.UI.Wpf.Windows
             /*base.WindowStyle = WindowStyle.None;
             base.AllowsTransparency = true;*/
 
-            StateChanged += DecoratableWindow_StateChanged;
+            //StateChanged += DecoratableWindow_StateChanged;
 
             ////DefaultStyleKey = typeof(DecoratableWindow);
             //Style = (Style)Resources[typeof(DecoratableWindow)];
@@ -202,9 +220,9 @@ namespace Start9.UI.Wpf.Windows
 
         /*double _maxWidth = double.PositiveInfinity;
         double _maxHeight = double.PositiveInfinity;*/
-        private void DecoratableWindow_StateChanged(object sender, EventArgs e)
+        /*private void DecoratableWindow_StateChanged(object sender, EventArgs e)
         {
-            /*if (WindowState == WindowState.Maximized)
+            if (WindowState == WindowState.Maximized)
             {
                 _maxWidth = MaxWidth;
                 _maxHeight = MaxHeight;
@@ -217,7 +235,58 @@ namespace Start9.UI.Wpf.Windows
                 MaxWidth = _maxWidth;
                 MaxHeight = _maxHeight;
             }
-            */
+            
+        }*/
+
+        double _maxWidth = double.PositiveInfinity;
+        double _maxHeight = double.PositiveInfinity;
+
+        protected override void OnStateChanged(EventArgs e)
+        {
+            base.OnStateChanged(e);
+
+            if (WindowState == WindowState.Maximized)
+            {
+                _maxWidth = MaxWidth;
+                _maxHeight = MaxHeight;
+                System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left + (Width / 2)), (int)SystemScaling.WpfUnitsToRealPixels(Top + (Height / 2)))); //System.Windows.Forms.Screen.FromHandle(Handle); //System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
+                NativeMethods.GetWindowRect(Handle, out NativeMethods.RECT winRect);
+
+
+                double verticalWidth = s.Bounds.Left - winRect.Left;
+                double horizontalHeight = s.Bounds.Top - winRect.Top;
+
+                if (!IsFullscreen)
+                {
+                    MaxWidth = s.WorkingArea.Width;
+                    MaxHeight = s.WorkingArea.Height;
+                    verticalWidth = s.WorkingArea.Left - winRect.Left;
+                    horizontalHeight = s.WorkingArea.Top - winRect.Top;
+                }
+                else
+                {
+                    MaxWidth = s.Bounds.Width;
+                    MaxHeight = s.Bounds.Height;
+                }
+
+                Margin = new Thickness(verticalWidth, horizontalHeight, (verticalWidth) * -1, (horizontalHeight) * -1);
+            }
+            else
+            {
+                IsFullscreen = false;
+                MaxWidth = _maxWidth;
+                MaxHeight = _maxHeight;
+                Margin = new Thickness(0);
+            }
+
+            /*if (_fullscreenButton != null)
+            {
+                if (IsFullscreen)
+                    _fullscreenButton.Visibility = Visibility.Collapsed;
+                else
+                    _fullscreenButton.Visibility = Visibility.Visible;
+            }*/
+
             ValidateSystemMenuItemStates();
         }
 
@@ -258,6 +327,17 @@ namespace Start9.UI.Wpf.Windows
                             WindowState = WindowState.Normal;
                     };*/
             }
+
+            _fullscreenButton = GetTemplateChild(PartFullscreenButton) as Button;
+            if (_fullscreenButton != null)
+                _fullscreenButton.Click += (sneder, args) =>
+                {
+                    if (!IsFullscreen)
+                    {
+                        IsFullscreen = true;
+                        WindowState = WindowState.Maximized;
+                    }
+                };
 
             _minButton = GetTemplateChild(PartMinimizeButton) as Button;
             if (_minButton != null)

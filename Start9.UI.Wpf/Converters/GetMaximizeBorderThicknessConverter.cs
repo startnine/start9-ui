@@ -13,8 +13,9 @@ namespace Start9.UI.Wpf.Converters
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var win = value as CompositingWindow;
-            NativeMethods.GetWindowRect(win.Handle, out NativeMethods.RECT winRect);
+
+            Debug.WriteLine("CONVERTING");
+            //var win = value as CompositingWindow;
             //Debug.WriteLine("e");
             //NativeMethods.DwmGetWindowAttribute(win.Handle, NativeMethods.DwmWindowAttribute.ExtendedFrameBounds, out NativeMethods.RECT dwmRect, Marshal.SizeOf(typeof(NativeMethods.RECT))); //sizeof(NativeMethods.RECT)
             //DwmGetWindowAttribute
@@ -23,10 +24,29 @@ namespace Start9.UI.Wpf.Converters
             //double verticalWidth = SystemScaling.RealPixelsToWpfUnits(NativeMethods.GetSystemMetrics(46)); //+ NativeMethods.GetSystemMetrics(32)); //32
             //double horizontalHeight = SystemScaling.RealPixelsToWpfUnits(/*NativeMethods.GetSystemMetrics(45) + */NativeMethods.GetSystemMetrics(33)); //33
             //double borderSize = SystemParameters.ResizeFrameVerticalBorderWidth + SystemParameters.FixedFrameVerticalBorderWidth - SystemParameters.BorderWidth;
-            var screen = System.Windows.Forms.Screen.FromHandle(win.Handle);
-            double verticalWidth = screen.WorkingArea.Left - winRect.Left;
-            double horizontalHeight = screen.WorkingArea.Top - winRect.Top;
-            return new Thickness(verticalWidth, horizontalHeight, (verticalWidth) * -1, (horizontalHeight) * -1);
+            //Start9.UI.Wpf.MonitorInfo.AllMonitors
+
+            MonitorInfo Monitor = null;
+            foreach (MonitorInfo m in MonitorInfo.AllMonitors)
+            {
+                if (m.DeviceId == System.Windows.Forms.Screen.FromHandle((value as CompositingWindow).Handle).DeviceName)
+                {
+                    Monitor = m;
+                    break;
+                }
+            }
+
+            //var screen = System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels((value as CompositingWindow).Left), (int)SystemScaling.WpfUnitsToRealPixels((value as CompositingWindow).Top)));
+
+            if (Monitor != null)
+            {
+                //NativeMethods.GetWindowRect((value as CompositingWindow).Handle, out NativeMethods.RECT winRect);
+                double verticalWidth = Monitor.WorkAreaBounds.Left;// - winRect.Left;
+                double horizontalHeight = Monitor.WorkAreaBounds.Top;// - winRect.Top;
+                return new Thickness(verticalWidth, horizontalHeight, (verticalWidth) * -1, (horizontalHeight) * -1);
+            }
+            else
+                throw new Exception("Monitor was null");
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

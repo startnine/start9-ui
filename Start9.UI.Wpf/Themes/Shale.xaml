@@ -18,7 +18,7 @@
     <!--conv:SubtractConverter x:Key="SubtractConverter"/-->
     <conv:IconToImageBrushConverter x:Key="IconToImageBrushConverter"/>
     <conv:GetMaximizeBorderThicknessConverter x:Key="GetMaximizeBorderThicknessConverter"/>
-    <!--conv:GetMaximizeOffsetDoubleConverter x:Key="GetMaximizeOffsetDoubleConverter"/-->
+    <conv:GetFullscreenBorderThicknessConverter x:Key="GetFullscreenBorderThicknessConverter"/>
     <conv:CornerCurvesToCornerRadiusConverter x:Key="CornerCurvesToCornerRadiusConverter"/>
     <conv:ThicknessInvertFilterConverter x:Key="ThicknessInvertFilterConverter"/>
 
@@ -29,10 +29,10 @@
 
     <Style x:Key="CaptionButtonStyle" TargetType="Button">
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Width" Value="32"/>
+        <Setter Property="Width" Value="45"/><!--32-->
         <Setter Property="VerticalAlignment" Value="Stretch"/>
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Margin" Value="0" />
+        <Setter Property="Margin" Value="1,0,0,1" />
         <Setter Property="Padding" Value="0" />
         <Setter Property="Foreground" Value="{DynamicResource TitlebarIdleForegroundBrush}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -83,7 +83,7 @@
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
         <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}" />
         <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="TitleBarHeight" Value="24"/>
+        <Setter Property="TitleBarHeight" Value="31"/><!--24-->
         <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource WindowForegroundBrush}"/>
         <Setter Property="FontFamily" Value="pack://application:,,,/Start9.UI.Wpf;component/Fonts/#Ubuntu"/>
@@ -292,7 +292,6 @@
                                                 <Setter Property="HorizontalAlignment" Value="Right" />
                                                 <Setter Property="VerticalAlignment" Value="Bottom" />
                                                 <Setter Property="Cursor" Value="SizeNWSE"/>
-                                                <Setter Property="FontFamily" Value="Marlett"/>
                                                 <Setter Property="FontSize" Value="12"/>
                                                 <Setter Property="RenderOptions.EdgeMode" Value="Aliased"/>
                                                 <Setter Property="Template">
@@ -349,7 +348,15 @@
                                             </ContextMenu>
                                         </Thumb.ContextMenu>
                                     </Thumb>
-                                    <StackPanel x:Name="CaptionButtons" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Height="24">
+                                    <StackPanel x:Name="CaptionButtons" Orientation="Horizontal" VerticalAlignment="Top" HorizontalAlignment="Right" Height="31">
+                                        <!--Height="24"-->
+                                        <Button x:Name="PART_FullscreenButton" Style="{DynamicResource CaptionButtonStyle}">
+                                            <Grid Width="9" Height="9">
+                                                <!--Path Data="M 9 0 L 7 0 L 0 7 L 0 9 L 2 9 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center"/-->
+                                                <Border Background="Transparent" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" BorderThickness="2,0,0,2" Width="4" Height="4" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                                <Border Background="Transparent" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" BorderThickness="0,2,2,0" Width="4" Height="4" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                                            </Grid>
+                                        </Button>
                                         <Button x:Name="PART_MinimizeButton" Style="{DynamicResource CaptionButtonStyle}">
                                             <Path Data="M 0 0 L 9 0 L 9 2 L 0 2 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                         </Button>
@@ -359,8 +366,14 @@
                                             </Button>
                                             <Button x:Name="PART_RestoreButton" Style="{DynamicResource CaptionButtonStyle}" Visibility="Hidden">
                                                 <Grid>
-                                                    <Path Data="M 0 0 L 0 5 L 5 5 L 5 0 Z" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,3,0"/>
-                                                    <Path Data="M -1 0 L 5 0 L 5 6" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,0,0,3"/>
+                                                    <Grid x:Name="RestoreIcon">
+                                                        <Path Data="M 0 0 L 0 5 L 5 5 L 5 0 Z" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,3,3,0"/>
+                                                        <Path Data="M -1 0 L 5 0 L 5 6" Fill="Transparent" Stroke="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" StrokeThickness="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="3,0,0,3"/>
+                                                    </Grid>
+                                                    <Grid x:Name="UnFullscreenIcon" Width="9" Height="9" Visibility="Collapsed">
+                                                        <Border Background="Transparent" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" BorderThickness="2,0,0,2" Width="4" Height="4" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                                                        <Border Background="Transparent" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" BorderThickness="0,2,2,0" Width="4" Height="4" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                                    </Grid>
                                                 </Grid>
                                             </Button>
                                         </Grid>
@@ -368,9 +381,9 @@
                                             <Path Data="M 0 -1 L 2 -1 L 4.5 2 L 7 -1 L 9 -1 L 9 1 L 6 3.5 L 9 6 L 9 8 L 7 8 L 4.5 5 L 2 8 L 0 8 L 0 6 L 3 3.5 L 0 1 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased"/>
                                         </Button>
                                     </StackPanel>
-                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="24" Margin="5,0">
+                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="31" Margin="5,0"><!--Height="24"-->
                                         <Image x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}" Visibility="{Binding ShowTitlebarIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                                        <TextBlock x:Name="TitleText" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TitlebarIdleForegroundBrush}" HorizontalAlignment="Center" TextAlignment="Center" Margin="100,0" Effect="{DynamicResource DropShadow}" Text="{Binding Path=Title, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <TextBlock x:Name="TitleText" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TitlebarIdleForegroundBrush}" HorizontalAlignment="Center" TextAlignment="Center" Margin="100,0" Effect="{DynamicResource DropShadow}" Text="{Binding Path=Title, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" UseLayoutRounding="True"/>
                                     </Grid>
                                 </Grid>
                                 <Border x:Name="Body" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Background="{TemplateBinding Background}" CornerRadius="0,0,2,2"/>
@@ -411,9 +424,6 @@
                         </DataTrigger-->
                         <Trigger Property="WindowState" Value="Maximized">
                             <!--Setter Property="Margin" Value="7"/-->
-                            <!--Setter TargetName="WindowRoot" Property="TranslateTransform.X" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GetMaximizeOffsetDoubleConverter}}"/>
-                            <Setter TargetName="WindowRoot" Property="TranslateTransform.Y" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GetMaximizeOffsetDoubleConverter}, ConverterParameter=vertical}"/-->
-                            <Setter TargetName="WindowRoot" Property="Margin" Value="{Binding Converter={StaticResource GetMaximizeBorderThicknessConverter}, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                             <Setter TargetName="WindowRoot" Property="BorderThickness" Value="0"/>
                             <Setter TargetName="WindowRoot" Property="CornerRadius" Value="0"/>
                             <Setter TargetName="TitlebarBorder" Property="BorderThickness" Value="0,0,0,1"/>
@@ -433,6 +443,26 @@
                             </Trigger.EnterActions>
                             <Trigger.ExitActions/-->
                         </Trigger>
+                        <Trigger Property="IsFullscreen" Value="True">
+                            <!--Setter Property="Topmost" Value="True"/-->
+                            <Setter TargetName="PART_FullscreenButton" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="RestoreIcon" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="UnFullscreenIcon" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <!--MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFullscreen" Value="True"/>
+                                <Condition Property="WindowState" Value="Maximized"/>
+                            </MultiTrigger.Conditions-->
+                            <!--Setter TargetName="WindowRoot" Property="Margin" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GetFullscreenBorderThicknessConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"/-->
+                        <!--/MultiTrigger-->
+                        <!--MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFullscreen" Value="False"/>
+                                <Condition Property="WindowState" Value="Maximized"/>
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="WindowRoot" Property="Margin" Value="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource GetMaximizeBorderThicknessConverter}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}"/>
+                        </MultiTrigger-->
                         <Trigger Property="ResizeMode" Value="NoResize">
                             <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Collapsed"/>

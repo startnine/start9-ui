@@ -200,7 +200,7 @@ namespace Start9.UI.Wpf.Windows
 
             //base.WindowStyle = WindowStyle.None;
             //base.AllowsTransparency = true;
-            StateChanged += CompositingWindow_StateChanged;
+            //StateChanged += CompositingWindow_StateChanged;
             Loaded += CompositingWindow_Loaded;
 
             /*StateChanged += (sneder, args) =>
@@ -214,10 +214,10 @@ namespace Start9.UI.Wpf.Windows
             return (d as Window).GetValue(AllowsTransparencyProperty);
         }*/
 
-        double _maxWidth = double.PositiveInfinity;
-        double _maxHeight = double.PositiveInfinity;
-        private void CompositingWindow_StateChanged(object sender, EventArgs e)
+        /*protected override void OnStateChanged(EventArgs e) //private void CompositingWindow_StateChanged(object sender, EventArgs e)
         {
+            base.OnStateChanged(e);
+
             if (WindowState == WindowState.Maximized)
             {
                 _maxWidth = MaxWidth;
@@ -231,7 +231,7 @@ namespace Start9.UI.Wpf.Windows
                 MaxWidth = _maxWidth;
                 MaxHeight = _maxHeight;
             }
-        }
+        }*/
 
         protected override void OnInitialized(EventArgs e)
         {
