@@ -99,7 +99,7 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="Window">
-                                <Rectangle Fill="Red"/>
+                                <Rectangle Stroke="Red" StrokeThickness="10"/>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
