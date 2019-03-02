@@ -39,6 +39,8 @@ namespace Start9.UI.Wpf.Windows
             IgnorePeekProperty.OverrideMetadata(typeof(ShadowedWindow), new FrameworkPropertyMetadata(false, ShadowedWindow.OnIgnorePeekChangedCallback));
         }
 
+        WindowInteropHelper _helper = null;
+
         public ShadowedWindow()
         {
             _shadowWindow = new Window()
@@ -52,8 +54,8 @@ namespace Start9.UI.Wpf.Windows
 
             _shadowWindow.SourceInitialized += (sneder, args) =>
             {
-                var helper = new WindowInteropHelper(_shadowWindow);
-                NativeMethods.SetWindowLong(helper.Handle, NativeMethods.GwlExstyle, (Int32)(NativeMethods.GetWindowLong(helper.Handle, NativeMethods.GwlExstyle)) | NativeMethods.WsExToolwindow | NativeMethods.WsExTransparent); ////WinApi
+                _helper = new WindowInteropHelper(_shadowWindow);
+                NativeMethods.SetWindowLong(_helper.Handle, NativeMethods.GwlExstyle, (Int32)(NativeMethods.GetWindowLong(_helper.Handle, NativeMethods.GwlExstyle)) | NativeMethods.WsExToolwindow | NativeMethods.WsExTransparent); ////WinApi
 
                 if (!IsWindowVisible)
                     _shadowWindow.Hide();
@@ -199,8 +201,10 @@ namespace Start9.UI.Wpf.Windows
 
         public void SyncShadowToWindow()
         {
-            _shadowWindow.Left = Left - ShadowOffsetThickness.Left;
-            _shadowWindow.Top = Top - ShadowOffsetThickness.Top;
+            //_shadowWindow.Left = Left - ShadowOffsetThickness.Left;
+            //_shadowWindow.Top = Top - ShadowOffsetThickness.Top;
+            if (_helper != null)
+                NativeMethods.SetWindowPos(_helper.Handle, IntPtr.Zero, (int)(Left - ShadowOffsetThickness.Left), (int)(Top - ShadowOffsetThickness.Top), (int)(ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right), (int)(ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom), 0x0004 | 0x0010);
             /*DoubleAnimation leftAnimation = new DoubleAnimation()
             {
                 From = Left,
@@ -219,8 +223,9 @@ namespace Start9.UI.Wpf.Windows
 
         public void SyncShadowToWindowSize()
         {
-            _shadowWindow.Width = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
-            _shadowWindow.Height = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
+            SyncShadowToWindow(); //For now, this won't exist later so
+            //_shadowWindow.Width = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
+            //_shadowWindow.Height = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
             /*DoubleAnimation widthAnimation = new DoubleAnimation()
             {
                 From = ActualWidth,
@@ -244,12 +249,12 @@ namespace Start9.UI.Wpf.Windows
             base.OnRenderSizeChanged(sizeInfo);
             SyncShadowToWindow();
             SyncShadowToWindowSize();
-        }
+        }*/
 
         protected override void OnLocationChanged(EventArgs e)
         {
             base.OnLocationChanged(e);
             SyncShadowToWindow();
-        }*/
+        }
     }
 }
