@@ -57,6 +57,8 @@ namespace Start9.UI.Wpf.Windows
                 _helper = new WindowInteropHelper(_shadowWindow);
                 NativeMethods.SetWindowLong(_helper.Handle, NativeMethods.GwlExstyle, (Int32)(NativeMethods.GetWindowLong(_helper.Handle, NativeMethods.GwlExstyle)) | NativeMethods.WsExToolwindow | NativeMethods.WsExTransparent); ////WinApi
 
+                SyncShadowToWindow();
+
                 if (!IsWindowVisible)
                     _shadowWindow.Hide();
             };
@@ -175,7 +177,6 @@ namespace Start9.UI.Wpf.Windows
             SizeChanged += (sneder, args) =>
             {
                 SyncShadowToWindow();
-                SyncShadowToWindowSize();
             };
         }
 
@@ -219,29 +220,6 @@ namespace Start9.UI.Wpf.Windows
             };
             _shadowWindow.BeginAnimation(Window.LeftProperty, leftAnimation);
             _shadowWindow.BeginAnimation(Window.TopProperty, topAnimation);*/
-        }
-
-        public void SyncShadowToWindowSize()
-        {
-            SyncShadowToWindow(); //For now, this won't exist later so
-            //_shadowWindow.Width = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
-            //_shadowWindow.Height = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
-            /*DoubleAnimation widthAnimation = new DoubleAnimation()
-            {
-                From = ActualWidth,
-                To = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right,
-                Duration = _noDuration
-            };
-            _shadowWindow.BeginAnimation(Window.WidthProperty, widthAnimation);
-            DoubleAnimation heightAnimation = new DoubleAnimation()
-            {
-                From = ActualHeight,
-                To = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom,
-                Duration = _noDuration
-            };
-            _shadowWindow.BeginAnimation(Window.HeightProperty, heightAnimation);*/
-            /*if (CompositionState != WindowCompositionState.Alpha)
-                SetCompositionState();*/
         }
 
         /*protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)

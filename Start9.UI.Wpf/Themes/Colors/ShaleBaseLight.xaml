@@ -7,10 +7,10 @@
     <DropShadowEffect x:Key="SecondaryDropShadow" Color="Black" Direction="270" ShadowDepth="10" BlurRadius="20" Opacity="0.5"/>
     <DropShadowEffect x:Key="TertiaryDropShadow" Color="Black" Direction="270" ShadowDepth="4" BlurRadius="8.5" Opacity="0.5"/>
     <GradientStopCollection x:Key="ShadowGradientStops">
-        <GradientStop Offset="0" Color="#7F000000"/>
+        <GradientStop Offset="0" Color="#40000000"/>
         <GradientStop Offset="1" Color="#00000000"/>
     </GradientStopCollection>
-    <SolidColorBrush x:Key="ShadowCornerBorderBrush">#7F000000</SolidColorBrush>
+    <SolidColorBrush x:Key="ShadowCornerBorderBrush">#40000000</SolidColorBrush>
 
     <RadialGradientBrush x:Key="DialogFadeGradientBrush" GradientOrigin="0.5,0.5" Center="0.5,0.5">
         <RadialGradientBrush.GradientStops>

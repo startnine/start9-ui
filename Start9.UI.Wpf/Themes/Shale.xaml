@@ -155,14 +155,14 @@
                                 </Grid-->
                                 <Grid x:Name="ShadowGrid" ClipToBounds="True">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="45"/>
+                                        <ColumnDefinition Width="25"/>
                                         <ColumnDefinition/>
-                                        <ColumnDefinition Width="45"/>
+                                        <ColumnDefinition Width="25"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition Height="45"/>
+                                        <RowDefinition Height="15"/>
                                         <RowDefinition/>
-                                        <RowDefinition Height="45"/>
+                                        <RowDefinition Height="40"/>
                                     </Grid.RowDefinitions>
                                     <!--Grid.OpacityMask>
                                         <VisualBrush>
@@ -222,7 +222,9 @@
                                             <RadialGradientBrush GradientOrigin="1,0" Center="1,0" GradientStops="{DynamicResource ShadowGradientStops}" RadiusX="1" RadiusY="1"/>
                                         </Rectangle.Fill>
                                     </Rectangle>
-                                    <Border BorderBrush="{DynamicResource ShadowCornerBorderBrush}" BorderThickness="2" CornerRadius="3" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1"/>
+                                    <ContentControl ClipToBounds="True" Grid.Column="1" Grid.Row="1">
+                                        <Border BorderBrush="{DynamicResource ShadowCornerBorderBrush}" BorderThickness="5" Margin="-5" CornerRadius="5" Background="Transparent" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                                    </ContentControl>
                                 </Grid>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsEnabled" Value="False">

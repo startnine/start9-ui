@@ -551,7 +551,7 @@ namespace Start9.UI.Wpf.Windows
                                 //Left = SystemScaling.CursorPosition.X - offset.X;
                                 //Top = SystemScaling.CursorPosition.Y - offset.Y;
                                 DragMove();
-                                SyncShadowToWindow();
+                                //////SyncShadowToWindow();
                                 timer.Stop();
                             }
                         }));
