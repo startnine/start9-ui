@@ -568,30 +568,32 @@ namespace Start9.UI.Wpf.Windows
 
         void ThumbBottomRightCorner_DragDelta(Object sender, DragDeltaEventArgs e)
         {
-            if (Width + e.HorizontalChange > 10)
+            /*if (Width + e.HorizontalChange > 10)
                 Width += e.HorizontalChange;
             if (Height + e.VerticalChange > 10)
-                Height += e.VerticalChange;
+                Height += e.VerticalChange;*/
+            NativeMethods.SetWindowPos(Handle, IntPtr.Zero, (int)Left, (int)Top, (int)(Width + e.HorizontalChange), (int)(Height + e.VerticalChange), 0x0004 | 0x0010);
             //SyncShadowToWindow();
             //SyncShadowToWindowSize();
         }
 
         void ThumbTopRightCorner_DragDelta(Object sender, DragDeltaEventArgs e)
         {
-            if (Width + e.HorizontalChange > 10)
+            /*if (Width + e.HorizontalChange > 10)
                 Width += e.HorizontalChange;
             if (Top + e.VerticalChange > 10)
             {
                 Top += e.VerticalChange;
                 Height -= e.VerticalChange;
-            }
+            }*/
+            NativeMethods.SetWindowPos(Handle, IntPtr.Zero, (int)Left, (int)(Top + e.VerticalChange), (int)(Width + e.HorizontalChange), (int)(Height - e.VerticalChange), 0x0004 | 0x0010);
             //SyncShadowToWindow();
             //SyncShadowToWindowSize();
         }
 
         void ThumbTopLeftCorner_DragDelta(Object sender, DragDeltaEventArgs e)
         {
-            if (Left + e.HorizontalChange > 10)
+            /*if (Left + e.HorizontalChange > 10)
             {
                 Left += e.HorizontalChange;
                 Width -= e.HorizontalChange;
@@ -600,58 +602,64 @@ namespace Start9.UI.Wpf.Windows
             {
                 Top += e.VerticalChange;
                 Height -= e.VerticalChange;
-            }
+            }*/
+            NativeMethods.SetWindowPos(Handle, IntPtr.Zero, (int)(Left + e.HorizontalChange), (int)(Top + e.VerticalChange), (int)(Width - e.HorizontalChange), (int)(Height - e.VerticalChange), 0x0004 | 0x0010);
             //SyncShadowToWindow();
             //SyncShadowToWindowSize();
         }
 
         void ThumbBottomLeftCorner_DragDelta(Object sender, DragDeltaEventArgs e)
         {
-            if (Left + e.HorizontalChange > 10)
+            /*if (Left + e.HorizontalChange > 10)
             {
                 Left += e.HorizontalChange;
                 Width -= e.HorizontalChange;
             }
             if (Height + e.VerticalChange > 10)
-                Height += e.VerticalChange;
+                Height += e.VerticalChange;*/
+            NativeMethods.SetWindowPos(Handle, IntPtr.Zero, (int)(Left + e.HorizontalChange), (int)Top, (int)(Width - e.HorizontalChange), (int)(Height + e.VerticalChange), 0x0004 | 0x0010);
             //SyncShadowToWindow();
             //SyncShadowToWindowSize();
         }
 
         void ThumbRight_DragDelta(Object sender, DragDeltaEventArgs e)
         {
-            if (Width + e.HorizontalChange > 10)
-                Width += e.HorizontalChange;
+            NativeMethods.SetWindowPos(Handle, IntPtr.Zero, (int)Left, (int)Top, (int)(Width + e.HorizontalChange), (int)Height, 0x0004 | 0x0010);
+            /*if (Width + e.HorizontalChange > 10)
+                Width += e.HorizontalChange;*/
             //SyncShadowToWindow();
             //SyncShadowToWindowSize();
         }
 
         void ThumbLeft_DragDelta(Object sender, DragDeltaEventArgs e)
         {
-            if (Left + e.HorizontalChange > 10)
+            /*if (Left + e.HorizontalChange > 10)
             {
                 Left += e.HorizontalChange;
                 Width -= e.HorizontalChange;
-            }
+            }*/
+            NativeMethods.SetWindowPos(Handle, IntPtr.Zero, (int)(Left + e.HorizontalChange), (int)Top, (int)(Width - e.HorizontalChange), (int)Height, 0x0004 | 0x0010);
             //SyncShadowToWindow();
             //SyncShadowToWindowSize();
         }
 
         void ThumbBottom_DragDelta(Object sender, DragDeltaEventArgs e)
         {
-            if (Height + e.VerticalChange > 10)
-                Height += e.VerticalChange;
+            /*if (Height + e.VerticalChange > 10)
+                Height += e.VerticalChange;*/
+            NativeMethods.SetWindowPos(Handle, IntPtr.Zero, (int)Left, (int)Top, (int)Width, (int)(Height + e.VerticalChange), 0x0004 | 0x0010);
             //SyncShadowToWindow();
             //SyncShadowToWindowSize();
         }
 
         void ThumbTop_DragDelta(Object sender, DragDeltaEventArgs e)
         {
-            if (Top + e.VerticalChange > 10)
+            /*if (Top + e.VerticalChange > 10)
             {
                 Top += e.VerticalChange;
                 Height -= e.VerticalChange;
-            }
+            }*/
+            NativeMethods.SetWindowPos(Handle, IntPtr.Zero, (int)Left, (int)(Top + e.VerticalChange), (int)Width, (int)(Height - e.VerticalChange), 0x0004 | 0x0010);
             //SyncShadowToWindow();
             //SyncShadowToWindowSize();
         }

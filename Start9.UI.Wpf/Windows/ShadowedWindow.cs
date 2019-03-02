@@ -199,14 +199,14 @@ namespace Start9.UI.Wpf.Windows
 
         public void SyncShadowToWindow()
         {
-            DoubleAnimation leftAnimation = new DoubleAnimation()
+            _shadowWindow.Left = Left - ShadowOffsetThickness.Left;
+            _shadowWindow.Top = Top - ShadowOffsetThickness.Top;
+            /*DoubleAnimation leftAnimation = new DoubleAnimation()
             {
                 From = Left,
                 To = Left - ShadowOffsetThickness.Left,
                 Duration = _noDuration
             };
-            //_shadowWindow.Left = Left - ShadowOffsetThickness.Left;
-            //_shadowWindow.Top = Top - ShadowOffsetThickness.Top;
             DoubleAnimation topAnimation = new DoubleAnimation()
             {
                 From = Top,
@@ -214,14 +214,14 @@ namespace Start9.UI.Wpf.Windows
                 Duration = _noDuration
             };
             _shadowWindow.BeginAnimation(Window.LeftProperty, leftAnimation);
-            _shadowWindow.BeginAnimation(Window.TopProperty, topAnimation);
+            _shadowWindow.BeginAnimation(Window.TopProperty, topAnimation);*/
         }
 
         public void SyncShadowToWindowSize()
         {
-            //_shadowWindow.Width = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
-            //_shadowWindow.Height = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
-            DoubleAnimation widthAnimation = new DoubleAnimation()
+            _shadowWindow.Width = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
+            _shadowWindow.Height = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
+            /*DoubleAnimation widthAnimation = new DoubleAnimation()
             {
                 From = ActualWidth,
                 To = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right,
@@ -234,7 +234,7 @@ namespace Start9.UI.Wpf.Windows
                 To = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom,
                 Duration = _noDuration
             };
-            _shadowWindow.BeginAnimation(Window.HeightProperty, heightAnimation);
+            _shadowWindow.BeginAnimation(Window.HeightProperty, heightAnimation);*/
             /*if (CompositionState != WindowCompositionState.Alpha)
                 SetCompositionState();*/
         }

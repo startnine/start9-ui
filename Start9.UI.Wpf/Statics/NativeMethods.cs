@@ -177,6 +177,9 @@ namespace Start9.UI.Wpf.Statics
             return returnValue;
         }
 
+        [DllImport("user32.dll", SetLastError = true)]
+        public static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, uint uFlags);
+
 
         public static IntPtr SetWindowLong(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong) => IntPtr.Size == 8
         ? SetWindowLongPtr64(hWnd, nIndex, dwNewLong)
