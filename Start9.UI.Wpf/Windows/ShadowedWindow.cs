@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Interop;
+using System.Windows.Media.Animation;
 using Start9.UI.Wpf.Statics;
 
 namespace Start9.UI.Wpf.Windows
@@ -31,6 +32,7 @@ namespace Start9.UI.Wpf.Windows
             DependencyProperty.Register("ShadowStyle", typeof(Style), typeof(ShadowedWindow), new PropertyMetadata());
 
         readonly Window _shadowWindow;
+        readonly TimeSpan _noDuration = TimeSpan.FromMilliseconds(0);
 
         static ShadowedWindow()
         {
@@ -197,14 +199,42 @@ namespace Start9.UI.Wpf.Windows
 
         public void SyncShadowToWindow()
         {
-            _shadowWindow.Left = Left - ShadowOffsetThickness.Left;
-            _shadowWindow.Top = Top - ShadowOffsetThickness.Top;
+            DoubleAnimation leftAnimation = new DoubleAnimation()
+            {
+                From = Left,
+                To = Left - ShadowOffsetThickness.Left,
+                Duration = _noDuration
+            };
+            //_shadowWindow.Left = Left - ShadowOffsetThickness.Left;
+            //_shadowWindow.Top = Top - ShadowOffsetThickness.Top;
+            DoubleAnimation topAnimation = new DoubleAnimation()
+            {
+                From = Top,
+                To = Top - ShadowOffsetThickness.Top,
+                Duration = _noDuration
+            };
+            _shadowWindow.BeginAnimation(Window.LeftProperty, leftAnimation);
+            _shadowWindow.BeginAnimation(Window.TopProperty, topAnimation);
         }
 
         public void SyncShadowToWindowSize()
         {
-            _shadowWindow.Width = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
-            _shadowWindow.Height = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
+            //_shadowWindow.Width = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right;
+            //_shadowWindow.Height = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom;
+            DoubleAnimation widthAnimation = new DoubleAnimation()
+            {
+                From = ActualWidth,
+                To = ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right,
+                Duration = _noDuration
+            };
+            _shadowWindow.BeginAnimation(Window.WidthProperty, widthAnimation);
+            DoubleAnimation heightAnimation = new DoubleAnimation()
+            {
+                From = ActualHeight,
+                To = ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom,
+                Duration = _noDuration
+            };
+            _shadowWindow.BeginAnimation(Window.HeightProperty, heightAnimation);
             /*if (CompositionState != WindowCompositionState.Alpha)
                 SetCompositionState();*/
         }
