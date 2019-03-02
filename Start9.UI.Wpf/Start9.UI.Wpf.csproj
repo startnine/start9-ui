@@ -12,10 +12,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
-  </ItemGroup>
+  </PropertyGroup>  
   <ItemGroup>
     <Resource Include="Fonts\Ubuntu-Bold.ttf" />
     <Resource Include="Fonts\Ubuntu-BoldItalic.ttf" />
@@ -25,8 +22,6 @@
     <Resource Include="Fonts\Ubuntu-Medium.ttf" />
     <Resource Include="Fonts\Ubuntu-MediumItalic.ttf" />
     <Resource Include="Fonts\Ubuntu-Regular.ttf" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Fonts\UFL.txt" />
   </ItemGroup>
 
@@ -35,5 +30,10 @@
     <Page Include="Windows\MessageBoxContent.xaml" />
     <Page Include="Themes\*.xaml" />
     <Page Include="Themes\Colors\*.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.0.1">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
   </ItemGroup> 
 </Project>

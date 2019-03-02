@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Interactivity;
+using Microsoft.Xaml.Behaviors;
 
 namespace Start9.UI.Wpf.Statics
 {
