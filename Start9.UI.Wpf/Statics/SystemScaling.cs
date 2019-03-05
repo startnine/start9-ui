@@ -103,7 +103,7 @@ namespace Start9.UI.Wpf.Statics
                 {
                     width = target.Width;
                 }
-                catch (Exception ex)
+                catch
                 {
                 }
 
@@ -113,7 +113,7 @@ namespace Start9.UI.Wpf.Statics
                 {
                     height = target.Height;
                 }
-                catch (Exception ex)
+                catch
                 {
                 }
             

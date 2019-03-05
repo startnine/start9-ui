@@ -151,11 +151,6 @@ namespace Start9.UI.Wpf.Windows
             win.SetCompositionState(win.CompositionState);
         }
 
-        static CompositingWindow()
-        {
-            //BackgroundProperty.OverrideMetadata(typeof(CompositingWindow), new FrameworkPropertyMetadata(new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Transparent)));
-            //AllowsTransparencyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata(true));
-        }
 
         public CompositingWindow()
         {
