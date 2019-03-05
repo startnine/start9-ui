@@ -11,7 +11,7 @@
         xmlns:beh="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
         x:Class="FrontEndTest.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow">
+        Title="MainWindow" ShowFullscreenButton="True" AutohideTitlebarWhenFullscreen="True">
     <!--BorderThickness="0,52,0,0"-->
     <!--Background="#40000000"-->
     <!--CompositionState="Glass" Background="#7FFFFFFF"-->
