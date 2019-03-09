@@ -17,7 +17,7 @@ namespace Start9.UI.Wpf.Windows
     public partial class CompositingWindow : Window
     {
         public IntPtr Handle;
-        /*NativeMethods.DWM_BLURBEHIND _blurInfo = new NativeMethods.DWM_BLURBEHIND();
+        /*NativeMethods.DWM_BLURBEHIND _blurInfo = new NativeMethods.DWM_BLURBEHIND();  
         NativeMethods.DWM_BLURBEHIND _unblurInfo = new NativeMethods.DWM_BLURBEHIND();*/
         /*{
             fEnable = false

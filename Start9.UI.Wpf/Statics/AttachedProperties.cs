@@ -1,13 +1,12 @@
 ﻿using Start9.UI.Wpf.Behaviors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
+
+#if NETCOREAPP3_0
 using Microsoft.Xaml.Behaviors;
+#else
+using System.Windows.Interactivity;
+#endif
 
 namespace Start9.UI.Wpf.Statics
 {

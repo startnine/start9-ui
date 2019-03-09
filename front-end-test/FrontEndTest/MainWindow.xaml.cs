@@ -55,18 +55,6 @@ namespace FrontEndTest
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            var win = new Window()
-            {
-                WindowStyle = WindowStyle.None,
-                AllowsTransparency = true
-            };
-            System.Windows.Shell.WindowChrome.SetWindowChrome(win, new System.Windows.Shell.WindowChrome()
-            {
-                ResizeBorderThickness = new Thickness(5),
-                CaptionHeight = 0,
-                UseAeroCaptionButtons = false
-            });
-            win.Show();
         }
 
         private void ToggleGlassToggleButton_Click(object sender, RoutedEventArgs e)

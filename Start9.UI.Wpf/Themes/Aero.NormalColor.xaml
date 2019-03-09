@@ -8,7 +8,7 @@
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     <conv:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
     <conv:WidthAndHeightToRectConverter x:Key="WidthAndHeightToRectConverter"/>
-    <conv:CombinedClassicFrameSizeConverter x:Key="CombinedClassicFrameSizeConverter"/>
+    <conv:ClassicFrameSizeConverter x:Key="ClassicFrameSizeConverter"/>
     <conv:ThicknessFilterConverter x:Key="ThicknessFilterConverter"/>
     <conv:DoubleToFractionOfDoubleConverter x:Key="DoubleToFractionOfDoubleConverter"/>
     <conv:GetMaximizeBorderThicknessConverter x:Key="GetMaximizeBorderThicknessConverter"/>

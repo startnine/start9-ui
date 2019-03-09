@@ -1,11 +1,8 @@
 ﻿using Start9.UI.Wpf.Statics;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Interop;
 using Orientation = System.Windows.Controls.Orientation;
@@ -14,10 +11,6 @@ using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Diagnostics;
-//using static Start9.UI.Wpf.Windows.AppBarWindow.NativeMethods;
-//using Rect = Start9.UI.Wpf.Windows.AppBarWindow.NativeMethods.Rect;
-//using SysWinRect = System.Windows.Rect;
 
 namespace Start9.UI.Wpf.Windows
 {

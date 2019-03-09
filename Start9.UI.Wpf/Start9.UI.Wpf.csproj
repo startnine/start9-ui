@@ -1,6 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFrameworks>netcoreapp3.0;net40</TargetFrameworks>
+    <UseWPF>true</UseWPF>
+    <UseWindowsForms>true</UseWindowsForms>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <AssemblyTitle>Start9.UI.Wpf</AssemblyTitle>
     <Product>Start9.UI.Wpf</Product>
@@ -12,7 +14,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
-  </PropertyGroup>  
+  </PropertyGroup>
+  
   <ItemGroup>
     <Resource Include="Fonts\Ubuntu-Bold.ttf" />
     <Resource Include="Fonts\Ubuntu-BoldItalic.ttf" />
@@ -21,19 +24,21 @@
     <Resource Include="Fonts\Ubuntu-LightItalic.ttf" />
     <Resource Include="Fonts\Ubuntu-Medium.ttf" />
     <Resource Include="Fonts\Ubuntu-MediumItalic.ttf" />
-    <Resource Include="Fonts\Ubuntu-Regular.ttf" />
+    <Resource Include="Fonts\Ubuntu-Regular.ttf" /> 
     <Resource Include="Fonts\UFL.txt" />
   </ItemGroup>
 
-  <!--Don't you hate an ugly csproj?-->
-  <ItemGroup>
-    <Page Include="Windows\MessageBoxContent.xaml" />
-    <Page Include="Themes\*.xaml" />
-    <Page Include="Themes\Colors\*.xaml" />
-  </ItemGroup>
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.0.1">
       <NoWarn>NU1701</NoWarn>
     </PackageReference>
-  </ItemGroup> 
+  </ItemGroup>
+  
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <!-- Not sure why this is neccesary - is this a bug? -->
+    <Reference Include="PresentationFramework.Classic" /> 
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525">
+      <NoWarn>NU1701</NoWarn>
+    </PackageReference>
+  </ItemGroup>
 </Project>

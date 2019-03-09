@@ -3,8 +3,7 @@
             xmlns:ui="clr-namespace:Start9.UI.Wpf"
             xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters"
             xmlns:win="clr-namespace:Start9.UI.Wpf.Windows"
-            xmlns:tic="clr-namespace:Start9.UI.Wpf.Statics"
-            xmlns:beh="clr-namespace:Start9.UI.Wpf.Behaviors">
+            xmlns:tic="clr-namespace:Start9.UI.Wpf.Statics">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/ShaleBaseLight.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/ShaleBlue.xaml"/>

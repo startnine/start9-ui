@@ -9,7 +9,7 @@
 
     <conv:ThicknessToDoubleConverter x:Key="ThicknessToDoubleConverter"/>
     <conv:WidthAndHeightToRectConverter x:Key="WidthAndHeightToRectConverter"/>
-    <conv:CombinedClassicFrameSizeConverter x:Key="CombinedClassicFrameSizeConverter"/>
+    <conv:ClassicFrameSizeConverter x:Key="ClassicFrameSizeConverter"/>
     <conv:ThicknessInvertFilterConverter x:Key="ThicknessInvertFilterConverter"/>
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
@@ -32,13 +32,13 @@
         <Setter Property="HideTransitionDuration" Value="50"/>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="{Binding Converter={StaticResource CombinedClassicFrameSizeConverter}, FallbackValue={x:Static SystemParameters.WindowResizeBorderThickness}}"/>
+        <Setter Property="BorderThickness" Value="{Binding Converter={StaticResource ClassicFrameSizeConverter}}"/>
         <Setter Property="Background" Value="{x:Static SystemColors.WindowBrush}"/>
         <Setter Property="Foreground" Value="{x:Static SystemColors.WindowTextBrush}"/>
         <Setter Property="FontFamily" Value="Tahoma"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="ShadowOffsetThickness" Value="25,15,25,40"/>
-        <Setter Property="Padding" Value="{x:Static SystemParameters.WindowResizeBorderThickness}"/>
+        <Setter Property="Padding" Value="{Binding Converter={StaticResource ClassicFrameSizeConverter}}"/>
         <Setter Property="ShadowStyle">
             <Setter.Value>
                 <Style TargetType="Window">
