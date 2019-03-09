@@ -112,6 +112,15 @@ namespace Start9.UI.Wpf.Windows
         public static readonly DependencyProperty ShadowVisibilityProperty =
             DependencyProperty.Register("ShadowVisibility", typeof(Visibility), typeof(DecoratableWindow), new PropertyMetadata(Visibility.Visible));*/
 
+        public bool ShowFullscreenButton
+        {
+            get => (bool)GetValue(ShowFullscreenButtonProperty);
+            set => SetValue(ShowFullscreenButtonProperty, value);
+        }
+
+        public static readonly DependencyProperty ShowFullscreenButtonProperty =
+            DependencyProperty.Register("ShowFullscreenButton", typeof(bool), typeof(DecoratableWindow), new PropertyMetadata(false));
+
         public bool IsFullscreen
         {
             get => (bool)GetValue(IsFullscreenProperty);
@@ -121,11 +130,29 @@ namespace Start9.UI.Wpf.Windows
         public static readonly DependencyProperty IsFullscreenProperty =
             DependencyProperty.Register("IsFullscreen", typeof(bool), typeof(DecoratableWindow), new PropertyMetadata(false, OnIsFullscreenPropertyChangedCallback));
 
+        public bool IsFullscreenTitlebarHidden
+        {
+            get => (bool)GetValue(IsFullscreenTitlebarHiddenProperty);
+            set => SetValue(IsFullscreenTitlebarHiddenProperty, value);
+        }
+
+        public static readonly DependencyProperty IsFullscreenTitlebarHiddenProperty =
+            DependencyProperty.Register("IsFullscreenTitlebarHidden", typeof(bool), typeof(DecoratableWindow), new PropertyMetadata(true));
+
         static void OnIsFullscreenPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
             if ((bool)e.NewValue == false)
                 (sender as DecoratableWindow).WindowState = WindowState.Normal;
         }
+
+        public bool AutohideTitlebarWhenFullscreen
+        {
+            get => (bool)GetValue(AutohideTitlebarWhenFullscreenProperty);
+            set => SetValue(AutohideTitlebarWhenFullscreenProperty, value);
+        }
+
+        public static readonly DependencyProperty AutohideTitlebarWhenFullscreenProperty =
+            DependencyProperty.Register("AutohideTitlebarWhenFullscreen", typeof(bool), typeof(DecoratableWindow), new PropertyMetadata(true));
 
         public bool ShowTitlebarText
         {
@@ -165,14 +192,14 @@ namespace Start9.UI.Wpf.Windows
                     DependencyProperty.RegisterAttached("FullWindowContent", typeof(object), typeof(DecoratableWindow),
                         new PropertyMetadata(null));*/
 
-        public double TitleBarHeight
+        public double TitlebarHeight
         {
-            get => (double)GetValue(TitleBarHeightProperty);
-            set => SetValue(TitleBarHeightProperty, value);
+            get => (double)GetValue(TitlebarHeightProperty);
+            set => SetValue(TitlebarHeightProperty, value);
         }
 
-        public static readonly DependencyProperty TitleBarHeightProperty =
-            DependencyProperty.Register("TitleBarHeight", typeof(double), typeof(DecoratableWindow), new PropertyMetadata(30.0));
+        public static readonly DependencyProperty TitlebarHeightProperty =
+            DependencyProperty.Register("TitlebarHeight", typeof(double), typeof(DecoratableWindow), new PropertyMetadata(30.0));
 
         /*static DecoratableWindow()
         {
