@@ -51,9 +51,9 @@ namespace Start9.UI.Wpf
                 _breadcrumbsStackPanel.Children.Clear();
                 if (BreadcrumbPath != null)
                 {
-                    if (BreadcrumbPath.ToString().Contains(@"\") && (BreadcrumbPath.Split(@"\").Length > 1))
+                    if (BreadcrumbPath.ToString().Contains("\\") && (BreadcrumbPath.Split('\\').Length > 1))
                     {
-                        string[] pathSegments = BreadcrumbPath.Split(@"\");
+                        string[] pathSegments = BreadcrumbPath.Split('\\');
                         int index = 0;
                         foreach (string s in pathSegments)
                         {
