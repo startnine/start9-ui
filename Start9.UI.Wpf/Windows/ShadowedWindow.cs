@@ -205,7 +205,7 @@ namespace Start9.UI.Wpf.Windows
             //_shadowWindow.Left = Left - ShadowOffsetThickness.Left;
             //_shadowWindow.Top = Top - ShadowOffsetThickness.Top;
             if (_helper != null)
-                NativeMethods.SetWindowPos(_helper.Handle, IntPtr.Zero, (int)(Left - ShadowOffsetThickness.Left), (int)(Top - ShadowOffsetThickness.Top), (int)(ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right), (int)(ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom), 0x0004 | 0x0010);
+                NativeMethods.SetWindowPos(_helper.Handle, IntPtr.Zero, (int)(SystemScaling.WpfUnitsToRealPixels(Left - ShadowOffsetThickness.Left)), (int)(SystemScaling.WpfUnitsToRealPixels(Top - ShadowOffsetThickness.Top)), (int)(SystemScaling.WpfUnitsToRealPixels(ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right)), (int)(SystemScaling.WpfUnitsToRealPixels(ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom)), 0x0004 | 0x0010);
             /*DoubleAnimation leftAnimation = new DoubleAnimation()
             {
                 From = Left,
