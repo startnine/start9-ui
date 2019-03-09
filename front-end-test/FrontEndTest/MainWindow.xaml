@@ -43,6 +43,7 @@
                             <RadioButton GroupName="NormalRadio" Content="Normal RadioButton"/>
                             <RadioButton GroupName="NormalRadio" IsChecked="True" Content="Checked RadioButton"/>
                             <ui:SpinBox/>
+                            <ui:ActionBox WatermarkText="Normal" ButtonContent="ActionBox"/>
                         </StackPanel>
                     </GroupBox>
                     <GroupBox Header="Disabled Controls" Grid.Column="1" IsEnabled="False">
@@ -61,6 +62,7 @@
                             <RadioButton GroupName="DisabledRadio" Content="Disabled RadioButton"/>
                             <RadioButton GroupName="DisabledRadio" IsChecked="True" Content="Disabled Checked RadioButton"/>
                             <ui:SpinBox IsEnabled="False"/>
+                            <ui:ActionBox WatermarkText="Disabled" ButtonContent="ActionBox" IsEnabled="False"/>
                         </StackPanel>
                     </GroupBox>
                 </Grid>
