@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,84 +17,52 @@ namespace Start9.UI.Wpf
         TextBox _textBox;
         StackPanel _breadcrumbsStackPanel;
 
-        public string BreadcrumbPath
+        public BreadcrumbItem[] BreadcrumbItems
         {
-            get => (string)GetValue(BreadcrumbPathProperty);
-            set => SetValue(BreadcrumbPathProperty, value);
+            get => (BreadcrumbItem[]) GetValue(BreadcrumbItemsProperty);
+            set => SetValue(BreadcrumbItemsProperty, value);
         }
 
-        public static readonly DependencyProperty BreadcrumbPathProperty =
-            DependencyProperty.Register(nameof(BreadcrumbPath), typeof(string), typeof(BreadcrumbsBar), new PropertyMetadata(string.Empty, OnPathPropertyChangedCallback));
+        public static readonly DependencyProperty BreadcrumbItemsProperty =
+            DependencyProperty.Register(nameof(BreadcrumbItems), typeof(BreadcrumbItem[]), typeof(BreadcrumbsBar), new PropertyMetadata(OnItemsPropertyChangedCallback));
 
-        static void OnPathPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
+        public BreadcrumbsPathToItemsConverter Converter { get; set; }
+
+        static void OnItemsPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue != null && e.NewValue.ToString().Contains(@"\"))
-            {
-                var sned = (sender as BreadcrumbsBar);
-
-                sned.PopulateStackPanel();
-                sned.PathUpdated?.Invoke(sned, null);
-            }
+            var sned = sender as BreadcrumbsBar;
+            sned.PopulateStackPanel(sned.BreadcrumbItems);
         }
 
         public event EventHandler<EventArgs> PathUpdated;
-        public event EventHandler<EventArgs> NavigationCancelled;
+        public event EventHandler<EventArgs> NavigationCanceled;
 
         public BreadcrumbsBar()
         {
 
         }
 
-        protected void PopulateStackPanel()
+        protected void PopulateStackPanel(BreadcrumbItem[] values)
         {
+            BreadcrumbItems = values;
             if (_breadcrumbsStackPanel != null)
             {
                 _breadcrumbsStackPanel.Children.Clear();
-                if (BreadcrumbPath != null)
+                foreach (var item in values)
                 {
-                    if (BreadcrumbPath.ToString().Contains("\\") && (BreadcrumbPath.Split('\\').Length > 1))
+                    var breadcrumbButton = new Button()
                     {
-                        string[] pathSegments = BreadcrumbPath.Split('\\');
-                        int index = 0;
-                        foreach (string s in pathSegments)
-                        {
-                            if (!string.IsNullOrWhiteSpace(s))
-                            {
-                                index++;
-                                Button breadcrumbButton = new Button()
-                                {
-                                    Content = s
-                                };
+                        Content = item.Name
+                    };
 
-                                string breadcrumbPath = "";
-                                for (int i = 0; i < index; i++)
-                                {
-                                    breadcrumbPath += (pathSegments[i] + @"\");
-                                }
-
-                                breadcrumbButton.Click += (sneder, args) =>
-                                {
-                                    BreadcrumbPath = breadcrumbPath;
-                                };
-
-                                _breadcrumbsStackPanel.Children.Add(breadcrumbButton);
-                            }
-                        }
-                    }
-                    else
+                    breadcrumbButton.Click += (sender, e) =>
                     {
-                        Button breadcrumbButton = new Button()
-                        {
-                            Content = BreadcrumbPath
-                        };
+                        PopulateStackPanel(Converter.Invoke?.Invoke(item.Path));
+                        PathUpdated?.Invoke(this, null);
+                    };
 
-                        breadcrumbButton.Click += (sneder, args) =>
-                        {
-                            BreadcrumbPath = BreadcrumbPath;
-                        };
+                    _breadcrumbsStackPanel.Children.Add(breadcrumbButton);
 
-                        _breadcrumbsStackPanel.Children.Add(breadcrumbButton);
-                    }
                 }
             }
         }
@@ -106,21 +75,23 @@ namespace Start9.UI.Wpf
             _textBox.GotFocus += (sneder, args) =>
             {
                 //if (sned._textBox.Text.ToLowerInvariant() != e.NewValue.ToString().ToLowerInvariant())
-                _textBox.Text = BreadcrumbPath;
+                _textBox.Text = BreadcrumbItems.Last().Path;
                 _breadcrumbsStackPanel.Visibility = Visibility.Collapsed;
             };
             _textBox.LostFocus += (sneder, args) =>
             {
                 if (!_breadcrumbsStackPanel.IsVisible)
-                    NavigationCancelled?.Invoke(this, null);
+                    NavigationCanceled?.Invoke(this, null);
             };
             _textBox.KeyDown += (sneder, args) =>
             {
                 if (args.Key == System.Windows.Input.Key.Enter)
-                    BreadcrumbPath = _textBox.Text;
+                {
+                    PopulateStackPanel(Converter.Invoke?.Invoke(_textBox.Text));
+                }
 
                 if (args.Key == System.Windows.Input.Key.Escape)
-                    NavigationCancelled?.Invoke(this, null);
+                    NavigationCanceled?.Invoke(this, null);
 
                 if ((args.Key == System.Windows.Input.Key.Enter) || (args.Key == System.Windows.Input.Key.Escape))
                 {
@@ -132,5 +103,27 @@ namespace Start9.UI.Wpf
 
             _breadcrumbsStackPanel = GetTemplateChild(PartBreadcrumbsStackPanel) as StackPanel;
         }
+    }
+
+    public struct BreadcrumbItem
+    {
+        public BreadcrumbItem(String name, String path)
+        {
+            Name = name;
+            Path = path;
+        }
+
+        public String Name { get; }
+        public String Path { get; }
+    }
+
+    public class BreadcrumbsPathToItemsConverter
+    {
+        public BreadcrumbsPathToItemsConverter(Func<String, BreadcrumbItem[]> converterDelegate)
+        {
+            Invoke = converterDelegate;
+        }
+
+        public Func<String, BreadcrumbItem[]> Invoke { get; }
     }
 }
