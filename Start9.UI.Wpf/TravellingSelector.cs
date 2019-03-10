@@ -31,7 +31,7 @@ namespace Start9.UI.Wpf
 
         public static readonly DependencyProperty TargetPanelProperty =
                     DependencyProperty.RegisterAttached("TargetPanel", typeof(Panel), typeof(TravellingSelector),
-                        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertiesChangedCallback));
+                        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnTargetPanelPropertyChangedCallback));
 
         /*public object SelectedObject
         {
@@ -51,6 +51,16 @@ namespace Start9.UI.Wpf
 
         public static readonly DependencyProperty SelectedObjectIndexProperty =
                     DependencyProperty.RegisterAttached("SelectedObjectIndex", typeof(int), typeof(TravellingSelector),
+                        new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertiesChangedCallback));
+
+        public int CollectionSize
+        {
+            get => (int)GetValue(CollectionSizeProperty);
+            set => SetValue(CollectionSizeProperty, value);
+        }
+
+        public static readonly DependencyProperty CollectionSizeProperty =
+                    DependencyProperty.RegisterAttached("CollectionSize", typeof(int), typeof(TravellingSelector),
                         new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertiesChangedCallback));
 
         public double SelectionWidth
@@ -116,7 +126,24 @@ namespace Start9.UI.Wpf
             (GetTemplateChild("PART_Selector") as UIElement).RenderTransform = _selectorTransform;
         }
 
+        static void OnTargetPanelPropertyChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var sned = (sender as TravellingSelector);
+            if (e.NewValue != null)
+                (e.NewValue as Panel).Loaded += sned.TravellingSelector_Loaded;
+
+            if (e.OldValue != null)
+                (e.NewValue as Panel).Loaded -= sned.TravellingSelector_Loaded;
+
+            sned.UpdateSelectorBounds();
+        }
+
         static void OnPropertiesChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            (sender as TravellingSelector).UpdateSelectorBounds();
+        }
+
+        static void zOnPropertiesChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
         {
             //Debug.WriteLine("TravellingSelector updated!");
             TravellingSelector selector = sender as TravellingSelector;
@@ -202,6 +229,103 @@ namespace Start9.UI.Wpf
                     selector.BeginAnimation(TravellingSelector.SelectionHeightProperty, heightAnimation);
                 }
             }
+        }
+
+        void UpdateSelectorBounds()
+        {
+            if (TargetPanel != null)
+            {
+                //Debug.WriteLine("TargetPanel != null");
+
+                bool doesSelectionExist = (SelectedObjectIndex >= 0) && (SelectedObjectIndex < TargetPanel.Children.Count);
+                if (SelectionExists != doesSelectionExist)
+                    SelectionExists = doesSelectionExist;
+
+                if (SelectionExists)
+                {
+                    //Debug.WriteLine("SelectionExists");
+                    //int index = Collection.ToList().IndexOf(SelectedObject);
+                    var panelPoint = TargetPanel.PointToScreen(new Point(0, 0));
+                    FrameworkElement panelChild = (FrameworkElement)(TargetPanel.Children[SelectedObjectIndex]);
+                    var childPoint = panelChild.PointToScreen(new Point(0, 0));
+
+                    double newX = childPoint.X - panelPoint.X;
+                    DoubleAnimation xAnimation = new DoubleAnimation()
+                    {
+                        To = newX,
+                        Duration = AnimationDuration
+                    };
+                    /*xAnimation.Completed += (sneder, args) =>
+                    {
+                        _selectorTransform.BeginAnimation(TranslateTransform.XProperty, null);
+                        _selectorTransform.X = newX;
+                    };*/
+
+                    double newY = childPoint.Y - panelPoint.Y;
+                    DoubleAnimation yAnimation = new DoubleAnimation()
+                    {
+                        To = newY,
+                        Duration = AnimationDuration
+                    };
+                    /*yAnimation.Completed += (sneder, args) =>
+                    {
+                        _selectorTransform.BeginAnimation(TranslateTransform.YProperty, null);
+                        _selectorTransform.Y = newY;
+                    };*/
+
+                    DoubleAnimation widthAnimation = new DoubleAnimation()
+                    {
+                        To = panelChild.ActualWidth,
+                        Duration = AnimationDuration
+                    };
+                    /*widthAnimation.Completed += (sneder, args) =>
+                    {
+                        BeginAnimation(TravellingSelectionWidthProperty, null);
+                        SelectionWidth = panelChild.ActualWidth;
+                    };*/
+
+                    DoubleAnimation heightAnimation = new DoubleAnimation()
+                    {
+                        To = panelChild.ActualHeight,
+                        Duration = AnimationDuration
+                    };
+                    /*heightAnimation.Completed += (sneder, args) =>
+                    {
+                        BeginAnimation(TravellingSelectionHeightProperty, null);
+                        SelectionWidth = panelChild.ActualHeight;
+                    };*/
+
+                    //E
+                    //_selectorTransform.Y = newY; //childPoint.Y - panelPoint.Y;
+                    SelectionWidth = 133; //panelChild.ActualWidth;
+                    SelectionWidth = 30; //panelChild.ActualHeight;
+
+                    if (AnimationEase != null)
+                    {
+                        xAnimation.EasingFunction = AnimationEase;
+                        yAnimation.EasingFunction = AnimationEase;
+                        widthAnimation.EasingFunction = AnimationEase;
+                        heightAnimation.EasingFunction = AnimationEase;
+                    }
+
+                    //Debug.WriteLine((childPoint.X - panelPoint.X).ToString() + ", " + (childPoint.Y - panelPoint.Y).ToString() + ", " + panelChild.ActualWidth + ", " + panelChild.ActualHeight);
+                    _selectorTransform.BeginAnimation(TranslateTransform.XProperty, xAnimation);
+                    _selectorTransform.BeginAnimation(TranslateTransform.YProperty, yAnimation);
+                    BeginAnimation(TravellingSelector.SelectionWidthProperty, widthAnimation);
+                    BeginAnimation(TravellingSelector.SelectionHeightProperty, heightAnimation);
+                }
+            }
+        }
+
+        public TravellingSelector()
+        {
+            Loaded += TravellingSelector_Loaded;
+            UpdateSelectorBounds();
+        }
+
+        private void TravellingSelector_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateSelectorBounds();
         }
     }
 }

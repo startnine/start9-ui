@@ -1697,7 +1697,7 @@
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
                         <Grid Grid.Row="0" Margin="0,0,0,1">
-                            <ui:TravellingSelector TargetPanel="{Binding ElementName=HeaderPanel}" SelectedObjectIndex="{TemplateBinding SelectedIndex}" AnimationDuration="0:0:0.250" Width="{Binding ActualWidth, ElementName=HeaderPanel}" Height="{Binding ActualHeight, ElementName=HeaderPanel}">
+                            <ui:TravellingSelector TargetPanel="{Binding ElementName=HeaderPanel}" SelectedObjectIndex="{TemplateBinding SelectedIndex}" CollectionSize="{Binding Items.Count, RelativeSource={RelativeSource Mode=TemplatedParent}}" AnimationDuration="0:0:0.250" Width="{Binding ActualWidth, ElementName=HeaderPanel}" Height="{Binding ActualHeight, ElementName=HeaderPanel}">
                                 <!--Collection="{Binding ItemsSource, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" SelectedObject="{Binding SelectedItem, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"-->
                                 <ui:TravellingSelector.AnimationEase>
                                     <CubicEase EasingMode="EaseOut"/>
