@@ -133,7 +133,7 @@ namespace Start9.UI.Wpf
                 (e.NewValue as Panel).Loaded += sned.TravellingSelector_Loaded;
 
             if (e.OldValue != null)
-                (e.NewValue as Panel).Loaded -= sned.TravellingSelector_Loaded;
+                (e.OldValue as Panel).Loaded -= sned.TravellingSelector_Loaded;
 
             sned.UpdateSelectorBounds();
         }
