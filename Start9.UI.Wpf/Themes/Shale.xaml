@@ -84,7 +84,12 @@
         <Setter Property="BorderBrush" Value="{DynamicResource WindowBorderBrush}" />
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="TitlebarHeight" Value="31"/><!--24-->
-        <Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" />
+        <!--Setter Property="Background" Value="{DynamicResource WindowBackgroundBrush}" /-->
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource WindowBackgroundGradientStops}"/>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Foreground" Value="{DynamicResource WindowForegroundBrush}"/>
         <Setter Property="FontFamily" Value="pack://application:,,,/Start9.UI.Wpf;component/Fonts/#Ubuntu"/>
         <Setter Property="FontSize" Value="12"/>
@@ -1696,7 +1701,7 @@
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="*"/>
                         </Grid.RowDefinitions>
-                        <Grid Grid.Row="0" Margin="0,0,0,1">
+                        <Grid Grid.Row="0" Margin="0">
                             <ui:TravellingSelector TargetPanel="{Binding ElementName=HeaderPanel}" SelectedObjectIndex="{TemplateBinding SelectedIndex}" CollectionSize="{Binding Items.Count, RelativeSource={RelativeSource Mode=TemplatedParent}}" AnimationDuration="0:0:0.250" Width="{Binding ActualWidth, ElementName=HeaderPanel}" Height="{Binding ActualHeight, ElementName=HeaderPanel}">
                                 <!--Collection="{Binding ItemsSource, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}" SelectedObject="{Binding SelectedItem, RelativeSource={RelativeSource Mode=TemplatedParent}, Mode=OneWay}"-->
                                 <ui:TravellingSelector.AnimationEase>
@@ -1757,10 +1762,10 @@
                         <!--Background="#40000000"-->
                         <!--MinHeight="24"-->
                         <Border x:Name="Border" Grid.Row="1" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="0" CornerRadius="0" KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained" KeyboardNavigation.TabIndex="2">
-                            <Grid Margin="{TemplateBinding Padding}">
-                                <Rectangle VerticalAlignment="Top" Height="18" IsHitTestVisible="False" Grid.Column="0" Grid.Row="0" Panel.ZIndex="100">
+                            <Grid>
+                                <Rectangle VerticalAlignment="Top" Height="18" IsHitTestVisible="False" Grid.Column="0" Grid.Row="0">
                                     <Rectangle.Fill>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                        <LinearGradientBrush Opacity="0.75" StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ShadowGradientStops}"/>
                                     </Rectangle.Fill>
                                 </Rectangle>
                                 <!--Border.Background>
@@ -1771,7 +1776,7 @@
                                     </LinearGradientBrush.GradientStops>
                                 </LinearGradientBrush>
                             </Border.Background-->
-                                <ContentPresenter Name="PART_SelectedContntHost" ContentSource="SelectedContent" TextBlock.Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                                <ContentPresenter Name="PART_SelectedContentHost" ContentSource="SelectedContent" TextBlock.Foreground="{TemplateBinding Foreground}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}"/>
                             </Grid>
                         </Border>
                     </Grid>

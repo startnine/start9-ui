@@ -18,7 +18,11 @@
             <GradientStop Offset="1.25" Color="#C0000000"/>
         </RadialGradientBrush.GradientStops>
     </RadialGradientBrush>
-    <SolidColorBrush x:Key="WindowBackgroundBrush">#FFCCCCCC</SolidColorBrush>
+    <!--SolidColorBrush x:Key="WindowBackgroundBrush">#FFCCCCCC</SolidColorBrush-->
+    <GradientStopCollection x:Key="WindowBackgroundGradientStops">
+        <GradientStop Offset="0" Color="#FFCCCCCC"/>
+        <GradientStop Offset="1" Color="#FFBEBEBE"/>
+    </GradientStopCollection>
     <SolidColorBrush x:Key="WindowBorderBrush">#FF555555</SolidColorBrush>
     <SolidColorBrush x:Key="WindowForegroundBrush">Black</SolidColorBrush>
 

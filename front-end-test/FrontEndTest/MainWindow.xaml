@@ -7,9 +7,9 @@
         xmlns:win="clr-namespace:Start9.UI.Wpf.Windows;assembly=Start9.UI.Wpf"
         x:Class="FrontEndTest.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow">
+        Title="MainWindow" TitlebarHeight="61">
     <Grid>
-        <TabControl Margin="10">
+        <TabControl Style="{DynamicResource LineTabControlStyle}">
             <TabItem Header="Buttons">
                 <Grid>
                     <Grid.ColumnDefinitions>
