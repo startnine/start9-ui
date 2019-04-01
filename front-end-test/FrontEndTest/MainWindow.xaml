@@ -11,61 +11,63 @@
     <Grid>
         <TabControl Style="{DynamicResource LineTabControlStyle}">
             <TabItem Header="Buttons">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <GroupBox Header="Enabled Controls" Grid.Column="0">
-                        <StackPanel>
-                            <Button Content="Normal Button">
-                                <Button.ContextMenu>
-                                    <ContextMenu>
-                                        <MenuItem Header="AAAA"/>
-                                        <MenuItem Header="BBBB" IsCheckable="True" IsChecked="True"/>
-                                        <MenuItem Header="CCCC">
-                                            <MenuItem Header="CAAA"/>
-                                            <MenuItem Header="CBBB"/>
-                                        </MenuItem>
-                                    </ContextMenu>
-                                </Button.ContextMenu>
-                            </Button>
-                            <RepeatButton Content="RepeatButton"/>
-                            <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Round Button"/-->
-                            <Button IsDefault="True" Content="Default Button"/>
-                            <ToggleButton Content="ToggleButton"/>
-                            <ToggleButton IsChecked="True" Content="Checked ToggleButton"/>
-                            <Rectangle Width="1" Height="40"/>
-                            <CheckBox Content="Normal CheckBox"/>
-                            <CheckBox IsChecked="True" Content="Checked CheckBox"/>
-                            <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Null CheckBox"/>
-                            <Rectangle Width="1" Height="40"/>
-                            <RadioButton GroupName="NormalRadio" Content="Normal RadioButton"/>
-                            <RadioButton GroupName="NormalRadio" IsChecked="True" Content="Checked RadioButton"/>
-                            <ui:SpinBox/>
-                            <ui:ActionBox WatermarkText="Normal" ButtonContent="ActionBox"/>
-                        </StackPanel>
-                    </GroupBox>
-                    <GroupBox Header="Disabled Controls" Grid.Column="1" IsEnabled="False">
-                        <StackPanel>
-                            <Button Content="Disabled Button"/>
-                            <RepeatButton Content="Disabled RepeatButton"/>
-                            <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Disabled Round Button"/-->
-                            <Button Visibility="Hidden" Content="Hidden Button"/>
-                            <ToggleButton Content="Disabled ToggleButton"/>
-                            <ToggleButton IsChecked="True" Content="Disabled Checked ToggleButton"/>
-                            <Rectangle Width="1" Height="40"/>
-                            <CheckBox Content="Disabled CheckBox"/>
-                            <CheckBox IsChecked="True" Content="Disabled Checked CheckBox"/>
-                            <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Disabled Null CheckBox"/>
-                            <Rectangle Width="1" Height="40"/>
-                            <RadioButton GroupName="DisabledRadio" Content="Disabled RadioButton"/>
-                            <RadioButton GroupName="DisabledRadio" IsChecked="True" Content="Disabled Checked RadioButton"/>
-                            <ui:SpinBox IsEnabled="False"/>
-                            <ui:ActionBox WatermarkText="Disabled" ButtonContent="ActionBox" IsEnabled="False"/>
-                        </StackPanel>
-                    </GroupBox>
-                </Grid>
+                <ScrollViewer VerticalScrollBarVisibility="Visible">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <GroupBox Header="Enabled Controls" Grid.Column="0">
+                            <StackPanel>
+                                <Button Content="Normal Button">
+                                    <Button.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="AAAA"/>
+                                            <MenuItem Header="BBBB" IsCheckable="True" IsChecked="True"/>
+                                            <MenuItem Header="CCCC">
+                                                <MenuItem Header="CAAA"/>
+                                                <MenuItem Header="CBBB"/>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Button.ContextMenu>
+                                </Button>
+                                <RepeatButton Content="RepeatButton"/>
+                                <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Round Button"/-->
+                                <Button IsDefault="True" Content="Default Button"/>
+                                <ToggleButton Content="ToggleButton"/>
+                                <ToggleButton IsChecked="True" Content="Checked ToggleButton"/>
+                                <Rectangle Width="1" Height="40"/>
+                                <CheckBox Content="Normal CheckBox"/>
+                                <CheckBox IsChecked="True" Content="Checked CheckBox"/>
+                                <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Null CheckBox"/>
+                                <Rectangle Width="1" Height="40"/>
+                                <RadioButton GroupName="NormalRadio" Content="Normal RadioButton"/>
+                                <RadioButton GroupName="NormalRadio" IsChecked="True" Content="Checked RadioButton"/>
+                                <ui:SpinBox/>
+                                <ui:ActionBox WatermarkText="Normal" ButtonContent="ActionBox"/>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Disabled Controls" Grid.Column="1" IsEnabled="False">
+                            <StackPanel>
+                                <Button Content="Disabled Button"/>
+                                <RepeatButton Content="Disabled RepeatButton"/>
+                                <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Disabled Round Button"/-->
+                                <Button Visibility="Hidden" Content="Hidden Button"/>
+                                <ToggleButton Content="Disabled ToggleButton"/>
+                                <ToggleButton IsChecked="True" Content="Disabled Checked ToggleButton"/>
+                                <Rectangle Width="1" Height="40"/>
+                                <CheckBox Content="Disabled CheckBox"/>
+                                <CheckBox IsChecked="True" Content="Disabled Checked CheckBox"/>
+                                <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Disabled Null CheckBox"/>
+                                <Rectangle Width="1" Height="40"/>
+                                <RadioButton GroupName="DisabledRadio" Content="Disabled RadioButton"/>
+                                <RadioButton GroupName="DisabledRadio" IsChecked="True" Content="Disabled Checked RadioButton"/>
+                                <ui:SpinBox IsEnabled="False"/>
+                                <ui:ActionBox WatermarkText="Disabled" ButtonContent="ActionBox" IsEnabled="False"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </Grid>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Boxes">
                 <GroupBox Header="Group Box">
