@@ -2202,8 +2202,36 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ui:BreadcrumbsBar}">
-                    <!--ControlTemplate.Resources>
+                    <ControlTemplate.Resources>
                         <Style x:Key="{x:Type Button}" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+                            <Setter Property="tic:AttachedProperties.CornerCurves">
+                                <Setter.Value>
+                                    <tic:CornerCurves TopLeft="False" TopRight="False" BottomRight="False" BottomLeft="False"/>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <DataTrigger Value="True">
+                                    <DataTrigger.Binding>
+                                        <MultiBinding Converter="{StaticResource ListViewItemIndexToBoolConverter}" ConverterParameter="first" FallbackValue="False">
+                                            <MultiBinding.Bindings>
+                                                <Binding Mode="OneWay" RelativeSource="{RelativeSource Mode=Self}"/>
+                                                <Binding Mode="OneWay" RelativeSource="{RelativeSource Mode=FindAncestor,AncestorType={x:Type StackPanel}}" FallbackValue="{x:Null}"/>
+                                                <Binding Mode="OneWay" Path="Children.Count" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type StackPanel}}" FallbackValue="0" UpdateSourceTrigger="PropertyChanged"/>
+                                            </MultiBinding.Bindings>
+                                        </MultiBinding>
+                                    </DataTrigger.Binding>
+                                    <!--Setter TargetName="IdleBackground" Property="stc" Value="2,0,0,2"/>
+                                    <Setter TargetName="IdleBackground" Property="BorderThickness" Value="1"/-->
+                                    <Setter Property="tic:AttachedProperties.CornerCurves">
+                                        <Setter.Value>
+                                            <tic:CornerCurves TopLeft="True" TopRight="False" BottomRight="False" BottomLeft="True"/>
+                                        </Setter.Value>
+                                    </Setter>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+
+                        <!--Style x:Key="{x:Type Button}" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
                             <Setter Property="Foreground" Value="{DynamicResource TitlebarIdleForegroundBrush}"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -2259,8 +2287,8 @@
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
-                        </Style>
-                    </ControlTemplate.Resources-->
+                        </Style-->
+                    </ControlTemplate.Resources>
                     <Grid>
                         <TextBox x:Name="PART_TextBox" Padding="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                         <StackPanel x:Name="PART_BreadcrumbsStackPanel" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Stretch"/>
@@ -4655,7 +4683,7 @@
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
             </Trigger>
-            <DataTrigger Binding="{Binding Path=(tic:AttachedProperties.OpenedWithTouch), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}" Value="True">
+            <DataTrigger Binding="{Binding Path=(tic:AttachedProperties.OpenedWithTouch), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, FallbackValue=False}" Value="True">
                 <!--Setter Property="Height" Value="45"/-->
                 <Setter Property="Padding" Value="15,10"/>
             </DataTrigger>

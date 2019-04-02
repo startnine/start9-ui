@@ -31,7 +31,7 @@ namespace Start9.UI.Wpf
 
         public static readonly DependencyProperty TargetPanelProperty =
                     DependencyProperty.RegisterAttached("TargetPanel", typeof(Panel), typeof(TravellingSelector),
-                        new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnTargetPanelPropertyChangedCallback));
+                        new PropertyMetadata(null, OnTargetPanelPropertyChangedCallback));
 
         /*public object SelectedObject
         {
@@ -51,7 +51,7 @@ namespace Start9.UI.Wpf
 
         public static readonly DependencyProperty SelectedObjectIndexProperty =
                     DependencyProperty.RegisterAttached("SelectedObjectIndex", typeof(int), typeof(TravellingSelector),
-                        new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertiesChangedCallback));
+                        new PropertyMetadata(-1, OnPropertiesChangedCallback));
 
         public int CollectionSize
         {
@@ -61,7 +61,7 @@ namespace Start9.UI.Wpf
 
         public static readonly DependencyProperty CollectionSizeProperty =
                     DependencyProperty.RegisterAttached("CollectionSize", typeof(int), typeof(TravellingSelector),
-                        new FrameworkPropertyMetadata(-1, FrameworkPropertyMetadataOptions.AffectsRender, OnPropertiesChangedCallback));
+                        new PropertyMetadata(-1, OnPropertiesChangedCallback));
 
         public double SelectionWidth
         {
