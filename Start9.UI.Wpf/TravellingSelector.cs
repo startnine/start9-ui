@@ -30,7 +30,7 @@ namespace Start9.UI.Wpf
         }
 
         public static readonly DependencyProperty TargetPanelProperty =
-                    DependencyProperty.RegisterAttached("TargetPanel", typeof(Panel), typeof(TravellingSelector),
+                    DependencyProperty.Register("TargetPanel", typeof(Panel), typeof(TravellingSelector),
                         new PropertyMetadata(null, OnTargetPanelPropertyChangedCallback));
 
         /*public object SelectedObject
@@ -50,7 +50,7 @@ namespace Start9.UI.Wpf
         }
 
         public static readonly DependencyProperty SelectedObjectIndexProperty =
-                    DependencyProperty.RegisterAttached("SelectedObjectIndex", typeof(int), typeof(TravellingSelector),
+                    DependencyProperty.Register("SelectedObjectIndex", typeof(int), typeof(TravellingSelector),
                         new PropertyMetadata(-1, OnPropertiesChangedCallback));
 
         public int CollectionSize
@@ -60,7 +60,7 @@ namespace Start9.UI.Wpf
         }
 
         public static readonly DependencyProperty CollectionSizeProperty =
-                    DependencyProperty.RegisterAttached("CollectionSize", typeof(int), typeof(TravellingSelector),
+                    DependencyProperty.Register("CollectionSize", typeof(int), typeof(TravellingSelector),
                         new PropertyMetadata(-1, OnPropertiesChangedCallback));
 
         public double SelectionWidth
@@ -130,12 +130,25 @@ namespace Start9.UI.Wpf
         {
             var sned = (sender as TravellingSelector);
             if (e.NewValue != null)
-                (e.NewValue as Panel).Loaded += sned.TravellingSelector_Loaded;
+            {
+                var panel = e.NewValue as Panel;
+                panel.Loaded += sned.TravellingSelector_Loaded;
+                panel.SizeChanged += sned.Panel_SizeChanged;
+            }
 
             if (e.OldValue != null)
-                (e.OldValue as Panel).Loaded -= sned.TravellingSelector_Loaded;
+            {
+                var panel = e.NewValue as Panel;
+                panel.Loaded -= sned.TravellingSelector_Loaded;
+                panel.SizeChanged -= sned.Panel_SizeChanged;
+            }
 
             sned.UpdateSelectorBounds();
+        }
+
+        private void Panel_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateSelectorBounds();
         }
 
         static void OnPropertiesChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
@@ -243,7 +256,7 @@ namespace Start9.UI.Wpf
 
                 if (SelectionExists)
                 {
-                    //Debug.WriteLine("SelectionExists");
+                    Debug.WriteLine("TravellingSelector: Selection exists");
                     //int index = Collection.ToList().IndexOf(SelectedObject);
                     var panelPoint = TargetPanel.PointToScreen(new Point(0, 0));
                     FrameworkElement panelChild = (FrameworkElement)(TargetPanel.Children[SelectedObjectIndex]);
@@ -314,6 +327,8 @@ namespace Start9.UI.Wpf
                     BeginAnimation(TravellingSelector.SelectionWidthProperty, widthAnimation);
                     BeginAnimation(TravellingSelector.SelectionHeightProperty, heightAnimation);
                 }
+                else
+                    Debug.WriteLine("TravellingSelector: Selection does not exist");
             }
         }
 
@@ -324,6 +339,11 @@ namespace Start9.UI.Wpf
         }
 
         private void TravellingSelector_Loaded(object sender, RoutedEventArgs e)
+        {
+            UpdateSelectorBounds();
+        }
+
+        protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
             UpdateSelectorBounds();
         }

@@ -704,12 +704,14 @@
     <Style x:Key="{x:Type ToggleButton}" TargetType="{x:Type ToggleButton}">
         <Setter Property="BorderThickness" Value="3"/>
         <Setter Property="Padding" Value="5"/>
-        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="Background">
             <Setter.Value>
                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ButtonBackgroundGradientStops}"/>
             </Setter.Value>
         </Setter>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ToggleButton}">
@@ -2306,6 +2308,7 @@
 
     <Style TargetType="{x:Type GroupBox}">
         <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="GroupBox">
@@ -2323,7 +2326,7 @@
                                     <RowDefinition x:Name="TopRow" Height="Auto"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <ContentPresenter x:Name="HeaderPresenter" Grid.Row="0" ContentSource="Header" RecognizesAccessKey="True" TextBlock.FontSize="14" Margin="0,0,0,5" Opacity="0.5"/>
+                                <ContentPresenter x:Name="HeaderPresenter" Grid.Row="0" ContentSource="Header" RecognizesAccessKey="True" TextElement.Foreground="{TemplateBinding Foreground}" TextBlock.FontSize="14" Margin="0,0,0,5" Opacity="0.5"/>
                                 <ContentPresenter x:Name="BodyPresenter" Grid.Row="1"/>
                             </Grid>
                         </Border>
@@ -4130,8 +4133,8 @@
         </Setter>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
-        <!--Setter Property="MinWidth" Value="{Binding MinWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}}"/>
-        <Setter Property="Foreground" Value="White"/-->
+        <!--Setter Property="MinWidth" Value="{Binding MinWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}}"/-->
+        <Setter Property="Foreground" Value="{DynamicResource ButtonForegroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TreeViewItem">

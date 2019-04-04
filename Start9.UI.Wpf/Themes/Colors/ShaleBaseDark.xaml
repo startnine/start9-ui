@@ -7,10 +7,10 @@
     <DropShadowEffect x:Key="SecondaryDropShadow" Color="Black" Direction="270" ShadowDepth="10" BlurRadius="20" Opacity="0.5"/>
     <DropShadowEffect x:Key="TertiaryDropShadow" Color="Black" Direction="270" ShadowDepth="4" BlurRadius="8.5" Opacity="0.5"/>
     <GradientStopCollection x:Key="ShadowGradientStops">
-        <GradientStop Offset="0" Color="#7F000000"/>
+        <GradientStop Offset="0" Color="#40000000"/>
         <GradientStop Offset="1" Color="#00000000"/>
     </GradientStopCollection>
-    <SolidColorBrush x:Key="ShadowCornerBorderBrush">#7F000000</SolidColorBrush>
+    <SolidColorBrush x:Key="ShadowCornerBorderBrush">#40000000</SolidColorBrush>
     <!--literally just subtract 0x99 from the R, G, and B channels for light brushes, adding instead where appropriate, and inverting all pure black to pure white-->
 
     <!--SolidColorBrush x:Key="WindowBackgroundBrush">#FF333333</SolidColorBrush-->
@@ -152,4 +152,27 @@
         <GradientStop Offset="0" Color="#FF66CC66"/>
         <GradientStop Offset="1" Color="#FF00CC00"/>
     </GradientStopCollection>
+
+    <!--coloures filters begin here-->
+    <SolidColorBrush x:Key="ButtonPressedBorderBrush" Color="{DynamicResource ButtonPressedBorderDarkColor}"/>
+    <GradientStopCollection x:Key="ButtonPressedBackgroundGradientStops">
+        <GradientStop Offset="0" Color="{DynamicResource ButtonPressedBackgroundDarkColor0}"/>
+        <GradientStop Offset="1" Color="{DynamicResource ButtonPressedBackgroundDarkColor1}"/>
+    </GradientStopCollection>
+    <GradientStopCollection x:Key="ButtonPressedSecondaryBackgroundGradientStops">
+        <GradientStop Offset="0" Color="{DynamicResource ButtonPressedSecondaryBackgroundDarkColor0}"/>
+        <GradientStop Offset="1" Color="{DynamicResource ButtonPressedSecondaryBackgroundDarkColor1}"/>
+    </GradientStopCollection>
+
+    <GradientStopCollection x:Key="CardListViewSelectedBackgroundGradientStops">
+        <GradientStop Offset="0" Color="{DynamicResource CardListViewSelectedBackgroundDarkColor0}"/>
+        <GradientStop Offset="1" Color="{DynamicResource CardListViewSelectedBackgroundDarkColor1}"/>
+    </GradientStopCollection>
+
+    <SolidColorBrush x:Key="HoverHighlightBrush" Color="{DynamicResource HoverHighlightDarkColor}"/>
+    <SolidColorBrush x:Key="SelectedHighlightBrush" Color="{DynamicResource SelectedHighlightDarkColor}"/>
+    <SolidColorBrush x:Key="TabItemPressedFlashBackground" Color="{DynamicResource TabItemPressedFlashBackgroundDarkColor}"/>
+    <SolidColorBrush x:Key="TabItemPressedFlashBorderBrush" Color="{DynamicResource TabItemPressedFlashBorderDarkColor}"/>
+
+    <SolidColorBrush x:Key="CheckBoxTickBrush" Color="{DynamicResource CheckBoxTickDarkColor}"/>
 </ResourceDictionary>

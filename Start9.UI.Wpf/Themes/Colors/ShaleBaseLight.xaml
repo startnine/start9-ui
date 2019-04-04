@@ -160,4 +160,27 @@
         <GradientStop Offset="0" Color="#FF006600"/>
         <GradientStop Offset="1" Color="#FF003300"/>
     </GradientStopCollection>
+
+    <!--coloures filters begin here-->
+    <SolidColorBrush x:Key="ButtonPressedBorderBrush" Color="{DynamicResource ButtonPressedBorderLightColor}"/>
+    <GradientStopCollection x:Key="ButtonPressedBackgroundGradientStops">
+        <GradientStop Offset="0" Color="{DynamicResource ButtonPressedBackgroundLightColor0}"/>
+        <GradientStop Offset="1" Color="{DynamicResource ButtonPressedBackgroundLightColor1}"/>
+    </GradientStopCollection>
+    <GradientStopCollection x:Key="ButtonPressedSecondaryBackgroundGradientStops">
+        <GradientStop Offset="0" Color="{DynamicResource ButtonPressedSecondaryBackgroundLightColor0}"/>
+        <GradientStop Offset="1" Color="{DynamicResource ButtonPressedSecondaryBackgroundLightColor1}"/>
+    </GradientStopCollection>
+
+    <GradientStopCollection x:Key="CardListViewSelectedBackgroundGradientStops">
+        <GradientStop Offset="0" Color="{DynamicResource CardListViewSelectedBackgroundLightColor0}"/>
+        <GradientStop Offset="1" Color="{DynamicResource CardListViewSelectedBackgroundLightColor1}"/>
+    </GradientStopCollection>
+
+    <SolidColorBrush x:Key="HoverHighlightBrush" Color="{DynamicResource HoverHighlightLightColor}"/>
+    <SolidColorBrush x:Key="SelectedHighlightBrush" Color="{DynamicResource SelectedHighlightLightColor}"/>
+    <SolidColorBrush x:Key="TabItemPressedFlashBackground" Color="{DynamicResource TabItemPressedFlashBackgroundLightColor}"/>
+    <SolidColorBrush x:Key="TabItemPressedFlashBorderBrush" Color="{DynamicResource TabItemPressedFlashBorderLightColor}"/>
+
+    <SolidColorBrush x:Key="CheckBoxTickBrush" Color="{DynamicResource CheckBoxTickLightColor}"/>
 </ResourceDictionary>
