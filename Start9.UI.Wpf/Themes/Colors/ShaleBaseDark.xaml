@@ -11,6 +11,7 @@
         <GradientStop Offset="1" Color="#00000000"/>
     </GradientStopCollection>
     <SolidColorBrush x:Key="ShadowCornerBorderBrush">#40000000</SolidColorBrush>
+    <SolidColorBrush x:Key="ModalPanelBackdropBrush">#C0000000</SolidColorBrush>
     <!--literally just subtract 0x99 from the R, G, and B channels for light brushes, adding instead where appropriate, and inverting all pure black to pure white-->
 
     <!--SolidColorBrush x:Key="WindowBackgroundBrush">#FF333333</SolidColorBrush-->
