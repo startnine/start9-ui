@@ -11,6 +11,7 @@ using Start9.UI.Wpf.Statics;
 
 namespace Start9.UI.Wpf.Behaviors
 {
+    //Somewhat based on https://stackoverflow.com/questions/20731402/animated-smooth-scrolling-on-scrollviewer/20846310
     public static class ScrollAnimationBehavior
     {
         private static ScrollViewer _listBoxScroller = new ScrollViewer();
@@ -233,7 +234,6 @@ namespace Start9.UI.Wpf.Behaviors
 
             _listBoxScroller = FindVisualChildHelper.GetFirstChildOfType<ScrollViewer>(listbox);
             SetEventHandlersForScrollViewer(_listBoxScroller);
-            ScrollViewer.SetCanContentScroll(listbox, false);
 
             _listBoxScroller.SetBinding(TimeDurationProperty, new Binding()
             {
