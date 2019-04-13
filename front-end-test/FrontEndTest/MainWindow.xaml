@@ -11,8 +11,8 @@
     <Grid>
         <TabControl Style="{DynamicResource LineTabControlStyle}">
             <TabItem Header="Buttons">
-                <ScrollViewer VerticalScrollBarVisibility="Visible">
-                    <Grid>
+                <ScrollViewer>
+                    <Grid Height="1000">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
                             <ColumnDefinition/>

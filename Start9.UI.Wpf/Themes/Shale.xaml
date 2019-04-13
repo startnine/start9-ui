@@ -3,7 +3,9 @@
             xmlns:ui="clr-namespace:Start9.UI.Wpf"
             xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters"
             xmlns:win="clr-namespace:Start9.UI.Wpf.Windows"
-            xmlns:tic="clr-namespace:Start9.UI.Wpf.Statics">
+            xmlns:tic="clr-namespace:Start9.UI.Wpf.Statics"
+            xmlns:uib="clr-namespace:Start9.UI.Wpf.Behaviors"
+            xmlns:beh="http://schemas.microsoft.com/xaml/behaviors">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/ShaleBaseLight.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/ShaleBlue.xaml"/>
@@ -3544,6 +3546,13 @@
     <Style x:Key="{x:Type ScrollViewer}" TargetType="{x:Type ScrollViewer}">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Padding" Value="0"/>
+        <Setter Property="uib:ScrollAnimationBehavior.IsEnabled" Value="True"/>
+        <Setter Property="uib:ScrollAnimationBehavior.TimeDuration" Value="00:00:00.20"/>
+        <Setter Property="uib:ScrollAnimationBehavior.EasingFunction">
+            <Setter.Value>
+                <CubicEase EasingMode="EaseOut"/>
+            </Setter.Value>
+        </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ScrollViewer}">

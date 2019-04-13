@@ -141,7 +141,7 @@ namespace Start9.UI.Wpf.Statics
                 }
             }
         }
-
+        
         public bool OpenedWithTouch
         {
             get => (bool)GetValue(OpenedWithTouchProperty);
