@@ -58,7 +58,7 @@
     <SolidColorBrush x:Key="ButtonDisabledBorderBrush">#FF404040</SolidColorBrush>
     <SolidColorBrush x:Key="ButtonDisabledBackgroundBrush">#FF4D4D4D</SolidColorBrush>
     <SolidColorBrush x:Key="ButtonDisabledSecondaryBackgroundBrush">#FF2D2D2D</SolidColorBrush>
-    <SolidColorBrush x:Key="ButtonDisabledForegroundBrush">#7FFFFFFF</SolidColorBrush>
+    <SolidColorBrush x:Key="ButtonDisabledForegroundBrush">#7F999999</SolidColorBrush>
 
     <GradientStopCollection x:Key="HorizontalPanelBackgroundGradientStops">
         <GradientStop Offset="0" Color="#FF646464"/>
