@@ -697,6 +697,7 @@
                                 </Border.Background>
                             </Border>
                         </Border>
+                        <Border CornerRadius="{Binding Path=(tic:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Margin="1" Padding="0" Background="Transparent" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1"/>
                         <Border x:Name="PressedBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonPressedBorderBrush}" BorderThickness="1" Opacity="0">
                             <Border.Background>
                                 <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ButtonPressedBackgroundGradientStops}"/>
@@ -1074,6 +1075,30 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0"/>
+        <Setter Property="uib:ScrollAnimationBehavior.IsEnabled" Value="True"/>
+        <Setter Property="uib:ScrollAnimationBehavior.TimeDuration" Value="00:00:00.20"/>
+        <Setter Property="uib:ScrollAnimationBehavior.EasingFunction">
+            <Setter.Value>
+                <CubicEase EasingMode="EaseOut"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListView">
+                    <Border BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" Background="{TemplateBinding Background}">
+                        <ScrollViewer x:Name="PART_ScrollViewer" uib:ScrollAnimationBehavior.IsEnabled="{TemplateBinding uib:ScrollAnimationBehavior.IsEnabled}" uib:ScrollAnimationBehavior.TimeDuration="{TemplateBinding uib:ScrollAnimationBehavior.TimeDuration}" uib:ScrollAnimationBehavior.EasingFunction="{TemplateBinding uib:ScrollAnimationBehavior.EasingFunction}">
+                            <!--Style="{DynamicResource {x:Static GridView.GridViewScrollViewerStyleKey}}"-->
+                            <ItemsPresenter />
+                        </ScrollViewer>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsGrouping" Value="True">
+                            <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <Style x:Key="{x:Type ListViewItem}" TargetType="ListViewItem">

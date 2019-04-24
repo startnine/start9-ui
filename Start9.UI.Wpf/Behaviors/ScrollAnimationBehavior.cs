@@ -145,24 +145,44 @@ namespace Start9.UI.Wpf.Behaviors
 
         private static void OnIsEnabledChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var target = sender;
-
-            if (target != null && target is ScrollViewer)
+            if ((bool)e.NewValue)
             {
-                ScrollViewer scroller = target as ScrollViewer;
-                scroller.Loaded += new RoutedEventHandler(scrollerLoaded);
+                if ((sender != null) && sender is ScrollViewer target)
+                {
+                    if (target.IsLoaded)
+                        scrollerLoaded(target, null);
+                    else
+                        target.Loaded += new RoutedEventHandler(scrollerLoaded);
+                }
+
+                /*if ((sender != null) && sender is ListBox targetBox)
+                {
+                    targetBox.Loaded += new RoutedEventHandler(listboxLoaded);
+                }*/
             }
-
-            if (target != null && target is ListBox)
+            else
             {
-                ListBox listbox = target as ListBox;
-                listbox.Loaded += new RoutedEventHandler(listboxLoaded);
+                Debug.WriteLine("Disabling...");
+                if ((sender != null) && sender is ScrollViewer target)
+                {
+                    Debug.WriteLine("...for ScrollViewer");
+                    UnsetEventHandlersForScrollViewer(target);
+                    target.Loaded -= new RoutedEventHandler(scrollerLoaded);
+                }
+
+                /*if ((sender != null) && sender is ListBox targetBox)
+                {
+                    Debug.WriteLine("...for ListBox");
+                    UnsetListBoxBindingsAndHandlers(targetBox);
+                    targetBox.Loaded -= new RoutedEventHandler(listboxLoaded);
+                }*/
             }
         }
 
         private static void AnimateScroll(ScrollViewer scrollViewer, double ToValue)
         {
-            SetAnimatedVerticalOffset(scrollViewer, ToValue);
+            if (GetIsEnabled(scrollViewer))
+                SetAnimatedVerticalOffset(scrollViewer, ToValue);
 
             /*Storyboard storyboard = new Storyboard();
 
@@ -221,6 +241,13 @@ namespace Start9.UI.Wpf.Behaviors
             scroller.PreviewKeyDown += new KeyEventHandler(ScrollViewerPreviewKeyDown);
         }
 
+        private static void UnsetEventHandlersForScrollViewer(ScrollViewer scroller)
+        {
+            scroller.PreviewMouseWheel -= new MouseWheelEventHandler(ScrollViewerPreviewMouseWheel);
+            scroller.PreviewKeyDown -= new KeyEventHandler(ScrollViewerPreviewKeyDown);
+            Debug.WriteLine("Unsetting EventHandlers for ScrollViewer");
+        }
+
         private static void scrollerLoaded(object sender, RoutedEventArgs e)
         {
             ScrollViewer scroller = sender as ScrollViewer;
@@ -233,6 +260,11 @@ namespace Start9.UI.Wpf.Behaviors
             ListBox listbox = sender as ListBox;
 
             _listBoxScroller = FindVisualChildHelper.GetFirstChildOfType<ScrollViewer>(listbox);
+            SetListBoxBindingsAndHandlers(listbox);
+        }
+
+        private static void SetListBoxBindingsAndHandlers(ListBox listbox)
+        {
             SetEventHandlersForScrollViewer(_listBoxScroller);
 
             _listBoxScroller.SetBinding(TimeDurationProperty, new Binding()
@@ -264,19 +296,46 @@ namespace Start9.UI.Wpf.Behaviors
             listbox.LayoutUpdated += new EventHandler(ListBoxLayoutUpdated);
         }
 
+        private static void UnsetListBoxBindingsAndHandlers(ListBox listbox)
+        {
+            UnsetEventHandlersForScrollViewer(_listBoxScroller);
+
+            BindingOperations.ClearBinding(_listBoxScroller, TimeDurationProperty);
+
+            BindingOperations.ClearBinding(_listBoxScroller, PointsToScrollProperty);
+
+            BindingOperations.ClearBinding(_listBoxScroller, EasingFunctionProperty);
+
+            /*SetTimeDuration(_listBoxScroller, new TimeSpan(0, 0, 0, 0, 200));
+            SetPointsToScroll(_listBoxScroller, 16.0);*/
+
+            listbox.SelectionChanged -= new SelectionChangedEventHandler(ListBoxSelectionChanged);
+            listbox.Loaded -= new RoutedEventHandler(ListBoxLoaded);
+            listbox.LayoutUpdated -= new EventHandler(ListBoxLayoutUpdated);
+        }
+
         private static void ScrollViewerPreviewMouseWheel(object sender, MouseWheelEventArgs e)
         {
             ScrollViewer scroller = (ScrollViewer)sender;
-            Debug.WriteLine("Scroll info: " + GetPointsToScroll(scroller) + ", " + SystemParameters.WheelScrollLines + ", " + e.Delta);
+            //Debug.WriteLine("Scroll info: " + GetPointsToScroll(scroller) + ", " + SystemParameters.WheelScrollLines + ", " + e.Delta);
             double mouseWheelChange = (double)e.Delta / 3;
             double newVOffset = GetAnimatedVerticalOffset(scroller) - (/*((e.Delta / -120.0) * TextBlock.GetLineHeight(scroller))*/mouseWheelChange * GetPointsToScroll(scroller)); //(mouseWheelChange / 3);
 
             if (newVOffset < 0)
+            {
                 AnimateScroll(scroller, 0);
+                Debug.WriteLine("ScrollViewerPreviewMouseWheel " + 0);
+            }
             else if (newVOffset > scroller.ScrollableHeight)
+            {
                 AnimateScroll(scroller, scroller.ScrollableHeight);
+                Debug.WriteLine("ScrollViewerPreviewMouseWheel " + 1);
+            }
             else
+            {
                 AnimateScroll(scroller, newVOffset);
+                Debug.WriteLine("ScrollViewerPreviewMouseWheel " + 2);
+            }
 
             e.Handled = true;
         }
@@ -331,16 +390,19 @@ namespace Start9.UI.Wpf.Behaviors
 
         private static void ListBoxLayoutUpdated(object sender, EventArgs e)
         {
+            Debug.WriteLine("ListBoxLayoutUpdated");
             UpdateScrollPosition(sender);
         }
 
         private static void ListBoxLoaded(object sender, RoutedEventArgs e)
         {
+            Debug.WriteLine("ListBoxLoaded");
             UpdateScrollPosition(sender);
         }
 
         private static void ListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            Debug.WriteLine("ListBoxSelectionChanged");
             ListBox listBox = sender as ListBox;
 
             if (listBox != null)

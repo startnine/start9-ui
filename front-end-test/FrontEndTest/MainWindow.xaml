@@ -4,10 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf"
+        xmlns:uib="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
+        xmlns:sys="clr-namespace:System;assembly=System.Runtime"
         xmlns:win="clr-namespace:Start9.UI.Wpf.Windows;assembly=Start9.UI.Wpf"
         x:Class="FrontEndTest.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" TitlebarHeight="61">
+        Title="MainWindow" Loaded="MainWindow_Loaded" TitlebarHeight="61">
     <Grid>
         <TabControl Style="{DynamicResource LineTabControlStyle}">
             <TabItem Header="Buttons">
@@ -117,10 +119,88 @@
                     </Grid>
                 </GroupBox>
             </TabItem>
-            <TabItem Header="TabItem 3"/>
-            <TabItem Header="TabItem 4"/>
-            <TabItem Header="TabItem 5"/>
-            <TabItem Header="TabItem 6"/>
+            <TabItem Header="Smooth Scrolling">
+                <UniformGrid Rows="1">
+                    <GroupBox Header="ScrollViewer Smoothing Options">
+                        <StackPanel Orientation="Vertical">
+                            <CheckBox x:Name="EnableSmoothScrollingCheckBox" IsChecked="True">Enable Scroll Smoothing</CheckBox>
+                            <DockPanel>
+                                <TextBlock Text="Animation type " DockPanel.Dock="Left"/>
+                                <ComboBox x:Name="AnimationTypeComboBox" SelectedIndex="3">
+                                    <ComboBoxItem>None</ComboBoxItem>
+                                    <BackEase/>
+                                    <BounceEase/>
+                                    <CircleEase/>
+                                    <CubicEase/>
+                                    <ElasticEase/>
+                                    <ExponentialEase/>
+                                    <PowerEase/>
+                                    <QuadraticEase/>
+                                    <QuarticEase/>
+                                    <QuinticEase/>
+                                    <SineEase/>
+                                </ComboBox>
+                            </DockPanel>
+                            <DockPanel>
+                                <TextBlock Text="Easing mode " DockPanel.Dock="Left"/>
+                                <ComboBox x:Name="EasingModeComboBox" SelectedIndex="1">
+                                    <ComboBoxItem>EaseIn</ComboBoxItem>
+                                    <ComboBoxItem>EaseOut</ComboBoxItem>
+                                    <ComboBoxItem>EaseInOut</ComboBoxItem>
+                                </ComboBox>
+                            </DockPanel>
+                            <Border x:Name="TimeDurationBorder" BorderThickness="1,0,0,0" BorderBrush="Transparent">
+                                <DockPanel>
+                                    <TextBlock Text="Time duration " DockPanel.Dock="Left"/>
+                                    <TextBox x:Name="TimeDurationTextBox"/>
+                                </DockPanel>
+                            </Border>
+                        </StackPanel>
+                    </GroupBox>
+                    <ListView x:Name="SmoothScrollTestListView">
+                        <ListViewItem>Item 1</ListViewItem>
+                        <ListViewItem>Item 2</ListViewItem>
+                        <ListViewItem>Item 3</ListViewItem>
+                        <ListViewItem>Item 4</ListViewItem>
+                        <ListViewItem>Item 5</ListViewItem>
+                        <ListViewItem>Item 6</ListViewItem>
+                        <ListViewItem>Item 7</ListViewItem>
+                        <ListViewItem>Item 8</ListViewItem>
+                        <ListViewItem>Item 9</ListViewItem>
+                        <ListViewItem>Item 10</ListViewItem>
+                        <ListViewItem>Item 11</ListViewItem>
+                        <ListViewItem>Item 12</ListViewItem>
+                        <ListViewItem>Item 13</ListViewItem>
+                        <ListViewItem>Item 14</ListViewItem>
+                        <ListViewItem>Item 15</ListViewItem>
+                        <ListViewItem>Item 16</ListViewItem>
+                        <ListViewItem>Item 17</ListViewItem>
+                        <ListViewItem>Item 18</ListViewItem>
+                        <ListViewItem>Item 19</ListViewItem>
+                        <ListViewItem>Item 20</ListViewItem>
+                        <ListViewItem>Item 21</ListViewItem>
+                        <ListViewItem>Item 22</ListViewItem>
+                        <ListViewItem>Item 23</ListViewItem>
+                        <ListViewItem>Item 24</ListViewItem>
+                        <ListViewItem>Item 25</ListViewItem>
+                        <ListViewItem>Item 26</ListViewItem>
+                        <ListViewItem>Item 27</ListViewItem>
+                        <ListViewItem>Item 28</ListViewItem>
+                        <ListViewItem>Item 29</ListViewItem>
+                        <ListViewItem>Item 30</ListViewItem>
+                        <ListViewItem>Item 31</ListViewItem>
+                        <ListViewItem>Item 32</ListViewItem>
+                        <ListViewItem>Item 33</ListViewItem>
+                        <ListViewItem>Item 34</ListViewItem>
+                        <ListViewItem>Item 35</ListViewItem>
+                        <ListViewItem>Item 36</ListViewItem>
+                        <ListViewItem>Item 37</ListViewItem>
+                        <ListViewItem>Item 38</ListViewItem>
+                        <ListViewItem>Item 39</ListViewItem>
+                        <ListViewItem>Item 40</ListViewItem>
+                    </ListView>
+                </UniformGrid>
+            </TabItem>
         </TabControl>
         <Grid Visibility="Collapsed">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
@@ -153,7 +233,6 @@
                     <ui:ToggleSwitch x:Name="ThemeToggleSwitch" TrueText="Light" FalseText="Dark" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True" Visibility="Collapsed" Content="Current Theme"/>
                     <ui:ToggleSwitch TrueText="True" FalseText="False" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True" Content="Title"/>
                 </Grid>
-
             </DockPanel>
         </Grid>
     </Grid>

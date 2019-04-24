@@ -125,8 +125,10 @@
     <SolidColorBrush x:Key="ToggleSwitchForegroundBrush">White</SolidColorBrush>
 
     <GradientStopCollection x:Key="DarkIconGradientStops">
-        <GradientStop Offset="0" Color="#FF888888"/>
-        <GradientStop Offset="1" Color="#FF555555"/>
+        <!--GradientStop Offset="0" Color="#FF888888"/>
+        <GradientStop Offset="1" Color="#FF555555"/-->
+        <GradientStop Offset="0" Color="#FF999999"/>
+        <GradientStop Offset="1" Color="#FF666666"/>
     </GradientStopCollection>
 
     <GradientStopCollection x:Key="DarkIconGradientStops2">
@@ -135,8 +137,10 @@
     </GradientStopCollection>
 
     <GradientStopCollection x:Key="DarkIconGradientStops3">
-        <GradientStop Offset="0" Color="#FFEEEEEE"/>
-        <GradientStop Offset="1" Color="#FFBBBBBB"/>
+        <!--GradientStop Offset="0" Color="#FFEEEEEE"/>
+        <GradientStop Offset="1" Color="#FFBBBBBB"/-->
+        <GradientStop Offset="0" Color="#FFDDDDDD"/>
+        <GradientStop Offset="1" Color="#FFAAAAAA"/>
     </GradientStopCollection>
 
     <GradientStopCollection x:Key="LightIconGradientStops">
