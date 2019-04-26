@@ -11,6 +11,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Loaded="MainWindow_Loaded" TitlebarHeight="61">
     <Grid>
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Height="31" Margin="0,-30,0,0">
+            <ToggleButton Style="{DynamicResource CaptionToggleButtonStyle}">CaptionToggleButtonStyle</ToggleButton>
+            <RepeatButton Style="{DynamicResource CaptionRepeatButtonStyle}">CaptionRepeatButtonStyle</RepeatButton>
+        </StackPanel>
         <TabControl Style="{DynamicResource LineTabControlStyle}">
             <TabItem Header="Buttons">
                 <ScrollViewer>
