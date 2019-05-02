@@ -173,8 +173,13 @@ namespace Start9.UI.Wpf.Statics
 
         public static bool DwmIsCompositionEnabled()
         {
-            DwmIsCompositionEnabled(out bool returnValue);
-            return returnValue;
+            if (Environment.OSVersion.Version.Major >= 6)
+            {
+                DwmIsCompositionEnabled(out bool returnValue);
+                return returnValue;
+            }
+            else
+                return false;
         }
 
         [DllImport("user32.dll", SetLastError = true)]

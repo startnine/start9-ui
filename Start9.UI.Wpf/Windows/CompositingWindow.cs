@@ -177,21 +177,24 @@ namespace Start9.UI.Wpf.Windows
                     IsGlassAvailable = false;
             }
 
-            _blurInfo = new NativeMethods.DWM_BLURBEHIND()
+            if (NativeMethods.DwmIsCompositionEnabled())
             {
-                dwFlags = NativeMethods.DWM_BB.Enable | NativeMethods.DWM_BB.BlurRegion | NativeMethods.DWM_BB.TransitionMaximized,
-                fEnable = true,
-                //hRgnBlur = IntPtr.Zero,
-                fTransitionOnMaximized = true
-            };
+                _blurInfo = new NativeMethods.DWM_BLURBEHIND()
+                {
+                    dwFlags = NativeMethods.DWM_BB.Enable | NativeMethods.DWM_BB.BlurRegion | NativeMethods.DWM_BB.TransitionMaximized,
+                    fEnable = true,
+                    //hRgnBlur = IntPtr.Zero,
+                    fTransitionOnMaximized = true
+                };
 
-            _unblurInfo = new NativeMethods.DWM_BLURBEHIND()
-            {
-                dwFlags = NativeMethods.DWM_BB.Enable | NativeMethods.DWM_BB.BlurRegion | NativeMethods.DWM_BB.TransitionMaximized,
-                fEnable = false,
-                hRgnBlur = IntPtr.Zero,
-                fTransitionOnMaximized = true
-            };
+                _unblurInfo = new NativeMethods.DWM_BLURBEHIND()
+                {
+                    dwFlags = NativeMethods.DWM_BB.Enable | NativeMethods.DWM_BB.BlurRegion | NativeMethods.DWM_BB.TransitionMaximized,
+                    fEnable = false,
+                    hRgnBlur = IntPtr.Zero,
+                    fTransitionOnMaximized = true
+                };
+            }
 
             //base.WindowStyle = WindowStyle.None;
             //base.AllowsTransparency = true;
@@ -235,7 +238,7 @@ namespace Start9.UI.Wpf.Windows
             //NativeMethods.SetWindowLong(Handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(Handle, NativeMethods.GwlExstyle).ToInt32() & 0x00000020 & 0x00080000);
             //System.Windows.Media.CompositionTarget = 
             //System.Windows.Media.RenderOptions.com
-            var source = HwndSource.FromHwnd(Handle); //PresentationSource.FromVisual(this) as HwndSource;
+            //var source = HwndSource.FromHwnd(Handle); //PresentationSource.FromVisual(this) as HwndSource;
             //source.ContentRendered += Source_ContentRendered;
             //source.CompositionTarget.BackgroundColor = System.Windows.Media.Colors.Transparent;
             //source.CompositionTarget.RenderMode = RenderMode.Default;
