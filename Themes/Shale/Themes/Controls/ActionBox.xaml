@@ -11,9 +11,17 @@
         <Setter Property="Padding" Value="5,0"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBoxForegroundBrush}"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ui:ActionBox}">
+                    <ControlTemplate.Resources>
+                        <ResourceDictionary>
+                            <ResourceDictionary.MergedDictionaries>
+                                <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Controls/Button.xaml"/>
+                            </ResourceDictionary.MergedDictionaries>
+                        </ResourceDictionary>
+                    </ControlTemplate.Resources>
                     <DockPanel>
                         <ToggleButton x:Name="PART_GoStopToggleButton" Content="{TemplateBinding ButtonContent}" DockPanel.Dock="Right" ui:AttachedProperties.CornerCurves="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}}">
                             <!--ui:AttachedProperties.CornerCurves>

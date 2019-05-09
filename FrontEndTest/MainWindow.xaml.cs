@@ -83,6 +83,8 @@ namespace FrontEndTest
             EasingModeComboBox.SelectionChanged += ScrollAnimationComboBox_SelectionChanged;
             EnableSmoothScrollingCheckBox.Checked += EnableSmoothScrollingCheckBox_Checked;
             EnableSmoothScrollingCheckBox.Unchecked += EnableSmoothScrollingCheckBox_Checked;
+            LightsToggleSwitch.Checked += LightsToggleSwitch_Checked;
+            LightsToggleSwitch.Unchecked += LightsToggleSwitch_Unchecked;
         }
 
         public void CalculateColor()
@@ -212,6 +214,16 @@ namespace FrontEndTest
             ShaleHueSlider.Value = _accent.Hue;
             ShaleSaturationSlider.Value = _accent.Saturation;
             CalculateColor();
+        }
+
+        private void LightsToggleSwitch_Checked(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Resources.MergedDictionaries[2].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml", UriKind.Relative);
+        }
+
+        private void LightsToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Resources.MergedDictionaries[2].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseDark.xaml", UriKind.Relative);
         }
     }
 }

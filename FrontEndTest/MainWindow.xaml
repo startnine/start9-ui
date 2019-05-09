@@ -18,12 +18,8 @@
         <TabControl Style="{DynamicResource LineTabControlStyle}">
             <TabItem Header="Buttons">
                 <ScrollViewer>
-                    <Grid Height="1000">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <GroupBox Header="Enabled Controls" Grid.Column="0">
+                    <UniformGrid Rows="1">
+                        <GroupBox Header="Enabled Controls">
                             <StackPanel>
                                 <Button Content="Normal Button">
                                     <Button.ContextMenu>
@@ -53,7 +49,7 @@
                                 <ui:ActionBox WatermarkText="Normal" ButtonContent="ActionBox"/>
                             </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="Disabled Controls" Grid.Column="1" IsEnabled="False">
+                        <GroupBox Header="Disabled Controls" IsEnabled="False">
                             <StackPanel>
                                 <Button Content="Disabled Button"/>
                                 <RepeatButton Content="Disabled RepeatButton"/>
@@ -72,56 +68,56 @@
                                 <ui:ActionBox WatermarkText="Disabled" ButtonContent="ActionBox" IsEnabled="False"/>
                             </StackPanel>
                         </GroupBox>
-                    </Grid>
+                    </UniformGrid>
                 </ScrollViewer>
             </TabItem>
             <TabItem Header="Boxes">
-                <GroupBox Header="Group Box">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
-                            <ColumnDefinition/>
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Grid.Column="0">
-                            <ComboBox IsEditable="True" SelectedIndex="0">
-                                <ComboBoxItem Content="Editable ComboBox"/>
-                                <ComboBoxItem Content="Editable ComboBox"/>
-                                <ComboBoxItem Content="Editable ComboBox"/>
-                            </ComboBox>
-                            <ComboBox IsEditable="False" SelectedIndex="0">
-                                <ComboBoxItem Content="Read-Only ComboBox"/>
-                                <ComboBoxItem Content="Read-Only ComboBox"/>
-                                <ComboBoxItem Content="Read-Only ComboBox"/>
-                            </ComboBox>
-                            <TextBox Text="TextBox"/>
-                            <TextBox Height="50" Text="TextBox with non-standard height"/>
-                            <ListBox>
-                                <ListBoxItem Content="ListBox"/>
-                                <ListBoxItem Content="ListBox"/>
-                                <ListBoxItem Content="ListBox"/>
-                            </ListBox>
-                        </StackPanel>
-                        <StackPanel Grid.Column="1" IsEnabled="False">
-                            <ComboBox IsEditable="True" SelectedIndex="0">
-                                <ComboBoxItem Content="Disabled Editable ComboBox"/>
-                                <ComboBoxItem Content="Disabled Editable ComboBox"/>
-                                <ComboBoxItem Content="Disabled Editable ComboBox"/>
-                            </ComboBox>
-                            <ComboBox IsEditable="False" SelectedIndex="0">
-                                <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
-                                <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
-                                <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
-                            </ComboBox>
-                            <TextBox Text="Disabled TextBox"/>
-                            <TextBox Height="50" Text="Disabled TextBox with non-standard height"/>
-                            <ListBox>
-                                <ListBoxItem Content="Disabled ListBox"/>
-                                <ListBoxItem Content="Disabled ListBox"/>
-                                <ListBoxItem Content="Disabled ListBox"/>
-                            </ListBox>
-                        </StackPanel>
-                    </Grid>
-                </GroupBox>
+                <ScrollViewer>
+                    <UniformGrid Rows="1">
+                        <GroupBox Header="Enabled Boxes">
+                            <StackPanel>
+                                <ComboBox IsEditable="True" SelectedIndex="0">
+                                    <ComboBoxItem Content="Editable ComboBox"/>
+                                    <ComboBoxItem Content="Editable ComboBox"/>
+                                    <ComboBoxItem Content="Editable ComboBox"/>
+                                </ComboBox>
+                                <ComboBox IsEditable="False" SelectedIndex="0">
+                                    <ComboBoxItem Content="Read-Only ComboBox"/>
+                                    <ComboBoxItem Content="Read-Only ComboBox"/>
+                                    <ComboBoxItem Content="Read-Only ComboBox"/>
+                                </ComboBox>
+                                <TextBox Text="TextBox"/>
+                                <TextBox Height="50" Text="TextBox with non-standard height"/>
+                                <ListBox>
+                                    <ListBoxItem Content="ListBox"/>
+                                    <ListBoxItem Content="ListBox"/>
+                                    <ListBoxItem Content="ListBox"/>
+                                </ListBox>
+                            </StackPanel>
+                        </GroupBox>
+                        <GroupBox Header="Disabled Boxes">
+                            <StackPanel IsEnabled="False">
+                                <ComboBox IsEditable="True" SelectedIndex="0">
+                                    <ComboBoxItem Content="Disabled Editable ComboBox"/>
+                                    <ComboBoxItem Content="Disabled Editable ComboBox"/>
+                                    <ComboBoxItem Content="Disabled Editable ComboBox"/>
+                                </ComboBox>
+                                <ComboBox IsEditable="False" SelectedIndex="0">
+                                    <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
+                                    <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
+                                    <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
+                                </ComboBox>
+                                <TextBox Text="Disabled TextBox"/>
+                                <TextBox Height="50" Text="Disabled TextBox with non-standard height"/>
+                                <ListBox>
+                                    <ListBoxItem Content="Disabled ListBox"/>
+                                    <ListBoxItem Content="Disabled ListBox"/>
+                                    <ListBoxItem Content="Disabled ListBox"/>
+                                </ListBox>
+                            </StackPanel>
+                        </GroupBox>
+                    </UniformGrid>
+                </ScrollViewer>
             </TabItem>
             <TabItem Header="Smooth Scrolling">
                 <UniformGrid Rows="1">
@@ -220,6 +216,7 @@
                                 <TextBlock Text="Saturation" DockPanel.Dock="Left"/>
                                 <Slider x:Name="ShaleSaturationSlider" Minimum="0" Maximum="100"/>
                             </DockPanel>
+                            <ui:ToggleSwitch x:Name="LightsToggleSwitch" Content="Lights" IsChecked="True"/>
                             <Button x:Name="ResetColouresButton" Click="ResetColouresButton_Click">Reset the  C O L O U R E S</Button>
                         </StackPanel>
                     </GroupBox>
