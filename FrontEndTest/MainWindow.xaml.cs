@@ -64,10 +64,10 @@ namespace FrontEndTest
 
             CalculateColor();
 
-            /*ShaleHueSlider.ValueChanged += ShaleSliders_ValueChanged;
-            ShaleSaturationSlider.ValueChanged += ShaleSliders_ValueChanged;*/
-            ShaleHueSlider.PreviewMouseLeftButtonUp += Sliders_PreviewMouseLeftButtonUp;
-            ShaleSaturationSlider.PreviewMouseLeftButtonUp += Sliders_PreviewMouseLeftButtonUp;
+            ShaleHueSlider.ValueChanged += ShaleSliders_ValueChanged;
+            ShaleSaturationSlider.ValueChanged += ShaleSliders_ValueChanged;
+            /*ShaleHueSlider.PreviewMouseLeftButtonUp += Sliders_PreviewMouseLeftButtonUp;
+            ShaleSaturationSlider.PreviewMouseLeftButtonUp += Sliders_PreviewMouseLeftButtonUp;*/
         }
 
         private void Sliders_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
