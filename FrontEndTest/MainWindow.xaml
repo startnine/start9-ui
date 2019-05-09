@@ -205,6 +205,26 @@
                     </ListView>
                 </UniformGrid>
             </TabItem>
+            <TabItem Header="Skin Settings">
+                <StackPanel Orientation="Vertical">
+                    <GroupBox Header="NOTE">
+                        <TextBlock Text="These options aren't actually skin-defined (yet)."/>
+                    </GroupBox>
+                    <GroupBox Header="Colours">
+                        <StackPanel Orientation="Vertical">
+                            <DockPanel>
+                                <TextBlock Text="Hue" DockPanel.Dock="Left"/>
+                                <Slider x:Name="ShaleHueSlider" Minimum="0" Maximum="360"/>
+                            </DockPanel>
+                            <DockPanel>
+                                <TextBlock Text="Saturation" DockPanel.Dock="Left"/>
+                                <Slider x:Name="ShaleSaturationSlider" Minimum="0" Maximum="100"/>
+                            </DockPanel>
+                            <Button x:Name="ResetColouresButton" Click="ResetColouresButton_Click">Reset the  C O L O U R E S</Button>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </TabItem>
         </TabControl>
         <Grid Visibility="Collapsed">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">

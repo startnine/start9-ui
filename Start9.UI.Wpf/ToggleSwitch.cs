@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
-using Start9.UI.Wpf.Statics;
+using Start9.UI.Wpf;
 
 namespace Start9.UI.Wpf
 {
@@ -67,7 +68,6 @@ namespace Start9.UI.Wpf
 
         public ToggleSwitch()
         {
-            //Click += delegate { OnClick(); };
             Loaded += ToggleSwitch_Loaded;
             SizeChanged += ToggleSwitch_SizeChanged;
         }
@@ -77,27 +77,33 @@ namespace Start9.UI.Wpf
             OffsetterWidth = GetOffsetterWidth();
         }
 
-        protected override Size MeasureOverride(Size constraint)
+        /*protected override Size MeasureOverride(Size constraint)
         {
             constraint.Width = GetOffsetterWidth();
+            //base.MeasureOverride(constraint);
             return constraint;
-        }
+        }*/
 
         private double GetOffsetterWidth()
         {
             double widthValue = 0;
-            if ((IsChecked == null) & (IsThreeState))
-            {
-                widthValue = (_gripContainer.ActualWidth / 2) - (_grip.ActualWidth / 2);
-            }
+
+            double gripContainerWidth = _gripContainer.ActualWidth;
+            if (_gripContainer.Width > gripContainerWidth)
+                gripContainerWidth = _gripContainer.Width;
+
+            double gripWidth = _grip.ActualWidth;
+            if (_grip.Width > gripWidth)
+                gripWidth = _grip.Width;
+
+            if ((IsChecked == null) & IsThreeState)
+                widthValue = (gripContainerWidth / 2) - (gripWidth / 2);
             else if (IsChecked == false)
-            {
                 widthValue = 0;
-            }
             else
-            {
-                widthValue = _gripContainer.ActualWidth - _grip.ActualWidth;
-            }
+                widthValue = gripContainerWidth - gripWidth;
+
+            Debug.WriteLine("ToggleSwitch OffsetterWidth: " + widthValue);
             return widthValue;
         }
 
@@ -116,24 +122,44 @@ namespace Start9.UI.Wpf
         {
             var toggle = (d as ToggleSwitch);
 
-            toggle.AnimateGripPosition();
+            toggle.ChangeChecked();
+        }
 
+        protected void ChangeChecked()
+        {
             try
             {
-                if (toggle.IsChecked == true)
+                AnimateGripPosition();
+
+                Binding textBinding = new Binding()
                 {
-                    toggle._stateText.Text = toggle.TrueText;
+                    Source = this,
+                    Mode = BindingMode.OneWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                };
+
+                if (IsChecked == true)
+                {
+                    //_stateText.Text = TrueText;
+                    textBinding.Path = new PropertyPath("TrueText");
                 }
-                else if (toggle.IsChecked == false)
+                else if (IsChecked == false)
                 {
-                    toggle._stateText.Text = toggle.FalseText;
+                    //_stateText.Text = FalseText;
+                    textBinding.Path = new PropertyPath("FalseText");
                 }
                 else
                 {
-                    toggle._stateText.Text = toggle.NullText;
+                    //_stateText.Text = NullText;
+                    textBinding.Path = new PropertyPath("NullText");
                 }
+
+                BindingOperations.SetBinding(_stateText, TextBlock.TextProperty, textBinding);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                Debug.WriteLine("TOGGLESWITCH ONISCHECKEDCHANGED FAILED: " + ex);
+            }
         }
 
         public void AnimateGripPosition()

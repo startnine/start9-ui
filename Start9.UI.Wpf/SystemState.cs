@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Media;
 
-namespace Start9.UI.Wpf.Statics
+namespace Start9.UI.Wpf
 {
     public class SystemState : DependencyObject
     {

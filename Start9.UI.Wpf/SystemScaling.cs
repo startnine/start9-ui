@@ -3,7 +3,7 @@ using System.Windows;
 using Graphics = System.Drawing.Graphics;
 using Point = System.Windows.Point;
 
-namespace Start9.UI.Wpf.Statics
+namespace Start9.UI.Wpf
 {
     /// <summary>
     /// Provides methods and constants for system scaling and converting between DIPs and physical pixels.

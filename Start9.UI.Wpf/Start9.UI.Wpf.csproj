@@ -17,6 +17,9 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Themes\Colors\ShaleBaseDark.xaml" />
+    <None Remove="Themes\Colors\ShaleBeigeOld.xaml" />
+    <None Remove="Themes\Colors\ShaleBlueOld.xaml" />
+    <None Remove="Themes\ShaleOld.xaml" />
   </ItemGroup>
   
   <ItemGroup>
@@ -49,5 +52,9 @@
     <Page Update="Themes\Colors\ShaleBaseDark.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Folder Include="Statics\" />
   </ItemGroup>
 </Project>

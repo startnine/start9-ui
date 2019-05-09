@@ -7,7 +7,7 @@ using System.Windows.Input;
 using System.Diagnostics;
 using System.Windows.Data;
 using System.Windows.Media;
-using Start9.UI.Wpf.Statics;
+using Start9.UI.Wpf;
 
 namespace Start9.UI.Wpf.Behaviors
 {

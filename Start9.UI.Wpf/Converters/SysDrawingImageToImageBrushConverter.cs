@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows.Media;
-using static Start9.UI.Wpf.Statics.Extensions;
+using static Start9.UI.Wpf.Extensions;
 
 namespace Start9.UI.Wpf.Converters
 {

@@ -1,6 +1,7 @@
 ﻿using Start9.UI.Wpf;
 using Start9.UI.Wpf.Behaviors;
 using Start9.UI.Wpf.Windows;
+using Start9.Wpf.Styles.Shale;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -33,6 +34,9 @@ namespace FrontEndTest
             Cancel
         }
 
+        ShaleAccent _accent = ShaleAccents.Blue; //new ShaleAccent(183, 28);
+        //ResourceDictionary _dictionary = null;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -54,6 +58,22 @@ namespace FrontEndTest
                 Source = new Uri("/Start9.UI.Wpf;component/Themes/Plex.xaml", UriKind.RelativeOrAbsolute)
             });*/
             TimeDurationTextBox.Text = ScrollAnimationBehavior.GetTimeDuration(SmoothScrollTestListView).ToString();
+
+            ShaleHueSlider.Value = _accent.Hue;
+            ShaleSaturationSlider.Value = _accent.Saturation;
+
+            CalculateColor();
+
+            /*ShaleHueSlider.ValueChanged += ShaleSliders_ValueChanged;
+            ShaleSaturationSlider.ValueChanged += ShaleSliders_ValueChanged;*/
+            ShaleHueSlider.PreviewMouseLeftButtonUp += Sliders_PreviewMouseLeftButtonUp;
+            ShaleSaturationSlider.PreviewMouseLeftButtonUp += Sliders_PreviewMouseLeftButtonUp;
+        }
+
+        private void Sliders_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
+        {
+            Debug.WriteLine("Mouse up");
+            CalculateColor();
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -63,6 +83,29 @@ namespace FrontEndTest
             EasingModeComboBox.SelectionChanged += ScrollAnimationComboBox_SelectionChanged;
             EnableSmoothScrollingCheckBox.Checked += EnableSmoothScrollingCheckBox_Checked;
             EnableSmoothScrollingCheckBox.Unchecked += EnableSmoothScrollingCheckBox_Checked;
+        }
+
+        public void CalculateColor()
+        {
+            for (int i = 2; i < Application.Current.Resources.MergedDictionaries.Count; i++)
+            {
+                Application.Current.Resources.MergedDictionaries.RemoveAt(0);
+            }
+            //Application.Current.Resources.MergedDictionaries[1].MergedDictionaries.Clear();
+            Debug.WriteLine("Values: " + ShaleHueSlider.Value + ", " + ShaleSaturationSlider.Value);
+            _accent = new ShaleAccent(ShaleHueSlider.Value, ShaleSaturationSlider.Value);
+
+            var dictionary = _accent.GetDictionary();
+            Debug.WriteLine(dictionary["SelectedHighlightLightColor"]);
+            Application.Current.Resources.MergedDictionaries.Insert(0, dictionary);
+            var lightDictionary = Application.Current.Resources.MergedDictionaries[2];
+            Uri source = lightDictionary.Source;
+            //remove and recreate light/dark ResourceDictionary (yes this is necessary...for some reason...
+            Application.Current.Resources.MergedDictionaries.Remove(lightDictionary);
+            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+            {
+                Source = source //new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseDark.xaml")
+            });
         }
 
         private void ToggleGlassToggleButton_Click(object sender, RoutedEventArgs e)
@@ -140,6 +183,35 @@ namespace FrontEndTest
             bool enable = EnableSmoothScrollingCheckBox.IsChecked == true;
             ScrollAnimationBehavior.SetIsEnabled(SmoothScrollTestListView, enable);
             Debug.WriteLine("EnableSmoothScrollingCheckBox_Checked: " + enable);
+        }
+
+
+        private void ShaleSliders_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            CalculateColor();
+        }
+
+        bool reset = false;
+        private void ResetColouresButton_Click(object sender, RoutedEventArgs e)
+        {
+            /*Debug.WriteLine("SelectedHighlightLightColor: " + Application.Current.Resources["SelectedHighlightLightColor"]);
+            Debug.WriteLine("SelectedHighlightBrush: " + Application.Current.Resources["SelectedHighlightBrush"]);
+            Debug.WriteLine("SelectedHighlightBrush.Color: " + ((SolidColorBrush)Application.Current.Resources["SelectedHighlightBrush"]).Color);
+            Debug.WriteLine("Dictionaries count: " + Application.Current.Resources.MergedDictionaries.Count);*/
+            if (reset)
+            {
+                _accent = ShaleAccents.Beige;
+                reset = false;
+            }
+            else
+            {
+                _accent = ShaleAccents.Blue;
+                reset = true;
+            }
+
+            ShaleHueSlider.Value = _accent.Hue;
+            ShaleSaturationSlider.Value = _accent.Saturation;
+            CalculateColor();
         }
     }
 }

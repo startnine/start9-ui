@@ -1,4 +1,4 @@
-﻿using Start9.UI.Wpf.Statics;
+﻿using Start9.UI.Wpf;
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -206,12 +206,12 @@ namespace Start9.UI.Wpf.Windows
             DefaultStyleKeyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata("{x:Type apictrl:DecoratableWindow}"));
         }*/
 
-        static DecoratableWindow()
+        /*static DecoratableWindow()
         {
             //DefaultStyleKeyProperty.OverrideMetadata(typeof(DecoratableWindow), new FrameworkPropertyMetadata(typeof(DecoratableWindow)));
-        }
+        }*/
 
-        public DecoratableWindow()
+        public DecoratableWindow() : base()
         {
             /*base.WindowStyle = WindowStyle.None;
             base.AllowsTransparency = true;*/

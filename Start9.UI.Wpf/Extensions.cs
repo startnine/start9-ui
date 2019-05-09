@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 
-namespace Start9.UI.Wpf.Statics
+namespace Start9.UI.Wpf
 {
     public static class Extensions
     {

@@ -1,4 +1,4 @@
-﻿using Start9.UI.Wpf.Statics;
+﻿using Start9.UI.Wpf;
 using System;
 using System.Windows;
 using System.Windows.Controls;

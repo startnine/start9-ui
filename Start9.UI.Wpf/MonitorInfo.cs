@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 //using System.Windows;
 //using static Start9.UI.Wpf.MonitorInfo.NativeMethods;
-using static Start9.UI.Wpf.Statics.NativeMethods;
+using static Start9.UI.Wpf.NativeMethods;
 
 namespace Start9.UI.Wpf
 {

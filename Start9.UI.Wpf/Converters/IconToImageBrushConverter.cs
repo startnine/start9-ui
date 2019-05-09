@@ -12,7 +12,7 @@ using System.Windows.Data;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using static Start9.UI.Wpf.Statics.SystemScaling;
+using static Start9.UI.Wpf.SystemScaling;
 
 namespace Start9.UI.Wpf.Converters
 {

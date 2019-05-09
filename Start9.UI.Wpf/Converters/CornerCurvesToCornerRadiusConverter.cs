@@ -1,4 +1,4 @@
-﻿using Start9.UI.Wpf.Statics;
+﻿using Start9.UI.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,7 +11,7 @@ using System.Windows.Data;
 
 namespace Start9.UI.Wpf.Converters
 {
-    class CornerCurvesToCornerRadiusConverter : IValueConverter
+    public class CornerCurvesToCornerRadiusConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {

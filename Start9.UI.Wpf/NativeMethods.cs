@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Start9.UI.Wpf.Statics
+namespace Start9.UI.Wpf
 {
     public static class NativeMethods
     {
@@ -373,13 +373,16 @@ namespace Start9.UI.Wpf.Statics
 
         public const Int32
             SwpNoMove = 0x0002,
-            SwpNoSize = 0x0001;
+            SwpNoSize = 0x0001,
+            SwpNoActivate = 0x0010;
 
         public const Int32
             WmActivate = 0x0006,
-            WmWindowPosChanged = 0x0047,
+            WmMove = 0x0003,
+            WmSize = 0x0005,
             WmSysCommand = 0x0112,
-            WmWindowPosChanging = 0x0046;
+            WmWindowPosChanging = 0x0046,
+            WmWindowPosChanged = 0x0047;
 
         public const Int32
             ScMove = 0xF010;

@@ -129,18 +129,16 @@ namespace Start9.UI.Wpf
         static void OnTargetPanelPropertyChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
         {
             var sned = (sender as TravellingSelector);
-            if (e.NewValue != null)
+            if ((e.NewValue != null) && (e.NewValue is Panel panel))
             {
-                var panel = e.NewValue as Panel;
                 panel.Loaded += sned.TravellingSelector_Loaded;
                 panel.SizeChanged += sned.Panel_SizeChanged;
             }
 
-            if (e.OldValue != null)
+            if ((e.OldValue != null) && (e.NewValue is Panel hPanel))
             {
-                var panel = e.NewValue as Panel;
-                panel.Loaded -= sned.TravellingSelector_Loaded;
-                panel.SizeChanged -= sned.Panel_SizeChanged;
+                hPanel.Loaded -= sned.TravellingSelector_Loaded;
+                hPanel.SizeChanged -= sned.Panel_SizeChanged;
             }
 
             sned.UpdateSelectorBounds();

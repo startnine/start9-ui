@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Timers;
 using System.ComponentModel;
-using Start9.UI.Wpf.Statics;
+using Start9.UI.Wpf;
 using System.Windows.Media;
 
 namespace Start9.UI.Wpf.Windows
@@ -156,6 +156,7 @@ namespace Start9.UI.Wpf.Windows
         {
             base.WindowStyle = WindowStyle.None;
             AllowsTransparency = true;
+            Handle = new WindowInteropHelper(this).EnsureHandle();
             /*System.Windows.Shell.WindowChrome.SetWindowChrome(this, new System.Windows.Shell.WindowChrome()// );
             {
                 GlassFrameThickness = new Thickness(0),
@@ -234,7 +235,7 @@ namespace Start9.UI.Wpf.Windows
         protected override void OnInitialized(EventArgs e)
         {
             base.OnInitialized(e);
-            Handle = new WindowInteropHelper(this).EnsureHandle();
+            //Handle = new WindowInteropHelper(this).EnsureHandle();
             //NativeMethods.SetWindowLong(Handle, NativeMethods.GwlExstyle, NativeMethods.GetWindowLong(Handle, NativeMethods.GwlExstyle).ToInt32() & 0x00000020 & 0x00080000);
             //System.Windows.Media.CompositionTarget = 
             //System.Windows.Media.RenderOptions.com

@@ -1,4 +1,4 @@
-﻿using Start9.UI.Wpf.Statics;
+﻿using Start9.UI.Wpf;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using Orientation = System.Windows.Controls.Orientation;
-using static Start9.UI.Wpf.Statics.NativeMethods;
+using static Start9.UI.Wpf.NativeMethods;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;

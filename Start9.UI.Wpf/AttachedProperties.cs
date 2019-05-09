@@ -8,7 +8,7 @@ using Microsoft.Xaml.Behaviors;
 using System.Windows.Interactivity;
 #endif
 
-namespace Start9.UI.Wpf.Statics
+namespace Start9.UI.Wpf
 {
     public class CornerCurves : Freezable
     {

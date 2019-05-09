@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters;assembly=Start9.UI.Wpf">
+    <Color x:Key="ButtonPressedBorderLightColor">#FF82B0B5</Color>
+    <Color x:Key="ButtonPressedBorderDarkColor">#FF4A6366</Color>
+    <!--Subtract 40 from V in PDN for Dark Colours-->
+    <!--FF83A6B6-->
+    <Color x:Key="ButtonPressedBackgroundLightColor0">#FFD4F2F4</Color>
+    <Color x:Key="ButtonPressedBackgroundDarkColor0">#FF7A8B8C</Color>
+    <Color x:Key="ButtonPressedBackgroundLightColor1">#FFA5DDE2</Color>
+    <Color x:Key="ButtonPressedBackgroundDarkColor1">#FF5A787A</Color>
+    <!--GradientStop Offset="0" Color="#FFD6ECF6"/>
+        <GradientStop Offset="1" Color="#FFA5D1E4"/-->
+    <Color x:Key="ButtonPressedSecondaryBackgroundLightColor0">#FFB1E8ED</Color>
+    <Color x:Key="ButtonPressedSecondaryBackgroundDarkColor0">#FF638184</Color>
+    <Color x:Key="ButtonPressedSecondaryBackgroundLightColor1">#FF9ED3D8</Color>
+    <Color x:Key="ButtonPressedSecondaryBackgroundDarkColor1">#FF536D70</Color>
+    <!--GradientStop Offset="0" Color="#FFB1DAEE"/>
+        <GradientStop Offset="1" Color="#FF9DC6DA"/-->
+
+
+    <Color x:Key="CardListViewSelectedBackgroundLightColor0">#FFD4F2F4</Color>
+    <Color x:Key="CardListViewSelectedBackgroundDarkColor0">#FF7A8B8C</Color>
+    <Color x:Key="CardListViewSelectedBackgroundLightColor1">#FF9ED3D8</Color>
+    <Color x:Key="CardListViewSelectedBackgroundDarkColor1">#FF536D70</Color>
+    <!--GradientStop Offset="0" Color="#FFD6ECF6"/>
+        <GradientStop Offset="1" Color="#FF9DC6DA"/-->
+
+    <Color x:Key="HoverHighlightLightColor">#C09ED3D8</Color>
+    <Color x:Key="HoverHighlightDarkColor">#C0789CA0</Color>
+    <!--special case, subtract 20 to V in PDN instead of subtracting 40-->
+    <!--C09DC6DA-->
+    <Color x:Key="SelectedHighlightLightColor">#FFA6D9DD</Color>
+    <Color x:Key="SelectedHighlightDarkColor">#FF7FA3A5</Color>
+    <!--special case, subtract 20 to V in PDN instead of subtracting 40-->
+    <!--FFA5D1E4-->
+    <Color x:Key="TabItemPressedFlashBackgroundLightColor">#7FB1E8ED</Color>
+    <Color x:Key="TabItemPressedFlashBackgroundDarkColor">#7F638184</Color>
+    <!--7FB1DAEE-->
+    <Color x:Key="TabItemPressedFlashBorderLightColor">#FFB1E8ED</Color>
+    <Color x:Key="TabItemPressedFlashBorderDarkColor">#FF638184</Color>
+    <!--FFB1DAEE-->
+
+    <Color x:Key="CheckBoxTickLightColor">#FF005159</Color>
+    <Color x:Key="CheckBoxTickDarkColor">#FF00ACBC</Color>
+    <!--special case, add 40 to V in PDN instead of subtracting-->
+    <!--FF00405B-->
+</ResourceDictionary>

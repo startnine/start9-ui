@@ -17,6 +17,15 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Start9.UI.Wpf\Start9.UI.Wpf.csproj" />
+    <PackageReference Include="ColorMine" Version="1.1.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Start9.UI.Wpf\Start9.UI.Wpf.csproj" />
+    <ProjectReference Include="..\Themes\Shale\Start9.Wpf.Styles.Shale.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
 </Project>
