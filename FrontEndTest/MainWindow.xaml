@@ -10,220 +10,240 @@
         x:Class="FrontEndTest.MainWindow"
         mc:Ignorable="d"
         Title="MainWindow" Loaded="MainWindow_Loaded" TitlebarHeight="61">
+    <win:DecoratableWindow.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Shale.xaml"/-->
+                <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml"/>
+
+                <!--ResourceDictionary Source="pack://application:,,,/PresentationFramework.Aero;component/themes/Aero.NormalColor.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Aero.NormalColor.xaml"/-->
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type Rectangle}" />
+        </ResourceDictionary>
+    </win:DecoratableWindow.Resources>
     <Grid>
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Height="31" Margin="0,-30,0,0">
             <ToggleButton Style="{DynamicResource CaptionToggleButtonStyle}">CaptionToggleButtonStyle</ToggleButton>
             <RepeatButton Style="{DynamicResource CaptionRepeatButtonStyle}">CaptionRepeatButtonStyle</RepeatButton>
         </StackPanel>
-        <TabControl Style="{DynamicResource LineTabControlStyle}">
-            <TabItem Header="Buttons">
-                <ScrollViewer>
+        <DockPanel>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem>Enabled StatusBarItem</StatusBarItem>
+                <StatusBarItem IsEnabled="False">Disabled StatusBarItem</StatusBarItem>
+            </StatusBar>
+            <TabControl Style="{DynamicResource LineTabControlStyle}">
+                <TabItem Header="Buttons">
+                    <ScrollViewer>
+                        <UniformGrid Rows="1">
+                            <GroupBox Header="Enabled Controls">
+                                <StackPanel>
+                                    <Button Content="Normal Button">
+                                        <Button.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="AAAA"/>
+                                                <MenuItem Header="BBBB" IsCheckable="True" IsChecked="True"/>
+                                                <MenuItem Header="CCCC">
+                                                    <MenuItem Header="CAAA"/>
+                                                    <MenuItem Header="CBBB"/>
+                                                </MenuItem>
+                                            </ContextMenu>
+                                        </Button.ContextMenu>
+                                    </Button>
+                                    <RepeatButton Content="RepeatButton"/>
+                                    <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Round Button"/-->
+                                    <Button IsDefault="True" Content="Default Button"/>
+                                    <ToggleButton Content="ToggleButton"/>
+                                    <ToggleButton IsChecked="True" Content="Checked ToggleButton"/>
+                                    <Rectangle Width="1" Height="40"/>
+                                    <CheckBox Content="Normal CheckBox"/>
+                                    <CheckBox IsChecked="True" Content="Checked CheckBox"/>
+                                    <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Null CheckBox"/>
+                                    <Rectangle Width="1" Height="40"/>
+                                    <RadioButton GroupName="NormalRadio" Content="Normal RadioButton"/>
+                                    <RadioButton GroupName="NormalRadio" IsChecked="True" Content="Checked RadioButton"/>
+                                    <ui:SpinBox/>
+                                    <ui:ActionBox WatermarkText="Normal" ButtonContent="ActionBox"/>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="Disabled Controls" IsEnabled="False">
+                                <StackPanel>
+                                    <Button Content="Disabled Button"/>
+                                    <RepeatButton Content="Disabled RepeatButton"/>
+                                    <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Disabled Round Button"/-->
+                                    <Button Visibility="Hidden" Content="Hidden Button"/>
+                                    <ToggleButton Content="Disabled ToggleButton"/>
+                                    <ToggleButton IsChecked="True" Content="Disabled Checked ToggleButton"/>
+                                    <Rectangle Width="1" Height="40"/>
+                                    <CheckBox Content="Disabled CheckBox"/>
+                                    <CheckBox IsChecked="True" Content="Disabled Checked CheckBox"/>
+                                    <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Disabled Null CheckBox"/>
+                                    <Rectangle Width="1" Height="40"/>
+                                    <RadioButton GroupName="DisabledRadio" Content="Disabled RadioButton"/>
+                                    <RadioButton GroupName="DisabledRadio" IsChecked="True" Content="Disabled Checked RadioButton"/>
+                                    <ui:SpinBox IsEnabled="False"/>
+                                    <ui:ActionBox WatermarkText="Disabled" ButtonContent="ActionBox" IsEnabled="False"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </UniformGrid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Boxes">
+                    <ScrollViewer>
+                        <UniformGrid Rows="1">
+                            <GroupBox Header="Enabled Boxes">
+                                <StackPanel>
+                                    <ComboBox IsEditable="True" SelectedIndex="0">
+                                        <ComboBoxItem Content="Editable ComboBox"/>
+                                        <ComboBoxItem Content="Editable ComboBox"/>
+                                        <ComboBoxItem Content="Editable ComboBox"/>
+                                    </ComboBox>
+                                    <ComboBox IsEditable="False" SelectedIndex="0">
+                                        <ComboBoxItem Content="Read-Only ComboBox"/>
+                                        <ComboBoxItem Content="Read-Only ComboBox"/>
+                                        <ComboBoxItem Content="Read-Only ComboBox"/>
+                                    </ComboBox>
+                                    <TextBox Text="TextBox"/>
+                                    <TextBox Height="50" Text="TextBox with non-standard height"/>
+                                    <ListBox>
+                                        <ListBoxItem Content="ListBox"/>
+                                        <ListBoxItem Content="ListBox"/>
+                                        <ListBoxItem Content="ListBox"/>
+                                    </ListBox>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="Disabled Boxes">
+                                <StackPanel IsEnabled="False">
+                                    <ComboBox IsEditable="True" SelectedIndex="0">
+                                        <ComboBoxItem Content="Disabled Editable ComboBox"/>
+                                        <ComboBoxItem Content="Disabled Editable ComboBox"/>
+                                        <ComboBoxItem Content="Disabled Editable ComboBox"/>
+                                    </ComboBox>
+                                    <ComboBox IsEditable="False" SelectedIndex="0">
+                                        <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
+                                        <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
+                                        <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
+                                    </ComboBox>
+                                    <TextBox Text="Disabled TextBox"/>
+                                    <TextBox Height="50" Text="Disabled TextBox with non-standard height"/>
+                                    <ListBox>
+                                        <ListBoxItem Content="Disabled ListBox"/>
+                                        <ListBoxItem Content="Disabled ListBox"/>
+                                        <ListBoxItem Content="Disabled ListBox"/>
+                                    </ListBox>
+                                </StackPanel>
+                            </GroupBox>
+                        </UniformGrid>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Smooth Scrolling">
                     <UniformGrid Rows="1">
-                        <GroupBox Header="Enabled Controls">
-                            <StackPanel>
-                                <Button Content="Normal Button">
-                                    <Button.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="AAAA"/>
-                                            <MenuItem Header="BBBB" IsCheckable="True" IsChecked="True"/>
-                                            <MenuItem Header="CCCC">
-                                                <MenuItem Header="CAAA"/>
-                                                <MenuItem Header="CBBB"/>
-                                            </MenuItem>
-                                        </ContextMenu>
-                                    </Button.ContextMenu>
-                                </Button>
-                                <RepeatButton Content="RepeatButton"/>
-                                <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Round Button"/-->
-                                <Button IsDefault="True" Content="Default Button"/>
-                                <ToggleButton Content="ToggleButton"/>
-                                <ToggleButton IsChecked="True" Content="Checked ToggleButton"/>
-                                <Rectangle Width="1" Height="40"/>
-                                <CheckBox Content="Normal CheckBox"/>
-                                <CheckBox IsChecked="True" Content="Checked CheckBox"/>
-                                <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Null CheckBox"/>
-                                <Rectangle Width="1" Height="40"/>
-                                <RadioButton GroupName="NormalRadio" Content="Normal RadioButton"/>
-                                <RadioButton GroupName="NormalRadio" IsChecked="True" Content="Checked RadioButton"/>
-                                <ui:SpinBox/>
-                                <ui:ActionBox WatermarkText="Normal" ButtonContent="ActionBox"/>
-                            </StackPanel>
-                        </GroupBox>
-                        <GroupBox Header="Disabled Controls" IsEnabled="False">
-                            <StackPanel>
-                                <Button Content="Disabled Button"/>
-                                <RepeatButton Content="Disabled RepeatButton"/>
-                                <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Disabled Round Button"/-->
-                                <Button Visibility="Hidden" Content="Hidden Button"/>
-                                <ToggleButton Content="Disabled ToggleButton"/>
-                                <ToggleButton IsChecked="True" Content="Disabled Checked ToggleButton"/>
-                                <Rectangle Width="1" Height="40"/>
-                                <CheckBox Content="Disabled CheckBox"/>
-                                <CheckBox IsChecked="True" Content="Disabled Checked CheckBox"/>
-                                <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Disabled Null CheckBox"/>
-                                <Rectangle Width="1" Height="40"/>
-                                <RadioButton GroupName="DisabledRadio" Content="Disabled RadioButton"/>
-                                <RadioButton GroupName="DisabledRadio" IsChecked="True" Content="Disabled Checked RadioButton"/>
-                                <ui:SpinBox IsEnabled="False"/>
-                                <ui:ActionBox WatermarkText="Disabled" ButtonContent="ActionBox" IsEnabled="False"/>
-                            </StackPanel>
-                        </GroupBox>
-                    </UniformGrid>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem Header="Boxes">
-                <ScrollViewer>
-                    <UniformGrid Rows="1">
-                        <GroupBox Header="Enabled Boxes">
-                            <StackPanel>
-                                <ComboBox IsEditable="True" SelectedIndex="0">
-                                    <ComboBoxItem Content="Editable ComboBox"/>
-                                    <ComboBoxItem Content="Editable ComboBox"/>
-                                    <ComboBoxItem Content="Editable ComboBox"/>
-                                </ComboBox>
-                                <ComboBox IsEditable="False" SelectedIndex="0">
-                                    <ComboBoxItem Content="Read-Only ComboBox"/>
-                                    <ComboBoxItem Content="Read-Only ComboBox"/>
-                                    <ComboBoxItem Content="Read-Only ComboBox"/>
-                                </ComboBox>
-                                <TextBox Text="TextBox"/>
-                                <TextBox Height="50" Text="TextBox with non-standard height"/>
-                                <ListBox>
-                                    <ListBoxItem Content="ListBox"/>
-                                    <ListBoxItem Content="ListBox"/>
-                                    <ListBoxItem Content="ListBox"/>
-                                </ListBox>
-                            </StackPanel>
-                        </GroupBox>
-                        <GroupBox Header="Disabled Boxes">
-                            <StackPanel IsEnabled="False">
-                                <ComboBox IsEditable="True" SelectedIndex="0">
-                                    <ComboBoxItem Content="Disabled Editable ComboBox"/>
-                                    <ComboBoxItem Content="Disabled Editable ComboBox"/>
-                                    <ComboBoxItem Content="Disabled Editable ComboBox"/>
-                                </ComboBox>
-                                <ComboBox IsEditable="False" SelectedIndex="0">
-                                    <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
-                                    <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
-                                    <ComboBoxItem Content="Disabled Read-Only ComboBox"/>
-                                </ComboBox>
-                                <TextBox Text="Disabled TextBox"/>
-                                <TextBox Height="50" Text="Disabled TextBox with non-standard height"/>
-                                <ListBox>
-                                    <ListBoxItem Content="Disabled ListBox"/>
-                                    <ListBoxItem Content="Disabled ListBox"/>
-                                    <ListBoxItem Content="Disabled ListBox"/>
-                                </ListBox>
-                            </StackPanel>
-                        </GroupBox>
-                    </UniformGrid>
-                </ScrollViewer>
-            </TabItem>
-            <TabItem Header="Smooth Scrolling">
-                <UniformGrid Rows="1">
-                    <GroupBox Header="ScrollViewer Smoothing Options">
-                        <StackPanel Orientation="Vertical">
-                            <CheckBox x:Name="EnableSmoothScrollingCheckBox" IsChecked="True">Enable Scroll Smoothing</CheckBox>
-                            <DockPanel>
-                                <TextBlock Text="Animation type " DockPanel.Dock="Left"/>
-                                <ComboBox x:Name="AnimationTypeComboBox" SelectedIndex="3">
-                                    <ComboBoxItem>None</ComboBoxItem>
-                                    <BackEase/>
-                                    <BounceEase/>
-                                    <CircleEase/>
-                                    <CubicEase/>
-                                    <ElasticEase/>
-                                    <ExponentialEase/>
-                                    <PowerEase/>
-                                    <QuadraticEase/>
-                                    <QuarticEase/>
-                                    <QuinticEase/>
-                                    <SineEase/>
-                                </ComboBox>
-                            </DockPanel>
-                            <DockPanel>
-                                <TextBlock Text="Easing mode " DockPanel.Dock="Left"/>
-                                <ComboBox x:Name="EasingModeComboBox" SelectedIndex="1">
-                                    <ComboBoxItem>EaseIn</ComboBoxItem>
-                                    <ComboBoxItem>EaseOut</ComboBoxItem>
-                                    <ComboBoxItem>EaseInOut</ComboBoxItem>
-                                </ComboBox>
-                            </DockPanel>
-                            <Border x:Name="TimeDurationBorder" BorderThickness="1,0,0,0" BorderBrush="Transparent">
+                        <GroupBox Header="ScrollViewer Smoothing Options">
+                            <StackPanel Orientation="Vertical">
+                                <CheckBox x:Name="EnableSmoothScrollingCheckBox" IsChecked="True">Enable Scroll Smoothing</CheckBox>
                                 <DockPanel>
-                                    <TextBlock Text="Time duration " DockPanel.Dock="Left"/>
-                                    <TextBox x:Name="TimeDurationTextBox"/>
+                                    <TextBlock Text="Animation type " DockPanel.Dock="Left"/>
+                                    <ComboBox x:Name="AnimationTypeComboBox" SelectedIndex="3">
+                                        <ComboBoxItem>None</ComboBoxItem>
+                                        <BackEase/>
+                                        <BounceEase/>
+                                        <CircleEase/>
+                                        <CubicEase/>
+                                        <ElasticEase/>
+                                        <ExponentialEase/>
+                                        <PowerEase/>
+                                        <QuadraticEase/>
+                                        <QuarticEase/>
+                                        <QuinticEase/>
+                                        <SineEase/>
+                                    </ComboBox>
                                 </DockPanel>
-                            </Border>
-                        </StackPanel>
-                    </GroupBox>
-                    <ListView x:Name="SmoothScrollTestListView">
-                        <ListViewItem>Item 1</ListViewItem>
-                        <ListViewItem>Item 2</ListViewItem>
-                        <ListViewItem>Item 3</ListViewItem>
-                        <ListViewItem>Item 4</ListViewItem>
-                        <ListViewItem>Item 5</ListViewItem>
-                        <ListViewItem>Item 6</ListViewItem>
-                        <ListViewItem>Item 7</ListViewItem>
-                        <ListViewItem>Item 8</ListViewItem>
-                        <ListViewItem>Item 9</ListViewItem>
-                        <ListViewItem>Item 10</ListViewItem>
-                        <ListViewItem>Item 11</ListViewItem>
-                        <ListViewItem>Item 12</ListViewItem>
-                        <ListViewItem>Item 13</ListViewItem>
-                        <ListViewItem>Item 14</ListViewItem>
-                        <ListViewItem>Item 15</ListViewItem>
-                        <ListViewItem>Item 16</ListViewItem>
-                        <ListViewItem>Item 17</ListViewItem>
-                        <ListViewItem>Item 18</ListViewItem>
-                        <ListViewItem>Item 19</ListViewItem>
-                        <ListViewItem>Item 20</ListViewItem>
-                        <ListViewItem>Item 21</ListViewItem>
-                        <ListViewItem>Item 22</ListViewItem>
-                        <ListViewItem>Item 23</ListViewItem>
-                        <ListViewItem>Item 24</ListViewItem>
-                        <ListViewItem>Item 25</ListViewItem>
-                        <ListViewItem>Item 26</ListViewItem>
-                        <ListViewItem>Item 27</ListViewItem>
-                        <ListViewItem>Item 28</ListViewItem>
-                        <ListViewItem>Item 29</ListViewItem>
-                        <ListViewItem>Item 30</ListViewItem>
-                        <ListViewItem>Item 31</ListViewItem>
-                        <ListViewItem>Item 32</ListViewItem>
-                        <ListViewItem>Item 33</ListViewItem>
-                        <ListViewItem>Item 34</ListViewItem>
-                        <ListViewItem>Item 35</ListViewItem>
-                        <ListViewItem>Item 36</ListViewItem>
-                        <ListViewItem>Item 37</ListViewItem>
-                        <ListViewItem>Item 38</ListViewItem>
-                        <ListViewItem>Item 39</ListViewItem>
-                        <ListViewItem>Item 40</ListViewItem>
-                    </ListView>
-                </UniformGrid>
-            </TabItem>
-            <TabItem Header="Skin Settings">
-                <StackPanel Orientation="Vertical">
-                    <GroupBox Header="NOTE">
-                        <TextBlock Text="These options aren't actually skin-defined (yet)."/>
-                    </GroupBox>
-                    <GroupBox Header="Colours">
-                        <StackPanel Orientation="Vertical">
-                            <DockPanel>
-                                <TextBlock Text="Hue" DockPanel.Dock="Left"/>
-                                <Slider x:Name="ShaleHueSlider" Minimum="0" Maximum="360"/>
-                            </DockPanel>
-                            <DockPanel>
-                                <TextBlock Text="Saturation" DockPanel.Dock="Left"/>
-                                <Slider x:Name="ShaleSaturationSlider" Minimum="0" Maximum="100"/>
-                            </DockPanel>
-                            <ui:ToggleSwitch x:Name="LightsToggleSwitch" Content="Lights" IsChecked="True"/>
-                            <Button x:Name="ResetColouresButton" Click="ResetColouresButton_Click">Reset the  C O L O U R E S</Button>
-                        </StackPanel>
-                    </GroupBox>
-                </StackPanel>
-            </TabItem>
-        </TabControl>
-        <Grid Visibility="Collapsed">
+                                <DockPanel>
+                                    <TextBlock Text="Easing mode " DockPanel.Dock="Left"/>
+                                    <ComboBox x:Name="EasingModeComboBox" SelectedIndex="1">
+                                        <ComboBoxItem>EaseIn</ComboBoxItem>
+                                        <ComboBoxItem>EaseOut</ComboBoxItem>
+                                        <ComboBoxItem>EaseInOut</ComboBoxItem>
+                                    </ComboBox>
+                                </DockPanel>
+                                <Border x:Name="TimeDurationBorder" BorderThickness="1,0,0,0" BorderBrush="Transparent">
+                                    <DockPanel>
+                                        <TextBlock Text="Time duration " DockPanel.Dock="Left"/>
+                                        <TextBox x:Name="TimeDurationTextBox"/>
+                                    </DockPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+                        <ListView x:Name="SmoothScrollTestListView">
+                            <ListViewItem>Item 1</ListViewItem>
+                            <ListViewItem>Item 2</ListViewItem>
+                            <ListViewItem>Item 3</ListViewItem>
+                            <ListViewItem>Item 4</ListViewItem>
+                            <ListViewItem>Item 5</ListViewItem>
+                            <ListViewItem>Item 6</ListViewItem>
+                            <ListViewItem>Item 7</ListViewItem>
+                            <ListViewItem>Item 8</ListViewItem>
+                            <ListViewItem>Item 9</ListViewItem>
+                            <ListViewItem>Item 10</ListViewItem>
+                            <ListViewItem>Item 11</ListViewItem>
+                            <ListViewItem>Item 12</ListViewItem>
+                            <ListViewItem>Item 13</ListViewItem>
+                            <ListViewItem>Item 14</ListViewItem>
+                            <ListViewItem>Item 15</ListViewItem>
+                            <ListViewItem>Item 16</ListViewItem>
+                            <ListViewItem>Item 17</ListViewItem>
+                            <ListViewItem>Item 18</ListViewItem>
+                            <ListViewItem>Item 19</ListViewItem>
+                            <ListViewItem>Item 20</ListViewItem>
+                            <ListViewItem>Item 21</ListViewItem>
+                            <ListViewItem>Item 22</ListViewItem>
+                            <ListViewItem>Item 23</ListViewItem>
+                            <ListViewItem>Item 24</ListViewItem>
+                            <ListViewItem>Item 25</ListViewItem>
+                            <ListViewItem>Item 26</ListViewItem>
+                            <ListViewItem>Item 27</ListViewItem>
+                            <ListViewItem>Item 28</ListViewItem>
+                            <ListViewItem>Item 29</ListViewItem>
+                            <ListViewItem>Item 30</ListViewItem>
+                            <ListViewItem>Item 31</ListViewItem>
+                            <ListViewItem>Item 32</ListViewItem>
+                            <ListViewItem>Item 33</ListViewItem>
+                            <ListViewItem>Item 34</ListViewItem>
+                            <ListViewItem>Item 35</ListViewItem>
+                            <ListViewItem>Item 36</ListViewItem>
+                            <ListViewItem>Item 37</ListViewItem>
+                            <ListViewItem>Item 38</ListViewItem>
+                            <ListViewItem>Item 39</ListViewItem>
+                            <ListViewItem>Item 40</ListViewItem>
+                        </ListView>
+                    </UniformGrid>
+                </TabItem>
+                <TabItem Header="Skin Settings">
+                    <StackPanel Orientation="Vertical">
+                        <GroupBox Header="NOTE">
+                            <TextBlock Text="These options aren't actually skin-defined (yet)."/>
+                        </GroupBox>
+                        <GroupBox Header="Colours">
+                            <StackPanel Orientation="Vertical">
+                                <DockPanel>
+                                    <TextBlock Text="Hue" DockPanel.Dock="Left"/>
+                                    <Slider x:Name="ShaleHueSlider" Minimum="0" Maximum="360"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Text="Saturation" DockPanel.Dock="Left"/>
+                                    <Slider x:Name="ShaleSaturationSlider" Minimum="0" Maximum="100"/>
+                                </DockPanel>
+                                <DockPanel>
+                                    <TextBlock Text="Presets" DockPanel.Dock="Top"/>
+                                    <UniformGrid x:Name="ColouresPresetsGrid" Columns="16"/>
+                                </DockPanel>
+                                <ui:ToggleSwitch x:Name="LightsToggleSwitch" Content="Lights" IsChecked="True"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                </TabItem>
+            </TabControl>
+            <!--Grid Visibility="Collapsed">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
                 <Button x:Name="CycleCompositionStateButton" Click="CycleCompositionStateButton_Click" Content="Cycle Composition State"/>
                 <TextBlock Background="White" Foreground="Red" x:Name="CurrentCompositionStateTextBlock"><Run Text="Alpha"/></TextBlock>
@@ -255,6 +275,7 @@
                     <ui:ToggleSwitch TrueText="True" FalseText="False" HorizontalAlignment="Left" IsThreeState="False" Checked="ThemeToggleSwitch_Checked" Unchecked="ThemeToggleSwitch_Unchecked" IsChecked="True" Content="Title"/>
                 </Grid>
             </DockPanel>
-        </Grid>
+        </Grid-->
+        </DockPanel>
     </Grid>
 </win:DecoratableWindow>

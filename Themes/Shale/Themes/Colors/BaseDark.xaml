@@ -3,7 +3,7 @@
             xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters;assembly=Start9.UI.Wpf">
     <conv:SolidColorBrushToColorConverter x:Key="SolidColorBrushToColorConverter"/>
 
-    <DropShadowEffect x:Key="DropShadow" Color="Black" Direction="270" ShadowDepth="3" BlurRadius="7.5" Opacity="0.5" />
+    <!--DropShadowEffect x:Key="DropShadow" Color="Black" Direction="270" ShadowDepth="3" BlurRadius="7.5" Opacity="0.5" />
     <DropShadowEffect x:Key="SecondaryDropShadow" Color="Black" Direction="270" ShadowDepth="10" BlurRadius="20" Opacity="0.5"/>
     <DropShadowEffect x:Key="TertiaryDropShadow" Color="Black" Direction="270" ShadowDepth="4" BlurRadius="8.5" Opacity="0.5"/>
     <GradientStopCollection x:Key="ShadowGradientStops">
@@ -11,7 +11,7 @@
         <GradientStop Offset="1" Color="#00000000"/>
     </GradientStopCollection>
     <SolidColorBrush x:Key="ShadowCornerBorderBrush">#40000000</SolidColorBrush>
-    <SolidColorBrush x:Key="ModalPanelBackdropBrush">#C0000000</SolidColorBrush>
+    <SolidColorBrush x:Key="ModalPanelBackdropBrush">#C0000000</SolidColorBrush-->
     <!--literally just subtract 0x99 from the R, G, and B channels for light brushes, adding instead where appropriate, and inverting all pure black to pure white-->
 
     <!--SolidColorBrush x:Key="WindowBackgroundBrush">#FF333333</SolidColorBrush-->

@@ -51,23 +51,17 @@ namespace FrontEndTest
                         Show();
                 }));
             };
-            //timer.Start();
+            
 
-            /*Start9.UI.Wpf.Windows.MessageBox<TestEnum>.Show("Body Text", "Caption", new ResourceDictionary()
-            {
-                Source = new Uri("/Start9.UI.Wpf;component/Themes/Plex.xaml", UriKind.RelativeOrAbsolute)
-            });*/
             TimeDurationTextBox.Text = ScrollAnimationBehavior.GetTimeDuration(SmoothScrollTestListView).ToString();
 
             ShaleHueSlider.Value = _accent.Hue;
             ShaleSaturationSlider.Value = _accent.Saturation;
 
-            CalculateColor();
+            Application.Current.Resources.MergedDictionaries.Add(_accent.Dictionary);
 
             ShaleHueSlider.ValueChanged += ShaleSliders_ValueChanged;
             ShaleSaturationSlider.ValueChanged += ShaleSliders_ValueChanged;
-            /*ShaleHueSlider.PreviewMouseLeftButtonUp += Sliders_PreviewMouseLeftButtonUp;
-            ShaleSaturationSlider.PreviewMouseLeftButtonUp += Sliders_PreviewMouseLeftButtonUp;*/
         }
 
         private void Sliders_PreviewMouseLeftButtonUp(object sender, MouseButtonEventArgs e)
@@ -85,39 +79,38 @@ namespace FrontEndTest
             EnableSmoothScrollingCheckBox.Unchecked += EnableSmoothScrollingCheckBox_Checked;
             LightsToggleSwitch.Checked += LightsToggleSwitch_Checked;
             LightsToggleSwitch.Unchecked += LightsToggleSwitch_Unchecked;
+
+            ColouresPresetsGrid.Children.Add(GetColoureButton(ShaleAccents.Blue));
+            ColouresPresetsGrid.Children.Add(GetColoureButton(ShaleAccents.Beige));
+        }
+
+        private Button GetColoureButton(ShaleAccent accent)
+        {
+            Button button = new Button()
+            {
+                Background = new SolidColorBrush(accent.ToColor())
+            };
+
+            button.SetBinding(Button.HeightProperty, new Binding()
+            {
+                Source = button,
+                Path = new PropertyPath("ActualWidth"),
+                FallbackValue = 10.0
+            });
+
+            button.Click += (sneder, args) =>
+            {
+                ShaleHueSlider.Value = accent.Hue;
+                ShaleSaturationSlider.Value = accent.Saturation;
+            };
+
+            return button;
         }
 
         public void CalculateColor()
         {
-            for (int i = 2; i < Application.Current.Resources.MergedDictionaries.Count; i++)
-            {
-                Application.Current.Resources.MergedDictionaries.RemoveAt(0);
-            }
-            //Application.Current.Resources.MergedDictionaries[1].MergedDictionaries.Clear();
-            Debug.WriteLine("Values: " + ShaleHueSlider.Value + ", " + ShaleSaturationSlider.Value);
-            _accent = new ShaleAccent(ShaleHueSlider.Value, ShaleSaturationSlider.Value);
-
-            var dictionary = _accent.GetDictionary();
-            Debug.WriteLine(dictionary["SelectedHighlightLightColor"]);
-            Application.Current.Resources.MergedDictionaries.Insert(0, dictionary);
-            var lightDictionary = Application.Current.Resources.MergedDictionaries[2];
-            Uri source = lightDictionary.Source;
-            //remove and recreate light/dark ResourceDictionary (yes this is necessary...for some reason...
-            Application.Current.Resources.MergedDictionaries.Remove(lightDictionary);
-            Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
-            {
-                Source = source //new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseDark.xaml")
-            });
-        }
-
-        private void ToggleGlassToggleButton_Click(object sender, RoutedEventArgs e)
-        {
-            /*if (ToggleGlassToggleButton.IsChecked == true)
-                EnableGlass = true;
-            else
-                EnableGlass = false;*/
-            //Debug.WriteLine("Glass toggled:" + EnableGlass.ToString());
-
+            _accent.Hue = ShaleHueSlider.Value;
+            _accent.Saturation = ShaleSaturationSlider.Value;
         }
 
         private void CycleCompositionStateButton_Click(object sender, RoutedEventArgs e)
@@ -131,23 +124,7 @@ namespace FrontEndTest
             else
                 CompositionState = WindowCompositionState.Alpha;
 
-            CurrentCompositionStateTextBlock.Text = CompositionState.ToString();
-        }
-
-        private void ThemeToggleSwitch_Checked(object sender, RoutedEventArgs e)
-        {
-            /*Resources.MergedDictionaries.Add(new ResourceDictionary()
-            {
-                Source = new Uri("/Start9.UI.Wpf;component/Themes/Colors/LightPlexBlue.xaml", UriKind.RelativeOrAbsolute)
-            });*/
-        }
-
-        private void ThemeToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
-        {
-            /*Resources.MergedDictionaries.Add(new ResourceDictionary()
-            {
-                Source = new Uri("/Start9.UI.Wpf;component/Themes/Colors/DarkPlexBlue.xaml", UriKind.RelativeOrAbsolute)
-            });*/
+            //CurrentCompositionStateTextBlock.Text = CompositionState.ToString();
         }
 
         private void ScrollAnimationComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -193,37 +170,14 @@ namespace FrontEndTest
             CalculateColor();
         }
 
-        bool reset = false;
-        private void ResetColouresButton_Click(object sender, RoutedEventArgs e)
-        {
-            /*Debug.WriteLine("SelectedHighlightLightColor: " + Application.Current.Resources["SelectedHighlightLightColor"]);
-            Debug.WriteLine("SelectedHighlightBrush: " + Application.Current.Resources["SelectedHighlightBrush"]);
-            Debug.WriteLine("SelectedHighlightBrush.Color: " + ((SolidColorBrush)Application.Current.Resources["SelectedHighlightBrush"]).Color);
-            Debug.WriteLine("Dictionaries count: " + Application.Current.Resources.MergedDictionaries.Count);*/
-            if (reset)
-            {
-                _accent = ShaleAccents.Beige;
-                reset = false;
-            }
-            else
-            {
-                _accent = ShaleAccents.Blue;
-                reset = true;
-            }
-
-            ShaleHueSlider.Value = _accent.Hue;
-            ShaleSaturationSlider.Value = _accent.Saturation;
-            CalculateColor();
-        }
-
         private void LightsToggleSwitch_Checked(object sender, RoutedEventArgs e)
         {
-            Application.Current.Resources.MergedDictionaries[2].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml", UriKind.Relative);
+            Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml", UriKind.Relative);
         }
 
         private void LightsToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
         {
-            Application.Current.Resources.MergedDictionaries[2].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseDark.xaml", UriKind.Relative);
+            Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseDark.xaml", UriKind.Relative);
         }
     }
 }
