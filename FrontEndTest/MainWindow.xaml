@@ -32,7 +32,7 @@
                 <StatusBarItem>Enabled StatusBarItem</StatusBarItem>
                 <StatusBarItem IsEnabled="False">Disabled StatusBarItem</StatusBarItem>
             </StatusBar>
-            <TabControl Style="{DynamicResource LineTabControlStyle}">
+            <TabControl Style="{DynamicResource PrimaryTabControlStyle}">
                 <TabItem Header="Buttons">
                     <ScrollViewer>
                         <UniformGrid Rows="1">
@@ -220,6 +220,12 @@
                 </TabItem>
                 <TabItem Header="Skin Settings">
                     <StackPanel Orientation="Vertical">
+                        <GroupBox Header="Current Skin">
+                            <ComboBox x:Name="SkinsComboBox" SelectedIndex="0">
+                                <ComboBoxItem Content="Shale"/>
+                                <ComboBoxItem Content="Plex"/>
+                            </ComboBox>
+                        </GroupBox>
                         <GroupBox Header="NOTE">
                             <TextBlock Text="These options aren't actually skin-defined (yet)."/>
                         </GroupBox>

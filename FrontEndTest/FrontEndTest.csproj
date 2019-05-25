@@ -21,6 +21,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Start9.UI.Wpf\Start9.UI.Wpf.csproj" />
+    <ProjectReference Include="..\Themes\Plex\Start9.Wpf.Styles.Plex.csproj" />
     <ProjectReference Include="..\Themes\Shale\Start9.Wpf.Styles.Shale.csproj" />
   </ItemGroup>
   <ItemGroup>

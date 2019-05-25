@@ -7,7 +7,6 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Shale.xaml"/>
-                <!--ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml"/-->
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

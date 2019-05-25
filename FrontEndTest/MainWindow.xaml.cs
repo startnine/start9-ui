@@ -27,6 +27,8 @@ namespace FrontEndTest
     /// </summary>
     public partial class MainWindow : DecoratableWindow
     {
+        bool _isSkinShale = true;
+
         enum TestEnum
         {
             OK,
@@ -82,10 +84,14 @@ namespace FrontEndTest
 
             ColouresPresetsGrid.Children.Add(GetColoureButton(ShaleAccents.Blue));
             ColouresPresetsGrid.Children.Add(GetColoureButton(ShaleAccents.Beige));
+
+            SkinsComboBox.SelectionChanged += SkinsComboBox_SelectionChanged;
         }
 
         private Button GetColoureButton(ShaleAccent accent)
         {
+            Debug.WriteLine("PRESET COLOUR: " + accent.ToColor());
+
             Button button = new Button()
             {
                 Background = new SolidColorBrush(accent.ToColor())
@@ -167,17 +173,37 @@ namespace FrontEndTest
 
         private void ShaleSliders_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            CalculateColor();
+            if (SkinsComboBox.SelectedIndex == 0)
+                CalculateColor();
         }
 
         private void LightsToggleSwitch_Checked(object sender, RoutedEventArgs e)
         {
-            Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml", UriKind.Relative);
+            if (SkinsComboBox.SelectedIndex == 0)
+                Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml", UriKind.Relative);
+            else if (SkinsComboBox.SelectedIndex == 1)
+                Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Colors/LightBlue.xaml", UriKind.Relative);
         }
 
         private void LightsToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
         {
-            Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseDark.xaml", UriKind.Relative);
+            if (SkinsComboBox.SelectedIndex == 0)
+                Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseDark.xaml", UriKind.Relative);
+            else if (SkinsComboBox.SelectedIndex == 1)
+                Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Colors/DarkBlue.xaml", UriKind.Relative);
+        }
+
+        private void SkinsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SkinsComboBox.SelectedIndex == 0)
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Shale.xaml", UriKind.Relative);
+            else if (SkinsComboBox.SelectedIndex == 1)
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Plex.xaml", UriKind.Relative);
+
+            if (LightsToggleSwitch.IsChecked.Value)
+                LightsToggleSwitch_Checked(LightsToggleSwitch, null);
+            else
+                LightsToggleSwitch_Unchecked(LightsToggleSwitch, null);
         }
     }
 }

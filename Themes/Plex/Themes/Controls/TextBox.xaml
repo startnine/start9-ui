@@ -1,0 +1,287 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf"
+            xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters;assembly=Start9.UI.Wpf"
+            xmlns:win="clr-namespace:Start9.UI.Wpf.Windows;assembly=Start9.UI.Wpf"
+            xmlns:uib="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
+            xmlns:beh="http://schemas.microsoft.com/xaml/behaviors">
+    <conv:CornerCurvesToCornerRadiusConverter x:Key="CornerCurvesToCornerRadiusConverter"/>
+
+    <Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBox}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
+        <Setter Property="AllowDrop" Value="true" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="5,0" />
+        <Setter Property="MinHeight" Value="22"/>
+        <Setter Property="Background" Value="{DynamicResource TextBoxPrimaryBackgroundBrush}"/>
+        <Setter Property="Foreground" Value="{DynamicResource TextBoxForegroundBrush}"/>
+        <Setter Property="BorderBrush" Value="{DynamicResource TextBoxPrimaryBorderBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Grid>
+                        <Border Name="OuterBorder" CornerRadius="11" BorderThickness="1" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"/>
+                        <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
+                        <Border CornerRadius="10" BorderThickness="1" Padding="0" BorderBrush="Transparent" ClipToBounds="True">
+                            <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
+                            <Border x:Name="ClipBorder" CornerRadius="9" BorderThickness="0" Padding="0" Background="Transparent" BorderBrush="Transparent" ClipToBounds="True">
+                                <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
+                                <Grid>
+                                    <Grid x:Name="ClipGrid" Margin="0" ClipToBounds="True">
+                                        <Grid.OpacityMask>
+                                            <VisualBrush>
+                                                <VisualBrush.Visual>
+                                                    <Border Background="White" SnapsToDevicePixels="True" CornerRadius="9" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}}"/>
+                                                    <!--{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=Border}}"-->
+                                                </VisualBrush.Visual>
+                                            </VisualBrush>
+                                        </Grid.OpacityMask>
+                                        <Grid x:Name="IdleEdge" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Opacity="0.25">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="11"/>
+                                                <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="11"/>
+                                                <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
+                                            </Grid.ColumnDefinitions>
+                                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
+                                                <Canvas.Background>
+                                                    <RadialGradientBrush RadiusX="1.125" Center="1,0.5" GradientOrigin="1,0.5" GradientStops="{DynamicResource TextBoxGlowRadialGradientStops}"/>
+                                                </Canvas.Background>
+                                            </Canvas>
+                                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
+                                                <Canvas.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TextBoxGlowLinearGradientStops}"/>
+                                                </Canvas.Background>
+                                            </Canvas>
+                                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2">
+                                                <Canvas.Background>
+                                                    <RadialGradientBrush RadiusX="1.125" Center="0,0.5" GradientOrigin="0,0.5" GradientStops="{DynamicResource TextBoxGlowRadialGradientStops}"/>
+                                                </Canvas.Background>
+                                            </Canvas>
+                                        </Grid>
+                                        <Grid x:Name="HoverEdge" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Opacity="0" ClipToBounds="True">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="11"/>
+                                                <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition Width="11"/>
+                                                <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Grid}}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
+                                            </Grid.ColumnDefinitions>
+                                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="0">
+                                                <Canvas.Background>
+                                                    <RadialGradientBrush RadiusX="1.125" Center="1,0.5" GradientOrigin="1,0.5" GradientStops="{DynamicResource TextBoxHoverGlowRadialGradientStops}"/>
+                                                </Canvas.Background>
+                                            </Canvas>
+                                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1">
+                                                <Canvas.Background>
+                                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TextBoxHoverGlowLinearGradientStops}"/>
+                                                </Canvas.Background>
+                                            </Canvas>
+                                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="2">
+                                                <Canvas.Background>
+                                                    <RadialGradientBrush RadiusX="1.125" Center="0,0.5" GradientOrigin="0,0.5" GradientStops="{DynamicResource TextBoxHoverGlowRadialGradientStops}"/>
+                                                </Canvas.Background>
+                                            </Canvas>
+                                        </Grid>
+                                    </Grid>
+                                    <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="#01000000"/>
+                                </Grid>
+                            </Border>
+                        </Border>
+                        <Border CornerRadius="11" BorderThickness="1" Margin="1" Background="Transparent" BorderBrush="{DynamicResource TextBoxSecondaryBorderBrush}" IsHitTestVisible="False"/>
+                        <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsFocused" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverEdge"
+                                                         Storyboard.TargetProperty="Opacity" To="1"
+                                                         Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverEdge"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource CheckBoxDisabledForegroundBrush}"/>
+                            <Setter TargetName="ClipGrid" Property="Opacity" Value="0.5"/>
+                            <Setter TargetName="OuterBorder" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ShinyTextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
+        <Setter Property="AllowDrop" Value="true" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="5,0" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBoxForegroundBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border Name="Border" CornerRadius="3" BorderThickness="1" Padding="0" BorderBrush="{DynamicResource TextBoxPrimaryBorderBrush}">
+                        <Border CornerRadius="2" BorderThickness="1" Padding="0" BorderBrush="{DynamicResource ShinyTextBoxPrimaryBorderBrush}" Background="{DynamicResource ShinyTextBoxPrimaryBackgroundBrush}">
+                            <Grid>
+                                <Grid x:Name="HoverEdge" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                      Margin="-1" Opacity="0">
+                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Top" Width="3" Height="3"
+                                                Margin="0">
+                                        <Canvas.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1" GradientStops="{DynamicResource TextBoxHoverGlowGradientStops}"/>
+                                        </Canvas.Background>
+                                    </Canvas>
+                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="3"
+                                                Margin="2,0">
+                                        <Canvas.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TextBoxHoverGlowGradientStops}"/>
+                                        </Canvas.Background>
+                                    </Canvas>
+                                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Top" Width="3"
+                                                Height="3" Margin="0">
+                                        <Canvas.Background>
+                                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,1" GradientStops="{DynamicResource TextBoxHoverGlowGradientStops}"/>
+                                        </Canvas.Background>
+                                    </Canvas>
+                                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Stretch" Width="3"
+                                                Margin="0,2">
+                                        <Canvas.Background>
+                                            <LinearGradientBrush StartPoint="1,0" EndPoint="0,0" GradientStops="{DynamicResource TextBoxHoverGlowGradientStops}"/>
+                                        </Canvas.Background>
+                                    </Canvas>
+                                    <Canvas HorizontalAlignment="Right" VerticalAlignment="Bottom" Width="3"
+                                                Height="3" Margin="0">
+                                        <Canvas.Background>
+                                            <LinearGradientBrush StartPoint="1,1" EndPoint="0,0" GradientStops="{DynamicResource TextBoxHoverGlowGradientStops}"/>
+                                        </Canvas.Background>
+                                    </Canvas>
+                                    <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Height="3"
+                                                Margin="2,0">
+                                        <Canvas.Background>
+                                            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" GradientStops="{DynamicResource TextBoxHoverGlowGradientStops}"/>
+                                        </Canvas.Background>
+                                    </Canvas>
+                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="3"
+                                                Height="3" Margin="0">
+                                        <Canvas.Background>
+                                            <LinearGradientBrush StartPoint="0,1" EndPoint="1,0" GradientStops="{DynamicResource TextBoxHoverGlowGradientStops}"/>
+                                        </Canvas.Background>
+                                    </Canvas>
+                                    <Canvas HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="3"
+                                                Margin="0,2">
+                                        <Canvas.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0" GradientStops="{DynamicResource TextBoxHoverGlowGradientStops}"/>
+                                        </Canvas.Background>
+                                    </Canvas>
+                                </Grid>
+                                <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="4"
+                                        Background="White" Margin="1,2,1,0" />
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                            </Grid>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsFocused" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverEdge"
+                                                         Storyboard.TargetProperty="Opacity" To="1"
+                                                         Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverEdge"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="AddressBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="KeyboardNavigation.TabNavigation" Value="None" />
+        <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
+        <Setter Property="AllowDrop" Value="true" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="Padding" Value="5,0" />
+        <Setter Property="Foreground" Value="{DynamicResource AddressBoxForegroundBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Border Name="Border" CornerRadius="11" BorderThickness="1" BorderBrush="{DynamicResource AddressBoxBorderBrush}">
+                        <Border CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource AddressBoxSecondaryBorderBrush}" Background="{DynamicResource AddressBoxSecondaryBackgroundBrush}">
+                            <Grid>
+                                <Border x:Name="IdleFill" BorderThickness="0" CornerRadius="9" Opacity="1" Background="{DynamicResource AddressBoxIdleFillBackgroundBrush}"/>
+                                <Border x:Name="HoverFill" BorderThickness="0" CornerRadius="9" Opacity="0" Background="{DynamicResource AddressBoxHoverFillBackgroundBrush}"/>
+                                <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" TextBlock.Foreground="{TemplateBinding Foreground}" Foreground="{TemplateBinding Foreground}" />
+                            </Grid>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsFocused" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverFill" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverFill" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

@@ -13,7 +13,14 @@ namespace Start9.Wpf.Styles.Shale
     //http://hslpicker.com/ is useful for manual rgb --> hsl conversions
     public static class ShaleAccents
     {
+        /// <summary>
+        /// #FF8DD3D6
+        /// </summary>
         public static ShaleAccent Blue => new ShaleAccent(183, 48);
+
+        /// <summary>
+        /// #FFBCB3A7
+        /// </summary>
         public static ShaleAccent Beige => new ShaleAccent(33, 13);
     }
     public class ShaleAccent

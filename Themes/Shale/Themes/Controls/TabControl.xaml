@@ -7,7 +7,7 @@
             xmlns:beh="http://schemas.microsoft.com/xaml/behaviors">
     <conv:CornerCurvesToCornerRadiusConverter x:Key="CornerCurvesToCornerRadiusConverter"/>
 
-    <Style x:Key="LineTabItemStyle" TargetType="{x:Type TabItem}">
+    <Style x:Key="PrimaryTabItemStyle" TargetType="{x:Type TabItem}">
         <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="VerticalAlignment" Value="Stretch"/>
@@ -91,9 +91,9 @@
         </Setter>
     </Style>
 
-    <Style x:Key="LineTabControlStyle" TargetType="{x:Type TabControl}">
+    <Style x:Key="PrimaryTabControlStyle" TargetType="{x:Type TabControl}">
         <Style.Resources>
-            <Style x:Key="{x:Type TabItem}" TargetType="{x:Type TabItem}" BasedOn="{StaticResource LineTabItemStyle}"/>
+            <Style x:Key="{x:Type TabItem}" TargetType="{x:Type TabItem}" BasedOn="{StaticResource PrimaryTabItemStyle}"/>
         </Style.Resources>
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="SnapsToDevicePixels" Value="True" />

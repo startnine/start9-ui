@@ -16,9 +16,13 @@
     <DebugType>pdbonly</DebugType>
   </PropertyGroup>
   <ItemGroup>
-    <None Remove="Themes\Colors\ShaleBaseDark.xaml" />
+    <None Remove="Themes\Colors\DarkPlexBlueOld.xaml" />
+    <None Remove="Themes\Colors\LightPlexBlueOld.xaml" />
+    <None Remove="Themes\Colors\ShaleBaseDarkOld.xaml" />
+    <None Remove="Themes\Colors\ShaleBaseLightOld.xaml" />
     <None Remove="Themes\Colors\ShaleBeigeOld.xaml" />
     <None Remove="Themes\Colors\ShaleBlueOld.xaml" />
+    <None Remove="Themes\PlexOld.xaml" />
     <None Remove="Themes\ShaleOld.xaml" />
   </ItemGroup>
   
@@ -49,7 +53,7 @@
   </ItemGroup>
   
   <ItemGroup>
-    <Page Update="Themes\Colors\ShaleBaseDark.xaml">
+    <Page Update="Themes\Colors\ShaleBaseDarkOld.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
