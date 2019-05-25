@@ -7,6 +7,7 @@
     <DropShadowEffect x:Key="TertiaryDropShadow" Color="Black" Direction="270" ShadowDepth="4" BlurRadius="8.5" Opacity="0.5"/>
     <GradientStopCollection x:Key="ShadowGradientStops">
         <GradientStop Offset="0" Color="#40000000"/>
+        <GradientStop Offset="0.75" Color="#06000000"/>
         <GradientStop Offset="1" Color="#00000000"/>
     </GradientStopCollection>
     <SolidColorBrush x:Key="ShadowCornerBorderBrush">#40000000</SolidColorBrush>

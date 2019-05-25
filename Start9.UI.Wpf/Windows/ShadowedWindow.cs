@@ -13,15 +13,6 @@ namespace Start9.UI.Wpf.Windows
 {
     public partial class ShadowedWindow : CompositingWindow
     {
-        public Thickness ShadowOffsetThickness
-        {
-            get => (Thickness)GetValue(ShadowOffsetThicknessProperty);
-            set => SetValue(ShadowOffsetThicknessProperty, value);
-        }
-
-        public static readonly DependencyProperty ShadowOffsetThicknessProperty =
-            DependencyProperty.Register("ShadowOffsetThickness", typeof(Thickness), typeof(ShadowedWindow), new PropertyMetadata(new Thickness(50)));
-
         public Style ShadowStyle
         {
             get => (Style)GetValue(ShadowStyleProperty);
@@ -29,7 +20,21 @@ namespace Start9.UI.Wpf.Windows
         }
 
         public static readonly DependencyProperty ShadowStyleProperty =
-            DependencyProperty.Register("ShadowStyle", typeof(Style), typeof(ShadowedWindow), new PropertyMetadata());
+            DependencyProperty.Register("ShadowStyle", typeof(Style), typeof(ShadowedWindow), new PropertyMetadata(OnShadowChangedCallback));
+
+        public Thickness ShadowOffsetThickness
+        {
+            get => (Thickness)GetValue(ShadowOffsetThicknessProperty);
+            set => SetValue(ShadowOffsetThicknessProperty, value);
+        }
+
+        public static readonly DependencyProperty ShadowOffsetThicknessProperty =
+            DependencyProperty.Register("ShadowOffsetThickness", typeof(Thickness), typeof(ShadowedWindow), new PropertyMetadata(new Thickness(50), OnShadowChangedCallback));
+
+        public static void OnShadowChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            (sender as ShadowedWindow).SyncShadowToWindow();
+        }
 
         readonly Window _shadowWindow;
         readonly TimeSpan _noDuration = TimeSpan.FromMilliseconds(0);

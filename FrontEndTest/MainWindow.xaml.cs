@@ -53,7 +53,7 @@ namespace FrontEndTest
                         Show();
                 }));
             };
-            
+
 
             TimeDurationTextBox.Text = ScrollAnimationBehavior.GetTimeDuration(SmoothScrollTestListView).ToString();
 
@@ -196,9 +196,15 @@ namespace FrontEndTest
         private void SkinsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (SkinsComboBox.SelectedIndex == 0)
+            {
                 Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Shale.xaml", UriKind.Relative);
+                TitlebarHeight = 61;
+            }
             else if (SkinsComboBox.SelectedIndex == 1)
+            {
                 Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Plex.xaml", UriKind.Relative);
+                ClearValue(TitlebarHeightProperty);
+            }
 
             if (LightsToggleSwitch.IsChecked.Value)
                 LightsToggleSwitch_Checked(LightsToggleSwitch, null);
