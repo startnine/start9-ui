@@ -7,10 +7,10 @@
             xmlns:beh="http://schemas.microsoft.com/xaml/behaviors">
     <conv:CornerCurvesToCornerRadiusConverter x:Key="CornerCurvesToCornerRadiusConverter"/>
 
-    <Style x:Key="{x:Type Button}" TargetType="Button">
+    <Style x:Key="{x:Type ButtonBase}" TargetType="ButtonBase">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Margin" Value="6,6,10,10" />
+        <!--Setter Property="Margin" Value="6,6,10,10" /-->
         <Setter Property="Padding" Value="4" />
         <Setter Property="Foreground" Value="{DynamicResource ButtonIdleForegroundBrush}" />
         <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -20,52 +20,52 @@
         <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="ButtonBase">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" UseLayoutRounding="True">
-                        <Grid.Effect>
+                        <!--Grid.Effect>
                             <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
-                        </Grid.Effect>
-                        <Border x:Name="IdleBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="{DynamicResource StandardButtonIdleBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonIdleBorderBrush}"/>
-                        <Border x:Name="PressedBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="{DynamicResource StandardButtonPressedBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonPressedBorderBrush}" />
-                        <Border x:Name="SecondaryBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="Transparent" BorderBrush="Transparent">
-                            <Border BorderThickness="1" CornerRadius="2" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonSecondaryBorderBrush}">
-                                <Border BorderThickness="1" CornerRadius="1" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonTertiaryBorderBrush}">
+                        </Grid.Effect-->
+                        <Border x:Name="IdleBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="{DynamicResource StandardButtonIdleBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonIdleBorderBrush}"/>
+                        <Border x:Name="PressedBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="{DynamicResource StandardButtonPressedBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonPressedBorderBrush}" />
+                        <Border x:Name="SecondaryBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="Transparent" BorderBrush="Transparent">
+                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonSecondaryBorderBrush}">
+                                <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonTertiaryBorderBrush}">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0" Background="{DynamicResource StandardButtonTertiaryBackgroundBrush}" BorderBrush="Transparent"/>
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0" Background="{DynamicResource StandardButtonQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
+                                        <Border BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="{DynamicResource StandardButtonTertiaryBackgroundBrush}" BorderBrush="Transparent"/>
+                                        <Border BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="{DynamicResource StandardButtonQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
                                     </Grid>
                                 </Border>
                             </Border>
                         </Border>
-                        <Border x:Name="HoverBackground" BorderThickness="1" CornerRadius="1" Margin="3,2,3,3" Padding="0" Opacity="0" BorderBrush="{DynamicResource StandardButtonHoverBorderBrush}" Background="Transparent">
+                        <Border x:Name="HoverBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="3,2,3,3" Padding="0" Opacity="0" BorderBrush="{DynamicResource StandardButtonHoverBorderBrush}" Background="Transparent">
                             <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource StandardButtonHoverGlowBrush}"/>
                         </Border>
-                        <Border x:Name="TertiaryBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="Transparent" BorderBrush="Transparent">
-                            <Border BorderThickness="1" CornerRadius="2" Margin="1,0,1,1" Padding="0">
-                                <Border BorderThickness="1" CornerRadius="1" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonSenaryBackgroundBrush}">
+                        <Border x:Name="TertiaryBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="Transparent" BorderBrush="Transparent">
+                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Margin="1,0,1,1" Padding="0">
+                                <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonSenaryBackgroundBrush}">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
                                     </Grid>
                                 </Border>
                             </Border>
                         </Border>
-                        <Border x:Name="DisabledBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0"
+                        <Border x:Name="DisabledBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0"
                                 Visibility="Visible" Opacity="0" Background="{DynamicResource StandardButtonDisabledPrimaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonDisabledPrimaryBorderBrush}">
                         </Border>
-                        <Border x:Name="DisabledSecondaryBackground" BorderThickness="1" CornerRadius="3" Margin="0"
+                        <Border x:Name="DisabledSecondaryBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0"
                                 Padding="0" Visibility="Visible" Opacity="0" Background="Transparent"
                                 BorderBrush="Transparent">
-                            <Border BorderThickness="1" CornerRadius="2" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonDisabledSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonDisabledSecondaryBorderBrush}">
-                                <Border BorderThickness="1" CornerRadius="1" Margin="0" Padding="0"
+                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonDisabledSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonDisabledSecondaryBorderBrush}">
+                                <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0"
                                         Background="Transparent" BorderBrush="{DynamicResource StandardButtonDisabledTertiaryBorderBrush}">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0"
+                                        <Border BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0"
                                                 Background="{DynamicResource StandardButtonDisabledTertiaryBackgroundBrush}" BorderBrush="Transparent" />
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0" Background="{DynamicResource StandardButtonDisabledQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
+                                        <Border BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="{DynamicResource StandardButtonDisabledQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
                                     </Grid>
                                 </Border>
                             </Border>
                         </Border>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False"/>
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -97,12 +97,12 @@
                                         <DoubleAnimation Storyboard.TargetName="SecondaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="0"
                                                          Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
+                                        <!--DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="ShadowDepth" To="1"
                                                          Duration="0:0:0.125" />
                                         <DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="Opacity" To="0.25"
-                                                         Duration="0:0:0.125" />
+                                                         Duration="0:0:0.125" /-->
                                         <DoubleAnimation Storyboard.TargetName="TertiaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="0.875"
                                                          Duration="0:0:0.125" />
@@ -121,12 +121,12 @@
                                         <DoubleAnimation Storyboard.TargetName="SecondaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="1"
                                                          Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
+                                        <!--DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="ShadowDepth" To="3"
                                                          Duration="0:0:0.125" />
                                         <DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="Opacity" To="0.5"
-                                                         Duration="0:0:0.125" />
+                                                         Duration="0:0:0.125" /-->
                                         <DoubleAnimation Storyboard.TargetName="TertiaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="0"
                                                          Duration="0:0:0.125" />
@@ -167,167 +167,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="{x:Type RepeatButton}" TargetType="{x:Type RepeatButton}">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Margin" Value="10" />
-        <Setter Property="Padding" Value="4" />
-        <Setter Property="Foreground" Value="{DynamicResource ButtonIdleForegroundBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" UseLayoutRounding="True">
-                        <Grid.Effect>
-                            <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
-                        </Grid.Effect>
-                        <Border x:Name="IdleBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="{DynamicResource StandardButtonIdleBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonIdleBorderBrush}"/>
-                        <Border x:Name="PressedBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="{DynamicResource StandardButtonPressedBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonPressedBorderBrush}" />
-                        <Border x:Name="SecondaryBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="Transparent" BorderBrush="Transparent">
-                            <Border BorderThickness="1" CornerRadius="2" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonSecondaryBorderBrush}">
-                                <Border BorderThickness="1" CornerRadius="1" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonTertiaryBorderBrush}">
-                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0" Background="{DynamicResource StandardButtonTertiaryBackgroundBrush}" BorderBrush="Transparent"/>
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0" Background="{DynamicResource StandardButtonQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
-                                    </Grid>
-                                </Border>
-                            </Border>
-                        </Border>
-                        <Border x:Name="HoverBackground" BorderThickness="1" CornerRadius="1" Margin="3,2,3,3" Padding="0" Opacity="0" BorderBrush="{DynamicResource StandardButtonHoverBorderBrush}" Background="Transparent">
-                            <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource StandardButtonHoverGlowBrush}"/>
-                        </Border>
-                        <Border x:Name="TertiaryBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="Transparent" BorderBrush="Transparent">
-                            <Border BorderThickness="1" CornerRadius="2" Margin="1,0,1,1" Padding="0">
-                                <Border BorderThickness="1" CornerRadius="1" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonSenaryBackgroundBrush}">
-                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-                                    </Grid>
-                                </Border>
-                            </Border>
-                        </Border>
-                        <Border x:Name="DisabledBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0"
-                                Visibility="Visible" Opacity="0" Background="{DynamicResource StandardButtonDisabledPrimaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonDisabledPrimaryBorderBrush}">
-                        </Border>
-                        <Border x:Name="DisabledSecondaryBackground" BorderThickness="1" CornerRadius="3" Margin="0"
-                                Padding="0" Visibility="Visible" Opacity="0" Background="Transparent"
-                                BorderBrush="Transparent">
-                            <Border BorderThickness="1" CornerRadius="2" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonDisabledSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonDisabledSecondaryBorderBrush}">
-                                <Border BorderThickness="1" CornerRadius="1" Margin="0" Padding="0"
-                                        Background="Transparent" BorderBrush="{DynamicResource StandardButtonDisabledTertiaryBorderBrush}">
-                                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0"
-                                                Background="{DynamicResource StandardButtonDisabledTertiaryBackgroundBrush}" BorderBrush="Transparent" />
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0" Background="{DynamicResource StandardButtonDisabledQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
-                                    </Grid>
-                                </Border>
-                            </Border>
-                        </Border>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False"/>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="IdleBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="0"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="1"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="SecondaryBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="0"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
-                                                         Storyboard.TargetProperty="ShadowDepth" To="1"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
-                                                         Storyboard.TargetProperty="Opacity" To="0.25"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="TertiaryBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="0.875"
-                                                         Duration="0:0:0.125" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="IdleBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="1"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="PressedBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="0"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="SecondaryBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="1"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
-                                                         Storyboard.TargetProperty="ShadowDepth" To="3"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
-                                                         Storyboard.TargetProperty="Opacity" To="0.5"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="TertiaryBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="0"
-                                                         Duration="0:0:0.125" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="DisabledBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="1"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DisabledSecondaryBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="1"
-                                                         Duration="0:0:0.125" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="DisabledBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="0"
-                                                         Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DisabledSecondaryBackground"
-                                                         Storyboard.TargetProperty="Opacity" To="0"
-                                                         Duration="0:0:0.125" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    <Style x:Key="{x:Type Button}" TargetType="Button" BasedOn="{StaticResource {x:Type ButtonBase}}"/>
+    <Style x:Key="{x:Type RepeatButton}" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource {x:Type ButtonBase}}"/>
 
-    <Style x:Key="RoundButtonStyle" TargetType="Button">
+    <Style x:Key="RoundButtonBaseStyle" TargetType="ButtonBase">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Background" Value="Transparent" />
         <!--Setter Property="Margin" Value="6,6,11,10" /-->
@@ -340,7 +183,7 @@
         <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexRoundFocusVisualStyle}" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="ButtonBase">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <Grid x:Name="IdleBackground" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                               Margin="0" Background="Transparent" Opacity="1">
@@ -366,7 +209,7 @@
                             <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Fill="{DynamicResource RoundButtonDisabledSecondaryFillBrush}"/>
                             <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Fill="{DynamicResource RoundButtonDisabledTertiaryFillBrush}"/>
                         </Grid>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" />
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsEnabled" Value="False">
@@ -447,7 +290,10 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ToolbarButtonStyle" TargetType="Button">
+    <Style x:Key="RoundButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource RoundButtonBaseStyle}"/>
+    <Style x:Key="RoundRepeatButtonStyle" TargetType="{x:Type RepeatButton}" BasedOn="{StaticResource RoundButtonBaseStyle}"/>
+
+    <Style x:Key="ToolbarButtonBaseStyle" TargetType="ButtonBase">
         <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonForegroundBrush}" />
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="BorderBrush" Value="Transparent" />
@@ -458,14 +304,14 @@
         <Setter Property="Padding" Value="5" />
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="Button">
+                <ControlTemplate TargetType="ButtonBase">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Border x:Name="HoverBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverBorderBrush}" BorderThickness="1" CornerRadius="4" Opacity="0">
-                            <Border BorderThickness="1" CornerRadius="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
-                                <Border BorderThickness="0,1,0,2" CornerRadius="2" Background="{DynamicResource ToolbarButtonHoverTertiaryBackgroundBrush}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}"/>
+                        <Border x:Name="HoverBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverBorderBrush}" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='4,4,4,4;0,0,0,0'}" Opacity="0">
+                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
+                                <Border BorderThickness="0,1,0,2" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Background="{DynamicResource ToolbarButtonHoverTertiaryBackgroundBrush}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}"/>
                             </Border>
                         </Border>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" />
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -494,6 +340,9 @@
         </Setter>
     </Style>
 
+    <Style x:Key="ToolbarButtonStyle" TargetType="Button" BasedOn="{StaticResource ToolbarButtonBaseStyle}"/>
+    <Style x:Key="ToolbarRepeatButtonStyle" TargetType="RepeatButton" BasedOn="{StaticResource ToolbarButtonBaseStyle}"/>
+
     <Style x:Key="HeaderStripButtonStyle" TargetType="Button">
         <Setter Property="Background" Value="Transparent" />
         <Setter Property="Margin" Value="15,0"/>
@@ -510,7 +359,7 @@
                         <Grid.Effect>
                             <DropShadowEffect x:Name="DropShadow" Direction="225" ShadowDepth="3" BlurRadius="25" Opacity="0.25"/>
                         </Grid.Effect>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" />
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -543,65 +392,55 @@
 
     <!--#region ToggleButton Styles-->
 
-    <Style x:Key="{x:Type ToggleButton}" TargetType="ToggleButton">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="Margin" Value="6,6,10,10" />
-        <Setter Property="Padding" Value="4" />
-        <Setter Property="Foreground" Value="{DynamicResource ButtonIdleForegroundBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexFocusVisualStyle}" />
+    <Style x:Key="{x:Type ToggleButton}" TargetType="ToggleButton" BasedOn="{StaticResource {x:Type ButtonBase}}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Grid.Effect>
+                        <!--Grid.Effect>
                             <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="320" ShadowDepth="3" BlurRadius="10" Opacity="0.5" />
-                        </Grid.Effect>
-                        <Border x:Name="IdleBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="{DynamicResource StandardButtonIdleBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonIdleBorderBrush}"/>
-                        <Border x:Name="PressedBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="{DynamicResource StandardButtonPressedBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonPressedBorderBrush}" />
-                        <Border x:Name="SecondaryBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="Transparent" BorderBrush="Transparent">
-                            <Border BorderThickness="1" CornerRadius="2" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonSecondaryBorderBrush}">
-                                <Border BorderThickness="1" CornerRadius="1" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonTertiaryBorderBrush}">
+                        </Grid.Effect-->
+                        <Border x:Name="IdleBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="{DynamicResource StandardButtonIdleBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonIdleBorderBrush}"/>
+                        <Border x:Name="PressedBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="{DynamicResource StandardButtonPressedBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonPressedBorderBrush}" />
+                        <Border x:Name="SecondaryBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0" Visibility="Visible" Opacity="1" Background="Transparent" BorderBrush="Transparent">
+                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonSecondaryBorderBrush}">
+                                <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonTertiaryBorderBrush}">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0" Background="{DynamicResource StandardButtonTertiaryBackgroundBrush}" BorderBrush="Transparent"/>
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0" Background="{DynamicResource StandardButtonQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
+                                        <Border BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="{DynamicResource StandardButtonTertiaryBackgroundBrush}" BorderBrush="Transparent"/>
+                                        <Border BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="{DynamicResource StandardButtonQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
                                     </Grid>
                                 </Border>
                             </Border>
                         </Border>
-                        <Border x:Name="HoverBackground" BorderThickness="1" CornerRadius="1" Margin="3,2,3,3" Padding="0" Opacity="0" BorderBrush="{DynamicResource StandardButtonHoverBorderBrush}" Background="Transparent">
+                        <Border x:Name="HoverBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="3,2,3,3" Padding="0" Opacity="0" BorderBrush="{DynamicResource StandardButtonHoverBorderBrush}" Background="Transparent">
                             <Canvas HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource StandardButtonHoverGlowBrush}"/>
                         </Border>
-                        <Border x:Name="TertiaryBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="Transparent" BorderBrush="Transparent">
-                            <Border BorderThickness="1" CornerRadius="2" Margin="1,0,1,1" Padding="0">
-                                <Border BorderThickness="1" CornerRadius="1" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonSenaryBackgroundBrush}">
+                        <Border x:Name="TertiaryBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0" Visibility="Visible" Opacity="0" Background="Transparent" BorderBrush="Transparent">
+                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Margin="1,0,1,1" Padding="0">
+                                <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="Transparent" BorderBrush="{DynamicResource StandardButtonSenaryBackgroundBrush}">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
                                     </Grid>
                                 </Border>
                             </Border>
                         </Border>
-                        <Border x:Name="DisabledBackground" BorderThickness="1" CornerRadius="3" Margin="0" Padding="0"
+                        <Border x:Name="DisabledBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0"
                                 Visibility="Visible" Opacity="0" Background="{DynamicResource StandardButtonDisabledPrimaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonDisabledPrimaryBorderBrush}">
                         </Border>
-                        <Border x:Name="DisabledSecondaryBackground" BorderThickness="1" CornerRadius="3" Margin="0"
+                        <Border x:Name="DisabledSecondaryBackground" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0"
                                 Padding="0" Visibility="Visible" Opacity="0" Background="Transparent"
                                 BorderBrush="Transparent">
-                            <Border BorderThickness="1" CornerRadius="2" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonDisabledSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonDisabledSecondaryBorderBrush}">
-                                <Border BorderThickness="1" CornerRadius="1" Margin="0" Padding="0"
+                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Margin="1,0,1,1" Padding="0" Background="{DynamicResource StandardButtonDisabledSecondaryBackgroundBrush}" BorderBrush="{DynamicResource StandardButtonDisabledSecondaryBorderBrush}">
+                                <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0"
                                         Background="Transparent" BorderBrush="{DynamicResource StandardButtonDisabledTertiaryBorderBrush}">
                                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0">
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0"
+                                        <Border BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0"
                                                 Background="{DynamicResource StandardButtonDisabledTertiaryBackgroundBrush}" BorderBrush="Transparent" />
-                                        <Border BorderThickness="0" CornerRadius="1" Margin="0" Padding="0" Background="{DynamicResource StandardButtonDisabledQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
+                                        <Border BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}" Margin="0" Padding="0" Background="{DynamicResource StandardButtonDisabledQuarternaryBackgroundBrush}" BorderBrush="Transparent"/>
                                     </Grid>
                                 </Border>
                             </Border>
                         </Border>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" />
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -638,12 +477,12 @@
                                         <DoubleAnimation Storyboard.TargetName="SecondaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="0"
                                                          Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
+                                        <!--DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="ShadowDepth" To="1"
                                                          Duration="0:0:0.125" />
                                         <DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="Opacity" To="0.25"
-                                                         Duration="0:0:0.125" />
+                                                         Duration="0:0:0.125" /-->
                                         <DoubleAnimation Storyboard.TargetName="TertiaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="0.875"
                                                          Duration="0:0:0.125" />
@@ -662,12 +501,12 @@
                                         <DoubleAnimation Storyboard.TargetName="SecondaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="1"
                                                          Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
+                                        <!--DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="ShadowDepth" To="3"
                                                          Duration="0:0:0.125" />
                                         <DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="Opacity" To="0.5"
-                                                         Duration="0:0:0.125" />
+                                                         Duration="0:0:0.125" /-->
                                         <DoubleAnimation Storyboard.TargetName="TertiaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="0"
                                                          Duration="0:0:0.125" />
@@ -688,12 +527,12 @@
                                         <DoubleAnimation Storyboard.TargetName="SecondaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="0"
                                                          Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
+                                        <!--DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="ShadowDepth" To="1"
                                                          Duration="0:0:0.125" />
                                         <DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="Opacity" To="0.25"
-                                                         Duration="0:0:0.125" />
+                                                         Duration="0:0:0.125" /-->
                                         <DoubleAnimation Storyboard.TargetName="TertiaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="0.875"
                                                          Duration="0:0:0.125" />
@@ -712,12 +551,12 @@
                                         <DoubleAnimation Storyboard.TargetName="SecondaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="1"
                                                          Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="DropShadow"
+                                        <!--DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="ShadowDepth" To="3"
                                                          Duration="0:0:0.125" />
                                         <DoubleAnimation Storyboard.TargetName="DropShadow"
                                                          Storyboard.TargetProperty="Opacity" To="0.5"
-                                                         Duration="0:0:0.125" />
+                                                         Duration="0:0:0.125" /-->
                                         <DoubleAnimation Storyboard.TargetName="TertiaryBackground"
                                                          Storyboard.TargetProperty="Opacity" To="0"
                                                          Duration="0:0:0.125" />
@@ -750,6 +589,7 @@
                                     </Storyboard>
                                 </BeginStoryboard>
                             </Trigger.ExitActions>
+                            <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -757,17 +597,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="RoundToggleButtonStyle" TargetType="ToggleButton">
-        <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Background" Value="Transparent" />
-        <!--Setter Property="Margin" Value="6,6,11,10" />
-        <Setter Property="Padding" Value="0" /-->
-        <Setter Property="Foreground" Value="{DynamicResource ButtonIdleForegroundBrush}" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="BorderThickness" Value="0" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="FocusVisualStyle" Value="{DynamicResource PlexRoundFocusVisualStyle}" />
+    <Style x:Key="RoundToggleButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource RoundButtonBaseStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
@@ -796,7 +626,7 @@
                             <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Fill="{DynamicResource RoundButtonDisabledSecondaryFillBrush}"/>
                             <Ellipse HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Fill="{DynamicResource RoundButtonDisabledTertiaryFillBrush}"/>
                         </Grid>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" />
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -879,30 +709,22 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ToolbarToggleButtonStyle" TargetType="ToggleButton">
-        <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonForegroundBrush}" />
-        <Setter Property="Background" Value="Transparent" />
-        <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Margin" Value="5" />
-        <Setter Property="Padding" Value="5" />
+    <Style x:Key="ToolbarToggleButtonStyle" TargetType="ToggleButton" BasedOn="{StaticResource ToolbarButtonBaseStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ToggleButton">
                     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Border x:Name="SelectedBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverPrimaryBorderBrush}" BorderThickness="1" CornerRadius="4" Opacity="0">
-                            <Border BorderThickness="1" CornerRadius="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
-                                <Border BorderThickness="0,1,0,2" CornerRadius="2" Background="{DynamicResource ToolbarToggleButtonSelectedBackground}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}"/>
+                        <Border x:Name="SelectedBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverPrimaryBorderBrush}" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='4,4,4,4;0,0,0,0'}" Opacity="0">
+                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
+                                <Border BorderThickness="0,1,0,2" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Background="{DynamicResource ToolbarToggleButtonSelectedBackground}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}"/>
                             </Border>
                         </Border>
-                        <Border x:Name="HoverBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverPrimaryBorderBrush}" BorderThickness="1" CornerRadius="4" Opacity="0">
-                            <Border BorderThickness="1" CornerRadius="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
-                                <Border BorderThickness="0,1,0,2" CornerRadius="2" Background="{DynamicResource ToolbarButtonHoverTertiaryBackgroundBrush}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}"/>
+                        <Border x:Name="HoverBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverPrimaryBorderBrush}" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='4,4,4,4;0,0,0,0'}" Opacity="0">
+                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
+                                <Border BorderThickness="0,1,0,2" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Background="{DynamicResource ToolbarButtonHoverTertiaryBackgroundBrush}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}"/>
                             </Border>
                         </Border>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" />
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -983,11 +805,11 @@
                                 </LinearGradientBrush>
                             </Border.OpacityMask>
                         </Border>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" UseLayoutRounding="True">
-                            <ContentControl.Effect>
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" UseLayoutRounding="True">
+                            <ContentPresenter.Effect>
                                 <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="230" ShadowDepth="3" BlurRadius="3" Opacity="0.375"/>
-                            </ContentControl.Effect>
-                        </ContentControl>
+                            </ContentPresenter.Effect>
+                        </ContentPresenter>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
@@ -1066,11 +888,11 @@
                                 </LinearGradientBrush>
                             </Border.OpacityMask>
                         </Border>
-                        <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" IsTabStop="False" UseLayoutRounding="True">
-                            <ContentControl.Effect>
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False" UseLayoutRounding="True">
+                            <ContentPresenter.Effect>
                                 <DropShadowEffect x:Name="DropShadow" Color="Black" Direction="230" ShadowDepth="3" BlurRadius="3" Opacity="0.375"/>
-                            </ContentControl.Effect>
-                        </ContentControl>
+                            </ContentPresenter.Effect>
+                        </ContentPresenter>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">

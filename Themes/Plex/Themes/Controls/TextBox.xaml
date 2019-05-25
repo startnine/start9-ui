@@ -15,8 +15,8 @@
         <Setter Property="AllowDrop" Value="true" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="5,0" />
-        <Setter Property="MinHeight" Value="22"/>
+        <Setter Property="Padding" Value="4" />
+        <!--Setter Property="MinHeight" Value="22"/-->
         <Setter Property="Background" Value="{DynamicResource TextBoxPrimaryBackgroundBrush}"/>
         <Setter Property="Foreground" Value="{DynamicResource TextBoxForegroundBrush}"/>
         <Setter Property="BorderBrush" Value="{DynamicResource TextBoxPrimaryBorderBrush}"/>
@@ -24,18 +24,81 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
                     <Grid>
-                        <Border Name="OuterBorder" CornerRadius="11" BorderThickness="1" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"/>
+                        <Border Name="OuterBorder" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" BorderThickness="1" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"/>
+                        <Border CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" BorderThickness="1" Padding="0" BorderBrush="Transparent" ClipToBounds="True">
+                            <Grid>
+                                <Border VerticalAlignment="Top" Height="6" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,0,0;0,0,0,0'}">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TextBoxGlowGradientStops}"/>
+                                    </Border.Background>
+                                </Border>
+                                <Border x:Name="HoverEdge" VerticalAlignment="Top" Height="6" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,0,0;0,0,0,0'}" Opacity="0">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TextBoxHoverGlowGradientStops}"/>
+                                    </Border.Background>
+                                </Border>
+                            </Grid>
+                        </Border>
+                        <!--LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource TextBoxHoverGlowLinearGradientStops}"/>
+                                                
+                                                    <RadialGradientBrush RadiusX="1.125" Center="0,0.5" GradientOrigin="0,0.5" GradientStops="{DynamicResource TextBoxHoverGlowRadialGradientStops}"/-->
+
+                        <Border CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" BorderThickness="1" Margin="1" Background="Transparent" BorderBrush="{DynamicResource TextBoxSecondaryBorderBrush}" IsHitTestVisible="False"/>
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="#01000000"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="IsFocused" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverEdge"
+                                                         Storyboard.TargetProperty="Opacity" To="1"
+                                                         Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverEdge"
+                                                         Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource CheckBoxDisabledForegroundBrush}"/>
+                            <!--Setter TargetName="ClipGrid" Property="Opacity" Value="0.5"/-->
+                            <Setter TargetName="OuterBorder" Property="Opacity" Value="0.5"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="zTextBox" TargetType="{x:Type TextBox}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TextBoxBase}">
+                    <Grid>
+                        <Border Name="OuterBorder" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='11,11,11,11;0,0,0,0'}" BorderThickness="1" Padding="0" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}"/>
                         <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
-                        <Border CornerRadius="10" BorderThickness="1" Padding="0" BorderBrush="Transparent" ClipToBounds="True">
+                        <Border CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='10,10,10,10;0,0,0,0'}" BorderThickness="1" Padding="0" BorderBrush="Transparent" ClipToBounds="True">
                             <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
-                            <Border x:Name="ClipBorder" CornerRadius="9" BorderThickness="0" Padding="0" Background="Transparent" BorderBrush="Transparent" ClipToBounds="True">
+                            <Border x:Name="ClipBorder" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='9,9,9,9;0,0,0,0'}" BorderThickness="0" Padding="0" Background="Transparent" BorderBrush="Transparent" ClipToBounds="True">
                                 <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
                                 <Grid>
+                                    <Rectangle x:Name="ClipSizingAid" Fill="#01000000"/>
                                     <Grid x:Name="ClipGrid" Margin="0" ClipToBounds="True">
                                         <Grid.OpacityMask>
                                             <VisualBrush>
                                                 <VisualBrush.Visual>
-                                                    <Border Background="White" SnapsToDevicePixels="True" CornerRadius="9" Width="{Binding ActualWidth, RelativeSource={RelativeSource AncestorType=Grid}}" Height="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Grid}}"/>
+                                                    <Border Background="White" SnapsToDevicePixels="True" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='9,9,9,9;0,0,0,0'}" Width="{Binding ActualWidth, ElementName=ClipSizingAid}" Height="{Binding ActualHeight, ElementName=ClipSizingAid}"/>
                                                     <!--{Binding CornerRadius, RelativeSource={RelativeSource AncestorType=Border}}"-->
                                                 </VisualBrush.Visual>
                                             </VisualBrush>
@@ -89,12 +152,12 @@
                                             </Canvas>
                                         </Grid>
                                     </Grid>
-                                    <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="#01000000"/>
                                 </Grid>
                             </Border>
                         </Border>
-                        <Border CornerRadius="11" BorderThickness="1" Margin="1" Background="Transparent" BorderBrush="{DynamicResource TextBoxSecondaryBorderBrush}" IsHitTestVisible="False"/>
+                        <Border CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='11,11,11,11;0,0,0,0'}" BorderThickness="1" Margin="1" Background="Transparent" BorderBrush="{DynamicResource TextBoxSecondaryBorderBrush}" IsHitTestVisible="False"/>
                         <!--{Binding ActualHeight, RelativeSource={RelativeSource Mode=Self}, Converter={StaticResource DoubleToFractionOfDoubleConverter}}-->
+                        <ScrollViewer x:Name="PART_ContentHost" Margin="0" Padding="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Background="#01000000"/>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <MultiTrigger>
@@ -144,8 +207,8 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                    <Border Name="Border" CornerRadius="3" BorderThickness="1" Padding="0" BorderBrush="{DynamicResource TextBoxPrimaryBorderBrush}">
-                        <Border CornerRadius="2" BorderThickness="1" Padding="0" BorderBrush="{DynamicResource ShinyTextBoxPrimaryBorderBrush}" Background="{DynamicResource ShinyTextBoxPrimaryBackgroundBrush}">
+                    <Border Name="Border" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" BorderThickness="1" Padding="0" BorderBrush="{DynamicResource TextBoxPrimaryBorderBrush}">
+                        <Border CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" BorderThickness="1" Padding="0" BorderBrush="{DynamicResource ShinyTextBoxPrimaryBorderBrush}" Background="{DynamicResource ShinyTextBoxPrimaryBackgroundBrush}">
                             <Grid>
                                 <Grid x:Name="HoverEdge" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                       Margin="-1" Opacity="0">
@@ -249,11 +312,11 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBoxBase}">
-                    <Border Name="Border" CornerRadius="11" BorderThickness="1" BorderBrush="{DynamicResource AddressBoxBorderBrush}">
-                        <Border CornerRadius="10" BorderThickness="1" BorderBrush="{DynamicResource AddressBoxSecondaryBorderBrush}" Background="{DynamicResource AddressBoxSecondaryBackgroundBrush}">
+                    <Border Name="Border" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='11,11,11,11;0,0,0,0'}" BorderThickness="1" BorderBrush="{DynamicResource AddressBoxBorderBrush}">
+                        <Border CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='10,10,10,10;0,0,0,0'}" BorderThickness="1" BorderBrush="{DynamicResource AddressBoxSecondaryBorderBrush}" Background="{DynamicResource AddressBoxSecondaryBackgroundBrush}">
                             <Grid>
-                                <Border x:Name="IdleFill" BorderThickness="0" CornerRadius="9" Opacity="1" Background="{DynamicResource AddressBoxIdleFillBackgroundBrush}"/>
-                                <Border x:Name="HoverFill" BorderThickness="0" CornerRadius="9" Opacity="0" Background="{DynamicResource AddressBoxHoverFillBackgroundBrush}"/>
+                                <Border x:Name="IdleFill" BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='9,9,9,9;0,0,0,0'}" Opacity="1" Background="{DynamicResource AddressBoxIdleFillBackgroundBrush}"/>
+                                <Border x:Name="HoverFill" BorderThickness="0" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='9,9,9,9;0,0,0,0'}" Opacity="0" Background="{DynamicResource AddressBoxHoverFillBackgroundBrush}"/>
                                 <ScrollViewer x:Name="PART_ContentHost" Margin="{TemplateBinding Padding}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" TextBlock.Foreground="{TemplateBinding Foreground}" Foreground="{TemplateBinding Foreground}" />
                             </Grid>
                         </Border>

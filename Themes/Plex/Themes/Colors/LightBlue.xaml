@@ -520,7 +520,7 @@
 
     <GradientStopCollection x:Key="TextBoxGlowLinearGradientStops">
         <GradientStop Offset="0" Color="#FFBECCDD" />
-        <GradientStop Offset="0.25" Color="Transparent" />
+        <GradientStop Offset="1" Color="Transparent" />
         <GradientStop Offset="0.75" Color="Transparent" />
         <GradientStop Offset="1" Color="#FFBECCDD" />
     </GradientStopCollection>
