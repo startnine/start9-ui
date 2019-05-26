@@ -399,7 +399,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListView}">
                     <Border Style="{DynamicResource HorizontalBarBorderStyle}" DockPanel.Dock="{Binding (DockPanel.Dock), RelativeSource={RelativeSource Mode=TemplatedParent}}" ui:AttachedProperties.CornerCurves="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}}">
-                        <ItemsPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                        <ItemsPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Right" VerticalAlignment="Stretch"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
@@ -432,7 +432,7 @@
         <Setter Property="ItemTemplate">
             <Setter.Value>
                 <DataTemplate>
-                    <Button x:Name="Button" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" Margin="0,0,5,0">
+                    <Button x:Name="Button" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" Margin="0,0,5,0" MinWidth="100">
                         <e:Interaction.Behaviors>
                             <uib:DialogBoxButtonBehavior/>
                         </e:Interaction.Behaviors>

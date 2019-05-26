@@ -184,6 +184,8 @@ namespace Start9.UI.Wpf.Windows
                 SizeToContent = SizeToContent.WidthAndHeight
             };
 
+            window.SetResourceReference(DecoratableWindow.StyleProperty, "MessageBoxWindowStyle");
+
             object value = null;
 
             content.ResultButtonClicked += (sneder, args) =>

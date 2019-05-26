@@ -642,4 +642,6 @@
             </Trigger>
         </Style.Triggers>
     </Style>
+
+    <Style x:Key="MessageBoxWindowStyle" TargetType="{x:Type win:DecoratableWindow}" BasedOn="{StaticResource {x:Type win:DecoratableWindow}}"/>
 </ResourceDictionary>

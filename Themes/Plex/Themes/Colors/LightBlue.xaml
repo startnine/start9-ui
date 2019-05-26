@@ -129,7 +129,7 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="WindowDialogFooterBrush">#FF5C75B5</SolidColorBrush>
+    <SolidColorBrush x:Key="WindowDialogForegroundBrush">White</SolidColorBrush>
 
     <!--#endregion Window Brushes-->
 
