@@ -213,7 +213,7 @@ namespace FrontEndTest
 
         private void MessageBoxTestButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxActionSets.IgnoreRetryAbortButtons b = (MessageBoxActionSets.IgnoreRetryAbortButtons)MessageBox<MessageBoxActionSets.IgnoreRetryAbortActionSet>.Show("Here, have some actions to choose from.", "This is a MessageBox", (Rectangle)Resources["SampleIcon"]);
+            MessageBoxButtons.IgnoreRetryAbortButtons b = (MessageBoxButtons.IgnoreRetryAbortButtons)MessageBox<IgnoreRetryAbortActionSet>.Show("Here, have some actions to choose from.", "This is a MessageBox", (Rectangle)Resources["SampleIcon"]);
 
             MessageBox.Show("Result of previous MessageBox: " + b.ToString(), "haha yes");
 
@@ -246,11 +246,14 @@ namespace FrontEndTest
                 return value.ToString();*/
         }
 
-        public object[] GetValues()
+        public IEnumerable<object> Actions
         {
-            object[] objects = new object[Enum.GetNames(typeof(SampleButtons)).Count()];
-            Enum.GetValues(typeof(SampleButtons)).CopyTo(objects, 0);
-            return objects;
+            get
+            {
+                object[] objects = new object[Enum.GetNames(typeof(SampleButtons)).Count()];
+                Enum.GetValues(typeof(SampleButtons)).CopyTo(objects, 0);
+                return objects.ToList();
+            }
         }
     }
 }

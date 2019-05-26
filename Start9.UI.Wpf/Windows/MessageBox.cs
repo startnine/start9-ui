@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace Start9.UI.Wpf.Windows
 {
-    public static class MessageBoxActionSets
+    public static class MessageBoxButtons
     {
         public enum OkButton
         {
@@ -32,91 +32,103 @@ namespace Start9.UI.Wpf.Windows
             Yes,
             No
         }
+    }
 
-        public class OkActionSet : IMessageBoxActionSet
+    public class OkActionSet : IMessageBoxActionSet
+    {
+        public string GetDisplayName(object value)
         {
-            public string GetDisplayName(object value)
-            {
-                if (value is string valueString)
-                    return valueString;
-                else
-                    return value.ToString();
-            }
-
-            public object[] GetValues()
-            {
-                object[] objects = new object[Enum.GetNames(typeof(OkButton)).Count()];
-                Enum.GetValues(typeof(OkButton)).CopyTo(objects, 0);
-                return objects;
-            }
+            if (value is string valueString)
+                return valueString;
+            else
+                return value.ToString();
         }
 
-        public class OkCancelActionSet : IMessageBoxActionSet
+        public IEnumerable<object> Actions
         {
-            public string GetDisplayName(object value)
+            get
             {
-                if (value is string valueString)
-                    return valueString;
-                else
-                    return value.ToString();
-            }
-
-            public object[] GetValues()
-            {
-                object[] objects = new object[Enum.GetNames(typeof(OkCancelButtons)).Count()];
-                Enum.GetValues(typeof(OkCancelButtons)).CopyTo(objects, 0);
-                return objects;
+                object[] objects = new object[Enum.GetNames(typeof(MessageBoxButtons.OkButton)).Count()];
+                Enum.GetValues(typeof(MessageBoxButtons.OkButton)).CopyTo(objects, 0);
+                return objects.ToList();
             }
         }
+    }
 
-        public class IgnoreRetryAbortActionSet : IMessageBoxActionSet
+    public class OkCancelActionSet : IMessageBoxActionSet
+    {
+        public string GetDisplayName(object value)
         {
-            public string GetDisplayName(object value)
-            {
-                if (value is string valueString)
-                    return valueString;
-                else
-                    return value.ToString();
-            }
-
-            public object[] GetValues()
-            {
-                object[] objects = new object[Enum.GetNames(typeof(IgnoreRetryAbortButtons)).Count()];
-                Enum.GetValues(typeof(IgnoreRetryAbortButtons)).CopyTo(objects, 0);
-                return objects;
-            }
+            if (value is string valueString)
+                return valueString;
+            else
+                return value.ToString();
         }
 
-        public class YesNoActionSet : IMessageBoxActionSet
+        public IEnumerable<object> Actions
         {
-            public string GetDisplayName(object value)
+            get
             {
-                if (value is string valueString)
-                    return valueString;
-                else
-                    return value.ToString();
+                object[] objects = new object[Enum.GetNames(typeof(MessageBoxButtons.OkCancelButtons)).Count()];
+                Enum.GetValues(typeof(MessageBoxButtons.OkCancelButtons)).CopyTo(objects, 0);
+                return objects.ToList();
             }
+        }
+    }
 
-            public object[] GetValues()
+    public class IgnoreRetryAbortActionSet : IMessageBoxActionSet
+    {
+        public string GetDisplayName(object value)
+        {
+            if (value is string valueString)
+                return valueString;
+            else
+                return value.ToString();
+        }
+
+        public IEnumerable<object> Actions
+        {
+            get
             {
-                object[] objects = new object[Enum.GetNames(typeof(YesNoButtons)).Count()];
-                Enum.GetValues(typeof(YesNoButtons)).CopyTo(objects, 0);
-                return objects;
+                object[] objects = new object[Enum.GetNames(typeof(MessageBoxButtons.IgnoreRetryAbortButtons)).Count()];
+                Enum.GetValues(typeof(MessageBoxButtons.IgnoreRetryAbortButtons)).CopyTo(objects, 0);
+                return objects.ToList();
+            }
+        }
+    }
+
+    public class YesNoActionSet : IMessageBoxActionSet
+    {
+        public string GetDisplayName(object value)
+        {
+            if (value is string valueString)
+                return valueString;
+            else
+                return value.ToString();
+        }
+
+        public IEnumerable<object> Actions
+        {
+            get
+            {
+                object[] objects = new object[Enum.GetNames(typeof(MessageBoxButtons.YesNoButtons)).Count()];
+                Enum.GetValues(typeof(MessageBoxButtons.YesNoButtons)).CopyTo(objects, 0);
+                return objects.ToList();
             }
         }
     }
 
     public static class MessageBox
     {
-        public static MessageBoxActionSets.OkButton Show(string text, string caption)
+        public static MessageBoxButtons.OkButton Show(string text, string caption)
         {
-            return (MessageBoxActionSets.OkButton)(MessageBox<MessageBoxActionSets.OkActionSet>.Show(text, caption));
+            return (MessageBoxButtons.OkButton)(MessageBox<OkActionSet>.Show(text, caption));
         }
     }
 
     public interface IMessageBoxActionSet
     {
-        object[] GetValues();
+        IEnumerable<object> Actions { get; }
 
         string GetDisplayName(object value);
     }

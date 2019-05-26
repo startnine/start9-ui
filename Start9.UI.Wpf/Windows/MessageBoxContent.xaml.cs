@@ -46,7 +46,7 @@ namespace Start9.UI.Wpf.Windows
         {
             InitializeComponent();
             Actions.Clear();
-            foreach (object s in actionSet.GetValues())
+            foreach (object s in actionSet.Actions)
                 Actions.Add(new MessageBoxAction(s, actionSet.GetDisplayName(s)));
 
             BodyTextBlock.Text = bodyText;
