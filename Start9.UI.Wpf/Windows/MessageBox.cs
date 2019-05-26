@@ -163,7 +163,7 @@ namespace Start9.UI.Wpf.Windows
         }
     }
 
-    public static class MessageBox<T>
+    public static class MessageBox<TActionSet> where TActionSet : IMessageBoxActionSet, new()
     {
         public static object Show(string text, string caption)
         {
@@ -172,10 +172,11 @@ namespace Start9.UI.Wpf.Windows
 
         public static object Show(string text, string caption, FrameworkElement icon)
         {
-            if (typeof(T).GetInterface(nameof(IMessageBoxActionSet)) == null)
-                throw new InvalidOperationException("MessageBoxActions<T>: T must implement IMessageBoxActionSet.");
+            /*if (typeof(TActionSet).GetInterface(nameof(IMessageBoxActionSet)) == null)
+                throw new InvalidOperationException("MessageBoxActions<T>: T must implement IMessageBoxActionSet.");*/
 
-            MessageBoxContent content = new MessageBoxContent((IMessageBoxActionSet)Activator.CreateInstance(typeof(T)), text, icon);
+            //(IMessageBoxActionSet)Activator.CreateInstance(typeof(TActionSet))
+            MessageBoxContent content = new MessageBoxContent(new TActionSet(), text, icon);
             DecoratableWindow window = new DecoratableWindow()
             {
                 Title = caption,
