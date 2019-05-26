@@ -54,7 +54,7 @@
                                                 </ContextMenu>
                                             </Button.ContextMenu>
                                         </Button>
-                                        <Button Content="Normal Button">
+                                        <Button x:Name="MessageBoxTestButton" Content="Click for MessageBox" Click="MessageBoxTestButton_Click">
                                             <ui:AttachedProperties.CornerCurves>
                                                 <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
                                             </ui:AttachedProperties.CornerCurves>

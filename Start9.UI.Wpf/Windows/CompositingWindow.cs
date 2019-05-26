@@ -266,6 +266,8 @@ namespace Start9.UI.Wpf.Windows
 
         private void CompositingWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            Loaded -= CompositingWindow_Loaded;
+
             if (IsVisible)
             {
                 IsWindowVisible = false;
@@ -277,8 +279,6 @@ namespace Start9.UI.Wpf.Windows
                 UpdateShowInAltTabPropertyValue(this);
 
             SetPeekState();
-
-            Loaded -= CompositingWindow_Loaded;
         }
 
         new public void Show()

@@ -211,5 +211,10 @@ namespace FrontEndTest
             else
                 LightsToggleSwitch_Unchecked(LightsToggleSwitch, null);
         }
+
+        private void MessageBoxTestButton_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox<MessageBoxEnums.OkButton>.Show("Here, have some information", "MessageBox", Resources.MergedDictionaries[0]);
+        }
     }
 }

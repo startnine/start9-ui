@@ -68,6 +68,8 @@ namespace Start9.UI.Wpf.Windows
                     _shadowWindow.Hide();
             };
 
+            _shadowWindow.Loaded += (sneder, args) => SyncShadowToWindow();
+
             Binding shadowStyleBinding = new Binding()
             {
                 Source = this,
@@ -208,7 +210,7 @@ namespace Start9.UI.Wpf.Windows
                 if (IgnorePeek)
                     peekValue = 1;
 
-                NativeMethods.DwmSetWindowAttribute(new WindowInteropHelper(_shadowWindow).EnsureHandle(), 12, ref peekValue, sizeof(int));
+                NativeMethods.DwmSetWindowAttribute(_helper.Handle, 12, ref peekValue, sizeof(int));
             }
         }
 
