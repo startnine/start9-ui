@@ -217,7 +217,7 @@ namespace FrontEndTest
 
             MessageBox.Show("Result of previous MessageBox: " + b.ToString(), "haha yes");
 
-            MessageBox<SampleActionSet>.Show("*laughs in custom actions*", "I CAN DO ANYTHING", (Rectangle)Resources["SampleIcon"]);
+            MessageBox<SampleActionSet>.Show("*laughs in custom MessageBox actions*", "I CAN DO ANYTHING", (Rectangle)Resources["SampleIcon"]);
         }
     }
 

@@ -69,6 +69,7 @@
     </Style>
     
     <Style x:Key="MessageBoxButtonsListViewStyle" TargetType="{x:Type ListView}">
+        <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>
         <Setter Property="ItemsPanel">
@@ -78,11 +79,12 @@
                 </ItemsPanelTemplate>
             </Setter.Value>
         </Setter>
+        <Setter Property="Margin" Value="0"/>
         <Setter Property="Padding" Value="5,5,0,5"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListView}">
-                    <Border Style="{DynamicResource HorizontalBarBorderStyle}" DockPanel.Dock="{Binding (DockPanel.Dock), RelativeSource={RelativeSource Mode=TemplatedParent}}" ui:AttachedProperties.CornerCurves="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                    <Border Style="{DynamicResource HorizontalBarBorderStyle}" DockPanel.Dock="{Binding (DockPanel.Dock), RelativeSource={RelativeSource Mode=TemplatedParent}}" ui:AttachedProperties.CornerCurves="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}}" HorizontalAlignment="Stretch">
                         <ItemsPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     </Border>
                 </ControlTemplate>
