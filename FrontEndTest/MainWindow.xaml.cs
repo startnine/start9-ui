@@ -27,8 +27,6 @@ namespace FrontEndTest
     /// </summary>
     public partial class MainWindow : DecoratableWindow
     {
-        bool _isSkinShale = true;
-
         enum TestEnum
         {
             OK,

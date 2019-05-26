@@ -36,7 +36,13 @@ namespace Start9.UI.Wpf.Windows
             (sender as ShadowedWindow).SyncShadowToWindow();
         }
 
-        readonly Window _shadowWindow;
+        Window _shadowWindow = new Window()
+        {
+            WindowStyle = WindowStyle.None,
+            AllowsTransparency = true,
+            ShowInTaskbar = false,
+            ShowActivated = false
+        };
         readonly TimeSpan _noDuration = TimeSpan.FromMilliseconds(0);
 
         static ShadowedWindow()
@@ -48,14 +54,15 @@ namespace Start9.UI.Wpf.Windows
 
         public ShadowedWindow() : base()
         {
-            _shadowWindow = new Window()
+            /*_shadowWindow = new Window()
             {
                 WindowStyle = WindowStyle.None,
                 AllowsTransparency = true,
                 ShowInTaskbar = false,
                 ShowActivated = false,
                 Tag = this
-            };
+            };*/
+            //_shadowWindow.Tag = this;
             _helper = new WindowInteropHelper(_shadowWindow);
 
             _shadowWindow.SourceInitialized += (sneder, args) =>
@@ -68,7 +75,8 @@ namespace Start9.UI.Wpf.Windows
                     _shadowWindow.Hide();
             };
 
-            _shadowWindow.Loaded += (sneder, args) => SyncShadowToWindow();
+            Loaded += ShadowedWindow_Loaded;
+            _shadowWindow.Loaded += ShadowWindow_Loaded;
 
             Binding shadowStyleBinding = new Binding()
             {
@@ -165,11 +173,26 @@ namespace Start9.UI.Wpf.Windows
             Deactivated += ShadowedWindow_Activated;
 
             HwndSource.FromHwnd(Handle).AddHook(new HwndSourceHook(WndProc));
+        }
 
-            Closed += (sneder, args) =>
-            {
-                _shadowWindow.Close();
-            };
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+            _shadowWindow.Close();
+            _shadowWindow = null;
+            //GC.Collect();
+        }
+
+        private void ShadowedWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            SyncShadowToWindow();
+            Loaded -= ShadowedWindow_Loaded;
+        }
+
+        private void ShadowWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            SyncShadowToWindow();
+            _shadowWindow.Loaded -= ShadowWindow_Loaded;
         }
 
         protected override void OnStateChanged(EventArgs e)
@@ -216,8 +239,10 @@ namespace Start9.UI.Wpf.Windows
 
         public void SyncShadowToWindow()
         {
-            if (_helper != null)
-                NativeMethods.SetWindowPos(_helper.EnsureHandle(), Handle, (int)(SystemScaling.WpfUnitsToRealPixels(Left - ShadowOffsetThickness.Left)), (int)(SystemScaling.WpfUnitsToRealPixels(Top - ShadowOffsetThickness.Top)), (int)(SystemScaling.WpfUnitsToRealPixels(ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right)), (int)(SystemScaling.WpfUnitsToRealPixels(ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom)), NativeMethods.SwpNoActivate);
+            if ((_shadowWindow != null) && (_helper != null) && _shadowWindow.IsVisible)
+            {
+                NativeMethods.SetWindowPos(_helper.Handle, Handle, (int)(SystemScaling.WpfUnitsToRealPixels(Left - ShadowOffsetThickness.Left)), (int)(SystemScaling.WpfUnitsToRealPixels(Top - ShadowOffsetThickness.Top)), (int)(SystemScaling.WpfUnitsToRealPixels(ActualWidth + ShadowOffsetThickness.Left + ShadowOffsetThickness.Right)), (int)(SystemScaling.WpfUnitsToRealPixels(ActualHeight + ShadowOffsetThickness.Top + ShadowOffsetThickness.Bottom)), NativeMethods.SwpNoActivate);
+            }
         }
 
         protected override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)

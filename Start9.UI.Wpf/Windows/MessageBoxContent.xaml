@@ -3,17 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:ui="clr-namespace:Start9.UI.Wpf"
              xmlns:local="clr-namespace:Start9.UI.Wpf.Windows"
              x:ClassModifier="internal"
              mc:Ignorable="d"
-             DataContext="{Binding RelativeSource={RelativeSource Self}}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+             DataContext="{Binding RelativeSource={RelativeSource Self}}" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True">
     <DockPanel>
-        <ListView x:Name="ButtonsListView" ItemsSource="{Binding EnumStrings}" DockPanel.Dock="Bottom" SelectionMode="Single" SelectionChanged="ButtonsListView_SelectionChanged">
-            <ListView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <UniformGrid IsItemsHost="True" Rows="1"/>
-                </ItemsPanelTemplate>
-            </ListView.ItemsPanel>
+        <ListView x:Name="ButtonsListView" Style="{DynamicResource MessageBoxButtonsListViewStyle}" ItemsSource="{Binding EnumStrings}" DockPanel.Dock="Bottom" SelectionMode="Single" SelectionChanged="ButtonsListView_SelectionChanged">
+            <ui:AttachedProperties.CornerCurves>
+                <ui:CornerCurves TopLeft="False" TopRight="False"/>
+            </ui:AttachedProperties.CornerCurves>
         </ListView>
         <TextBlock x:Name="BodyTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="100,50"/>
     </DockPanel>

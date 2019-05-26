@@ -48,10 +48,9 @@ namespace Start9.UI.Wpf.Windows
             InitializeComponent();
             _enumType = enumType;
 
+            EnumStrings.Clear();
             foreach (string s in Enum.GetNames(_enumType))
-            {
                 EnumStrings.Add(s);
-            }
 
             BodyTextBlock.Text = bodyText;
         }
@@ -61,14 +60,18 @@ namespace Start9.UI.Wpf.Windows
         private void EnumButton_Click(object sender, RoutedEventArgs e)
         {
             ValueString = (sender as Button).Content as string;
-            ResultButtonClicked.Invoke(sender, new MessageBoxEventArgs(_enumType, Enum.Parse(_enumType, ValueString)));
-            Window.GetWindow(this).Close();
+            EndDialog(sender, ValueString);
         }
 
         private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ValueString = (sender as ListView).SelectedItem as string;
-            ResultButtonClicked.Invoke(sender, new MessageBoxEventArgs(_enumType, Enum.Parse(_enumType, ValueString)));
+            EndDialog(sender, ValueString);
+        }
+
+        public void EndDialog(object sender, string value)
+        {
+            ResultButtonClicked.Invoke(sender, new MessageBoxEventArgs(_enumType, Enum.Parse(_enumType, value)));
             Window.GetWindow(this).Close();
         }
     }
