@@ -19,6 +19,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MessageBox = Start9.UI.Wpf.Windows.MessageBox;
 
 namespace FrontEndTest
 {
@@ -178,17 +179,17 @@ namespace FrontEndTest
         private void LightsToggleSwitch_Checked(object sender, RoutedEventArgs e)
         {
             if (SkinsComboBox.SelectedIndex == 0)
-                Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml", UriKind.Relative);
             else if (SkinsComboBox.SelectedIndex == 1)
-                Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Colors/LightBlue.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Colors/LightBlue.xaml", UriKind.Relative);
         }
 
         private void LightsToggleSwitch_Unchecked(object sender, RoutedEventArgs e)
         {
             if (SkinsComboBox.SelectedIndex == 0)
-                Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseDark.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseDark.xaml", UriKind.Relative);
             else if (SkinsComboBox.SelectedIndex == 1)
-                Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Colors/DarkBlue.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Colors/DarkBlue.xaml", UriKind.Relative);
         }
 
         private void SkinsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -212,7 +213,44 @@ namespace FrontEndTest
 
         private void MessageBoxTestButton_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox<MessageBoxEnums.OkButton>.Show("Here, have some information", "MessageBox", Resources.MergedDictionaries[0]);
+            MessageBoxActionSets.IgnoreRetryAbortButtons b = (MessageBoxActionSets.IgnoreRetryAbortButtons)MessageBox<MessageBoxActionSets.IgnoreRetryAbortActionSet>.Show("Here, have some actions to choose from.", "This is a MessageBox", (Rectangle)Resources["SampleIcon"]);
+
+            MessageBox.Show("Result of previous MessageBox: " + b.ToString(), "haha yes");
+
+            MessageBox<SampleActionSet>.Show("*laughs in custom actions*", "I CAN DO ANYTHING", (Rectangle)Resources["SampleIcon"]);
+        }
+    }
+
+    public enum SampleButtons
+    {
+        Yeet,
+        NoU
+    }
+
+    public class SampleActionSet : IMessageBoxActionSet
+    {
+        public string GetDisplayName(object value)
+        {
+            switch ((SampleButtons)value)
+            {
+                case SampleButtons.Yeet:
+                    return "Yeet";
+                case SampleButtons.NoU:
+                    return "no u";
+                default:
+                    return string.Empty;
+            }
+            /*if ((SampleButtons)value == SampleButtons.Yeet)
+                return "Yeet";
+            else if ((SampleButtons)value == SampleButtons.Yeet)
+                return value.ToString();*/
+        }
+
+        public object[] GetValues()
+        {
+            object[] objects = new object[Enum.GetNames(typeof(SampleButtons)).Count()];
+            Enum.GetValues(typeof(SampleButtons)).CopyTo(objects, 0);
+            return objects;
         }
     }
 }

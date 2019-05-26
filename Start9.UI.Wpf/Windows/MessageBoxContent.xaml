@@ -9,11 +9,14 @@
              mc:Ignorable="d"
              DataContext="{Binding RelativeSource={RelativeSource Self}}" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True">
     <DockPanel>
-        <ListView x:Name="ButtonsListView" Style="{DynamicResource MessageBoxButtonsListViewStyle}" ItemsSource="{Binding EnumStrings}" DockPanel.Dock="Bottom" SelectionMode="Single" SelectionChanged="ButtonsListView_SelectionChanged">
+        <ListView x:Name="ButtonsListView" Style="{DynamicResource MessageBoxButtonsListViewStyle}" ItemsSource="{Binding Actions}" DockPanel.Dock="Bottom" SelectionMode="Single">
             <ui:AttachedProperties.CornerCurves>
                 <ui:CornerCurves TopLeft="False" TopRight="False"/>
             </ui:AttachedProperties.CornerCurves>
         </ListView>
-        <TextBlock x:Name="BodyTextBlock" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" Margin="100,50"/>
+        <ContentControl x:Name="IconContentControl" Style="{DynamicResource MessageBoxIconContentControlStyle}"/>
+        <!-- Style="{DynamicResource MessageBoxIconContentControlStyle}"-->
+        <TextBlock x:Name="BodyTextBlock" TextWrapping="Wrap" Style="{DynamicResource MessageBoxBodyTextBlockStyle}"/>
+        <!--Margin="100,50"-->
     </DockPanel>
 </UserControl>

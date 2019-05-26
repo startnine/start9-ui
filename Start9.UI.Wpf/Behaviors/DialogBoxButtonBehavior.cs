@@ -22,7 +22,7 @@ namespace Start9.UI.Wpf.Behaviors
             {
                 AssociatedObject.Click += (sneder, args) =>
                 {
-                    content.EndDialog(AssociatedObject, (string)(AssociatedObject.Content));
+                    content.EndDialog(AssociatedObject, (MessageBoxAction)(AssociatedObject.DataContext));
                     //content.ButtonsListView.SelectedIndex = content.EnumStrings.IndexOf((string)(AssociatedObject.Content));
                 };
             }

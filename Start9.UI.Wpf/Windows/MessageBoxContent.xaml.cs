@@ -21,72 +21,72 @@ namespace Start9.UI.Wpf.Windows
     /// </summary>
     internal partial class MessageBoxContent : UserControl
     {
-        internal ObservableCollection<string> EnumStrings
+        internal ObservableCollection<MessageBoxAction> Actions
         {
-            get => (ObservableCollection<string>)GetValue(EnumStringsProperty);
-            set => SetValue(EnumStringsProperty, value);
+            get => (ObservableCollection<MessageBoxAction>)GetValue(ActionsProperty);
+            set => SetValue(ActionsProperty, value);
         }
 
-        internal static readonly DependencyProperty EnumStringsProperty =
-                    DependencyProperty.RegisterAttached("EnumStrings", typeof(ObservableCollection<string>), typeof(MessageBoxContent),
-                        new PropertyMetadata(new ObservableCollection<string>()));
+        internal static readonly DependencyProperty ActionsProperty =
+                    DependencyProperty.RegisterAttached(nameof(Actions), typeof(ObservableCollection<MessageBoxAction>), typeof(MessageBoxContent),
+                        new PropertyMetadata(new ObservableCollection<MessageBoxAction>()));
 
-        internal string ValueString
+        internal MessageBoxAction SelectedAction
         {
-            get => (string)GetValue(ValueStringProperty);
-            set => SetValue(ValueStringProperty, value);
+            get => (MessageBoxAction)GetValue(SelectedActionProperty);
+            set => SetValue(SelectedActionProperty, value);
         }
 
-        internal static readonly DependencyProperty ValueStringProperty =
-                    DependencyProperty.RegisterAttached("ValueString", typeof(string), typeof(MessageBoxContent),
+        internal static readonly DependencyProperty SelectedActionProperty =
+                    DependencyProperty.RegisterAttached(nameof(SelectedAction), typeof(MessageBoxAction), typeof(MessageBoxContent),
                         new PropertyMetadata());
 
-        Type _enumType;
 
-        internal MessageBoxContent(Type enumType, string bodyText)
+        internal MessageBoxContent(IMessageBoxActionSet actionSet, string bodyText, FrameworkElement icon)
         {
             InitializeComponent();
-            _enumType = enumType;
-
-            EnumStrings.Clear();
-            foreach (string s in Enum.GetNames(_enumType))
-                EnumStrings.Add(s);
+            Actions.Clear();
+            foreach (object s in actionSet.GetValues())
+                Actions.Add(new MessageBoxAction(s, actionSet.GetDisplayName(s)));
 
             BodyTextBlock.Text = bodyText;
+
+            if (icon != null)
+            {
+                IconContentControl.Visibility = Visibility.Visible;
+                IconContentControl.Content = icon;
+            }
+            else
+                IconContentControl.Visibility = Visibility.Collapsed;
         }
 
         internal event EventHandler<MessageBoxEventArgs> ResultButtonClicked;
 
-        private void EnumButton_Click(object sender, RoutedEventArgs e)
+        /*private void EnumButton_Click(object sender, RoutedEventArgs e)
         {
-            ValueString = (sender as Button).Content as string;
-            EndDialog(sender, ValueString);
+            SelectedAction = (sender as Button).Content as string;
+            EndDialog(sender, SelectedAction);
         }
 
         private void ButtonsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ValueString = (sender as ListView).SelectedItem as string;
-            EndDialog(sender, ValueString);
-        }
+            SelectedAction = (sender as ListView).SelectedItem as string;
+            EndDialog(sender, SelectedAction);
+        }*/
 
-        public void EndDialog(object sender, string value)
+        public void EndDialog(object sender, MessageBoxAction value)
         {
-            ResultButtonClicked.Invoke(sender, new MessageBoxEventArgs(_enumType, Enum.Parse(_enumType, value)));
+            ResultButtonClicked.Invoke(sender, new MessageBoxEventArgs(value.Value));
             Window.GetWindow(this).Close();
         }
     }
 
     public class MessageBoxEventArgs : EventArgs
     {
-        //Type _type;
-
-        internal MessageBoxEventArgs(Type type, object value)
+        internal MessageBoxEventArgs(object value)
         {
-
             Result = value;
         }
-
-        public Type Type { get; }
 
         public object Result { get; }
     }

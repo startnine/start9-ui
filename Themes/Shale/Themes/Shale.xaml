@@ -57,6 +57,17 @@
         <Setter Property="BorderThickness" Value="1"/>
     </Style>
 
+    <Style x:Key="MessageBoxIconContentControlStyle" TargetType="{x:Type ContentControl}">
+        <Setter Property="Margin" Value="50,0,-25,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="MessageBoxBodyTextBlockStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Margin" Value="50,50"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+    </Style>
+    
     <Style x:Key="MessageBoxButtonsListViewStyle" TargetType="{x:Type ListView}">
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent"/>

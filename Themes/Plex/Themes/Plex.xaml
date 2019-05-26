@@ -1,7 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
             xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters;assembly=Start9.UI.Wpf"
-            xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf">
+            xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf"
+            xmlns:uib="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
+            xmlns:e="http://schemas.microsoft.com/xaml/behaviors">
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     
     <Style x:Key="ToolbarBackgroundControlStyle" TargetType="{x:Type Control}">
@@ -367,6 +369,75 @@
                         <Ellipse StrokeThickness="2" SnapsToDevicePixels="true" Fill="Transparent" Margin="1" Stroke="{DynamicResource FocusVisualLinearGradientBrush}"/>
                     </Grid>
                 </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="MessageBoxIconContentControlStyle" TargetType="{x:Type ContentControl}">
+        <Setter Property="Margin" Value="50,0,-25,0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="MessageBoxBodyTextBlockStyle" TargetType="{x:Type TextBlock}">
+        <Setter Property="Margin" Value="50,50"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+    </Style>
+
+    <Style x:Key="MessageBoxButtonsListViewStyle" TargetType="{x:Type ListView}">
+        <Setter Property="Background" Value="Transparent"/>
+        <Setter Property="BorderBrush" Value="Transparent"/>
+        <Setter Property="ItemsPanel">
+            <Setter.Value>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" IsItemsHost="True"/>
+                </ItemsPanelTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Padding" Value="5,5,0,5"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListView}">
+                    <Border Style="{DynamicResource HorizontalBarBorderStyle}" DockPanel.Dock="{Binding (DockPanel.Dock), RelativeSource={RelativeSource Mode=TemplatedParent}}" ui:AttachedProperties.CornerCurves="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                        <ItemsPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemContainerStyle">
+            <Setter.Value>
+                <Style TargetType="{x:Type ListViewItem}">
+                    <Setter Property="Padding" Value="0"/>
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                <Grid HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}">
+                                    <ContentPresenter x:Name="PART_ContentPresenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Collapsed"/>
+                                    <GridViewRowPresenter x:Name="PART_GridViewRowPesenter" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Visibility="Visible" />
+                                </Grid>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="GridView.ColumnCollection" Value="{x:Null}">
+                                        <Setter TargetName="PART_ContentPresenter" Property="Visibility" Value="Visible"/>
+                                        <Setter TargetName="PART_GridViewRowPesenter" Property="Visibility" Value="Collapsed"/>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="ItemTemplate">
+            <Setter.Value>
+                <DataTemplate>
+                    <Button x:Name="Button" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" Margin="0,0,5,0">
+                        <e:Interaction.Behaviors>
+                            <uib:DialogBoxButtonBehavior/>
+                        </e:Interaction.Behaviors>
+                    </Button>
+                </DataTemplate>
             </Setter.Value>
         </Setter>
     </Style>
