@@ -320,7 +320,7 @@
                     </StackPanel>
                 </TabItem>
                 <TabItem x:Name="RevealTestTabItem" Header="Reveal Test (Plex only)" IsEnabled="False">
-                    <UniformGrid Background="{DynamicResource WindowToolbarBackgroundBrush}">
+                    <UniformGrid Background="{DynamicResource ToolbarBackgroundBrush}">
                         <Button Style="{DynamicResource ToolbarButtonStyle}">0</Button>
                         <Button Style="{DynamicResource ToolbarButtonStyle}">1</Button>
                         <Button Style="{DynamicResource ToolbarButtonStyle}">2</Button>

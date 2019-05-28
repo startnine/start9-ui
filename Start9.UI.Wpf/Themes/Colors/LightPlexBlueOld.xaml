@@ -88,7 +88,7 @@
 
     <SolidColorBrush x:Key="ToolbarDarkBackgroundBrush">#FF366AAF</SolidColorBrush>
 
-    <LinearGradientBrush x:Key="WindowToolbarBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+    <LinearGradientBrush x:Key="ToolbarBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="#FF366AAF" />
             <GradientStop Offset="0.5" Color="#FF5F9CDA" />
@@ -96,7 +96,7 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="WindowToolbarBorderBrush" StartPoint="0,0" EndPoint="1,0">
+    <LinearGradientBrush x:Key="ToolbarBorderBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="#FF4D80C9" />
             <GradientStop Offset="0.5" Color="#FF85C0FA" />
@@ -104,10 +104,10 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="WindowToolbarSecondaryBackgroundBrush">#003566A4</SolidColorBrush>
-    <SolidColorBrush x:Key="WindowToolbarSecondaryBorderBrush">#FF3566A4</SolidColorBrush>
+    <SolidColorBrush x:Key="ToolbarSecondaryBackgroundBrush">#003566A4</SolidColorBrush>
+    <SolidColorBrush x:Key="ToolbarSecondaryBorderBrush">#FF3566A4</SolidColorBrush>
 
-    <LinearGradientBrush x:Key="WindowToolbarTertiaryBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+    <LinearGradientBrush x:Key="ToolbarTertiaryBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="#FF5894D3" />
             <GradientStop Offset="0.5" Color="#FF81BEFC" />
@@ -115,7 +115,7 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="WindowToolbarQuarternaryBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+    <LinearGradientBrush x:Key="ToolbarQuarternaryBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
             <GradientStop Offset="0" Color="#FF3C70B5" />
             <GradientStop Offset="0.5" Color="#FF255898" />

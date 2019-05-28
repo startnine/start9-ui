@@ -309,10 +309,35 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ButtonBase">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Border x:Name="HoverBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverBorderBrush}" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='4,4,4,4;0,0,0,0'}" Opacity="0">
-                            <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ToolbarButtonHoverTertiaryBackgroundBrush}" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
-                                <Border BorderThickness="0,1,0,2" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}">
+                    <Grid>
+                        <Border x:Name="IdleBackground" Opacity="1" Margin="2,1,2,2" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}">
+                            <Border.BorderBrush>
+                                <VisualBrush ViewboxUnits="Absolute">
+                                    <VisualBrush.Visual>
+                                        <Ellipse x:Name="IdleRevealGlowEllipse" Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualWidth}" RenderTransformOrigin="0.5,0.5">
+                                            <Ellipse.RenderTransform>
+                                                <ScaleTransform ScaleX="3" ScaleY="3"/>
+                                            </Ellipse.RenderTransform>
+                                            <Ellipse.Fill>
+                                                <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" GradientStops="{DynamicResource ToolbarButtonIdleRevealGradientStops}"/>
+                                            </Ellipse.Fill>
+                                        </Ellipse>
+                                    </VisualBrush.Visual>
+                                    <VisualBrush.Viewbox>
+                                        <MultiBinding Converter="{StaticResource RevealBrushViewboxConverter}">
+                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="(ui:RevealInfo.CursorX)"/>
+                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="(ui:RevealInfo.CursorY)"/>
+                                            <Binding Source="{x:Reference Name=IdleRevealGlowEllipse}" Path="Width"/>
+                                            <Binding Source="{x:Reference Name=IdleRevealGlowEllipse}" Path="Height"/>
+                                        </MultiBinding>
+                                    </VisualBrush.Viewbox>
+                                </VisualBrush>
+                            </Border.BorderBrush>
+                        </Border>
+                        <Border x:Name="HoverBackground" Opacity="0" BorderThickness="1,0,1,1" BorderBrush="{DynamicResource ToolbarButtonPrimaryBorderBrush}" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}">
+                            <Border BorderThickness="1" BorderBrush="{DynamicResource ToolbarButtonSecondaryBorderBrush}" Background="{DynamicResource ToolbarButtonSecondaryBackgroundBrush}" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}">
+                                <Border Margin="1" BorderBrush="{DynamicResource ToolbarButtonTertiaryBackgroundBrush}" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='1,1,1,1;0,0,0,0'}">
                                     <Border.Background>
                                         <VisualBrush ViewboxUnits="Absolute">
                                             <VisualBrush.Visual>
@@ -320,25 +345,11 @@
                                                     <beh:Interaction.Behaviors>
                                                         <uib:RevealSizeSynchronizerBehavior/>
                                                     </beh:Interaction.Behaviors>
-                                                    <!--Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}"-->
-                                                    <!--Ellipse.Width>
-                                                        <MultiBinding Converter="{StaticResource DoublesLimitToBoolConverter}" ConverterParameter="max">
-                                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="Width"/>
-                                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="Height"/>
-                                                        </MultiBinding>
-                                                    </Ellipse.Width-->
                                                     <Ellipse.RenderTransform>
                                                         <ScaleTransform ScaleX="2" ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Mode=Self}}"/>
                                                     </Ellipse.RenderTransform>
                                                     <Ellipse.Fill>
-                                                        <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                                                            <!--GradientStop Offset="0" Color="#FFEEFEFE"/>
-                                                            <GradientStop Offset="0.5" Color="#B076BDEF"/>
-                                                            <GradientStop Offset="0.75" Color="#5076BEEF"/>
-                                                            <GradientStop Offset="1" Color="#0076BEEF"/-->
-                                                            <GradientStop Offset="0" Color="#FFB8F2FB"/>
-                                                            <GradientStop Offset="1" Color="#00B8F2FB"/>
-                                                        </RadialGradientBrush>
+                                                        <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5" GradientStops="{DynamicResource ToolbarButtonHoverRevealGradientStops}"/>
                                                     </Ellipse.Fill>
                                                 </Ellipse>
                                             </VisualBrush.Visual>
@@ -353,7 +364,104 @@
                                             </VisualBrush.Viewbox>
                                         </VisualBrush>
                                     </Border.Background>
-                                    <!--Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Visibility="Collapsed">
+                                </Border>
+                            </Border>
+                        </Border>
+                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="IdleBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                        <DoubleAnimation Storyboard.TargetName="IdleBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                            <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonHoverForegroundBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="RenderTransform.ScaleX" To="3" Duration="0:0:0.125" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="Opacity" To="0.5" Duration="0:0:0.125" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="RenderTransform.ScaleX" To="2" Duration="0:0:0.25" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="False">
+                            <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonDisabledForegroundBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <ControlTemplate x:Key="Yeet2" TargetType="ButtonBase">
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Border x:Name="HoverBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverBorderBrush}" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='4,4,4,4;0,0,0,0'}" Opacity="0">
+                <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ToolbarButtonHoverTertiaryBackgroundBrush}" BorderBrush="{DynamicResource ToolbarButtonHoverSecondaryBorderBrush}">
+                    <Border BorderThickness="0,1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" BorderBrush="{DynamicResource ToolbarButtonHoverTertiaryBorderBrush}">
+                        <Border.Background>
+                            <VisualBrush ViewboxUnits="Absolute">
+                                <VisualBrush.Visual>
+                                    <Ellipse x:Name="HoverRevealGlowEllipse" RenderTransformOrigin="0.5,0.5">
+                                        <beh:Interaction.Behaviors>
+                                            <uib:RevealSizeSynchronizerBehavior/>
+                                        </beh:Interaction.Behaviors>
+                                        <!--Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}"-->
+                                        <!--Ellipse.Width>
+                                                        <MultiBinding Converter="{StaticResource DoublesLimitToBoolConverter}" ConverterParameter="max">
+                                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="Width"/>
+                                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="Height"/>
+                                                        </MultiBinding>
+                                                    </Ellipse.Width-->
+                                        <Ellipse.RenderTransform>
+                                            <ScaleTransform ScaleX="2" ScaleY="{Binding ScaleX, RelativeSource={RelativeSource Mode=Self}}"/>
+                                        </Ellipse.RenderTransform>
+                                        <Ellipse.Fill>
+                                            <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                                                <!--GradientStop Offset="0" Color="#FFEEFEFE"/>
+                                                            <GradientStop Offset="0.5" Color="#B076BDEF"/>
+                                                            <GradientStop Offset="0.75" Color="#5076BEEF"/>
+                                                            <GradientStop Offset="1" Color="#0076BEEF"/-->
+                                                <GradientStop Offset="0" Color="#FFB8F2FB"/>
+                                                <GradientStop Offset="1" Color="#00B8F2FB"/>
+                                            </RadialGradientBrush>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                </VisualBrush.Visual>
+                                <VisualBrush.Viewbox>
+                                    <MultiBinding Converter="{StaticResource RevealBrushViewboxConverter}">
+                                        <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="(ui:RevealInfo.CursorX)"/>
+                                        <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="(ui:RevealInfo.CursorY)"/>
+                                        <Binding Source="{x:Reference Name=HoverRevealGlowEllipse}" Path="Width"/>
+                                        <Binding Source="{x:Reference Name=HoverRevealGlowEllipse}" Path="Height"/>
+                                    </MultiBinding>
+                                </VisualBrush.Viewbox>
+                            </VisualBrush>
+                        </Border.Background>
+                        <!--Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Visibility="Collapsed">
                                         <Border.Background>
                                             <!-fwpf:RevealBrush Color="{DynamicResource ToolbarButtonRevealColor}" Size="100" Opacity="0.75" /->
                                             <RadialGradientBrush MappingMode="Absolute" RadiusY="100" RadiusX="100" GradientStops="{DynamicResource ToolbarButtonRevealGradientStops}" Opacity="0.75">
@@ -393,12 +501,12 @@
                                             </RadialGradientBrush>
                                         </Border.BorderBrush>
                                     </Border-->
-                                </Border>
-                            </Border>
-                        </Border>
-                        <Border Margin="1" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}">
-                            <Border.BorderBrush>
-                                <!--ui:RevealBrush>
+                    </Border>
+                </Border>
+            </Border>
+            <Border Margin="1" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}">
+                <Border.BorderBrush>
+                    <!--ui:RevealBrush>
                                     <ui:RevealBrush.RevealEffectVisual>
                                         <Ellipse Width="100" Height="100">
                                             <!-Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualHeight}"->
@@ -415,34 +523,34 @@
                                         </Ellipse>
                                     </ui:RevealBrush.RevealEffectVisual>
                                 </ui:RevealBrush-->
-                                <VisualBrush ViewboxUnits="Absolute">
-                                    <VisualBrush.Visual>
-                                        <Ellipse x:Name="IdleRevealGlowEllipse" Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualWidth}" RenderTransformOrigin="0.5,0.5">
-                                            <Ellipse.RenderTransform>
-                                                <ScaleTransform ScaleX="3" ScaleY="3"/>
-                                            </Ellipse.RenderTransform>
-                                            <!--Width="100" Height="100"-->
-                                            <Ellipse.Fill>
-                                                <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
-                                                    <GradientStop Offset="0" Color="#FFEEFEFE"/>
-                                                    <GradientStop Offset="0.5" Color="#B076BDEF"/>
-                                                    <GradientStop Offset="0.75" Color="#5076BEEF"/>
-                                                    <GradientStop Offset="1" Color="#0076BEEF"/>
-                                                </RadialGradientBrush>
-                                            </Ellipse.Fill>
-                                        </Ellipse>
-                                    </VisualBrush.Visual>
-                                    <VisualBrush.Viewbox>
-                                        <MultiBinding Converter="{StaticResource RevealBrushViewboxConverter}">
-                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
-                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="(ui:RevealInfo.CursorX)"/>
-                                            <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="(ui:RevealInfo.CursorY)"/>
-                                            <Binding Source="{x:Reference Name=IdleRevealGlowEllipse}" Path="Width"/>
-                                            <Binding Source="{x:Reference Name=IdleRevealGlowEllipse}" Path="Height"/>
-                                        </MultiBinding>
-                                    </VisualBrush.Viewbox>
-                                </VisualBrush>
-                                <!--RadialGradientBrush MappingMode="Absolute" RadiusY="100" RadiusX="100" GradientStops="{DynamicResource ToolbarButtonRevealGradientStops}" Opacity="0.75">
+                    <VisualBrush ViewboxUnits="Absolute">
+                        <VisualBrush.Visual>
+                            <Ellipse x:Name="IdleRevealGlowEllipse" Width="{TemplateBinding ActualWidth}" Height="{TemplateBinding ActualWidth}" RenderTransformOrigin="0.5,0.5">
+                                <Ellipse.RenderTransform>
+                                    <ScaleTransform ScaleX="3" ScaleY="3"/>
+                                </Ellipse.RenderTransform>
+                                <!--Width="100" Height="100"-->
+                                <Ellipse.Fill>
+                                    <RadialGradientBrush GradientOrigin="0.5,0.5" Center="0.5,0.5">
+                                        <GradientStop Offset="0" Color="#FFEEFEFE"/>
+                                        <GradientStop Offset="0.5" Color="#B076BDEF"/>
+                                        <GradientStop Offset="0.75" Color="#5076BEEF"/>
+                                        <GradientStop Offset="1" Color="#0076BEEF"/>
+                                    </RadialGradientBrush>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </VisualBrush.Visual>
+                        <VisualBrush.Viewbox>
+                            <MultiBinding Converter="{StaticResource RevealBrushViewboxConverter}">
+                                <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}"/>
+                                <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="(ui:RevealInfo.CursorX)"/>
+                                <Binding RelativeSource="{RelativeSource Mode=TemplatedParent}" Path="(ui:RevealInfo.CursorY)"/>
+                                <Binding Source="{x:Reference Name=IdleRevealGlowEllipse}" Path="Width"/>
+                                <Binding Source="{x:Reference Name=IdleRevealGlowEllipse}" Path="Height"/>
+                            </MultiBinding>
+                        </VisualBrush.Viewbox>
+                    </VisualBrush>
+                    <!--RadialGradientBrush MappingMode="Absolute" RadiusY="100" RadiusX="100" GradientStops="{DynamicResource ToolbarButtonRevealGradientStops}" Opacity="0.75">
                                     <RadialGradientBrush.Center>
                                         <MultiBinding Converter="{StaticResource RelativePositionConverter}">
                                             <Binding RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType={x:Type Border}}" Path="(fwpf:PointerTracker.RootObject)"/>
@@ -458,57 +566,54 @@
                                         </MultiBinding>
                                     </RadialGradientBrush.GradientOrigin>
                                 </RadialGradientBrush-->
-                                <!--fwpf:RevealBrush Color="#FFB8F2FB" Size="200" Opacity="1" /-->
-                            </Border.BorderBrush>
-                        </Border>
-                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                            <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonHoverForegroundBrush}" />
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Trigger.EnterActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="RenderTransform.ScaleX" To="3" Duration="0:0:0.125" />
-                                        <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="Opacity" To="0.5" Duration="0:0:0.125" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.EnterActions>
-                            <Trigger.ExitActions>
-                                <BeginStoryboard>
-                                    <Storyboard>
-                                        <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="RenderTransform.ScaleX" To="2" Duration="0:0:0.25" />
-                                        <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
-                                    </Storyboard>
-                                </BeginStoryboard>
-                            </Trigger.ExitActions>
-                        </Trigger>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonDisabledForegroundBrush}" />
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+                    <!--fwpf:RevealBrush Color="#FFB8F2FB" Size="200" Opacity="1" /-->
+                </Border.BorderBrush>
+            </Border>
+            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}" Margin="{TemplateBinding Padding}" Focusable="False"/>
+        </Grid>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+                <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonHoverForegroundBrush}" />
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Trigger.EnterActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="RenderTransform.ScaleX" To="3" Duration="0:0:0.125" />
+                            <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="Opacity" To="0.5" Duration="0:0:0.125" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="RenderTransform.ScaleX" To="2" Duration="0:0:0.25" />
+                            <DoubleAnimation Storyboard.TargetName="HoverRevealGlowEllipse" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.25" />
+                        </Storyboard>
+                    </BeginStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonDisabledForegroundBrush}" />
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
 
-    <ControlTemplate x:Key="no_u" TargetType="ButtonBase">
+    <ControlTemplate x:Key="Yeet" TargetType="ButtonBase">
         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Border x:Name="HoverBackground" Background="Transparent" BorderBrush="{DynamicResource ToolbarButtonHoverBorderBrush}" BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='4,4,4,4;0,0,0,0'}" Opacity="0">
                 <Border BorderThickness="1" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#FF68A2CC">

@@ -14,14 +14,14 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Control}">
                     <Grid>
-                        <Border x:Name="ToolBarBorder" CornerRadius="8,8,0,0" BorderThickness="1,1,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource WindowToolbarBackgroundBrush}" BorderBrush="{DynamicResource WindowToolbarBorderBrush}">
+                        <Border x:Name="ToolBarBorder" CornerRadius="8,8,0,0" BorderThickness="1,1,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ToolbarBackgroundBrush}" BorderBrush="{DynamicResource ToolbarBorderBrush}">
                             <Border x:Name="ToolBarSecondaryBorder" CornerRadius="8,8,0,0"
-                                                    BorderThickness="0,1,0,0" Background="{DynamicResource WindowToolbarSecondaryBackgroundBrush}"
-                                                    BorderBrush="{DynamicResource WindowToolbarSecondaryBorderBrush}" />
+                                                    BorderThickness="0,1,0,0" Background="{DynamicResource ToolbarSecondaryBackgroundBrush}"
+                                                    BorderBrush="{DynamicResource ToolbarSecondaryBorderBrush}" />
                         </Border>
-                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource WindowToolbarBackgroundBrush}"/>
-                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource WindowToolbarTertiaryBackgroundBrush}"/>
-                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource WindowToolbarQuarternaryBackgroundBrush}"/>
+                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource ToolbarBackgroundBrush}"/>
+                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource ToolbarTertiaryBackgroundBrush}"/>
+                        <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource ToolbarQuarternaryBackgroundBrush}"/>
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
@@ -58,19 +58,19 @@
 
     <Style x:Key="{x:Type ToolBarTray}" TargetType="{x:Type ToolBarTray}">
         <!--Setter Property="OverridesDefaultStyle" Value="True"/-->
-        <Setter Property="Background" Value="{DynamicResource WindowToolbarBackgroundBrush}"/>
+        <Setter Property="Background" Value="{DynamicResource ToolbarBackgroundBrush}"/>
         <!--Setter Property="Background">
             <Setter.Value>
                 <VisualBrush AutoLayoutContent="True">
                     <VisualBrush.Visual>
                         <Border Background="Red" MinWidth="50" MinHeight="50" BorderBrush="Green" BorderThickness="1" Width="{Binding Width, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type VisualBrush}}}">
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Border BorderThickness="1,1,1,0" Background="{DynamicResource WindowToolbarBackgroundBrush}" BorderBrush="{DynamicResource WindowToolbarBorderBrush}">
-                                    <Border BorderThickness="0,1,0,0" Background="{DynamicResource WindowToolbarSecondaryBackgroundBrush}" BorderBrush="{DynamicResource WindowToolbarSecondaryBorderBrush}" />
+                                <Border BorderThickness="1,1,1,0" Background="{DynamicResource ToolbarBackgroundBrush}" BorderBrush="{DynamicResource ToolbarBorderBrush}">
+                                    <Border BorderThickness="0,1,0,0" Background="{DynamicResource ToolbarSecondaryBackgroundBrush}" BorderBrush="{DynamicResource ToolbarSecondaryBorderBrush}" />
                                 </Border>
-                                <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource WindowToolbarBackgroundBrush}"/>
-                                <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource WindowToolbarTertiaryBackgroundBrush}"/>
-                                <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource WindowToolbarQuarternaryBackgroundBrush}"/>
+                                <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource ToolbarBackgroundBrush}"/>
+                                <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource ToolbarTertiaryBackgroundBrush}"/>
+                                <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource ToolbarQuarternaryBackgroundBrush}"/>
                             </Grid>
                         </Border>
                     </VisualBrush.Visual>
@@ -82,12 +82,12 @@
                 <VisualBrush>
                     <VisualBrush.Visual>
                         <Grid Width="200" Height="200"><!-Grid DataContext="{Binding RelativeSource={RelativeSource Mode=Self}}" MinWidth="50" MinHeight="50" Width="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBarTray}},FallbackValue=10}" Height="{Binding ActualHeight, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ToolBarTray}}, FallbackValue=10}" Background="#01000000"->
-                            <Border BorderThickness="1,1,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource WindowToolbarBackgroundBrush}" BorderBrush="{DynamicResource WindowToolbarBorderBrush}">
-                                <Border BorderThickness="0,1,0,0" Background="{DynamicResource WindowToolbarSecondaryBackgroundBrush}" BorderBrush="{DynamicResource WindowToolbarSecondaryBorderBrush}" />
+                            <Border BorderThickness="1,1,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ToolbarBackgroundBrush}" BorderBrush="{DynamicResource ToolbarBorderBrush}">
+                                <Border BorderThickness="0,1,0,0" Background="{DynamicResource ToolbarSecondaryBackgroundBrush}" BorderBrush="{DynamicResource ToolbarSecondaryBorderBrush}" />
                             </Border>
-                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource WindowToolbarBackgroundBrush}"/>
-                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource WindowToolbarTertiaryBackgroundBrush}"/>
-                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource WindowToolbarQuarternaryBackgroundBrush}"/>
+                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource ToolbarBackgroundBrush}"/>
+                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource ToolbarTertiaryBackgroundBrush}"/>
+                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource ToolbarQuarternaryBackgroundBrush}"/>
                         </Grid>
                     </VisualBrush.Visual>
                 </VisualBrush>
@@ -163,7 +163,7 @@
                         <Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="{x:Type TextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
                             <Setter Property="Background" Value="{DynamicResource ToolbarDarkBackgroundBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonForegroundBrush}"/>
-                            <Setter Property="BorderBrush" Value="{DynamicResource WindowToolbarBorderBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource ToolbarBorderBrush}"/>
                             <Setter Property="VerticalAlignment" Value="Center"/>
                         </Style>
 
@@ -174,7 +174,7 @@
                         <Style x:Key="{x:Type ui:ToggleSwitch}" BasedOn="{StaticResource {x:Type ui:ToggleSwitch}}" TargetType="{x:Type ui:ToggleSwitch}">
                             <Setter Property="Background" Value="{DynamicResource ToolbarDarkBackgroundBrush}"/>
                             <Setter Property="Foreground" Value="{DynamicResource ToolbarButtonForegroundBrush}"/>
-                            <Setter Property="BorderBrush" Value="{DynamicResource WindowToolbarBorderBrush}"/>
+                            <Setter Property="BorderBrush" Value="{DynamicResource ToolbarBorderBrush}"/>
                         </Style>
 
                         <!--Style x:Key="{x:Static ToolBar.TextBoxStyleKey}" TargetType="{x:Type TextBox}">

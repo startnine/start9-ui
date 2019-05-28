@@ -13,8 +13,8 @@
 
     <LinearGradientBrush x:Key="DefaultWindowBodyBrush" StartPoint="0,0" EndPoint="0,1">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF212121" />
-            <GradientStop Offset="1" Color="Black" />
+            <GradientStop Offset="0" Color="#FF3D3D3D" />
+            <GradientStop Offset="1" Color="#FF212121" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
@@ -29,23 +29,23 @@
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="FooterOuterBorderBrush">#FF414141</SolidColorBrush>
+    <SolidColorBrush x:Key="FooterOuterBorderBrush">#FF5E5E5E</SolidColorBrush>
 
     <SolidColorBrush x:Key="FooterInnerBorderBrush">#FF000000</SolidColorBrush>
 
     <LinearGradientBrush x:Key="ActiveTitlebarBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF343434" />
-            <GradientStop Offset="0.5" Color="#FF595959" />
-            <GradientStop Offset="1" Color="#FF343434" />
+            <GradientStop Offset="0" Color="#FF515151" />
+            <GradientStop Offset="0.5" Color="#FF757575" />
+            <GradientStop Offset="1" Color="#FF515151" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="InactiveTitlebarBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF252525" />
-            <GradientStop Offset="0.5" Color="#FF454545" />
-            <GradientStop Offset="1" Color="#FF252525" />
+            <GradientStop Offset="0" Color="#FF424242" />
+            <GradientStop Offset="0.5" Color="#FF636363" />
+            <GradientStop Offset="1" Color="#FF424242" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
@@ -53,58 +53,58 @@
 
     <LinearGradientBrush x:Key="ActiveTitlebarBorderBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF343434" />
-            <GradientStop Offset="0.05" Color="#FF4F4F4F" />
-            <GradientStop Offset="0.5" Color="#FF7E7E7E" />
-            <GradientStop Offset="0.95" Color="#FF4F4F4F" />
-            <GradientStop Offset="1" Color="#FF343434" />
+            <GradientStop Offset="0" Color="#FF515151" />
+            <GradientStop Offset="0.05" Color="#FF6B6B6B" />
+            <GradientStop Offset="0.5" Color="#FF9B9B9B" />
+            <GradientStop Offset="0.95" Color="#FF6B6B6B" />
+            <GradientStop Offset="1" Color="#FF515151" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
     <LinearGradientBrush x:Key="InactiveTitlebarBorderBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF252525" />
-            <GradientStop Offset="0.05" Color="#FF3C3C3C" />
-            <GradientStop Offset="0.5" Color="#FF606060" />
-            <GradientStop Offset="0.95" Color="#FF3C3C3C" />
-            <GradientStop Offset="1" Color="#FF252525" />
+            <GradientStop Offset="0" Color="#FF424242" />
+            <GradientStop Offset="0.05" Color="#FF595959" />
+            <GradientStop Offset="0.5" Color="#FF7C7C7C" />
+            <GradientStop Offset="0.95" Color="#FF595959" />
+            <GradientStop Offset="1" Color="#FF424242" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="ToolbarDarkBackgroundBrush">#FF1F1F1F</SolidColorBrush>
+    <SolidColorBrush x:Key="ToolbarDarkBackgroundBrush">#FF3D3D3D</SolidColorBrush>
 
-    <LinearGradientBrush x:Key="WindowToolbarBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+    <LinearGradientBrush x:Key="ToolbarBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF1F1F1F" />
-            <GradientStop Offset="0.5" Color="#FF454545" />
-            <GradientStop Offset="1" Color="#FF1F1F1F" />
+            <GradientStop Offset="0" Color="#FF3D3D3D" />
+            <GradientStop Offset="0.5" Color="#FF636363" />
+            <GradientStop Offset="1" Color="#FF3D3D3D" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="WindowToolbarBorderBrush" StartPoint="0,0" EndPoint="1,0">
+    <LinearGradientBrush x:Key="ToolbarBorderBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF2E2E2E" />
-            <GradientStop Offset="0.5" Color="#FF676767" />
-            <GradientStop Offset="1" Color="#FF2E2E2E" />
+            <GradientStop Offset="0" Color="#FF4C4C4C" />
+            <GradientStop Offset="0.5" Color="#FF848484" />
+            <GradientStop Offset="1" Color="#FF4C4C4C" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <SolidColorBrush x:Key="WindowToolbarSecondaryBackgroundBrush">#003E3E3E</SolidColorBrush>
-    <SolidColorBrush x:Key="WindowToolbarSecondaryBorderBrush">#FF3E3E3E</SolidColorBrush>
+    <SolidColorBrush x:Key="ToolbarSecondaryBackgroundBrush">#005B5B5B</SolidColorBrush>
+    <SolidColorBrush x:Key="ToolbarSecondaryBorderBrush">#FF5B5B5B</SolidColorBrush>
 
-    <LinearGradientBrush x:Key="WindowToolbarTertiaryBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+    <LinearGradientBrush x:Key="ToolbarTertiaryBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF2E2E2E" />
-            <GradientStop Offset="0.5" Color="#FF676767" />
-            <GradientStop Offset="1" Color="#FF2E2E2E" />
+            <GradientStop Offset="0" Color="#FF4C4C4C" />
+            <GradientStop Offset="0.5" Color="#FF848484" />
+            <GradientStop Offset="1" Color="#FF4C4C4C" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
-    <LinearGradientBrush x:Key="WindowToolbarQuarternaryBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
+    <LinearGradientBrush x:Key="ToolbarQuarternaryBackgroundBrush" StartPoint="0,0" EndPoint="1,0">
         <LinearGradientBrush.GradientStops>
-            <GradientStop Offset="0" Color="#FF1D1D1D" />
-            <GradientStop Offset="0.5" Color="#FF050505" />
-            <GradientStop Offset="1" Color="#FF1D1D1D" />
+            <GradientStop Offset="0" Color="#FF3A3A3A" />
+            <GradientStop Offset="0.5" Color="#FF212121" />
+            <GradientStop Offset="1" Color="#FF3A3A3A" />
         </LinearGradientBrush.GradientStops>
     </LinearGradientBrush>
 
@@ -378,7 +378,46 @@
             <GradientStop Offset="1" Color="#18969696" />
         </RadialGradientBrush.GradientStops>
     </RadialGradientBrush>
-    <SolidColorBrush x:Key="ToolbarButtonHoverPrimaryBorderBrush">#40FFFFFF</SolidColorBrush>
+
+    <SolidColorBrush x:Key="ToolbarButtonForegroundBrush">White</SolidColorBrush>
+
+    <LinearGradientBrush x:Key="ToolbarButtonPrimaryBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0.25" Color="#00FFFFFF"/>
+        <GradientStop Offset="1" Color="#40FFFFFF"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ToolbarButtonSecondaryBorderBrush" StartPoint="0,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#C05E5E5E"/>
+        <GradientStop Offset="0.5" Color="#405E5E5E"/>
+        <GradientStop Offset="1" Color="#FF5E5E5E"/>
+    </LinearGradientBrush>
+
+    <LinearGradientBrush x:Key="ToolbarButtonSecondaryBackgroundBrush" StartPoint="0,1" EndPoint="1,0">
+        <GradientStop Offset="0" Color="#FF567589"/>
+        <GradientStop Offset="0.25" Color="#FF5C697C"/>
+        <GradientStop Offset="0.75" Color="#FF5C697C"/>
+        <GradientStop Offset="1" Color="#FF4F6C7F"/>
+    </LinearGradientBrush>
+
+
+    <LinearGradientBrush x:Key="ToolbarButtonTertiaryBackgroundBrush" StartPoint="0.25,0" EndPoint="0,1">
+        <GradientStop Offset="0" Color="#FF44506B"/>
+        <GradientStop Offset="0.75" Color="#FF5A657A"/>
+        <GradientStop Offset="1" Color="#FF8297A3"/>
+    </LinearGradientBrush>
+
+    <GradientStopCollection x:Key="ToolbarButtonIdleRevealGradientStops">
+        <GradientStop Offset="0" Color="#FFDDEDED"/>
+        <GradientStop Offset="0.5" Color="#B0667FA5"/>
+        <GradientStop Offset="0.75" Color="#507997C4"/>
+        <GradientStop Offset="1" Color="#007997C4"/>
+    </GradientStopCollection>
+
+    <GradientStopCollection x:Key="ToolbarButtonHoverRevealGradientStops">
+        <GradientStop Offset="0" Color="#FF9ABBD1"/>
+        <GradientStop Offset="1" Color="#009ABBD1"/>
+    </GradientStopCollection>
+    <!--SolidColorBrush x:Key="ToolbarButtonHoverPrimaryBorderBrush">#40FFFFFF</SolidColorBrush>
 
     <LinearGradientBrush x:Key="ToolbarButtonHoverSecondaryBorderBrush" StartPoint="0,0" EndPoint="0.25,1">
         <LinearGradientBrush.GradientStops>
@@ -400,7 +439,7 @@
             <GradientStop Offset="0" Color="#FF6D9BAF" />
             <GradientStop Offset="0.75" Color="#FF0E5D9E" />
         </LinearGradientBrush.GradientStops>
-    </LinearGradientBrush>
+    </LinearGradientBrush-->
 
     <SolidColorBrush x:Key="ToolbarButtonHoverForegroundBrush">#FF00007F</SolidColorBrush>
 

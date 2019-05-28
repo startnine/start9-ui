@@ -16,14 +16,14 @@
                 <ControlTemplate TargetType="{x:Type Menu}">
                     <Grid>
                         <Grid>
-                            <Border x:Name="ToolBarBorder" CornerRadius="8,8,0,0" BorderThickness="1,1,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource WindowToolbarBackgroundBrush}" BorderBrush="{DynamicResource WindowToolbarBorderBrush}">
+                            <Border x:Name="ToolBarBorder" CornerRadius="8,8,0,0" BorderThickness="1,1,1,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{DynamicResource ToolbarBackgroundBrush}" BorderBrush="{DynamicResource ToolbarBorderBrush}">
                                 <Border x:Name="ToolBarSecondaryBorder" CornerRadius="8,8,0,0"
-                                                    BorderThickness="0,1,0,0" Background="{DynamicResource WindowToolbarSecondaryBackgroundBrush}"
-                                                    BorderBrush="{DynamicResource WindowToolbarSecondaryBorderBrush}" />
+                                                    BorderThickness="0,1,0,0" Background="{DynamicResource ToolbarSecondaryBackgroundBrush}"
+                                                    BorderBrush="{DynamicResource ToolbarSecondaryBorderBrush}" />
                             </Border>
-                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource WindowToolbarBackgroundBrush}"/>
-                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource WindowToolbarTertiaryBackgroundBrush}"/>
-                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource WindowToolbarQuarternaryBackgroundBrush}"/>
+                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="0" Background="{DynamicResource ToolbarBackgroundBrush}"/>
+                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="1" Background="{DynamicResource ToolbarTertiaryBackgroundBrush}"/>
+                            <Canvas Height="1" VerticalAlignment="Bottom" Margin="2" Background="{DynamicResource ToolbarQuarternaryBackgroundBrush}"/>
                         </Grid>
                         <StackPanel ClipToBounds="True" Orientation="Horizontal" IsItemsHost="True" />
                     </Grid>
