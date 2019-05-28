@@ -204,6 +204,16 @@ namespace FrontEndTest
                 Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Plex.xaml", UriKind.Relative);
                 ClearValue(TitlebarHeightProperty);
             }
+            else //2 and above
+            {
+
+            }
+
+            //Enable/disable Reveal test tab as needed
+            if (SkinsComboBox.SelectedIndex == 1)
+                RevealTestTabItem.IsEnabled = true;
+            else
+                RevealTestTabItem.IsEnabled = false;
 
             if (LightsToggleSwitch.IsChecked.Value)
                 LightsToggleSwitch_Checked(LightsToggleSwitch, null);

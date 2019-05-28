@@ -1,9 +1,17 @@
 ﻿using Start9.UI.Wpf;
 using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Globalization;
+using System.Runtime.CompilerServices;
+using System.Threading;
+using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Markup;
 using System.Windows.Media;
+using Timer = System.Timers.Timer;
 
 namespace Start9.UI.Wpf
 {
@@ -285,5 +293,95 @@ namespace Start9.UI.Wpf
 
             //RevealGlowTimer.Start();
         }
+    }
+
+    public class RevealInfo : DependencyObject
+    {
+        static List<FrameworkElement> _elements = new List<FrameworkElement>();
+
+        static Timer _timer = new Timer(1);
+        static SynchronizationContext _context = null;
+
+        static RevealInfo()
+        {
+            _context = SynchronizationContext.Current;
+            _timer.Elapsed += (sneder, args) => _context.Send(state => UpdateControls(), null);
+            _timer.Start();
+        }
+
+        static Point _cursorPos = new Point(0, 0);
+
+        public static void UpdateControls()
+        {
+            _cursorPos = SystemScaling.CursorPosition;
+            for (int i = 0; i < _elements.Count; i++)
+                UpdateControl(_elements[i]);
+        }
+
+        public static void UpdateControl(FrameworkElement element)
+        {
+            if (element.IsVisible)
+            {
+                var controlPos = element.PointToScreen(new Point(0, 0));
+                SetCursorX(element, _cursorPos.X - controlPos.X);
+                SetCursorY(element, _cursorPos.Y - controlPos.Y);
+            }
+        }
+
+        public static void SetRevealEnabled(FrameworkElement target, bool value)
+        {
+            target.SetValue(RevealEnabledProperty, value);
+        }
+
+        public static bool GetRevealEnabled(FrameworkElement target)
+        {
+            return (bool)target.GetValue(RevealEnabledProperty);
+        }
+
+        public static readonly DependencyProperty RevealEnabledProperty =
+            DependencyProperty.RegisterAttached("RevealEnabled", typeof(bool), typeof(RevealInfo), new PropertyMetadata(false, OnRevealEnabledPropertyChangedCallback));
+
+        private static void OnRevealEnabledPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is FrameworkElement target)
+            {
+                if ((bool)e.NewValue)
+                {
+                    if (!_elements.Contains(target))
+                        _elements.Add(target);
+                }
+                else
+                {
+                    if (_elements.Contains(target))
+                        _elements.Remove(target);
+                }
+            }
+        }
+
+        public static void SetCursorX(FrameworkElement target, double value)
+        {
+            target.SetValue(CursorXProperty, value);
+        }
+
+        public static double GetCursorX(FrameworkElement target)
+        {
+            return (double)target.GetValue(CursorXProperty);
+        }
+
+        public static readonly DependencyProperty CursorXProperty =
+            DependencyProperty.RegisterAttached("CursorX", typeof(double), typeof(RevealInfo), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.Inherits));
+
+        public static void SetCursorY(FrameworkElement target, double value)
+        {
+            target.SetValue(CursorYProperty, value);
+        }
+
+        public static double GetCursorY(FrameworkElement target)
+        {
+            return (double)target.GetValue(CursorYProperty);
+        }
+
+        public static readonly DependencyProperty CursorYProperty =
+            DependencyProperty.RegisterAttached("CursorY", typeof(double), typeof(RevealInfo), new FrameworkPropertyMetadata(0.0, FrameworkPropertyMetadataOptions.Inherits));
     }
 }

@@ -48,7 +48,7 @@
             </Rectangle>
         </ResourceDictionary>
     </win:DecoratableWindow.Resources>
-    <Grid>
+    <Grid Background="#01000000">
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Height="31" Margin="0,-30,0,0">
             <ToggleButton Style="{DynamicResource CaptionToggleButtonStyle}">CaptionToggleButtonStyle</ToggleButton>
             <RepeatButton Style="{DynamicResource CaptionRepeatButtonStyle}">CaptionRepeatButtonStyle</RepeatButton>
@@ -318,6 +318,59 @@
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
+                </TabItem>
+                <TabItem x:Name="RevealTestTabItem" Header="Reveal Test (Plex only)" IsEnabled="False">
+                    <UniformGrid Background="{DynamicResource WindowToolbarBackgroundBrush}">
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">0</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">1</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">2</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">3</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">4</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">5</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">6</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">7</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">8</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">9</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">A</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">B</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">C</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">D</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">E</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">F</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">G</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">H</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">I</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">J</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">K</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">L</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">M</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">N</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">O</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">P</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">Q</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">R</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">S</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">T</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">U</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">V</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">W</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">X</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">Y</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">Z</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">!</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">@</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">#</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">$</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">%</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">^</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">&amp;</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">*</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">(</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">)</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">+</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">-</Button>
+                        <Button Style="{DynamicResource ToolbarButtonStyle}">=</Button>
+                    </UniformGrid>
                 </TabItem>
             </TabControl>
             <!--Grid Visibility="Collapsed">

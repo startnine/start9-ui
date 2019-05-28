@@ -25,6 +25,9 @@
     </Page>
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+    <PackageReference Include="FluentWPF">
+      <Version>0.6.1</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
       <Version>1.0.1</Version>
     </PackageReference>
