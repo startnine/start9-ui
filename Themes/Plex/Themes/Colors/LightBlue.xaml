@@ -551,7 +551,7 @@
     <!--#region TextBox Brushes-->
 
     <SolidColorBrush x:Key="TextBoxForegroundBrush">Black</SolidColorBrush>
-    <SolidColorBrush x:Key="TextBoxPrimaryBorderBrush">#FF6C8C9F</SolidColorBrush>
+    <SolidColorBrush x:Key="TextBoxPrimaryBorderBrush">#FF425284</SolidColorBrush><!--FF6C8C9F-->
     <SolidColorBrush x:Key="TextBoxPrimaryBackgroundBrush">White</SolidColorBrush>
 
     <GradientStopCollection x:Key="TextBoxGlowGradientStops">
