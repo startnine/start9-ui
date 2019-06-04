@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -110,6 +111,63 @@ namespace Start9.UI.Wpf
             path.Height = constraint.Height;
             SetBorder();
             return constraint;
+        }
+    }
+
+    public class CutCornerDecorator : Decorator
+    {
+        static FrameworkPropertyMetadataOptions _options = FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsArrange;
+
+        public CornerRadius CornerRadius
+        {
+            get => (CornerRadius)GetValue(CornerRadiusProperty);
+            set => SetValue(CornerRadiusProperty, value);
+        }
+
+        public static readonly DependencyProperty CornerRadiusProperty =
+            DependencyProperty.Register(nameof(CornerRadius), typeof(CornerRadius), typeof(CutCornerDecorator), new FrameworkPropertyMetadata(new CornerRadius(6), _options));
+
+        public Brush Background
+        {
+            get => (Brush)GetValue(BackgroundProperty);
+            set => SetValue(BackgroundProperty, value);
+        }
+
+        public static DependencyProperty BackgroundProperty =
+            DependencyProperty.Register(nameof(Background), typeof(Brush), typeof(CutCornerDecorator), new FrameworkPropertyMetadata(null, _options));
+
+        public Brush BorderBrush
+        {
+            get => (Brush)GetValue(BorderBrushProperty);
+            set => SetValue(BorderBrushProperty, value);
+        }
+
+        public static DependencyProperty BorderBrushProperty =
+            DependencyProperty.Register(nameof(BorderBrush), typeof(Brush), typeof(CutCornerDecorator), new FrameworkPropertyMetadata(null, _options));
+
+        public Thickness BorderThickness
+        {
+            get => (Thickness)GetValue(BorderThicknessProperty);
+            set => SetValue(BorderThicknessProperty, value);
+        }
+
+        public static readonly DependencyProperty BorderThicknessProperty =
+            DependencyProperty.Register(nameof(BorderThickness), typeof(Thickness), typeof(CutCornerDecorator), new FrameworkPropertyMetadata(new Thickness(1), _options));
+
+        protected override void OnRender(DrawingContext drawingContext)
+        {
+            base.OnRender(drawingContext);
+            DrawCutCorners(drawingContext);
+        }
+
+        private void DrawCutCorners(DrawingContext dc)
+        {
+            dc.DrawGeometry(this.Background, new Pen(BorderBrush, BorderThickness.Left), GetCutCornerGeometry(ActualWidth, ActualHeight));
+        }
+
+        private Geometry GetCutCornerGeometry(double width, double height)
+        {
+            return PathGeometry.Parse("M 0 " + CornerRadius.TopLeft + " L " + CornerRadius.TopLeft + " 0 L " + (width - CornerRadius.TopRight) + " 0 L " + width + " " + CornerRadius.TopRight + " L " + width + " " + (height - CornerRadius.BottomRight) + " L " + (width - CornerRadius.BottomRight) + " " + height + " L " + CornerRadius.BottomLeft + " " + height + " L 0 " + (height - CornerRadius.BottomLeft) + " Z");
         }
     }
 }

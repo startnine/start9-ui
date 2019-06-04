@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start9.Wpf.Styles.Shale", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start9.Wpf.Styles.Plex", "Themes\Plex\Start9.Wpf.Styles.Plex.csproj", "{0A955652-DB8A-4B40-B02D-E71E1CFFF835}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Start9.Wpf.Styles.EDNA", "Themes\EDNA\Start9.Wpf.Styles.EDNA.csproj", "{8BCB5B71-DD2F-4E8B-9C28-FDA86ADF4E1F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{0A955652-DB8A-4B40-B02D-E71E1CFFF835}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A955652-DB8A-4B40-B02D-E71E1CFFF835}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0A955652-DB8A-4B40-B02D-E71E1CFFF835}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8BCB5B71-DD2F-4E8B-9C28-FDA86ADF4E1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8BCB5B71-DD2F-4E8B-9C28-FDA86ADF4E1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8BCB5B71-DD2F-4E8B-9C28-FDA86ADF4E1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8BCB5B71-DD2F-4E8B-9C28-FDA86ADF4E1F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

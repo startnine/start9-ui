@@ -120,7 +120,7 @@
                 <DataTemplate>
                     <Button x:Name="Button" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding}" Margin="0,0,5,0">
                         <e:Interaction.Behaviors>
-                            <uib:DialogBoxButtonBehavior/>
+                            <uib:MessageBoxButtonBehavior/>
                         </e:Interaction.Behaviors>
                     </Button>
                 </DataTemplate>

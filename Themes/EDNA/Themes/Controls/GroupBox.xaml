@@ -1,0 +1,48 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf"
+            xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters;assembly=Start9.UI.Wpf"
+            xmlns:win="clr-namespace:Start9.UI.Wpf.Windows;assembly=Start9.UI.Wpf"
+            xmlns:uib="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
+            xmlns:beh="http://schemas.microsoft.com/xaml/behaviors">
+    <conv:CornerCurvesToCornerRadiusConverter x:Key="CornerCurvesToCornerRadiusConverter"/>
+
+    <Style TargetType="{x:Type GroupBox}">
+        <Setter Property="UseLayoutRounding" Value="True"/>
+        <Setter Property="Padding" Value="10"/>
+        <Setter Property="Foreground" Value="{DynamicResource Idle2ForegroundBrush}"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GroupBox">
+                    <Grid Margin="10" ClipToBounds="True">
+                        <!--Grid.Effect>
+                            <DropShadowEffect Color="Black" Direction="270" ShadowDepth="10" BlurRadius="20" Opacity="0.5"/>
+                        </Grid.Effect-->
+                            <ui:CutCornerDecorator Background="{DynamicResource GroupBoxBackgroundBrush}"/>
+                            <ui:CutCornerDecorator CornerRadius="7,0,7,7" BorderBrush="{DynamicResource GroupBoxOuterBorderBrush}" Margin="1,-2,-2,1"/>
+                            <ui:CutCornerDecorator CornerRadius="7,7,7,0" BorderBrush="{DynamicResource GroupBoxInnerBorderBrush}" Margin="-2,1,1,-2"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition x:Name="TopRow" Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+                            <Grid>
+                                <ui:CutCornerDecorator Background="{DynamicResource GroupBoxHeaderBackgroundBrush}"/>
+                                <ContentPresenter x:Name="HeaderPresenter" Grid.Row="0" ContentSource="Header" RecognizesAccessKey="True" TextElement.Foreground="{DynamicResource GroupBoxHeaderForegroundBrush}" TextElement.FontSize="12" Margin="18,2" TextElement.FontFamily="EA Pirulen Rg DS"/>
+                            </Grid>
+                            <ContentPresenter x:Name="BodyPresenter" Margin="{TemplateBinding Padding}" Grid.Row="1"/>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <!--DataTrigger Binding="{Binding Path=ContentSource, Source={x:Reference HeaderPresenter}, Converter={StaticResource IsNullOrWhiteSpaceConverter}}" Value="True"-->
+                        <Trigger Property="Header" Value="{x:Null}">
+                            <!--Setter TargetName="BodyPresenter" Property="Margin" Value="0,-10,0,0"/-->
+                            <Setter TargetName="HeaderPresenter" Property="Margin" Value="0"/>
+                            <Setter TargetName="TopRow" Property="Height" Value="0"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>

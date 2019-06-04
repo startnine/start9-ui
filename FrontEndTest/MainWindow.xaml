@@ -49,7 +49,7 @@
         </ResourceDictionary>
     </win:DecoratableWindow.Resources>
     <Grid Background="#01000000">
-        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Height="31" Margin="0,-30,0,0">
+        <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal" Height="31" Margin="0,-30,0,0" Visibility="Collapsed">
             <ToggleButton Style="{DynamicResource CaptionToggleButtonStyle}">CaptionToggleButtonStyle</ToggleButton>
             <RepeatButton Style="{DynamicResource CaptionRepeatButtonStyle}">CaptionRepeatButtonStyle</RepeatButton>
         </StackPanel>
@@ -58,7 +58,7 @@
                 <StatusBarItem>Enabled StatusBarItem</StatusBarItem>
                 <StatusBarItem IsEnabled="False">Disabled StatusBarItem</StatusBarItem>
             </StatusBar>
-            <TabControl Style="{DynamicResource PrimaryTabControlStyle}">
+            <TabControl x:Name="MainTabControl" Style="{DynamicResource PrimaryTabControlStyle}">
                 <TabItem Header="Buttons">
                     <ScrollViewer>
                         <UniformGrid Rows="1">
@@ -295,6 +295,7 @@
                             <ComboBox x:Name="SkinsComboBox" SelectedIndex="0">
                                 <ComboBoxItem Content="Shale"/>
                                 <ComboBoxItem Content="Plex"/>
+                                <ComboBoxItem Content="E-DNA"/>
                             </ComboBox>
                         </GroupBox>
                         <GroupBox Header="NOTE">

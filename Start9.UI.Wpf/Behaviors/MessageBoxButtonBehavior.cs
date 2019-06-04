@@ -13,7 +13,7 @@ using Start9.UI.Wpf.Windows;
 
 namespace Start9.UI.Wpf.Behaviors
 {
-    public class DialogBoxButtonBehavior : Behavior<Button>
+    public class MessageBoxButtonBehavior : Behavior<Button>
     {
         protected override void OnAttached()
         {

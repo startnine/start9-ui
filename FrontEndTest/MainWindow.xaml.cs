@@ -204,6 +204,13 @@ namespace FrontEndTest
                 Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Plex.xaml", UriKind.Relative);
                 ClearValue(TitlebarHeightProperty);
             }
+            else if (SkinsComboBox.SelectedIndex == 2)
+            {
+                //Application.Current.Resources.MergedDictionaries.RemoveAt(1);
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.EDNA;component/Themes/EDNA.xaml", UriKind.Relative);
+                ClearValue(TitlebarHeightProperty);
+                MainTabControl.Margin = new Thickness(15); //MainTabControl.Margin.Left, 25, MainTabControl.Margin.Right, MainTabControl.Margin.Bottom);
+            }
             else //2 and above
             {
 
@@ -214,6 +221,9 @@ namespace FrontEndTest
                 RevealTestTabItem.IsEnabled = true;
             else
                 RevealTestTabItem.IsEnabled = false;
+
+            if (SkinsComboBox.SelectedIndex != 2)
+                MainTabControl.ClearValue(TabControl.MarginProperty);
 
             if (LightsToggleSwitch.IsChecked.Value)
                 LightsToggleSwitch_Checked(LightsToggleSwitch, null);
