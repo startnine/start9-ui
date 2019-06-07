@@ -1,17 +1,11 @@
-﻿using Start9.UI.Wpf;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.Runtime.CompilerServices;
 using System.Threading;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Markup;
 using System.Windows.Media;
-using Timer = System.Timers.Timer;
+using System.Linq;
 
 namespace Start9.UI.Wpf
 {
@@ -298,15 +292,12 @@ namespace Start9.UI.Wpf
     public class RevealInfo : DependencyObject
     {
         static List<FrameworkElement> _elements = new List<FrameworkElement>();
-
-        static Timer _timer = new Timer(1);
         static SynchronizationContext _context = null;
 
         static RevealInfo()
         {
             _context = SynchronizationContext.Current;
-            _timer.Elapsed += (sneder, args) => _context.Send(state => UpdateControls(), null);
-            _timer.Start();
+            CompositionTarget.Rendering += (sneder, args) => UpdateControls();
         }
 
         static Point _cursorPos = new Point(0, 0);
@@ -314,18 +305,16 @@ namespace Start9.UI.Wpf
         public static void UpdateControls()
         {
             _cursorPos = SystemScaling.CursorPosition;
-            for (int i = 0; i < _elements.Count; i++)
+            IEnumerable<FrameworkElement> visibleElements = _elements.Where(x => x.IsVisible);
+            for (int i = 0; i < visibleElements.Count(); i++)
                 UpdateControl(_elements[i]);
         }
 
         public static void UpdateControl(FrameworkElement element)
         {
-            if (element.IsVisible)
-            {
-                var controlPos = element.PointToScreen(new Point(0, 0));
-                SetCursorX(element, _cursorPos.X - controlPos.X);
-                SetCursorY(element, _cursorPos.Y - controlPos.Y);
-            }
+            var controlPos = element.PointToScreen(new Point(0, 0));
+            SetCursorX(element, _cursorPos.X - controlPos.X);
+            SetCursorY(element, _cursorPos.Y - controlPos.Y);
         }
 
         public static void SetRevealEnabled(FrameworkElement target, bool value)
