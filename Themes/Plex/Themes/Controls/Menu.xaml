@@ -4,7 +4,7 @@
             xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters;assembly=Start9.UI.Wpf"
             xmlns:win="clr-namespace:Start9.UI.Wpf.Windows;assembly=Start9.UI.Wpf"
             xmlns:uib="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
-            xmlns:beh="http://schemas.microsoft.com/xaml/behaviors">
+            xmlns:beh="http://schemas.microsoft.com/expression/2010/interactivity">
     <conv:CornerCurvesToCornerRadiusConverter x:Key="CornerCurvesToCornerRadiusConverter"/>
 
     <Style x:Key="{x:Type Menu}" TargetType="{x:Type Menu}">

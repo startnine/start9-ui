@@ -4,7 +4,7 @@
             xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters"
             xmlns:win="clr-namespace:Start9.UI.Wpf.Windows"
             xmlns:uib="clr-namespace:Start9.UI.Wpf.Behaviors"
-            xmlns:beh="http://schemas.microsoft.com/xaml/behaviors">
+            xmlns:beh="http://schemas.microsoft.com/expression/2010/interactivity">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/ShaleBaseLight.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Colors/ShaleBlueOld.xaml"/>

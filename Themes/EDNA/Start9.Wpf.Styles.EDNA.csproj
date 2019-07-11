@@ -18,9 +18,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Start9.UI.Wpf\Start9.UI.Wpf.csproj" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf">
-      <Version>1.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
 </Project>

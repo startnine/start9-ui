@@ -2,11 +2,11 @@
 using System.Windows;
 using System.Windows.Controls;
 
-#if NETCOREAPP3_0
+/*#if NETCOREAPP3_0
 using Microsoft.Xaml.Behaviors;
-#else
+#else*/
 using System.Windows.Interactivity;
-#endif
+//#endif
 
 namespace Start9.UI.Wpf
 {

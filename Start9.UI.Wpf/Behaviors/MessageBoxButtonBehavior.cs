@@ -4,11 +4,11 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 
-#if NETCOREAPP3_0
+/*#if NETCOREAPP3_0
 using Microsoft.Xaml.Behaviors;
-#else
+#else*/
 using System.Windows.Interactivity;
-#endif
+//#endif
 using Start9.UI.Wpf.Windows;
 
 namespace Start9.UI.Wpf.Behaviors

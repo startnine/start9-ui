@@ -3,7 +3,7 @@
             xmlns:conv="clr-namespace:Start9.UI.Wpf.Converters;assembly=Start9.UI.Wpf"
             xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf"
             xmlns:uib="clr-namespace:Start9.UI.Wpf.Behaviors;assembly=Start9.UI.Wpf"
-            xmlns:e="http://schemas.microsoft.com/xaml/behaviors">
+            xmlns:e="http://schemas.microsoft.com/expression/2010/interactivity">
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     
     <Style x:Key="ToolbarBackgroundControlStyle" TargetType="{x:Type Control}">
