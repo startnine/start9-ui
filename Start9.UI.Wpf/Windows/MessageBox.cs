@@ -184,6 +184,12 @@ namespace Start9.UI.Wpf.Windows
                 SizeToContent = SizeToContent.WidthAndHeight
             };
 
+            window.Closing += (sender, args) =>
+            {
+                if (!content.CanClose)
+                    args.Cancel = true;
+            };
+
             window.SetResourceReference(DecoratableWindow.StyleProperty, "MessageBoxWindowStyle");
 
             object value = null;

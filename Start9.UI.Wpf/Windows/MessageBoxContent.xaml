@@ -5,7 +5,6 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:ui="clr-namespace:Start9.UI.Wpf"
              xmlns:local="clr-namespace:Start9.UI.Wpf.Windows"
-             x:ClassModifier="internal"
              mc:Ignorable="d"
              DataContext="{Binding RelativeSource={RelativeSource Self}}" HorizontalAlignment="Center" VerticalAlignment="Center" UseLayoutRounding="True" SnapsToDevicePixels="True">
     <DockPanel>

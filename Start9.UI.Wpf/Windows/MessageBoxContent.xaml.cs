@@ -19,8 +19,10 @@ namespace Start9.UI.Wpf.Windows
     /// <summary>
     /// Interaction logic for MessageBoxContent.xaml
     /// </summary>
-    internal partial class MessageBoxContent : UserControl
+    public partial class MessageBoxContent : UserControl
     {
+        internal bool CanClose = false;
+
         internal ObservableCollection<MessageBoxAction> Actions
         {
             get => (ObservableCollection<MessageBoxAction>)GetValue(ActionsProperty);
@@ -76,6 +78,7 @@ namespace Start9.UI.Wpf.Windows
 
         public void EndDialog(object sender, MessageBoxAction value)
         {
+            CanClose = true;
             ResultButtonClicked.Invoke(sender, new MessageBoxEventArgs(value.Value));
             Window.GetWindow(this).Close();
         }
