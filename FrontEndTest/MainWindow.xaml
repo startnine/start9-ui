@@ -128,6 +128,23 @@
                                         </ui:SpinBox>
                                     </UniformGrid>
                                     <Rectangle Width="1" Height="40"/>
+                                    <ui:SplitButton Content="SplitButton">
+                                        <ui:SplitButton.FlyoutMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="A"/>
+                                                <MenuItem Header="B"/>
+                                                <MenuItem Header="C"/>
+                                            </ContextMenu>
+                                        </ui:SplitButton.FlyoutMenu>
+                                        <ui:SplitButton.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="D"/>
+                                                <MenuItem Header="E"/>
+                                                <MenuItem Header="F"/>
+                                            </ContextMenu>
+                                        </ui:SplitButton.ContextMenu>
+                                    </ui:SplitButton>
+                                    <Rectangle Width="1" Height="40"/>
                                     <CheckBox Content="Normal CheckBox"/>
                                     <CheckBox IsChecked="True" Content="Checked CheckBox"/>
                                     <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Null CheckBox"/>
@@ -149,6 +166,23 @@
                                     <CheckBox Content="Disabled CheckBox"/>
                                     <CheckBox IsChecked="True" Content="Disabled Checked CheckBox"/>
                                     <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Disabled Null CheckBox"/>
+                                    <Rectangle Width="1" Height="40"/>
+                                    <ui:SplitButton Content="Disabled SplitButton">
+                                        <ui:SplitButton.FlyoutMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="A"/>
+                                                <MenuItem Header="B"/>
+                                                <MenuItem Header="C"/>
+                                            </ContextMenu>
+                                        </ui:SplitButton.FlyoutMenu>
+                                        <ui:SplitButton.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem Header="D"/>
+                                                <MenuItem Header="E"/>
+                                                <MenuItem Header="F"/>
+                                            </ContextMenu>
+                                        </ui:SplitButton.ContextMenu>
+                                    </ui:SplitButton>
                                     <Rectangle Width="1" Height="40"/>
                                     <RadioButton GroupName="DisabledRadio" Content="Disabled RadioButton"/>
                                     <RadioButton GroupName="DisabledRadio" IsChecked="True" Content="Disabled Checked RadioButton"/>

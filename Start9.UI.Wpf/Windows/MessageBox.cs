@@ -172,10 +172,6 @@ namespace Start9.UI.Wpf.Windows
 
         public static object Show(string text, string caption, FrameworkElement icon)
         {
-            /*if (typeof(TActionSet).GetInterface(nameof(IMessageBoxActionSet)) == null)
-                throw new InvalidOperationException("MessageBoxActions<T>: T must implement IMessageBoxActionSet.");*/
-
-            //(IMessageBoxActionSet)Activator.CreateInstance(typeof(TActionSet))
             MessageBoxContent content = new MessageBoxContent(new TActionSet(), text, icon);
             DecoratableWindow window = new DecoratableWindow()
             {
