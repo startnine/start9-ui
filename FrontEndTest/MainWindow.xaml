@@ -12,15 +12,6 @@
         Title="MainWindow" Loaded="MainWindow_Loaded" TitlebarHeight="61" ShowFullscreenButton="True">
     <win:DecoratableWindow.Resources>
         <ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <!--ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Shale.xaml"/-->
-                
-
-                <!--ResourceDictionary Source="pack://application:,,,/PresentationFramework.Aero;component/themes/Aero.NormalColor.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/Start9.UI.Wpf;component/Themes/Aero.NormalColor.xaml"/-->
-            </ResourceDictionary.MergedDictionaries>
-            <!--Style TargetType="{x:Type Rectangle}" /-->
-
             <Rectangle x:Key="SampleIcon" x:Shared="False" Width="56" Height="46">
                 <Rectangle.Fill>
                     <VisualBrush>
@@ -60,141 +51,163 @@
             </StatusBar>
             <TabControl x:Name="MainTabControl" Style="{DynamicResource PrimaryTabControlStyle}">
                 <TabItem Header="Buttons">
-                    <ScrollViewer>
-                        <UniformGrid Rows="1">
-                            <GroupBox Header="Enabled Controls">
-                                <StackPanel Orientation="Vertical">
-                                    <UniformGrid Columns="2">
-                                        <Button Content="Normal Button">
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopRight="False" BottomRight="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                            <Button.ContextMenu>
+                    <DockPanel>
+                        <Menu DockPanel.Dock="Top">
+                            <MenuItem Header="File">
+                                <MenuItem Header="MenuItem 1"/>
+                                <MenuItem Header="MenuItem 2"/>
+                                <Separator/>
+                                <MenuItem Header="MenuItem 3"/>
+                            </MenuItem>
+                            <MenuItem Header="Edit">
+                                <MenuItem Header="MenuItem 4"/>
+                                <Separator/>
+                                <MenuItem Header="MenuItem 5"/>
+                                <MenuItem Header="MenuItem 6"/>
+                            </MenuItem>
+                        </Menu>
+                        <ScrollViewer>
+                            <ui:AttachedProperties.CornerCurves>
+                                <ui:CornerCurves TopLeft="False" TopRight="False" BottomRight="False" BottomLeft="False"/>
+                            </ui:AttachedProperties.CornerCurves>
+                            <UniformGrid Rows="1">
+                                <GroupBox Header="Enabled Controls">
+                                    <StackPanel Orientation="Vertical">
+                                        <UniformGrid Columns="2">
+                                            <Button Content="Normal Button">
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopRight="False" BottomRight="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                                <Button.ContextMenu>
+                                                    <ContextMenu>
+                                                        <MenuItem Header="AAAA"/>
+                                                        <MenuItem Header="BBBB" IsCheckable="True" IsChecked="True"/>
+                                                        <MenuItem Header="CCCC">
+                                                            <MenuItem Header="CAAA"/>
+                                                            <MenuItem Header="CBBB"/>
+                                                        </MenuItem>
+                                                    </ContextMenu>
+                                                </Button.ContextMenu>
+                                            </Button>
+                                            <Button x:Name="MessageBoxTestButton" Content="Click for MessageBox" Click="MessageBoxTestButton_Click">
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                            </Button>
+                                            <RepeatButton Content="RepeatButton">
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopRight="False" BottomRight="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                            </RepeatButton>
+                                            <RepeatButton Content="RepeatButton">
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                            </RepeatButton>
+                                            <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Round Button"/-->
+                                            <Button IsDefault="True" Content="Default Button">
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopRight="False" BottomRight="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                            </Button>
+                                            <Button IsDefault="True" Content="Default Button">
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                            </Button>
+                                            <ToggleButton Content="ToggleButton">
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopRight="False" BottomRight="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                            </ToggleButton>
+                                            <ToggleButton IsChecked="True" Content="Checked ToggleButton">
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                            </ToggleButton>
+                                            <ui:SpinBox>
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopRight="False" BottomRight="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                            </ui:SpinBox>
+                                            <ui:SpinBox>
+                                                <ui:AttachedProperties.CornerCurves>
+                                                    <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
+                                                </ui:AttachedProperties.CornerCurves>
+                                            </ui:SpinBox>
+                                        </UniformGrid>
+                                        <Rectangle Width="1" Height="40"/>
+                                        <ui:SplitButton Content="SplitButton">
+                                            <ui:SplitButton.FlyoutMenu>
                                                 <ContextMenu>
-                                                    <MenuItem Header="AAAA"/>
-                                                    <MenuItem Header="BBBB" IsCheckable="True" IsChecked="True"/>
-                                                    <MenuItem Header="CCCC">
-                                                        <MenuItem Header="CAAA"/>
-                                                        <MenuItem Header="CBBB"/>
-                                                    </MenuItem>
+                                                    <MenuItem Header="A"/>
+                                                    <MenuItem Header="B"/>
+                                                    <MenuItem Header="C"/>
                                                 </ContextMenu>
-                                            </Button.ContextMenu>
-                                        </Button>
-                                        <Button x:Name="MessageBoxTestButton" Content="Click for MessageBox" Click="MessageBoxTestButton_Click">
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                        </Button>
-                                        <RepeatButton Content="RepeatButton">
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopRight="False" BottomRight="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                        </RepeatButton>
-                                        <RepeatButton Content="RepeatButton">
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                        </RepeatButton>
-                                        <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Round Button"/-->
-                                        <Button IsDefault="True" Content="Default Button">
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopRight="False" BottomRight="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                        </Button>
-                                        <Button IsDefault="True" Content="Default Button">
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                        </Button>
-                                        <ToggleButton Content="ToggleButton">
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopRight="False" BottomRight="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                        </ToggleButton>
-                                        <ToggleButton IsChecked="True" Content="Checked ToggleButton">
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                        </ToggleButton>
-                                        <ui:SpinBox>
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopRight="False" BottomRight="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                        </ui:SpinBox>
-                                        <ui:SpinBox>
-                                            <ui:AttachedProperties.CornerCurves>
-                                                <ui:CornerCurves TopLeft="False" BottomLeft="False"/>
-                                            </ui:AttachedProperties.CornerCurves>
-                                        </ui:SpinBox>
-                                    </UniformGrid>
-                                    <Rectangle Width="1" Height="40"/>
-                                    <ui:SplitButton Content="SplitButton">
-                                        <ui:SplitButton.FlyoutMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="A"/>
-                                                <MenuItem Header="B"/>
-                                                <MenuItem Header="C"/>
-                                            </ContextMenu>
-                                        </ui:SplitButton.FlyoutMenu>
-                                        <ui:SplitButton.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="D"/>
-                                                <MenuItem Header="E"/>
-                                                <MenuItem Header="F"/>
-                                            </ContextMenu>
-                                        </ui:SplitButton.ContextMenu>
-                                    </ui:SplitButton>
-                                    <Rectangle Width="1" Height="40"/>
-                                    <CheckBox Content="Normal CheckBox"/>
-                                    <CheckBox IsChecked="True" Content="Checked CheckBox"/>
-                                    <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Null CheckBox"/>
-                                    <Rectangle Width="1" Height="40"/>
-                                    <RadioButton GroupName="NormalRadio" Content="Normal RadioButton"/>
-                                    <RadioButton GroupName="NormalRadio" IsChecked="True" Content="Checked RadioButton"/>
-                                    <ui:ActionBox WatermarkText="Normal" ButtonContent="ActionBox"/>
-                                </StackPanel>
-                            </GroupBox>
-                            <GroupBox Header="Disabled Controls" IsEnabled="False">
-                                <StackPanel>
-                                    <Button Content="Disabled Button"/>
-                                    <RepeatButton Content="Disabled RepeatButton"/>
-                                    <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Disabled Round Button"/-->
-                                    <Button Visibility="Hidden" Content="Hidden Button"/>
-                                    <ToggleButton Content="Disabled ToggleButton"/>
-                                    <ToggleButton IsChecked="True" Content="Disabled Checked ToggleButton"/>
-                                    <Rectangle Width="1" Height="40"/>
-                                    <CheckBox Content="Disabled CheckBox"/>
-                                    <CheckBox IsChecked="True" Content="Disabled Checked CheckBox"/>
-                                    <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Disabled Null CheckBox"/>
-                                    <Rectangle Width="1" Height="40"/>
-                                    <ui:SplitButton Content="Disabled SplitButton">
-                                        <ui:SplitButton.FlyoutMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="A"/>
-                                                <MenuItem Header="B"/>
-                                                <MenuItem Header="C"/>
-                                            </ContextMenu>
-                                        </ui:SplitButton.FlyoutMenu>
-                                        <ui:SplitButton.ContextMenu>
-                                            <ContextMenu>
-                                                <MenuItem Header="D"/>
-                                                <MenuItem Header="E"/>
-                                                <MenuItem Header="F"/>
-                                            </ContextMenu>
-                                        </ui:SplitButton.ContextMenu>
-                                    </ui:SplitButton>
-                                    <Rectangle Width="1" Height="40"/>
-                                    <RadioButton GroupName="DisabledRadio" Content="Disabled RadioButton"/>
-                                    <RadioButton GroupName="DisabledRadio" IsChecked="True" Content="Disabled Checked RadioButton"/>
-                                    <ui:SpinBox IsEnabled="False"/>
-                                    <ui:ActionBox WatermarkText="Disabled" ButtonContent="ActionBox" IsEnabled="False"/>
-                                </StackPanel>
-                            </GroupBox>
-                        </UniformGrid>
-                    </ScrollViewer>
+                                            </ui:SplitButton.FlyoutMenu>
+                                            <ui:SplitButton.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="D"/>
+                                                    <MenuItem Header="E"/>
+                                                    <MenuItem Header="F"/>
+                                                </ContextMenu>
+                                            </ui:SplitButton.ContextMenu>
+                                        </ui:SplitButton>
+                                        <Rectangle Width="1" Height="40"/>
+                                        <CheckBox Content="Normal CheckBox"/>
+                                        <CheckBox IsChecked="True" Content="Checked CheckBox"/>
+                                        <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Null CheckBox"/>
+                                        <Rectangle Width="1" Height="40"/>
+                                        <RadioButton GroupName="NormalRadio" Content="Normal RadioButton"/>
+                                        <RadioButton GroupName="NormalRadio" IsChecked="True" Content="Checked RadioButton"/>
+                                        <ui:ActionBox WatermarkText="Normal" ButtonContent="ActionBox"/>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="Disabled Controls" IsEnabled="False">
+                                    <StackPanel>
+                                        <Button Content="Disabled Button"/>
+                                        <RepeatButton Content="Disabled RepeatButton"/>
+                                        <!--Button Style="{DynamicResource RoundButtonStyle}" Width="30" Height="30" Content="Disabled Round Button"/-->
+                                        <Button Visibility="Hidden" Content="Hidden Button"/>
+                                        <ToggleButton Content="Disabled ToggleButton"/>
+                                        <ToggleButton IsChecked="True" Content="Disabled Checked ToggleButton"/>
+                                        <Rectangle Width="1" Height="40"/>
+                                        <ui:SplitButton Content="Disabled SplitButton">
+                                            <ui:SplitButton.FlyoutMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="A"/>
+                                                    <MenuItem Header="B"/>
+                                                    <MenuItem Header="C"/>
+                                                </ContextMenu>
+                                            </ui:SplitButton.FlyoutMenu>
+                                            <ui:SplitButton.ContextMenu>
+                                                <ContextMenu>
+                                                    <MenuItem Header="D"/>
+                                                    <MenuItem Header="E"/>
+                                                    <MenuItem Header="F"/>
+                                                </ContextMenu>
+                                            </ui:SplitButton.ContextMenu>
+                                        </ui:SplitButton>
+                                        <Rectangle Width="1" Height="40"/>
+                                        <CheckBox Content="Disabled CheckBox"/>
+                                        <CheckBox IsChecked="True" Content="Disabled Checked CheckBox"/>
+                                        <CheckBox IsThreeState="True" IsChecked="{x:Null}" Content="Disabled Null CheckBox"/>
+                                        <Rectangle Width="1" Height="40"/>
+                                        <RadioButton GroupName="DisabledRadio" Content="Disabled RadioButton"/>
+                                        <RadioButton GroupName="DisabledRadio" IsChecked="True" Content="Disabled Checked RadioButton"/>
+                                        <ui:SpinBox IsEnabled="False"/>
+                                        <ui:ActionBox WatermarkText="Disabled" ButtonContent="ActionBox" IsEnabled="False"/>
+                                    </StackPanel>
+                                </GroupBox>
+                            </UniformGrid>
+                        </ScrollViewer>
+                    </DockPanel>
                 </TabItem>
                 <TabItem Header="Boxes">
                     <ScrollViewer>
+                        <ui:AttachedProperties.CornerCurves>
+                            <ui:CornerCurves TopLeft="False" TopRight="False" BottomRight="False" BottomLeft="False"/>
+                        </ui:AttachedProperties.CornerCurves>
                         <UniformGrid Rows="1">
                             <GroupBox Header="Enabled Boxes">
                                 <StackPanel>
@@ -330,6 +343,15 @@
                                 <ComboBoxItem Content="Shale"/>
                                 <ComboBoxItem Content="Plex"/>
                                 <ComboBoxItem Content="E-DNA"/>
+                                <Separator/>
+                                <ComboBoxItem Content="Classic"/>
+                                <ComboBoxItem Content="Luna Blue"/>
+                                <ComboBoxItem Content="Luna Olive (NYI)" IsEnabled="False"/>
+                                <ComboBoxItem Content="Luna Silver (NYI)" IsEnabled="False"/>
+                                <ComboBoxItem Content="Royale (NYI)" IsEnabled="False"/>
+                                <ComboBoxItem Content="Aero"/>
+                                <ComboBoxItem Content="Aero2"/>
+                                <ComboBoxItem Content="AeroLite"/>
                             </ComboBox>
                         </GroupBox>
                         <GroupBox Header="NOTE">

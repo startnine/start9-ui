@@ -194,26 +194,67 @@ namespace FrontEndTest
 
         private void SkinsComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            ClearValue(TitlebarHeightProperty);
+            MainTabControl.Margin = new Thickness(0);
+
             if (SkinsComboBox.SelectedIndex == 0)
             {
                 Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Shale;component/Themes/Shale.xaml", UriKind.Relative);
                 TitlebarHeight = 61;
             }
-            else if (SkinsComboBox.SelectedIndex == 1)
+            if (SkinsComboBox.SelectedIndex == 1)
             {
                 Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.Plex;component/Themes/Plex.xaml", UriKind.Relative);
-                ClearValue(TitlebarHeightProperty);
             }
             else if (SkinsComboBox.SelectedIndex == 2)
             {
-                //Application.Current.Resources.MergedDictionaries.RemoveAt(1);
                 Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/Start9.Wpf.Styles.EDNA;component/Themes/EDNA.xaml", UriKind.Relative);
-                ClearValue(TitlebarHeightProperty);
-                MainTabControl.Margin = new Thickness(15); //MainTabControl.Margin.Left, 25, MainTabControl.Margin.Right, MainTabControl.Margin.Bottom);
+                MainTabControl.Margin = new Thickness(15);
             }
-            else //2 and above
+            else if (SkinsComboBox.SelectedIndex == 4)
             {
-
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.Classic, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/classic.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Generic.xaml", UriKind.Relative);
+            }
+            else if (SkinsComboBox.SelectedIndex == 5)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/luna.normalcolor.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Luna.NormalColor.xaml", UriKind.Relative);
+            }
+            else if (SkinsComboBox.SelectedIndex == 6)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/luna.homestead.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Luna.Homestead.xaml", UriKind.Relative);
+            }
+            else if (SkinsComboBox.SelectedIndex == 7)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/luna.metallic.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Luna.Metallic.xaml", UriKind.Relative);
+            }
+            else if (SkinsComboBox.SelectedIndex == 7)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.Luna, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/luna.metallic.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Luna.Metallic.xaml", UriKind.Relative);
+            }
+            else if (SkinsComboBox.SelectedIndex == 8)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.Royale, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/royale.normalcolor.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Royale.NormalColor.xaml", UriKind.Relative);
+            }
+            else if (SkinsComboBox.SelectedIndex == 9)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.Aero, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/aero.normalcolor.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Aero.NormalColor.xaml", UriKind.Relative);
+            }
+            else if (SkinsComboBox.SelectedIndex == 10)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.Aero2, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/aero2.normalcolor.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Aero2.NormalColor.xaml", UriKind.Relative);
+            }
+            else if (SkinsComboBox.SelectedIndex == 11)
+            {
+                Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.AeroLite, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/aerolite.normalcolor.xaml", UriKind.Relative);
+                Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Generic.xaml", UriKind.Relative);
             }
 
             //Enable/disable Reveal test tab as needed

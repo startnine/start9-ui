@@ -39,7 +39,6 @@
                 <Style TargetType="Window">
                     <Setter Property="WindowStyle" Value="None"/>
                     <Setter Property="ResizeMode" Value="NoResize"/>
-                    <Setter Property="AllowsTransparency" Value="True"/>
                     <Setter Property="Visibility" Value="Visible"/>
                     <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
                     <Setter Property="Template">

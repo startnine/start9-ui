@@ -6,7 +6,7 @@ using System.Windows.Data;
 
 namespace Start9.UI.Wpf.Converters
 {
-    public class ClassicFrameSizeConverter : IValueConverter
+    /*public class ClassicFrameSizeConverter : IValueConverter
     {
         public Object Convert(Object value, Type targetType, Object parameter, CultureInfo culture)
         {
@@ -20,6 +20,20 @@ namespace Start9.UI.Wpf.Converters
 
         public Object ConvertBack(Object value, Type targetType,
             Object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }*/
+
+    public class ClassicFrameSizeConverter : IMultiValueConverter
+    {
+        public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)
+        {
+            var border = (Thickness)values[0];
+            return new Thickness(border.Left, border.Top + (double)values[1], border.Right, border.Bottom);
+        }
+
+        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
         }

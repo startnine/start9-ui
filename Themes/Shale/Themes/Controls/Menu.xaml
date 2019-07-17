@@ -259,4 +259,25 @@
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="{x:Type Menu}" TargetType="{x:Type Menu}">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Menu}">
+                    <Grid>
+                        <Rectangle VerticalAlignment="Bottom" Margin="0,-18" Height="18" IsHitTestVisible="False">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <Border Style="{DynamicResource HorizontalBarBorderStyle}" DockPanel.Dock="{TemplateBinding DockPanel.Dock}">
+                            <StackPanel Orientation="Horizontal" IsItemsHost="True" />
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

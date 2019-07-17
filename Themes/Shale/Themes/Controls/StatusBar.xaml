@@ -7,7 +7,7 @@
             xmlns:beh="http://schemas.microsoft.com/expression/2010/interactivity">
     <conv:CornerCurvesToCornerRadiusConverter x:Key="CornerCurvesToCornerRadiusConverter"/>
 
-    <Style x:Key="{x:Type StatusBar}" TargetType="{x:Type StatusBar}">
+    <Style x:Key="NoShadowStatusBarStyle" TargetType="{x:Type StatusBar}">
         <Setter Property="SnapsToDevicePixels" Value="True"/>
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="Foreground" Value="{DynamicResource StatusBarForegroundBrush}"/>
@@ -41,7 +41,7 @@
         </Setter>
     </Style>
 
-    <Style x:Key="ShadowedStatusBarStyle" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource {x:Type StatusBar}}">
+    <Style x:Key="{x:Type StatusBar}" TargetType="{x:Type StatusBar}" BasedOn="{StaticResource NoShadowStatusBarStyle}">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type StatusBar}">
