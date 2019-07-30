@@ -52,10 +52,23 @@ namespace Start9.UI.Wpf.Behaviors
         {
             ScrollViewer scrollViewer = target as ScrollViewer;
 
+            double difference = ((double)e.NewValue - (double)e.OldValue);
+            Debug.WriteLine("Scroll animation difference: " + difference);
+
+            /*double toVal = Math.Max(scrollViewer.VerticalOffset + difference, GetPointsToScroll(scrollViewer));
+
+            if (difference < 0)
+                toVal = Math.Min(scrollViewer.VerticalOffset + difference, -GetPointsToScroll(scrollViewer));
+
+            if (toVal < 0)
+                toVal = 0;
+            else if (toVal > scrollViewer.ScrollableHeight)
+                toVal = scrollViewer.ScrollableHeight;*/
+
             DoubleAnimation verticalAnimation = new DoubleAnimation()
             {
                 From = scrollViewer.VerticalOffset,
-                To = (double)e.NewValue,
+                To = (double)e.NewValue,//scrollViewer.VerticalOffset + difference, //toVal,
                 EasingFunction = GetEasingFunction(scrollViewer),
                 Duration = new Duration(GetTimeDuration(scrollViewer))
             };
@@ -237,12 +250,14 @@ namespace Start9.UI.Wpf.Behaviors
 
         private static void SetEventHandlersForScrollViewer(ScrollViewer scroller)
         {
+            scroller.ScrollChanged += new ScrollChangedEventHandler(ScrollViewerScrollChanged);
             scroller.PreviewMouseWheel += new MouseWheelEventHandler(ScrollViewerPreviewMouseWheel);
             scroller.PreviewKeyDown += new KeyEventHandler(ScrollViewerPreviewKeyDown);
         }
 
         private static void UnsetEventHandlersForScrollViewer(ScrollViewer scroller)
         {
+            scroller.ScrollChanged -= new ScrollChangedEventHandler(ScrollViewerScrollChanged);
             scroller.PreviewMouseWheel -= new MouseWheelEventHandler(ScrollViewerPreviewMouseWheel);
             scroller.PreviewKeyDown -= new KeyEventHandler(ScrollViewerPreviewKeyDown);
             Debug.WriteLine("Unsetting EventHandlers for ScrollViewer");
@@ -353,39 +368,50 @@ namespace Start9.UI.Wpf.Behaviors
             if ((scroller.TemplatedParent != null) && (scroller.TemplatedParent is ListBox box))
                 listBox = scroller.TemplatedParent as ListBox;
 
-            if ((keyPressed == Key.Down) && (listBox == null))
+            if (listBox == null)
             {
-                /*if ((listBox != null) && (listBox.SelectedIndex < (listBox.Items.Count - 1)))
-                    listBox.SelectedIndex++;
-                else*/
-                newVerticalPos = NormalizeScrollPos(scroller, (newVerticalPos + GetPointsToScroll(scroller)), Orientation.Vertical);
-                isKeyHandled = true;
-            }
-            else if (keyPressed == Key.PageDown)
-            {
-                newVerticalPos = NormalizeScrollPos(scroller, (newVerticalPos + scroller.ViewportHeight), Orientation.Vertical);
-                isKeyHandled = true;
-            }
-            else if ((keyPressed == Key.Up) && (listBox == null))
-            {
-                /*if ((listBox != null) && (listBox.SelectedIndex > 0))
-                    listBox.SelectedIndex--;
-                else*/
-                newVerticalPos = NormalizeScrollPos(scroller, (newVerticalPos - GetPointsToScroll(scroller)), Orientation.Vertical);
-                isKeyHandled = true;
-            }
-            else if (keyPressed == Key.PageUp)
-            {
-                newVerticalPos = NormalizeScrollPos(scroller, (newVerticalPos - scroller.ViewportHeight), Orientation.Vertical);
-                isKeyHandled = true;
-            }
+                if (keyPressed == Key.Down)
+                {
+                    /*if ((listBox != null) && (listBox.SelectedIndex < (listBox.Items.Count - 1)))
+                        listBox.SelectedIndex++;
+                    else*/
+                    newVerticalPos = NormalizeScrollPos(scroller, (newVerticalPos + GetPointsToScroll(scroller)), Orientation.Vertical);
+                    isKeyHandled = true;
+                }
+                else if (keyPressed == Key.PageDown)
+                {
+                    newVerticalPos = NormalizeScrollPos(scroller, (newVerticalPos + scroller.ViewportHeight), Orientation.Vertical);
+                    isKeyHandled = true;
+                }
+                else if ((keyPressed == Key.Up) && (listBox == null))
+                {
+                    /*if ((listBox != null) && (listBox.SelectedIndex > 0))
+                        listBox.SelectedIndex--;
+                    else*/
+                    newVerticalPos = NormalizeScrollPos(scroller, (newVerticalPos - GetPointsToScroll(scroller)), Orientation.Vertical);
+                    isKeyHandled = true;
+                }
+                else if (keyPressed == Key.PageUp)
+                {
+                    newVerticalPos = NormalizeScrollPos(scroller, (newVerticalPos - scroller.ViewportHeight), Orientation.Vertical);
+                    isKeyHandled = true;
+                }
 
-            if (newVerticalPos != GetVerticalOffset(scroller))
-            {
-                AnimateScroll(scroller, newVerticalPos);
-            }
+                if (newVerticalPos != GetVerticalOffset(scroller))
+                {
+                    AnimateScroll(scroller, newVerticalPos);
+                }
 
-            e.Handled = isKeyHandled;
+                e.Handled = isKeyHandled;
+            }
+        }
+
+        private static void ScrollViewerScrollChanged(object sender, ScrollChangedEventArgs e)
+        {
+            ScrollViewer scroller = (ScrollViewer)sender;
+
+            if ((scroller.VerticalOffset != GetAnimatedVerticalOffset(scroller)) && (scroller.VerticalOffset != GetVerticalOffset(scroller)))
+                SetAnimatedVerticalOffset(scroller, scroller.VerticalOffset);
         }
 
         private static void ListBoxLayoutUpdated(object sender, EventArgs e)

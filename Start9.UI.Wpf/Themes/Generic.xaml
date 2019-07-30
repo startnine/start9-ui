@@ -16,6 +16,40 @@
 
     <!--#endregion Converters-->
 
+
+    <Style x:Key="CaptionButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Setter Property="VerticalAlignment" Value="Stretch"/>
+        <Setter Property="Width" Value="{x:Static SystemParameters.CaptionWidth}"/>
+        <!--Setter Property="Height" Value="{x:Static SystemParameters.CaptionHeight}"/-->
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="0,6,0,0"/>
+        <!--Setter Property="Margin" Value="-2,-4,0,0"/-->
+        <Setter Property="Background" Value="{x:Static SystemColors.ControlBrush}"/>
+        <Setter Property="Foreground" Value="{x:Static SystemColors.ControlTextBrush}"/>
+        <Setter Property="FontFamily" Value="Marlett"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="TextOptions.TextRenderingMode" Value="Aliased"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Grid Background="#01000000">
+                        <Grid Margin="{TemplateBinding Padding}">
+                            <theme:ClassicBorderDecorator x:Name="BorderDecorator" BorderStyle="Raised" BorderThickness="3" Background="{TemplateBinding Background}"/>
+                            <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Focusable="False" IsTabStop="False" Padding="0" RenderOptions.EdgeMode="Aliased"/>
+                        </Grid>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="BorderDecorator" Property="BorderStyle" Value="RaisedPressed"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
     <!--#region Window Styles-->
 
     <Style TargetType="win:DecoratableWindow">
@@ -33,11 +67,12 @@
         <Setter Property="HideTransitionDuration" Value="50"/>
         <Setter Property="RenderTransformOrigin" Value="0.5,0.5"/>
         <Setter Property="BorderBrush" Value="Transparent" />
-        <Setter Property="BorderThickness" Value="{Binding Path=(SystemParameters.ThickVerticalBorderWidth), Converter={StaticResource DoubleToThicknessConverter}, ConverterParameter='ltrb'}"/>
+        <Setter Property="BorderThickness" Value="{Binding Path=(SystemParameters.ResizeFrameVerticalBorderWidth), Converter={StaticResource DoubleToThicknessConverter}, ConverterParameter='ltrb'}"/>
         <!--{x:Static SystemParameters.WindowNonClientFrameThickness}-->
         <!--{Binding Path={x:Static SystemParameters.BorderWidth}, Converter={StaticResource DoubleToThicknessConverter}, ConverterParameter='ltrb'}-->
         <!--Value="{Binding Converter={StaticResource ClassicFrameSizeConverter}}"/-->
         <Setter Property="TitlebarHeight" Value="{Binding Path=(SystemParameters.CaptionHeight)}"/>
+        <!--Setter Property="TitlebarHeight" Value="{x:Static SystemParameters.ResizeFrameVerticalBorderWidth}"/-->
         <!--{x:Static SystemParameters.CaptionHeight}-->
         <Setter Property="Background" Value="{x:Static SystemColors.WindowBrush}"/>
         <Setter Property="Foreground" Value="{x:Static SystemColors.WindowTextBrush}"/>
@@ -239,119 +274,106 @@
                                 </Setter.Value>
                             </Setter>
                         </Style>
-
-                        <Style x:Key="TitleBarButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
-                            <Setter Property="VerticalAlignment" Value="Top"/>
-                            <Setter Property="Width" Value="{x:Static SystemParameters.CaptionWidth}"/>
-                            <Setter Property="Height" Value="{x:Static SystemParameters.CaptionHeight}"/>
-                            <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                            <Setter Property="VerticalContentAlignment" Value="Center"/>
-                            <Setter Property="Padding" Value="2,4,0,0"/>
-                            <Setter Property="Margin" Value="-2,-4,0,0"/>
-                            <Setter Property="Background" Value="{x:Static SystemColors.ControlBrush}"/>
-                            <Setter Property="Foreground" Value="{x:Static SystemColors.ControlTextBrush}"/>
-                            <Setter Property="FontFamily" Value="Marlett"/>
-                            <Setter Property="FontSize" Value="12"/>
-                            <Setter Property="TextOptions.TextRenderingMode" Value="Aliased"/>
-                            <Setter Property="Template">
-                                <Setter.Value>
-                                    <ControlTemplate TargetType="{x:Type Button}">
-                                        <Grid Background="#01000000">
-                                            <Grid Margin="{TemplateBinding Padding}">
-                                                <theme:ClassicBorderDecorator x:Name="BorderDecorator" BorderStyle="Raised" BorderThickness="3" Background="{TemplateBinding Background}"/>
-                                                <ContentControl Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Focusable="False" IsTabStop="False" Padding="0" RenderOptions.EdgeMode="Aliased"/>
-                                            </Grid>
-                                        </Grid>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsPressed" Value="True">
-                                                <Setter TargetName="BorderDecorator" Property="BorderStyle" Value="RaisedPressed"/>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
-                                    </ControlTemplate>
-                                </Setter.Value>
-                            </Setter>
-                        </Style>
                     </ControlTemplate.Resources>
                     <Grid x:Name="WindowRoot" Margin="{TemplateBinding Margin}">
                         <Grid Background="{x:Static SystemColors.ActiveBorderBrush}">
+                            <theme:ClassicBorderDecorator x:Name="BorderDecorator" BorderStyle="AltRaised" BorderThickness="2"/>
                             <DockPanel>
                                 <Rectangle x:Name="TitlebarSpacerRectangle" Height="{TemplateBinding TitlebarHeight}" Fill="#01000000" DockPanel.Dock="Top"/>
-                                <Border x:Name="Body" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Background="{TemplateBinding Background}" CornerRadius="0,0,3,3"/>
+                                <Border x:Name="Body" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,0,3,3"/>
+                                <!--Margin="0,6,0,0" Background="{TemplateBinding Background}"-->
                             </DockPanel>
-                            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{TemplateBinding TitlebarHeight}" Margin="4" Visibility="Visible" Opacity="1" Background="#01000000">
-                                <Border x:Name="ActiveTitlebarBackground" Visibility="Visible" IsHitTestVisible="False">
-                                    <Border.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                            <LinearGradientBrush.GradientStops>
-                                                <GradientStop Offset="0" Color="{x:Static SystemColors.ActiveCaptionColor}"/>
-                                                <GradientStop Offset="1" Color="{x:Static SystemColors.GradientActiveCaptionColor}"/>
-                                            </LinearGradientBrush.GradientStops>
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                </Border>
-                                <Border x:Name="InactiveTitlebarBackground" Visibility="Hidden" IsHitTestVisible="False">
-                                    <Border.Background>
-                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                            <LinearGradientBrush.GradientStops>
-                                                <GradientStop Offset="0" Color="{x:Static SystemColors.InactiveCaptionColor}"/>
-                                                <GradientStop Offset="1" Color="{x:Static SystemColors.GradientInactiveCaptionColor}"/>
-                                            </LinearGradientBrush.GradientStops>
-                                        </LinearGradientBrush>
-                                    </Border.Background>
-                                </Border>
-                                <Thumb x:Name="PART_Titlebar" Style="{DynamicResource BorderThumb}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{TemplateBinding TitlebarHeight}" Background="#01000000">
-                                    <Thumb.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
-                                            <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
-                                            <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
-                                            <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
-                                            <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
-                                            <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
-                                        </ContextMenu>
-                                    </Thumb.ContextMenu>
-                                </Thumb>
-                                <Grid Height="{TemplateBinding TitlebarHeight}">
-                                    <Canvas x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="2" IsHitTestVisible="False">
+                            <Border x:Name="TitlebarBorder" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderBrush="Transparent" BorderThickness="4" Visibility="Visible" Opacity="1" Background="#01000000">
+                                <Border.RenderTransform>
+                                    <ScaleTransform ScaleX="1" ScaleY="1"/>
+                                </Border.RenderTransform>
+                                <Grid x:Name="TitlebarGrid" Height="{TemplateBinding TitlebarHeight}">
+                                    <Border x:Name="ActiveTitlebarBackground" Visibility="Visible" IsHitTestVisible="False">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <LinearGradientBrush.GradientStops>
+                                                    <GradientStop Offset="0" Color="{x:Static SystemColors.ActiveCaptionColor}"/>
+                                                    <GradientStop Offset="1" Color="{x:Static SystemColors.GradientActiveCaptionColor}"/>
+                                                </LinearGradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+                                    <Border x:Name="InactiveTitlebarBackground" Visibility="Hidden" IsHitTestVisible="False">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <LinearGradientBrush.GradientStops>
+                                                    <GradientStop Offset="0" Color="{x:Static SystemColors.InactiveCaptionColor}"/>
+                                                    <GradientStop Offset="1" Color="{x:Static SystemColors.GradientInactiveCaptionColor}"/>
+                                                </LinearGradientBrush.GradientStops>
+                                            </LinearGradientBrush>
+                                        </Border.Background>
+                                    </Border>
+                                    <Thumb x:Name="PART_Titlebar" Style="{DynamicResource BorderThumb}" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="{TemplateBinding TitlebarHeight}" Background="#01000000">
+                                        <Thumb.ContextMenu>
+                                            <ContextMenu>
+                                                <MenuItem x:Name="PART_SystemMenuRestore" Header="Restore"/>
+                                                <MenuItem x:Name="PART_SystemMenuMove" Header="Move"/>
+                                                <MenuItem x:Name="PART_SystemMenuSize" Header="Size"/>
+                                                <MenuItem x:Name="PART_SystemMenuMinimize" Header="Minimize"/>
+                                                <MenuItem x:Name="PART_SystemMenuMaximize" Header="Maximize"/>
+                                                <MenuItem x:Name="PART_SystemMenuClose" Header="Close"/>
+                                            </ContextMenu>
+                                        </Thumb.ContextMenu>
+                                    </Thumb>
+                                    <Grid>
+                                        <!--Canvas x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="2" IsHitTestVisible="False">
                                         <Canvas.Background>
                                             <ImageBrush ImageSource="{TemplateBinding Icon}" />
                                         </Canvas.Background>
-                                    </Canvas>
-                                    <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="20,0,0,0" FontWeight="Bold" FontSize="11" Foreground="{x:Static SystemColors.ActiveCaptionTextBrush}" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
-                                    <!--ContentPresenter Content="{TemplateBinding TitleBarContent}" IsHitTestVisible="False"/-->
-                                    <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="-2,2,2,-2">
-                                        <!--RenderTransformOrigin="1,0">
-                                        <StackPanel.RenderTransform>
-                                            <ScaleTransform ScaleX="2" ScaleY="2"/>
-                                        </StackPanel.RenderTransform-->
-                                        <!--Width="18" VerticalAlignment="Stretch" -->
-                                        <Button x:Name="PART_MinimizeButton" Style="{DynamicResource TitleBarButtonStyle}">
-                                            <Grid Width="7" Height="9">
-                                                <Rectangle HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="6" Height="2"/>
-                                            </Grid>
-                                        </Button>
-                                        <Grid x:Name="MaxRestButtonGrid" Margin="0,0,2,0">
-                                            <Button x:Name="PART_MaximizeButton" Style="{DynamicResource TitleBarButtonStyle}">
-                                                <Border BorderBrush="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="9" Height="9" BorderThickness="1,2,1,1"/>
-                                            </Button>
-                                            <Button x:Name="PART_RestoreButton" Visibility="Hidden" Style="{DynamicResource TitleBarButtonStyle}">
-                                                <Grid Width="8" Height="9">
-                                                    <Border HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="6" Height="6" BorderThickness="1,2,1,1"/>
-                                                    <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="{Binding Background,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" BorderBrush="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="6" Height="6" BorderThickness="1,2,1,1"/>
+                                    </Canvas-->
+                                        <Image x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}" Visibility="{Binding ShowTitlebarIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                        <Label x:Name="TitleText" Content="{TemplateBinding Title}" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Height="26" Margin="20,0,0,0" FontWeight="Bold" FontSize="11" Foreground="{x:Static SystemColors.ActiveCaptionTextBrush}" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" IsHitTestVisible="False"/>
+                                        <StackPanel x:Name="CaptionButtons" HorizontalAlignment="Right" VerticalAlignment="Stretch" Orientation="Horizontal" Margin="-4,-4,-4,2">
+                                            <Button x:Name="PART_FullscreenButton" Style="{DynamicResource CaptionButtonStyle}" ToolTip="Full Screen" Visibility="Collapsed">
+                                                <Grid Width="8" Height="8">
+                                                    <!--Border Background="Transparent" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" BorderThickness="2,0,0,2" Width="4" Height="4" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
+                                                <Border Background="Transparent" BorderBrush="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" BorderThickness="0,2,2,0" Width="4" Height="4" HorizontalAlignment="Right" VerticalAlignment="Top"/-->
+                                                    <Path Data="M 0 0 L 0 3 L 3 0 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top" UseLayoutRounding="True" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased"/>
+                                                    <Path Data="M 3 3 L 0 3 L 3 0 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Right" VerticalAlignment="Bottom" UseLayoutRounding="True" SnapsToDevicePixels="True" RenderOptions.EdgeMode="Aliased"/>
                                                 </Grid>
                                             </Button>
-                                        </Grid>
-                                        <Button x:Name="PART_CloseButton" Style="{DynamicResource TitleBarButtonStyle}" Margin="0,-4,-2,0" Padding="0,4,2,0">r</Button>
-                                    </StackPanel>
+                                            <Button x:Name="PART_MinimizeButton" Style="{DynamicResource CaptionButtonStyle}">
+                                                <Grid Width="7" Height="9">
+                                                    <Rectangle HorizontalAlignment="Left" VerticalAlignment="Bottom" Fill="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="6" Height="2"/>
+                                                </Grid>
+                                            </Button>
+                                            <Grid x:Name="MaxRestButtonGrid">
+                                                <!-- Margin="0,0,2,0"-->
+                                                <Button x:Name="PART_MaximizeButton" Style="{DynamicResource CaptionButtonStyle}">
+                                                    <Border BorderBrush="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="9" Height="9" BorderThickness="1,2,1,1"/>
+                                                </Button>
+                                                <Button x:Name="PART_RestoreButton" Visibility="Hidden" Style="{DynamicResource CaptionButtonStyle}">
+                                                    <Grid>
+                                                        <Grid x:Name="RestoreIcon" Width="8" Height="9">
+                                                            <Border HorizontalAlignment="Right" VerticalAlignment="Top" BorderBrush="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="6" Height="6" BorderThickness="1,2,1,1"/>
+                                                            <Border HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="{Binding Background,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" BorderBrush="{Binding Foreground,RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Button}}}" Width="6" Height="6" BorderThickness="1,2,1,1"/>
+                                                        </Grid>
+                                                        <Grid x:Name="UnFullscreenIcon" Width="8" Height="8" Visibility="Collapsed">
+                                                            <Path Data="M 3 3 L 0 3 L 3 0 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                                            <Path Data="M 0 0 L 0 3 L 3 0 Z" Fill="{Binding Path=Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" Stroke="Transparent" StrokeThickness="0" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Button>
+                                            </Grid>
+                                            <Grid Width="{x:Static SystemParameters.CaptionWidth}" Margin="8,0,0,0">
+                                                <Button x:Name="PART_CloseButton" Style="{DynamicResource CaptionButtonStyle}" Width="Auto" Margin="-8,0,0,0" Padding="2,6,6,0">r</Button>
+                                            </Grid>
+                                            <!-- Margin="0,-4,-2,0" Padding="0,4,2,0"-->
+                                        </StackPanel>
+                                    </Grid>
+                                    <Border x:Name="DialogFilm" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
                                 </Grid>
-                                <Border x:Name="DialogFilm" IsHitTestVisible="False" Background="#C0000000" Visibility="Hidden" Margin="0,0,0,-12"/>
-                            </Grid>
-                            <theme:ClassicBorderDecorator BorderStyle="AltRaised" BorderThickness="2"/>
-                            <Border Margin="0,10,0,0">
-                                <Border BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}" Background="{TemplateBinding Background}">
+                            </Border>
+                            <Grid x:Name="BodyGrid" HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}">
+                                <Border Margin="0,2,0,0" Background="{TemplateBinding Background}">
                                     <ContentPresenter Content="{TemplateBinding Content}"/>
                                 </Border>
-                            </Border>
+                            </Grid>
                             <!--Grid x:Name="FullWindowContentGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible" Margin="{TemplateBinding Padding}">
                             <ContentPresenter Content="{TemplateBinding FullWindowContent}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Visibility="Visible"/>
                         </Grid-->
@@ -397,6 +419,9 @@
                         </Grid>
                     </Grid>
                     <ControlTemplate.Triggers>
+                        <Trigger Property="ShowFullscreenButton" Value="True">
+                            <Setter TargetName="PART_FullscreenButton" Property="Visibility" Value="Visible"/>
+                        </Trigger>
                         <DataTrigger Binding="{Binding Icon, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="{x:Null}">
                             <Setter TargetName="WindowIcon" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="TitleText" Property="Margin" Value="0"/>
@@ -408,7 +433,49 @@
                             <Setter TargetName="PART_MaximizeButton" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="PART_RestoreButton" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="BorderDecorator" Property="Visibility" Value="Collapsed"/>
                         </Trigger>
+                        <Trigger Property="IsFullscreen" Value="True">
+                            <Setter TargetName="PART_FullscreenButton" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="RestoreIcon" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="UnFullscreenIcon" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFullscreen" Value="True"/>
+                                <Condition Property="AutohideTitlebarWhenFullscreen" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <!--Setter TargetName="TitlebarBorder" Property="Height" Value="{Binding Path=(SystemParameters.CaptionHeight)}"/-->
+                            <Setter TargetName="TitlebarGrid" Property="Height" Value="{Binding Path=(SystemParameters.CaptionHeight)}"/>
+                            <Setter TargetName="TitlebarBorder" Property="Panel.ZIndex" Value="999"/>
+                            <Setter TargetName="TitlebarBorder" Property="BorderBrush" Value="{x:Static SystemColors.ActiveBorderBrush}"/>
+                            <Setter TargetName="TitlebarSpacerRectangle" Property="Panel.ZIndex" Value="999"/>
+                            <Setter TargetName="TitlebarSpacerRectangle" Property="Height" Value="1"/>
+                            <Setter TargetName="BodyGrid" Property="Margin" Value="0,1,0,0"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsFullscreen" Value="True"/>
+                                <Condition SourceName="TitlebarSpacerRectangle" Property="IsMouseOver" Value="False"/>
+                                <Condition SourceName="TitlebarBorder" Property="IsMouseOver" Value="False"/>
+                                <Condition Property="AutohideTitlebarWhenFullscreen" Value="True"/>
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="TitlebarBorder" Storyboard.TargetProperty="RenderTransform.ScaleY" To="0" Duration="0:0:0.25" EasingFunction="{StaticResource WindowHiddenEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="TitlebarBorder" Storyboard.TargetProperty="RenderTransform.ScaleY" To="1" Duration="0:0:0.25" EasingFunction="{StaticResource WindowVisibleEase}"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                            <Setter Property="IsFullscreenTitlebarHidden" Value="False"/>
+                        </MultiTrigger>
                         <Trigger Property="ResizeMode" Value="NoResize">
                             <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="MaxRestButtonGrid" Property="Visibility" Value="Collapsed"/>

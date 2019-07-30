@@ -473,7 +473,7 @@
                                     <TextBlock x:Name="TitleText" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TitlebarIdleForegroundBrush}" HorizontalAlignment="Center" TextAlignment="Center" Margin="100,0" Effect="{DynamicResource DropShadow}" Text="{Binding Path=Title, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" UseLayoutRounding="True" SnapsToDevicePixels="True"/>
                                 </Grid>
                             </Grid>
-                            <Grid Margin="{TemplateBinding Padding}">
+                            <Grid x:Name="BodyGrid" Margin="{TemplateBinding Padding}">
                                 <ContentPresenter Content="{TemplateBinding Content}"/>
                             </Grid>
                             <Grid x:Name="ResizeGrid">
@@ -543,11 +543,13 @@
                                 <Condition Property="AutohideTitlebarWhenFullscreen" Value="True"/>
                             </MultiTrigger.Conditions>
                             <!--Setter TargetName="TitlebarGrid" Property="Height" Value="1"/-->
+                            <Setter TargetName="TitlebarGrid" Property="Height" Value="31"/>
                             <Setter TargetName="TitlebarGrid" Property="Panel.ZIndex" Value="999"/>
-                            <Setter TargetName="Body" Property="Margin" Value="0,-1,0,0"/>
+                            <!--Setter TargetName="Body" Property="Margin" Value="0,1,0,0"/-->
                             <Setter TargetName="TitlebarSpacerRectangle" Property="Panel.ZIndex" Value="999"/>
                             <Setter TargetName="TitlebarSpacerRectangle" Property="Height" Value="1"/>
-                            <Setter Property="Padding" Value="0"/>
+                            <!--Setter Property="Padding" Value="0"/-->
+                            <Setter TargetName="BodyGrid" Property="Margin" Value="0,1,0,0"/>
                         </MultiTrigger>
                         <MultiTrigger>
                             <MultiTrigger.Conditions>

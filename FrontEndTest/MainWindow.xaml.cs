@@ -196,6 +196,7 @@ namespace FrontEndTest
         {
             ClearValue(TitlebarHeightProperty);
             MainTabControl.Margin = new Thickness(0);
+            MainTabControl.ClearValue(TabControl.BackgroundProperty);
 
             if (SkinsComboBox.SelectedIndex == 0)
             {
@@ -215,6 +216,7 @@ namespace FrontEndTest
             {
                 Application.Current.Resources.MergedDictionaries[0].Source = new Uri("/PresentationFramework.Classic, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, ProcessorArchitecture=MSIL;component/themes/classic.xaml", UriKind.Relative);
                 Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Generic.xaml", UriKind.Relative);
+                MainTabControl.Background = SystemColors.ActiveBorderBrush;
             }
             else if (SkinsComboBox.SelectedIndex == 5)
             {

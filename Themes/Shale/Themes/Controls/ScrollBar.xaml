@@ -1383,7 +1383,7 @@
                         </Rectangle>
                         <Rectangle VerticalAlignment="Bottom" Height="9" IsHitTestVisible="False" Grid.Column="0" Grid.Row="0">
                             <Rectangle.Fill>
-                                <LinearGradientBrush Opacity="0.625" StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                <LinearGradientBrush Opacity="0.625" StartPoint="0,1" EndPoint="0,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
                                 <!--LinearGradientBrush.GradientStops>
                                     <GradientStop Offset="0" Color="#00000000"/>
                                     <GradientStop Offset="2" Color="#40000000"/>
@@ -1392,15 +1392,23 @@
                         </Rectangle>
                         <Rectangle x:Name="RightShadow" HorizontalAlignment="Right" Width="14" IsHitTestVisible="False" Visibility="Hidden" Grid.Column="0" Grid.Row="0">
                             <Rectangle.Fill>
-                                <LinearGradientBrush Opacity="0.875" StartPoint="0,0" EndPoint="1,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
+                                <LinearGradientBrush Opacity="0.875" StartPoint="1,0" EndPoint="0,0" GradientStops="{DynamicResource ShadowGradientStops}"/>
                                 <!--LinearGradientBrush.GradientStops>
                                     <GradientStop Offset="0" Color="#00000000"/>
                                     <GradientStop Offset="1" Color="#50000000"/>
                                 </LinearGradientBrush.GradientStops-->
                             </Rectangle.Fill>
                         </Rectangle>
-                        <ScrollBar x:Name="PART_VerticalScrollBar" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Grid.Column="1" Grid.Row="0"/>
-                        <ScrollBar x:Name="PART_HorizontalScrollBar" Orientation="Horizontal" Value="{TemplateBinding HorizontalOffset}" Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Grid.Column="0" Grid.Row="1"/>
+                        <ScrollBar x:Name="PART_VerticalScrollBar" Value="{TemplateBinding VerticalOffset}" Maximum="{TemplateBinding ScrollableHeight}" ViewportSize="{TemplateBinding ViewportHeight}" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Grid.Column="1" Grid.Row="0">
+							<ui:AttachedProperties.CornerCurves>
+                                <ui:CornerCurves TopLeft="False" TopRight="{Binding Path=(ui:AttachedProperties.CornerCurves).TopRight, RelativeSource={RelativeSource Mode=TemplatedParent}}" BottomRight="False" BottomLeft="False"/>
+                            </ui:AttachedProperties.CornerCurves>
+						</ScrollBar>
+                        <ScrollBar x:Name="PART_HorizontalScrollBar" Orientation="Horizontal" Value="{TemplateBinding HorizontalOffset}" Maximum="{TemplateBinding ScrollableWidth}" ViewportSize="{TemplateBinding ViewportWidth}" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Grid.Column="0" Grid.Row="1">
+							<ui:AttachedProperties.CornerCurves>
+                                <ui:CornerCurves TopLeft="False" TopRight="False" BottomRight="False" BottomLeft="{Binding Path=(ui:AttachedProperties.CornerCurves).BottomLeft, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
+                            </ui:AttachedProperties.CornerCurves>
+						</ScrollBar>
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="ComputedVerticalScrollBarVisibility" Value="Visible">

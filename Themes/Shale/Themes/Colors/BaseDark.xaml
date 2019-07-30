@@ -13,7 +13,12 @@
     <SolidColorBrush x:Key="ShadowCornerBorderBrush">#40000000</SolidColorBrush>
     <SolidColorBrush x:Key="ModalPanelBackdropBrush">#C0000000</SolidColorBrush-->
     <!--literally just subtract 0x99 from the R, G, and B channels for light brushes, adding instead where appropriate, and inverting all pure black to pure white-->
-
+    <RadialGradientBrush x:Key="DialogFadeGradientBrush" GradientOrigin="0.5,0.5" Center="0.5,0.5">
+        <RadialGradientBrush.GradientStops>
+            <GradientStop Offset="0.25" Color="#60000000"/>
+            <GradientStop Offset="1.25" Color="#C0000000"/>
+        </RadialGradientBrush.GradientStops>
+    </RadialGradientBrush>
     <!--SolidColorBrush x:Key="WindowBackgroundBrush">#FF333333</SolidColorBrush-->
     <GradientStopCollection x:Key="WindowBackgroundGradientStops">
         <GradientStop Offset="0" Color="#FF333333"/>

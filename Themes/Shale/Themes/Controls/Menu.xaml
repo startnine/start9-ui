@@ -202,10 +202,10 @@
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{DynamicResource ButtonDisabledForegroundBrush}"/>
             </Trigger>
-            <DataTrigger Binding="{Binding Path=(ui:AttachedProperties.OpenedWithTouch), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, FallbackValue=False}" Value="True">
-                <!--Setter Property="Height" Value="45"/-->
+            <!--DataTrigger Binding="{Binding Path=(ui:AttachedProperties.OpenedWithTouch), Mode=OneWay, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}, FallbackValue=False}" Value="True">
+                <!-Setter Property="Height" Value="45"/->
                 <Setter Property="Padding" Value="15,10"/>
-            </DataTrigger>
+            </DataTrigger-->
         </Style.Triggers>
     </Style>
 
