@@ -75,6 +75,9 @@ namespace Start9.Wpf.Styles.Shale
                     Hsl hsl = (new Rgb() { R = color.R, G = color.G, B = color.B }).To<Hsl>();
                     hsl.S = _saturation;
                     hsl.H = _hue;
+                    if (s.Contains("DarkColor"))
+                        hsl.S /= 3; 
+
                     Rgb rgb = hsl.To<Rgb>();
                     color.R = (byte)rgb.R;
                     color.G = (byte)rgb.G;

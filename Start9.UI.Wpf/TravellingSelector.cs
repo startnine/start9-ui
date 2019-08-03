@@ -254,7 +254,7 @@ namespace Start9.UI.Wpf
 
                 if (SelectionExists)
                 {
-                    Debug.WriteLine("TravellingSelector: Selection exists");
+                    //Debug.WriteLine("TravellingSelector: Selection exists");
                     //int index = Collection.ToList().IndexOf(SelectedObject);
                     var panelPoint = TargetPanel.PointToScreen(new Point(0, 0));
                     FrameworkElement panelChild = (FrameworkElement)(TargetPanel.Children[SelectedObjectIndex]);
@@ -325,8 +325,8 @@ namespace Start9.UI.Wpf
                     BeginAnimation(TravellingSelector.SelectionWidthProperty, widthAnimation);
                     BeginAnimation(TravellingSelector.SelectionHeightProperty, heightAnimation);
                 }
-                else
-                    Debug.WriteLine("TravellingSelector: Selection does not exist");
+                /*else
+                    Debug.WriteLine("TravellingSelector: Selection does not exist");*/
             }
         }
 

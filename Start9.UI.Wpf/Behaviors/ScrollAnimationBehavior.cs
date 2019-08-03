@@ -53,7 +53,7 @@ namespace Start9.UI.Wpf.Behaviors
             ScrollViewer scrollViewer = target as ScrollViewer;
 
             double difference = ((double)e.NewValue - (double)e.OldValue);
-            Debug.WriteLine("Scroll animation difference: " + difference);
+            //Debug.WriteLine("Scroll animation difference: " + difference);
 
             /*double toVal = Math.Max(scrollViewer.VerticalOffset + difference, GetPointsToScroll(scrollViewer));
 
@@ -175,10 +175,10 @@ namespace Start9.UI.Wpf.Behaviors
             }
             else
             {
-                Debug.WriteLine("Disabling...");
+                //Debug.WriteLine("Disabling...");
                 if ((sender != null) && sender is ScrollViewer target)
                 {
-                    Debug.WriteLine("...for ScrollViewer");
+                    //Debug.WriteLine("...for ScrollViewer");
                     UnsetEventHandlersForScrollViewer(target);
                     target.Loaded -= new RoutedEventHandler(scrollerLoaded);
                 }
@@ -260,7 +260,7 @@ namespace Start9.UI.Wpf.Behaviors
             scroller.ScrollChanged -= new ScrollChangedEventHandler(ScrollViewerScrollChanged);
             scroller.PreviewMouseWheel -= new MouseWheelEventHandler(ScrollViewerPreviewMouseWheel);
             scroller.PreviewKeyDown -= new KeyEventHandler(ScrollViewerPreviewKeyDown);
-            Debug.WriteLine("Unsetting EventHandlers for ScrollViewer");
+            //Debug.WriteLine("Unsetting EventHandlers for ScrollViewer");
         }
 
         private static void scrollerLoaded(object sender, RoutedEventArgs e)
@@ -339,17 +339,17 @@ namespace Start9.UI.Wpf.Behaviors
             if (newVOffset < 0)
             {
                 AnimateScroll(scroller, 0);
-                Debug.WriteLine("ScrollViewerPreviewMouseWheel " + 0);
+                //Debug.WriteLine("ScrollViewerPreviewMouseWheel " + 0);
             }
             else if (newVOffset > scroller.ScrollableHeight)
             {
                 AnimateScroll(scroller, scroller.ScrollableHeight);
-                Debug.WriteLine("ScrollViewerPreviewMouseWheel " + 1);
+                //Debug.WriteLine("ScrollViewerPreviewMouseWheel " + 1);
             }
             else
             {
                 AnimateScroll(scroller, newVOffset);
-                Debug.WriteLine("ScrollViewerPreviewMouseWheel " + 2);
+                //Debug.WriteLine("ScrollViewerPreviewMouseWheel " + 2);
             }
 
             e.Handled = true;
@@ -416,19 +416,19 @@ namespace Start9.UI.Wpf.Behaviors
 
         private static void ListBoxLayoutUpdated(object sender, EventArgs e)
         {
-            Debug.WriteLine("ListBoxLayoutUpdated");
+            //Debug.WriteLine("ListBoxLayoutUpdated");
             UpdateScrollPosition(sender);
         }
 
         private static void ListBoxLoaded(object sender, RoutedEventArgs e)
         {
-            Debug.WriteLine("ListBoxLoaded");
+            //Debug.WriteLine("ListBoxLoaded");
             UpdateScrollPosition(sender);
         }
 
         private static void ListBoxSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Debug.WriteLine("ListBoxSelectionChanged");
+            //Debug.WriteLine("ListBoxSelectionChanged");
             ListBox listBox = sender as ListBox;
 
             if (listBox != null)
@@ -446,16 +446,16 @@ namespace Start9.UI.Wpf.Behaviors
                     itemPoint.X = SystemScaling.RealPixelsToWpfUnits(itemPoint.X);
                     itemPoint.Y = SystemScaling.RealPixelsToWpfUnits(itemPoint.Y);
 
-                    Debug.WriteLine("MEASURED VALUES: " + itemPoint.Y + ", " + listPoint.Y + ", " + tempItem.ActualHeight + ", " + _listBoxScroller.ActualHeight);
+                    //Debug.WriteLine("MEASURED VALUES: " + itemPoint.Y + ", " + listPoint.Y + ", " + tempItem.ActualHeight + ", " + _listBoxScroller.ActualHeight);
                     if (itemPoint.Y < listPoint.Y)
                     {
-                        Debug.WriteLine("SCROLLING UP: " + itemPoint.Y + ", " + listPoint.Y);
+                        //Debug.WriteLine("SCROLLING UP: " + itemPoint.Y + ", " + listPoint.Y);
                         scrollTo = _listBoxScroller.VerticalOffset + (itemPoint.Y - listPoint.Y);
-                        Debug.WriteLine("scrollTo: " + scrollTo);
+                        //Debug.WriteLine("scrollTo: " + scrollTo);
                     }
                     else if ((itemPoint.Y + tempItem.ActualHeight) > (listPoint.Y + _listBoxScroller.ActualHeight + _listBoxScroller.Padding.Top + _listBoxScroller.Padding.Bottom))
                     {
-                        Debug.WriteLine("SCROLLING DOWN: " + (itemPoint.Y + tempItem.ActualHeight) + ", " + (listPoint.Y + _listBoxScroller.ActualHeight + _listBoxScroller.Padding.Top + _listBoxScroller.Padding.Bottom));
+                        //Debug.WriteLine("SCROLLING DOWN: " + (itemPoint.Y + tempItem.ActualHeight) + ", " + (listPoint.Y + _listBoxScroller.ActualHeight + _listBoxScroller.Padding.Top + _listBoxScroller.Padding.Bottom));
                         scrollTo = (itemPoint.Y + tempItem.ActualHeight) - ((listPoint.Y + _listBoxScroller.ActualHeight) - _listBoxScroller.ContentVerticalOffset);
                     }
                     else
