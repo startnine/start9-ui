@@ -252,7 +252,7 @@ namespace Start9.UI.Wpf
                 if (SelectionExists != doesSelectionExist)
                     SelectionExists = doesSelectionExist;
 
-                if (SelectionExists)
+                if (SelectionExists && (PresentationSource.FromVisual(TargetPanel) != null))
                 {
                     //Debug.WriteLine("TravellingSelector: Selection exists");
                     //int index = Collection.ToList().IndexOf(SelectedObject);
