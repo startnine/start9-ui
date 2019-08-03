@@ -390,24 +390,7 @@
                     <RepeatButton Style="{DynamicResource ScrollBarPageButton}" Command="ScrollBar.PageUpCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Style="{DynamicResource ScrollBarThumb}">
-                        <Thumb.BorderBrush>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
-                                    <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1.0" />
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-                        </Thumb.BorderBrush>
-                        <Thumb.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0.0" />
-                                    <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1.0" />
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-                        </Thumb.Background>
-                    </Thumb>
+                    <Thumb Style="{DynamicResource ScrollBarThumb}"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{DynamicResource ScrollBarPageButton}" Command="ScrollBar.PageDownCommand" />
@@ -614,24 +597,7 @@
                     <RepeatButton Style="{DynamicResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
                 </Track.DecreaseRepeatButton>
                 <Track.Thumb>
-                    <Thumb Style="{DynamicResource ScrollBarThumb}" Margin="0,1,0,1">
-                        <Thumb.BorderBrush>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
-                                    <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1.0" />
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-                        </Thumb.BorderBrush>
-                        <Thumb.Background>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                <LinearGradientBrush.GradientStops>
-                                    <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0.0" />
-                                    <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1.0" />
-                                </LinearGradientBrush.GradientStops>
-                            </LinearGradientBrush>
-                        </Thumb.Background>
-                    </Thumb>
+                    <Thumb Style="{DynamicResource ScrollBarThumb}" Margin="0,1,0,1"/>
                 </Track.Thumb>
                 <Track.IncreaseRepeatButton>
                     <RepeatButton Style="{DynamicResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />
@@ -873,24 +839,7 @@
                                         <RepeatButton Style="{DynamicResource ScrollBarPageButton}" Command="ScrollBar.PageUpCommand" />
                                     </Track.DecreaseRepeatButton>
                                     <Track.Thumb>
-                                        <Thumb Style="{DynamicResource ScrollBarThumb}">
-                                            <Thumb.BorderBrush>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
-                                                        <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1.0" />
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Thumb.BorderBrush>
-                                            <Thumb.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0.0" />
-                                                        <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1.0" />
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Thumb.Background>
-                                        </Thumb>
+                                        <Thumb Style="{DynamicResource ScrollBarThumb}"/>
                                     </Track.Thumb>
                                     <Track.IncreaseRepeatButton>
                                         <RepeatButton Style="{DynamicResource ScrollBarPageButton}" Command="ScrollBar.PageDownCommand" />
@@ -1097,24 +1046,7 @@
                                         <RepeatButton Style="{DynamicResource ScrollBarPageButton}" Command="ScrollBar.PageLeftCommand" />
                                     </Track.DecreaseRepeatButton>
                                     <Track.Thumb>
-                                        <Thumb Style="{DynamicResource ScrollBarThumb}" Margin="0,1,0,1">
-                                            <Thumb.BorderBrush>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="{DynamicResource BorderLightColor}" Offset="0.0" />
-                                                        <GradientStop Color="{DynamicResource BorderDarkColor}" Offset="1.0" />
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Thumb.BorderBrush>
-                                            <Thumb.Background>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <LinearGradientBrush.GradientStops>
-                                                        <GradientStop Color="{DynamicResource ControlLightColor}" Offset="0.0" />
-                                                        <GradientStop Color="{DynamicResource ControlMediumColor}" Offset="1.0" />
-                                                    </LinearGradientBrush.GradientStops>
-                                                </LinearGradientBrush>
-                                            </Thumb.Background>
-                                        </Thumb>
+                                        <Thumb Style="{DynamicResource ScrollBarThumb}" Margin="0,1,0,1"/>
                                     </Track.Thumb>
                                     <Track.IncreaseRepeatButton>
                                         <RepeatButton Style="{DynamicResource ScrollBarPageButton}" Command="ScrollBar.PageRightCommand" />

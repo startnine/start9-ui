@@ -333,6 +333,7 @@ namespace Start9.UI.Wpf
         public TravellingSelector()
         {
             Loaded += TravellingSelector_Loaded;
+            CompositionTarget.Rendering += (sneder, args) => UpdateSelectorBounds();
             UpdateSelectorBounds();
         }
 
