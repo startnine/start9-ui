@@ -11,7 +11,8 @@
         <Setter Property="HorizontalAlignment" Value="Stretch"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="Padding">
+		<Setter Property="Padding" Value="0"/>
+        <!--Setter Property="Padding">
             <Setter.Value>
                 <Binding ConverterParameter="15" Path="Padding" RelativeSource="{RelativeSource Mode=FindAncestor, AncestorType=TreeViewItem}">
                     <Binding.FallbackValue>
@@ -22,7 +23,7 @@
                     </Binding.Converter>
                 </Binding>
             </Setter.Value>
-        </Setter>
+        </Setter-->
         <Setter Property="Margin" Value="0"/>
         <Setter Property="BorderThickness" Value="0"/>
         <!--Setter Property="MinWidth" Value="{Binding MinWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type TreeView}}}"/-->
@@ -113,7 +114,7 @@
                                 <ContentPresenter x:Name="PART_Header" ContentSource="Header" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
                             </DockPanel>
                         </Grid>
-                        <ItemsPresenter x:Name="ItemsHost" HorizontalAlignment="Stretch" Height="Auto" Visibility="Visible" MinWidth="{TemplateBinding MinWidth}"/>
+                        <ItemsPresenter x:Name="ItemsHost" HorizontalAlignment="Stretch" Height="Auto" Visibility="Visible" MinWidth="{TemplateBinding MinWidth}" Margin="15,0,0,0"/>
                     </StackPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsExpanded" Value="False">

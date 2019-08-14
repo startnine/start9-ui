@@ -209,7 +209,7 @@
                             <ui:CornerCurves TopLeft="False" TopRight="False" BottomRight="False" BottomLeft="False"/>
                         </ui:AttachedProperties.CornerCurves>
                         <UniformGrid Rows="1">
-                            <GroupBox Header="Enabled Boxes">
+                            <Expander Header="Enabled Boxes" IsExpanded="True">
                                 <StackPanel>
                                     <ComboBox IsEditable="True" SelectedIndex="0">
                                         <ComboBoxItem Content="Editable ComboBox"/>
@@ -229,9 +229,9 @@
                                         <ListBoxItem Content="ListBox"/>
                                     </ListBox>
                                 </StackPanel>
-                            </GroupBox>
-                            <GroupBox Header="Disabled Boxes">
-                                <StackPanel IsEnabled="False">
+                            </Expander>
+                            <Expander Header="Disabled Boxes" IsExpanded="True" IsEnabled="False">
+                                <StackPanel>
                                     <ComboBox IsEditable="True" SelectedIndex="0">
                                         <ComboBoxItem Content="Disabled Editable ComboBox"/>
                                         <ComboBoxItem Content="Disabled Editable ComboBox"/>
@@ -250,7 +250,7 @@
                                         <ListBoxItem Content="Disabled ListBox"/>
                                     </ListBox>
                                 </StackPanel>
-                            </GroupBox>
+                            </Expander>
                         </UniformGrid>
                     </ScrollViewer>
                 </TabItem>
