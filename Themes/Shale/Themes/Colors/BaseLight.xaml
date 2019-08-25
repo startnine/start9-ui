@@ -153,13 +153,17 @@
     </GradientStopCollection>
 
     <GradientStopCollection x:Key="RedIconGradientStops">
-        <GradientStop Offset="0" Color="#FF990000"/>
-        <GradientStop Offset="1" Color="#FF660000"/>
+        <GradientStop Offset="0" Color="#FFAA0000"/>
+        <GradientStop Offset="1" Color="#FF770000"/>
+        <!--GradientStop Offset="0" Color="#FF990000"/>
+        <GradientStop Offset="1" Color="#FF660000"/-->
     </GradientStopCollection>
 
     <GradientStopCollection x:Key="GreenIconGradientStops">
-        <GradientStop Offset="0" Color="#FF006600"/>
-        <GradientStop Offset="1" Color="#FF003300"/>
+        <GradientStop Offset="0" Color="#FF00AA00"/>
+        <GradientStop Offset="1" Color="#FF007700"/>
+        <!--GradientStop Offset="0" Color="#FF006600"/>
+        <GradientStop Offset="1" Color="#FF003300"/-->
     </GradientStopCollection>
 
     <!--coloures filters begin here-->
