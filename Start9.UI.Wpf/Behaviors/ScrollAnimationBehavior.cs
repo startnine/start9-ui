@@ -368,7 +368,7 @@ namespace Start9.UI.Wpf.Behaviors
             if ((scroller.TemplatedParent != null) && (scroller.TemplatedParent is ListBox box))
                 listBox = scroller.TemplatedParent as ListBox;
 
-            if (listBox == null)
+            if (false) //listBox == null)
             {
                 if (keyPressed == Key.Down)
                 {

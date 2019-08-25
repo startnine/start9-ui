@@ -42,6 +42,11 @@
     <!-- Not sure why this is neccesary - is this a bug? -->
     <Reference Include="PresentationFramework.Classic" /> 
   </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netcoreapp3.0'">
+    <Reference Include="PresentationFramework.Classic">
+      <HintPath>C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App\3.0.0-preview8-28405-07\PresentationFramework.Classic.dll</HintPath>
+    </Reference>
+  </ItemGroup>
   
   <ItemGroup>
     <Page Update="Themes\Colors\ShaleBaseDarkOld.xaml">

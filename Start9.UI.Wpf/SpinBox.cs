@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
+using System.Windows.Input;
 
 namespace Start9.UI.Wpf
 {
@@ -15,6 +16,20 @@ namespace Start9.UI.Wpf
     [TemplatePart(Name = PartContentBox, Type = typeof(TextBox))]
     public class SpinBox : Control
     {
+        /*protected override void OnPreviewKeyDown(KeyEventArgs e)
+        {
+            if ((e.Key == Key.Up) || (e.Key == Key.Down))
+            {
+                if (e.Key == Key.Up)
+                    ValidSetValue(Value + Increment);
+                else if (e.Key == Key.Down)
+                    ValidSetValue(Value - Increment);
+
+                e.Handled = true;
+            }
+            base.OnPreviewKeyDown(e);
+        }*/
+
         const String PartDecrementButton = "PART_DecrementButton";
         const String PartIncrementButton = "PART_IncrementButton";
         const String PartContentBox = "PART_ContentBox";
@@ -59,7 +74,7 @@ namespace Start9.UI.Wpf
         }
 
         public static readonly DependencyProperty MinimumProperty =
-            DependencyProperty.Register("Minimum", typeof(double), typeof(SpinBox), new PropertyMetadata(0.0));
+            DependencyProperty.Register("Minimum", typeof(double), typeof(SpinBox), new PropertyMetadata(double.NegativeInfinity));
 
         public double Increment
         {
@@ -90,24 +105,38 @@ namespace Start9.UI.Wpf
             {
                 _contentBox.TextChanged += ContentBox_TextChanged;
                 _contentBox.LostFocus += ContentBox_LostFocus;
+                _contentBox.PreviewKeyDown += ContentBox_PreviewKeyDown;
                 ValidateContent();
+            }
+        }
+
+        private void ContentBox_PreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.Key == Key.Up) || (e.Key == Key.Down))
+            {
+                if (e.Key == Key.Up)
+                    ValidSetValue(Value + Increment);
+                else if (e.Key == Key.Down)
+                    ValidSetValue(Value - Increment);
+
+                e.Handled = true;
             }
         }
 
         private void DecrementButton_Click(object sender, RoutedEventArgs e)
         {
-            //Debug.WriteLine(Increment);
-            double newVal = Value - Increment;
-            if (newVal >= Minimum)
-                Value = newVal;
+            ValidSetValue(Value - Increment);
         }
 
         private void IncrementButton_Click(object sender, RoutedEventArgs e)
         {
-            //Debug.WriteLine(Increment);
-            double newVal = Value + Increment;
-            if (newVal <= Maximum)
-                Value = newVal;
+            ValidSetValue(Value + Increment);
+        }
+
+        private void ValidSetValue(double newValue)
+        {
+            if ((newValue >= Minimum) && (newValue <= Maximum))
+                Value = newValue;
         }
 
         private void ContentBox_TextChanged(object sender, TextChangedEventArgs e)

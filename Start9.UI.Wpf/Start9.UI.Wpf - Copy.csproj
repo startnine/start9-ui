@@ -41,9 +41,6 @@
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <!-- Not sure why this is neccesary - is this a bug? -->
     <Reference Include="PresentationFramework.Classic" /> 
-    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525">
-      <NoWarn>NU1701</NoWarn>
-    </PackageReference>
   </ItemGroup>
   
   <ItemGroup>
@@ -54,5 +51,15 @@
   
   <ItemGroup>
     <Folder Include="Statics\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="System.Windows.Interactivity.WPF" Version="2.0.20525" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\..\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

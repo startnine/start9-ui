@@ -171,6 +171,8 @@
                                         <Button Visibility="Hidden" Content="Hidden Button"/>
                                         <ToggleButton Content="Disabled ToggleButton"/>
                                         <ToggleButton IsChecked="True" Content="Disabled Checked ToggleButton"/>
+                                        <ui:SpinBox/>
+
                                         <Rectangle Width="1" Height="40"/>
                                         <ui:SplitButton Content="Disabled SplitButton">
                                             <ui:SplitButton.FlyoutMenu>
