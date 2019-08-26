@@ -11,5 +11,10 @@ namespace Start9.UI.Wpf.Skinning
         Page GetSettingsPage();
 
         ResourceDictionary OnApplySkinSettings();
+
+        string SkinName
+        {
+            get;
+        }
     }
 }

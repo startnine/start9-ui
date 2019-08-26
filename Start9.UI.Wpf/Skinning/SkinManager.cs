@@ -53,10 +53,13 @@ namespace Start9.UI.Wpf.Skinning
         {
             if (Application.Current.Resources.MergedDictionaries.Count == 0)
             {
-                if (targetSkin != DefaultSkin)
+                if (targetSkin == DefaultSkin)
                     Application.Current.Resources.MergedDictionaries.Add(DefaultSkin.OnApplySkinSettings());
-
-                Application.Current.Resources.MergedDictionaries.Add(targetSkin.OnApplySkinSettings());
+                else
+                {
+                    Application.Current.Resources.MergedDictionaries.Add(DefaultSkin.OnApplySkinSettings());
+                    Application.Current.Resources.MergedDictionaries.Add(targetSkin.OnApplySkinSettings());
+                }
             }
             else if (Application.Current.Resources.MergedDictionaries.Count == 1)
             {
