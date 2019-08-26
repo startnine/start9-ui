@@ -51,11 +51,41 @@ namespace Start9.UI.Wpf.Skinning
 
         void ApplySkin(ISkinInfo targetSkin)
         {
-            Application.Current.Resources.MergedDictionaries.Clear();
-            if (targetSkin != DefaultSkin)
-                Application.Current.Resources.MergedDictionaries.Add(DefaultSkin.OnApplySkinSettings());
+            if (Application.Current.Resources.MergedDictionaries.Count == 0)
+            {
+                if (targetSkin != DefaultSkin)
+                    Application.Current.Resources.MergedDictionaries.Add(DefaultSkin.OnApplySkinSettings());
 
-            Application.Current.Resources.MergedDictionaries.Add(targetSkin.OnApplySkinSettings());
+                Application.Current.Resources.MergedDictionaries.Add(targetSkin.OnApplySkinSettings());
+            }
+            else if (Application.Current.Resources.MergedDictionaries.Count == 1)
+            {
+                if (targetSkin == DefaultSkin)
+                    Application.Current.Resources.MergedDictionaries[0] = DefaultSkin.OnApplySkinSettings();
+                else
+                {
+                    Application.Current.Resources.MergedDictionaries[0] = DefaultSkin.OnApplySkinSettings();
+                    Application.Current.Resources.MergedDictionaries.Add(targetSkin.OnApplySkinSettings());
+                }
+            }
+            else
+            {
+                if (targetSkin == DefaultSkin)
+                {
+                    Application.Current.Resources.MergedDictionaries[0] = DefaultSkin.OnApplySkinSettings();
+                    
+                    for (int i = 1; i < Application.Current.Resources.MergedDictionaries.Count; i++)
+                        Application.Current.Resources.MergedDictionaries.RemoveAt(i);
+                }
+                else
+                {
+                    Application.Current.Resources.MergedDictionaries[0] = DefaultSkin.OnApplySkinSettings();
+                    Application.Current.Resources.MergedDictionaries[1] = targetSkin.OnApplySkinSettings();
+
+                    for (int i = 2; i < Application.Current.Resources.MergedDictionaries.Count; i++)
+                        Application.Current.Resources.MergedDictionaries.RemoveAt(i);
+                }
+            }
         }
 
         public SkinManager(string skinsFolderPath, ISkinInfo defaultSkin)
