@@ -521,10 +521,13 @@ namespace Start9.UI.Wpf.Windows
                 if (_systemMenuMaximize != null)
                     _systemMenuMaximize.IsEnabled = true;
 
-                if ((_systemMenuMove != null) && (_titlebar != null))
-                    _systemMenuMove.IsEnabled = true;
-                else
-                    _systemMenuMove.IsEnabled = false;
+                if (_systemMenuMove != null)
+                {
+                    if (_titlebar != null)
+                        _systemMenuMove.IsEnabled = true;
+                    else
+                        _systemMenuMove.IsEnabled = false;
+                }
             }
 
             if (_systemMenuSize != null)

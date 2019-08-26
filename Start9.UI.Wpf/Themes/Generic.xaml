@@ -52,7 +52,7 @@
 
     <!--#region Window Styles-->
 
-    <Style TargetType="win:DecoratableWindow">
+    <Style x:Key="{x:Type win:DecoratableWindow}" TargetType="{x:Type win:DecoratableWindow}">
         <Style.Resources>
             <ResourceDictionary>
                 <QuarticEase x:Key="WindowVisibleEase" EasingMode="EaseOut"/>
