@@ -12,6 +12,7 @@
     <conv:ThicknessFilterConverter x:Key="ThicknessFilterConverter"/>
     <conv:DoubleToFractionOfDoubleConverter x:Key="DoubleToFractionOfDoubleConverter"/>
     <conv:GetMaximizeBorderThicknessConverter x:Key="GetMaximizeBorderThicknessConverter"/>
+    <conv:CornerCurvesToCornerRadiusConverter x:Key="CornerCurvesToCornerRadiusConverter"/>
 
     <!--#endregion Converters-->
     
@@ -198,11 +199,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Thumb">
-                                        <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0">
-                                            <Rectangle.Fill>
-                                                <SolidColorBrush Color="#01000000" />
-                                            </Rectangle.Fill>
-                                        </Rectangle>
+                                        <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0" Fill="Transparent"/>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
@@ -225,7 +222,7 @@
                                             <Style x:Key="{x:Type ResizeGrip}" TargetType="{x:Type ResizeGrip}">
                                                 <Setter Property="OverridesDefaultStyle" Value="True" />
                                                 <Setter Property="Foreground" Value="Blue" />
-                                                <Setter Property="Background" Value="#01000000" />
+                                                <Setter Property="Background" Value="Transparent" />
                                                 <Setter Property="IsHitTestVisible" Value="True" />
                                                 <Setter Property="Width" Value="18" />
                                                 <Setter Property="Height" Value="18" />
@@ -251,11 +248,7 @@
                                             </Style>
                                         </ControlTemplate.Resources>
                                         <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <Rectangle StrokeThickness="0">
-                                                <Rectangle.Fill>
-                                                    <SolidColorBrush Color="#01000000" />
-                                                </Rectangle.Fill>
-                                            </Rectangle>
+                                            <Rectangle StrokeThickness="0" Fill="Transparent"/>
                                             <ResizeGrip x:Name="PART_ResizeGrip"/>
                                         </Grid>
                                     </ControlTemplate>
@@ -270,7 +263,7 @@
                                     <ControlTemplate TargetType="{x:Type Button}">
                                         <Grid>
                                             <Border x:Name="ActiveIdleBackground" BorderBrush="#C0000000" CornerRadius="0" BorderThickness="0,0,1,0">
-                                                <Border BorderThickness="1" CornerRadius="{TemplateBinding BorderThickness}">
+                                                <Border BorderThickness="1" CornerRadius="{Binding Path=(local:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='0,0,3,3;0,0,0,0'}">
                                                     <Border.Background>
                                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                             <LinearGradientBrush.GradientStops>
@@ -294,7 +287,7 @@
                                                 </Border>
                                             </Border>
                                             <Border x:Name="InactiveIdleBackground" BorderBrush="#C0000000" CornerRadius="0" BorderThickness="0,0,1,0" Opacity="0">
-                                                <Border BorderThickness="1" CornerRadius="{TemplateBinding BorderThickness}">
+                                                <Border BorderThickness="1" CornerRadius="{Binding Path=(local:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='0,0,3,3;0,0,0,0'}">
                                                     <!--Border.Background>
                                                         <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                             <LinearGradientBrush.GradientStops>
@@ -325,7 +318,7 @@
                                                             </RadialGradientBrush.GradientStops>
                                                         </RadialGradientBrush>
                                                     </Border.Background>
-                                                    <Border BorderThickness="1" CornerRadius="{TemplateBinding BorderThickness}">
+                                                    <Border BorderThickness="1" CornerRadius="{Binding Path=(local:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='0,0,3,3;0,0,0,0'}">
                                                         <Border.Background>
                                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                                 <LinearGradientBrush.GradientStops>
@@ -370,7 +363,7 @@
                                                             </RadialGradientBrush.GradientStops>
                                                         </RadialGradientBrush>
                                                     </Border.Background>
-                                                    <Border BorderThickness="1" CornerRadius="{TemplateBinding BorderThickness}">
+                                                    <Border BorderThickness="1" CornerRadius="{Binding Path=(local:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='0,0,3,3;0,0,0,0'}">
                                                         <Border.Background>
                                                             <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                                                 <LinearGradientBrush.GradientStops>
@@ -484,6 +477,21 @@
                             </Setter>
                         </Style>
 
+                        <Style x:Key="FullscreenButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyle}">
+                            <Setter Property="BorderThickness" Value="0,0,3,0"/>
+                            <Setter Property="Width" Value="28"/>
+                            <Setter Property="Content">
+                                <Setter.Value>
+                                    <Grid Width="11" Height="11" UseLayoutRounding="True">
+                                        <Path Data="M 0.5 0.5 L 6.5 0.5 L 6.5 3.5 L 3.5 3.5 L 3.5 6.5 L 0.5 6.5 Z" Fill="{DynamicResource CaptionButtonGlyphFillBrush}" Stroke="{DynamicResource CaptionButtonGlyphStrokeBrush}" StrokeThickness="1" HorizontalAlignment="Left" VerticalAlignment="Top"/>
+                                        <Path Data="M 0.5 6.5 L 6.5 6.5 L 6.5 0.5 L 3.5 0.5 L 3.5 3.5 L 0.5 3.5 Z" Fill="{DynamicResource CaptionButtonGlyphFillBrush}" Stroke="{DynamicResource CaptionButtonGlyphStrokeBrush}" StrokeThickness="1" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+                                        <!--Border BorderBrush="{DynamicResource CaptionButtonGlyphFillBrush}" Width="10" Height="8" BorderThickness="0,0,0,3"/-->
+                                        <!--Border Background="{DynamicResource CaptionButtonGlyphFillBrush}" BorderBrush="{DynamicResource CaptionButtonGlyphStrokeBrush}" BorderThickness="1" Height="5" VerticalAlignment="Bottom"/-->
+                                    </Grid>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+
                         <Style x:Key="MinimizeButtonStyle" TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyle}">
                             <Setter Property="BorderThickness" Value="0,0,3,0"/>
                             <Setter Property="Width" Value="28"/>
@@ -574,7 +582,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="{x:Type Button}">
-                                        <Grid Background="#01000000">
+                                        <Grid Background="Transparent">
                                             <Grid Margin="0,0,3,0">
                                                 <Border x:Name="ActiveIdleBackground" CornerRadius="0,0,3,0">
                                                     <Border.Background>
@@ -740,44 +748,46 @@
                             <Border x:Name="OuterBorder1" Background="#01FFFFFF" BorderBrush="#CC000000" BorderThickness="1" CornerRadius="6">
                                 <Border x:Name="OuterBorder2" BorderBrush="#CCFFFFFF" BorderThickness="1" CornerRadius="5"/>
                             </Border>
-                            <Rectangle x:Name="TopLeftShine" Width="226" Height="125" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2">
-                                <Rectangle.Fill>
+                            <Border x:Name="TopLeftShine" Width="226" Height="125" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="2" CornerRadius="5,0,0,0">
+                                <Border.Background>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
                                         <GradientStop Offset="0" Color="#7FFFFFFF"/>
                                         <GradientStop Offset="0.3" Color="#60FFFFFF"/>
                                         <GradientStop Offset="0.5" Color="#00FFFFFF"/>
                                     </LinearGradientBrush>
-                                </Rectangle.Fill>
-                                <Rectangle.OpacityMask>
+                                </Border.Background>
+                                <Border.OpacityMask>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                         <GradientStop Offset="0.5" Color="Black"/>
                                         <GradientStop Offset="1" Color="Transparent"/>
                                     </LinearGradientBrush>
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <Rectangle x:Name="TopRightShine" Width="226" Height="125" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2">
-                                <Rectangle.Fill>
+                                </Border.OpacityMask>
+                            </Border>
+                            <Border x:Name="TopRightShine" Width="226" Height="125" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="2" CornerRadius="0,5,0,0">
+                                <Border.Background>
                                     <LinearGradientBrush StartPoint="1,0" EndPoint="0,1">
                                         <GradientStop Offset="0" Color="#7FFFFFFF"/>
                                         <GradientStop Offset="0.3" Color="#60FFFFFF"/>
                                         <GradientStop Offset="0.5" Color="#00FFFFFF"/>
                                     </LinearGradientBrush>
-                                </Rectangle.Fill>
-                                <Rectangle.OpacityMask>
+                                </Border.Background>
+                                <Border.OpacityMask>
                                     <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
                                         <GradientStop Offset="0.5" Color="Black"/>
                                         <GradientStop Offset="1" Color="Transparent"/>
                                     </LinearGradientBrush>
-                                </Rectangle.OpacityMask>
-                            </Rectangle>
-                            <Border x:Name="SideShine" BorderBrush="Transparent" BorderThickness="1,90,1,0.5" Margin="{Binding BorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ThicknessFilterConverter}, ConverterParameter=zpzz}" VerticalAlignment="Top" Height="180">
-                                <Border.Background>
-                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                        <GradientStop Offset="0" Color="#00FDFDFD"/>
-                                        <GradientStop Offset="1" Color="#BAFDFDFD"/>
-                                    </LinearGradientBrush>
-                                </Border.Background>
+                                </Border.OpacityMask>
                             </Border>
+                            <Grid Margin="0,90,0,0" VerticalAlignment="Top">
+                                <Border x:Name="SideShine" BorderBrush="Transparent" BorderThickness="1,0,1,0.5" Margin="{Binding BorderThickness, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource ThicknessFilterConverter}, ConverterParameter=zpzz}" VerticalAlignment="Top" Height="180">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="#00FDFDFD"/>
+                                            <GradientStop Offset="1" Color="#BAFDFDFD"/>
+                                        </LinearGradientBrush>
+                                    </Border.Background>
+                                </Border>
+                            </Grid>
                             <Grid Margin="-2">
                                 <Border x:Name="InnerBorder1" BorderBrush="#91FDFDFD" BorderThickness="1" CornerRadius="2" Margin="{TemplateBinding BorderThickness}" Padding="0">
                                     <Border x:Name="InnerBorder2" Background="{TemplateBinding Background}" BorderBrush="#92181818" BorderThickness="1" CornerRadius="1" Padding="0"/>
@@ -799,9 +809,10 @@
                                 <Border x:Name="CaptionButtonsBorder1" BorderBrush="#CCFFFFFF" BorderThickness="1,0,1,1" CornerRadius="0,0,4,4" Height="20" VerticalAlignment="Top" HorizontalAlignment="Right" Margin="0,1,6,0">
                                     <Border x:Name="CaptionButtonsBorder2" BorderBrush="#C0000000" BorderThickness="1,0,1,1" CornerRadius="0,0,3,3" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
                                         <StackPanel x:Name="CaptionButtons" Orientation="Horizontal">
-                                            <Button x:Name="PART_MinimizeButton" Style="{DynamicResource MinimizeButtonStyle}"/>
-                                            <Button x:Name="PART_MaximizeButton" Style="{DynamicResource MaximizeButtonStyle}"/>
-                                            <Button x:Name="PART_RestoreButton" Style="{DynamicResource RestoreButtonStyle}" Visibility="Collapsed"/>
+                                            <Button x:Name="PART_FullscreenButton" Style="{DynamicResource FullscreenButtonStyle}" Visibility="Collapsed" local:AttachedProperties.CornerCurves="false,false,false,true"/>
+                                            <Button x:Name="PART_MinimizeButton" Style="{DynamicResource MinimizeButtonStyle}" local:AttachedProperties.CornerCurves="false,false,false,true"/>
+                                            <Button x:Name="PART_MaximizeButton" Style="{DynamicResource MaximizeButtonStyle}" local:AttachedProperties.CornerCurves="false"/>
+                                            <Button x:Name="PART_RestoreButton" Style="{DynamicResource RestoreButtonStyle}" Visibility="Collapsed" local:AttachedProperties.CornerCurves="false"/>
                                             <Button x:Name="PART_CloseButton" Style="{DynamicResource CloseButtonStyle}"/>
                                         </StackPanel>
                                     </Border>
@@ -865,6 +876,10 @@
                             <Setter TargetName="CaptionStackPanel" Property="Margin" Value="8,4,8,0"/>
                             <Setter TargetName="CaptionButtonsBorder1" Property="Margin" Value="0,8,10,0"/>
                         </Trigger>
+                        <Trigger Property="ShowFullscreenButton" Value="True">
+                            <Setter TargetName="PART_FullscreenButton" Property="Visibility" Value="Visible"/>
+                            <Setter TargetName="PART_MinimizeButton" Property="local:AttachedProperties.CornerCurves" Value="false"/>
+                        </Trigger>
                         <!--Trigger Property="IsActive" Value="False"-->
                         <!--DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="False"-->
                         <Trigger Property="IsActive" Value="False">
@@ -918,11 +933,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="Thumb">
-                            <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0">
-                                <Rectangle.Fill>
-                                    <SolidColorBrush Color="#01000000" />
-                                </Rectangle.Fill>
-                            </Rectangle>
+                            <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0" Fill="Transparent"/>
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
@@ -945,7 +956,7 @@
                                 <Style x:Key="{x:Type ResizeGrip}" TargetType="{x:Type ResizeGrip}">
                                     <Setter Property="OverridesDefaultStyle" Value="True" />
                                     <Setter Property="Foreground" Value="Blue" />
-                                    <Setter Property="Background" Value="#01000000" />
+                                    <Setter Property="Background" Value="Transparent" />
                                     <Setter Property="IsHitTestVisible" Value="True" />
                                     <Setter Property="Width" Value="18" />
                                     <Setter Property="Height" Value="18" />
@@ -971,11 +982,7 @@
                                 </Style>
                             </ControlTemplate.Resources>
                             <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                <Rectangle StrokeThickness="0">
-                                    <Rectangle.Fill>
-                                        <SolidColorBrush Color="#01000000" />
-                                    </Rectangle.Fill>
-                                </Rectangle>
+                                <Rectangle StrokeThickness="0" Fill="Transparent"/>
                                 <ResizeGrip x:Name="PART_ResizeGrip"/>
                             </Grid>
                         </ControlTemplate>
@@ -990,7 +997,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
-                            <Border Background="#01000000">
+                            <Border Background="Transparent">
                                 <Grid Margin="0,9,0,0">
                                     <Border x:Name="HoverBackground" BorderBrush="Transparent" CornerRadius="2" BorderThickness="1" Visibility="Collapsed">
                                         <Border BorderThickness="1" CornerRadius="1">
@@ -1103,7 +1110,7 @@
                 <Setter Property="Template">
                     <Setter.Value>
                         <ControlTemplate TargetType="{x:Type Button}">
-                            <Border Background="#01000000">
+                            <Border Background="Transparent">
                                 <Grid Margin="0,9,2,0">
                                     <Border x:Name="HoverBackground" BorderBrush="Transparent" CornerRadius="2" BorderThickness="1" Visibility="Collapsed">
                                         <Border BorderThickness="1" CornerRadius="1">

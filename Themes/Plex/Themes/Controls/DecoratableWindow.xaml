@@ -23,11 +23,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Thumb">
-                    <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0">
-                        <Rectangle.Fill>
-                            <SolidColorBrush Color="#01000000" />
-                        </Rectangle.Fill>
-                    </Rectangle>
+                    <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0" Fill="Transparent"/>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
@@ -48,7 +44,6 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ResizeGrip}">
                     <Grid>
-
                         <Ellipse HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="5" Height="5" Fill="{DynamicResource ResizeGripCircleBackgroundBrush}" Stroke="{DynamicResource ResizeGripCircleBorderBrush}" StrokeThickness="1" />
                         <Ellipse HorizontalAlignment="Center" VerticalAlignment="Bottom" Width="5" Height="5" Fill="{DynamicResource ResizeGripCircleBackgroundBrush}" Stroke="{DynamicResource ResizeGripCircleBorderBrush}" StrokeThickness="1" Margin="0,-1,0,1" />
                         <Ellipse HorizontalAlignment="Center" VerticalAlignment="Center" Width="5" Height="5" Fill="{DynamicResource ResizeGripCircleBackgroundBrush}" Stroke="{DynamicResource ResizeGripCircleBorderBrush}" StrokeThickness="1" Margin="-3,-2,3,2" />
@@ -359,11 +354,7 @@
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Thumb">
-                                        <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0">
-                                            <Rectangle.Fill>
-                                                <SolidColorBrush Color="#01000000" />
-                                            </Rectangle.Fill>
-                                        </Rectangle>
+                                        <Rectangle MinWidth="4" MinHeight="4" StrokeThickness="0" Fill="Transparent"/>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
@@ -443,7 +434,7 @@
                                         </Grid>
                                     </Grid>
                                     <DockPanel>
-                                        <Rectangle x:Name="TitlebarSpacerRectangle" Height="{TemplateBinding TitlebarHeight}" Fill="#01000000" DockPanel.Dock="Top" IsHitTestVisible="False"/>
+                                        <Rectangle x:Name="TitlebarSpacerRectangle" Height="{TemplateBinding TitlebarHeight}" Fill="Transparent" DockPanel.Dock="Top" IsHitTestVisible="False"/>
                                         <Border x:Name="Body" Background="{TemplateBinding Background}" CornerRadius="8"/>
                                     </DockPanel>
                                     <ContentPresenter x:Name="ContentPr" Margin="{TemplateBinding Padding}" Content="{TemplateBinding Content}"/>

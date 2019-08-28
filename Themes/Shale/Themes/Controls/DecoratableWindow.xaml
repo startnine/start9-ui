@@ -336,7 +336,7 @@
                         <Style x:Key="BorderThumbStyle" TargetType="Thumb">
                             <Setter Property="SnapsToDevicePixels" Value="true" />
                             <Setter Property="OverridesDefaultStyle" Value="true" />
-                            <Setter Property="Background" Value="#01000000"/>
+                            <Setter Property="Background" Value="Transparent"/>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="Thumb">
@@ -363,7 +363,7 @@
                                             <Style x:Key="{x:Type ResizeGrip}" TargetType="{x:Type ResizeGrip}">
                                                 <Setter Property="OverridesDefaultStyle" Value="True" />
                                                 <Setter Property="Foreground" Value="Blue" />
-                                                <Setter Property="Background" Value="#01000000" />
+                                                <Setter Property="Background" Value="Transparent" />
                                                 <Setter Property="IsHitTestVisible" Value="True" />
                                                 <Setter Property="Width" Value="18" />
                                                 <Setter Property="Height" Value="18" />
@@ -401,14 +401,14 @@
                             </Setter>
                         </Style>
                     </ControlTemplate.Resources>
-                    <Border x:Name="WindowRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="4" Margin="{TemplateBinding Margin}">
+                    <Border x:Name="WindowRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="3" Margin="{TemplateBinding Margin}">
                         <Grid>
                             <!--Grid.RowDefinitions>
                                 <RowDefinition Height="{Binding TitlebarHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions-->
                             <DockPanel>
-                                <Rectangle x:Name="TitlebarSpacerRectangle" Height="{TemplateBinding TitlebarHeight}" Fill="#01000000" DockPanel.Dock="Top"/>
+                                <Rectangle x:Name="TitlebarSpacerRectangle" Height="{TemplateBinding TitlebarHeight}" DockPanel.Dock="Top"/>
                                 <Border x:Name="Body" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0" Background="{TemplateBinding Background}" CornerRadius="0,0,3,3"/>
                             </DockPanel>
                             <Grid x:Name="TitlebarGrid" Height="{TemplateBinding TitlebarHeight}" HorizontalAlignment="Stretch" VerticalAlignment="Top">

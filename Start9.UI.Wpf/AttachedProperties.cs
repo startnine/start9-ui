@@ -1,4 +1,7 @@
 ﻿using Start9.UI.Wpf.Behaviors;
+using System;
+using System.ComponentModel;
+using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,6 +13,63 @@ using System.Windows.Interactivity;
 
 namespace Start9.UI.Wpf
 {
+    public class CornerCurvesConverter : System.Windows.CornerRadiusConverter
+    {
+        public override bool CanConvertFrom(ITypeDescriptorContext typeDescriptorContext, Type sourceType)
+        {
+            //return (sourceType == typeof(string)) || (sourceType == typeof(bool)) || (sourceType == typeof(Boolean));
+            TypeCode code = Type.GetTypeCode(sourceType);
+            switch (code)
+            {
+                case TypeCode.String:
+                    return true;
+                case TypeCode.Boolean:
+                    return true;
+
+                default:
+                    return false;
+            }
+        }
+
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
+        {
+            return (destinationType == typeof(CornerCurves)) || (destinationType == typeof(string)) || (destinationType == typeof(String));
+        }
+
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object source)
+        {
+            if (source != null)
+            {
+                if (source is bool boolVal)
+                    return new CornerCurves(boolVal);
+                else if (source is string strVal)
+                {
+                    string[] values = strVal.Replace(" ", ",").Split(",".ToCharArray());
+                    if ((values.Length == 1) && bool.TryParse(values[0], out bool uniformBool))
+                        return new CornerCurves(uniformBool);
+                    else if ((values.Length == 4) && bool.TryParse(values[0], out bool topLeftBool) && bool.TryParse(values[1], out bool topRightBool) && bool.TryParse(values[2], out bool bottomRightBool) && bool.TryParse(values[3], out bool bottomLeftBool))
+                        return new CornerCurves(topLeftBool, topRightBool, bottomRightBool, bottomLeftBool);
+                }
+            }
+
+            throw new Exception("Cannot convert this type to 'CornerCurves'!");
+        }
+
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
+        {
+            if (value is CornerCurves curve)
+            {
+                if (destinationType == typeof(bool))
+                    return curve.TopLeft;
+                else
+                    return curve.ToString();
+            }
+            throw new Exception("Cannot convert 'CornerCurves' to this type!");
+        }
+    }
+
+
+    [TypeConverter(typeof(CornerCurvesConverter))]
     public class CornerCurves : Freezable
     {
         public bool TopLeft
@@ -76,6 +136,15 @@ namespace Start9.UI.Wpf
         protected override Freezable CreateInstanceCore()
         {
             return new CornerCurves(true);
+        }
+
+#if NETCOREAPP3_0
+        public override string? ToString()
+#else
+        public override string ToString()
+#endif
+        {
+            return TopLeft + "," + TopRight + "," + BottomRight + "," + BottomLeft;
         }
     }
 

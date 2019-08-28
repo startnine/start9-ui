@@ -14,7 +14,7 @@ using System.Windows.Media;
 
 namespace Start9.UI.Wpf.Windows
 {
-    public partial class CompositingWindow : Window
+    public abstract partial class CompositingWindow : Window
     {
         public IntPtr Handle;
         /*NativeMethods.DWM_BLURBEHIND _blurInfo = new NativeMethods.DWM_BLURBEHIND();  
@@ -157,6 +157,7 @@ namespace Start9.UI.Wpf.Windows
             base.WindowStyle = WindowStyle.None;
             AllowsTransparency = true;
             Handle = new WindowInteropHelper(this).EnsureHandle();
+            HwndSource.FromHwnd(Handle).CompositionTarget.BackgroundColor = Colors.Transparent;
             /*System.Windows.Shell.WindowChrome.SetWindowChrome(this, new System.Windows.Shell.WindowChrome()// );
             {
                 GlassFrameThickness = new Thickness(0),
@@ -206,6 +207,24 @@ namespace Start9.UI.Wpf.Windows
             {
                 SetCompositionState();
             };*/
+            HwndSource.FromHwnd(Handle).AddHook(new HwndSourceHook(CompositingWindowWndProc));
+        }
+
+        public IntPtr CompositingWindowWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, ref Boolean handled)
+        {
+            if (msg == 0x0084)
+            {
+                /*var x = (uint)lParam & (uint)0x0000FFFF;
+                var y = (uint)lParam >> 16;*/
+                NativeMethods.POINT cursor = new NativeMethods.POINT();
+                if (NativeMethods.ScreenToClient(Handle, ref cursor))
+                {
+                    if (InputHitTest(new Point(SystemScaling.RealPixelsToWpfUnits(cursor.X), SystemScaling.RealPixelsToWpfUnits(cursor.Y))) != null)
+                        return new IntPtr(1);
+                }
+            }
+
+            return IntPtr.Zero;
         }
 
         /*private static object CoerceAllowsTransparency(DependencyObject d, object value)
@@ -213,24 +232,24 @@ namespace Start9.UI.Wpf.Windows
             return (d as Window).GetValue(AllowsTransparencyProperty);
         }*/
 
-        /*protected override void OnStateChanged(EventArgs e) //private void CompositingWindow_StateChanged(object sender, EventArgs e)
-        {
-            base.OnStateChanged(e);
+            /*protected override void OnStateChanged(EventArgs e) //private void CompositingWindow_StateChanged(object sender, EventArgs e)
+            {
+                base.OnStateChanged(e);
 
-            if (WindowState == WindowState.Maximized)
-            {
-                _maxWidth = MaxWidth;
-                _maxHeight = MaxHeight;
-                System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromHandle(Handle); //System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
-                MaxWidth = s.WorkingArea.Width;
-                MaxHeight = s.WorkingArea.Height;
-            }
-            else
-            {
-                MaxWidth = _maxWidth;
-                MaxHeight = _maxHeight;
-            }
-        }*/
+                if (WindowState == WindowState.Maximized)
+                {
+                    _maxWidth = MaxWidth;
+                    _maxHeight = MaxHeight;
+                    System.Windows.Forms.Screen s = System.Windows.Forms.Screen.FromHandle(Handle); //System.Windows.Forms.Screen.FromPoint(new System.Drawing.Point((int)SystemScaling.WpfUnitsToRealPixels(Left), (int)SystemScaling.WpfUnitsToRealPixels(Top)));
+                    MaxWidth = s.WorkingArea.Width;
+                    MaxHeight = s.WorkingArea.Height;
+                }
+                else
+                {
+                    MaxWidth = _maxWidth;
+                    MaxHeight = _maxHeight;
+                }
+            }*/
 
         protected override void OnInitialized(EventArgs e)
         {

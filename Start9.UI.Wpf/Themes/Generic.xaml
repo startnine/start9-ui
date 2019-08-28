@@ -280,7 +280,7 @@
                             <theme:ClassicBorderDecorator x:Name="BorderDecorator" BorderStyle="AltRaised" BorderThickness="2"/>
                             <DockPanel>
                                 <Rectangle x:Name="TitlebarSpacerRectangle" Height="{TemplateBinding TitlebarHeight}" Fill="#01000000" DockPanel.Dock="Top"/>
-                                <Border x:Name="Body" BorderBrush="Transparent" BorderThickness="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="0,0,3,3"/>
+                                <Border x:Name="Body" Background="{TemplateBinding Background}" BorderBrush="Transparent" BorderThickness="{TemplateBinding BorderThickness}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                                 <!--Margin="0,6,0,0" Background="{TemplateBinding Background}"-->
                             </DockPanel>
                             <Border x:Name="TitlebarBorder" HorizontalAlignment="Stretch" VerticalAlignment="Top" BorderBrush="Transparent" BorderThickness="4" Visibility="Visible" Opacity="1" Background="#01000000">
@@ -370,7 +370,7 @@
                                 </Grid>
                             </Border>
                             <Grid x:Name="BodyGrid" HorizontalAlignment="Stretch" Margin="{TemplateBinding Padding}">
-                                <Border Margin="0,2,0,0" Background="{TemplateBinding Background}">
+                                <Border Margin="0,2,0,0">
                                     <ContentPresenter Content="{TemplateBinding Content}"/>
                                 </Border>
                             </Grid>
@@ -427,13 +427,16 @@
                             <Setter TargetName="TitleText" Property="Margin" Value="0"/>
                         </DataTrigger>
                         <Trigger Property="WindowState" Value="Maximized">
-                            <Setter Property="Margin" Value="7"/>
+                            <!--Setter Property="Margin" Value="7"/-->
                             <Setter Property="MaxWidth" Value="{x:Static SystemParameters.PrimaryScreenWidth}"/>
                             <Setter Property="MaxHeight" Value="{x:Static SystemParameters.PrimaryScreenHeight}"/>
                             <Setter TargetName="PART_MaximizeButton" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="PART_RestoreButton" Property="Visibility" Value="Visible"/>
                             <Setter TargetName="ResizeGrid" Property="Visibility" Value="Collapsed"/>
                             <Setter TargetName="BorderDecorator" Property="Visibility" Value="Collapsed"/>
+                            <Setter TargetName="Body" Property="BorderThickness" Value="0"/>
+                            <Setter TargetName="WindowRoot" Property="Margin" Value="7,7,-7,-7"/>
+                            <Setter TargetName="BodyGrid" Property="Margin" Value="0"/><!--Value="{Binding TitlebarHeight, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource DoubleToThicknessConverter}, ConverterParameter='t'}"-->
                         </Trigger>
                         <Trigger Property="IsFullscreen" Value="True">
                             <Setter TargetName="PART_FullscreenButton" Property="Visibility" Value="Collapsed"/>

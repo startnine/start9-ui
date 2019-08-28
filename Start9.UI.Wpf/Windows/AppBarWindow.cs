@@ -17,7 +17,7 @@ namespace Start9.UI.Wpf.Windows
 
     [TemplatePart(Name = PartDragMoveGrid, Type = typeof(Grid))]
     [TemplatePart(Name = PartResizeThumb, Type = typeof(Thumb))]
-    public class AppBarWindow : CompositingWindow
+    public class AppBarWindow : ShadowedWindow
     {
         const String PartDragMoveGrid = "PART_DragMoveGrid";
         const String PartResizeThumb = "PART_ResizeThumb";
@@ -602,7 +602,7 @@ namespace Start9.UI.Wpf.Windows
 
             // add the hook, setup the appbar
             var source = HwndSource.FromHwnd(new WindowInteropHelper(this).Handle); //HwndSource.FromHwnd(new WindowInteropHelper(this).EnsureHandle()); // (HwndSource)PresentationSource.FromVisual(this);
-            source.AddHook(WndProc);
+            source.AddHook(AppBarWindowWndProc);
 
             var abd = GetAppBarData();
             SHAppBarMessage(ABM.New, ref abd);
@@ -726,7 +726,7 @@ namespace Start9.UI.Wpf.Windows
             }
         }
 
-        public IntPtr WndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, ref Boolean handled)
+        public IntPtr AppBarWindowWndProc(IntPtr hwnd, Int32 msg, IntPtr wParam, IntPtr lParam, ref Boolean handled)
         {
             if (msg == WmWindowPosChanging && !IsInAppBarResize)
             {

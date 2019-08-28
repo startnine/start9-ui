@@ -172,7 +172,7 @@ namespace Start9.UI.Wpf.Windows
             Activated += ShadowedWindow_Activated;
             Deactivated += ShadowedWindow_Activated;
 
-            HwndSource.FromHwnd(Handle).AddHook(new HwndSourceHook(WndProc));
+            HwndSource.FromHwnd(Handle).AddHook(new HwndSourceHook(ShadowedWindowWndProc));
         }
 
         protected override void OnClosed(EventArgs e)
@@ -204,7 +204,7 @@ namespace Start9.UI.Wpf.Windows
                 _shadowWindow.Hide();
         }
 
-        protected IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        protected IntPtr ShadowedWindowWndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             if (msg == NativeMethods.WmWindowPosChanging)
                 SyncShadowToWindow();
