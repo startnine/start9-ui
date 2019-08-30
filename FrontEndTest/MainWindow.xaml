@@ -341,25 +341,33 @@
                 <TabItem Header="Skin Settings">
                     <StackPanel Orientation="Vertical">
                         <GroupBox Header="Current Skin">
-                            <ComboBox x:Name="SkinsComboBox" SelectedIndex="0">
-                                <ComboBoxItem Content="Shale"/>
-                                <ComboBoxItem Content="Plex"/>
-                                <ComboBoxItem Content="E-DNA"/>
-                                <Separator/>
-                                <ComboBoxItem Content="Classic"/>
-                                <ComboBoxItem Content="Luna Blue"/>
-                                <ComboBoxItem Content="Luna Olive (NYI)" IsEnabled="False"/>
-                                <ComboBoxItem Content="Luna Silver (NYI)" IsEnabled="False"/>
-                                <ComboBoxItem Content="Royale (NYI)" IsEnabled="False"/>
-                                <ComboBoxItem Content="Aero"/>
-                                <ComboBoxItem Content="Aero2"/>
-                                <ComboBoxItem Content="AeroLite"/>
-                            </ComboBox>
+                            <StackPanel Orientation="Vertical">
+                                <ComboBox x:Name="SkinsComboBox" SelectedIndex="0">
+                                    <ComboBoxItem Content="Shale"/>
+                                    <ComboBoxItem Content="Plex"/>
+                                    <ComboBoxItem Content="E-DNA"/>
+                                    <Separator/>
+                                    <ComboBoxItem Content="Classic"/>
+                                    <ComboBoxItem Content="Luna Blue"/>
+                                    <ComboBoxItem Content="Luna Olive (NYI)" IsEnabled="False"/>
+                                    <ComboBoxItem Content="Luna Silver (NYI)" IsEnabled="False"/>
+                                    <ComboBoxItem Content="Royale (NYI)" IsEnabled="False"/>
+                                    <ComboBoxItem Content="Aero"/>
+                                    <ComboBoxItem Content="Aero2"/>
+                                    <ComboBoxItem Content="AeroLite"/>
+                                    <Separator/>
+                                </ComboBox>
+                                <DockPanel>
+                                    <TextBlock Text="Dictionary URI within assembly: " DockPanel.Dock="Left"/>
+                                    <TextBox x:Name="ExternalThemeUriTextBox" Text="PATH WITHIN ASSEMBLY TO XAML FILE HERE"/>
+                                </DockPanel>
+                                <Button x:Name="LoadExternalThemeButton" Content="Load External Resource Assembly" Click="LoadExternalThemeButton_Click"/>
+                            </StackPanel>
                         </GroupBox>
-                        <GroupBox Header="NOTE">
+                        <GroupBox Header="NOTE" Visibility="Collapsed">
                             <TextBlock Text="These options aren't actually skin-defined (yet)."/>
                         </GroupBox>
-                        <GroupBox Header="Colours">
+                        <GroupBox Header="Colours" Visibility="Collapsed">
                             <StackPanel Orientation="Vertical">
                                 <DockPanel>
                                     <TextBlock Text="Hue" DockPanel.Dock="Left"/>

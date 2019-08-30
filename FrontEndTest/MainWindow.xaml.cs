@@ -19,6 +19,7 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Reflection;
 using MessageBox = Start9.UI.Wpf.Windows.MessageBox;
 
 namespace FrontEndTest
@@ -259,6 +260,21 @@ namespace FrontEndTest
                 Application.Current.Resources.MergedDictionaries[1].Source = new Uri("/Start9.UI.Wpf;component/Themes/Generic.xaml", UriKind.Relative);
             }
 
+            if ((SkinsComboBox.SelectedIndex >= 13) && (SkinsComboBox.SelectedItem is ComboBoxItem item) && (item.Tag is string uri))
+            {
+                string[] uris = uri.Split("?".ToCharArray(), StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < uris.Length; i++)
+                {
+                    if (i < Application.Current.Resources.MergedDictionaries.Count)
+                        Application.Current.Resources.MergedDictionaries[i].Source = new Uri(uris[i], UriKind.RelativeOrAbsolute);
+                    else
+                        Application.Current.Resources.MergedDictionaries.Add(new ResourceDictionary()
+                        {
+                            Source = new Uri(uris[i], UriKind.RelativeOrAbsolute)
+                        });
+                }
+            }
+
             //Enable/disable Reveal test tab as needed
             if (SkinsComboBox.SelectedIndex == 1)
                 RevealTestTabItem.IsEnabled = true;
@@ -281,6 +297,28 @@ namespace FrontEndTest
             MessageBox.Show("Result of previous MessageBox: " + b.ToString(), "haha yes");
 
             MessageBox<SampleActionSet>.Show("*laughs in custom MessageBox actions*", "I CAN DO ANYTHING", (Rectangle)Resources["SampleIcon"]);
+        }
+
+        private void LoadExternalThemeButton_Click(object sender, RoutedEventArgs e)
+        {
+            Microsoft.Win32.OpenFileDialog browse = new Microsoft.Win32.OpenFileDialog()
+            {
+                Filter = ".NET Assembly (*.dll, *.exe)|*.dll;*.exe",
+                CheckFileExists = true
+            };
+            if ((browse.ShowDialog() == true) && (!string.IsNullOrWhiteSpace(browse.FileName)))
+            {
+                Assembly skin = Assembly.LoadFile(browse.FileName);
+                string tagValue = string.Empty;
+                foreach (string s in ExternalThemeUriTextBox.Text.Split("?".ToCharArray()))
+                    tagValue += @"pack://application:,,,/" + System.IO.Path.GetFileNameWithoutExtension(browse.FileName) + @";component/" + s + "?";
+
+                SkinsComboBox.Items.Add(new ComboBoxItem()
+                {
+                    Content = System.IO.Path.GetFileName(browse.FileName),
+                    Tag = tagValue
+                });
+            }
         }
     }
 

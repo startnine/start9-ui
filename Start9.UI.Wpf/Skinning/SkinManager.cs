@@ -110,7 +110,7 @@ namespace Start9.UI.Wpf.Skinning
                 string path = Path.Combine(s, "Skin.dll");
                 if (File.Exists(path))
                 {
-                    Assembly skinAssembly = Assembly.LoadFrom(path);
+                    Assembly skinAssembly = Assembly.LoadFile(path);
                     var attributes = skinAssembly.GetCustomAttributes(true); //typeof(SkinAssemblyAttribute)
                     foreach (Attribute attr in attributes)
                     {
