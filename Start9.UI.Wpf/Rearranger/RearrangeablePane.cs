@@ -126,11 +126,11 @@ namespace Start9.UI.Wpf.Rearranger
                 Binding visibilityBinding = new Binding()
                 {
                     Source = obj,
-                    Path = new PropertyPath(VisibilityProperty),
+                    Path = new PropertyPath(FrameworkElement.VisibilityProperty),
                     Mode = BindingMode.OneWay,
                     UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                 };
-                SetBinding(VisibilityProperty, dockBinding);
+                SetBinding(FrameworkElement.VisibilityProperty, visibilityBinding);
                 RefreshCanResize();
             }
         }
@@ -147,7 +147,6 @@ namespace Start9.UI.Wpf.Rearranger
                     return rerr;
                 else
                     return null;*/
-                Debug.WriteLine("TEMPLATEDPARENT TYPE: " + TemplatedParent.GetType().ToString());
                 if (Parent is DockPanel d)
                 {
                     if (d.TemplatedParent is Rearranger rerr)
@@ -188,7 +187,6 @@ namespace Start9.UI.Wpf.Rearranger
         private void Titlebar_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             //owner.MovePane(this);
-            Debug.WriteLine("Titlebar_PreviewMouseLeftButtonDown");
             TitlebarMouseLeftButtonDown?.Invoke(this, null);
         }
 
@@ -203,12 +201,7 @@ namespace Start9.UI.Wpf.Rearranger
         void ThumbTop_DragDelta(Object sender, DragDeltaEventArgs e)
         {
             if (DockPanel.GetDock(this) == Dock.Bottom)
-            {
-                //Debug.WriteLine("Height before: " + Height + ", " + ActualHeight);
-                Debug.WriteLine("e.VerticalChange: " + e.VerticalChange);
                 ValidSetHeight(_contentPresenter.ActualHeight - e.VerticalChange);
-                //Debug.WriteLine("Height after: " + Height + ", " + ActualHeight);
-            }
         }
 
         void ThumbRight_DragDelta(Object sender, DragDeltaEventArgs e)

@@ -186,7 +186,6 @@ namespace Start9.UI.Wpf.Rearranger
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
                     {
-                        Debug.WriteLine("Timer ticking!");
                         bool done = Mouse.LeftButton == MouseButtonState.Released;
                         bool cancel = Keyboard.GetKeyStates(Key.Escape) == KeyStates.Down;
                         if (done || cancel)
@@ -274,6 +273,83 @@ namespace Start9.UI.Wpf.Rearranger
                                 if (_dragMovementGuide.ActualHeight < 50)
                                     _dragMovementGuide.Height = 50;*/
                                 Canvas.SetTop(_dragMovementGuide, ActualHeight - _dragMovementGuide.ActualHeight);
+
+                                currentToNewLocation = true;
+                            }
+                            else if (SystemScaling.IsMouseWithin((FrameworkElement)_itemsDockPanel.Children[_itemsDockPanel.Children.Count - 1]))
+                            {
+                                newIndex = _itemsDockPanel.Children.Count - 2;
+                                newDock = Dock.Bottom;
+
+                                RearrangeablePane lastPane = (RearrangeablePane)_itemsDockPanel.Children[_itemsDockPanel.Children.Count - 1];
+                                Point lastPaneCurPos = lastPane.PointFromScreen(SystemScaling.CursorPosition);
+                                double horizontal = lastPaneCurPos.X / lastPane.ActualWidth;
+                                double vertical = lastPaneCurPos.Y / lastPane.ActualHeight;
+
+                                if (horizontal > 0.5)
+                                {
+                                    if (vertical > 0.5)
+                                    {
+                                        if (horizontal > vertical)
+                                            newDock = Dock.Right;
+                                        else
+                                            newDock = Dock.Bottom;
+                                    }
+                                    else
+                                    {
+                                        if (vertical > horizontal)
+                                            newDock = Dock.Right;
+                                        else
+                                            newDock = Dock.Top;
+                                    }
+                                }
+                                else
+                                {
+                                    if (vertical > 0.5)
+                                    {
+                                        if (horizontal > vertical)
+                                            newDock = Dock.Left;
+                                        else
+                                            newDock = Dock.Bottom;
+                                    }
+                                    else
+                                    {
+                                        if (vertical > horizontal)
+                                            newDock = Dock.Left;
+                                        else
+                                            newDock = Dock.Top;
+                                    }
+                                }
+
+                                Point lastPaneRearrangerOffset = PointFromScreen(lastPane.PointToScreen(new Point(0, 0)));
+                                if (newDock == Dock.Left)
+                                {
+                                    Canvas.SetLeft(_dragMovementGuide, lastPaneRearrangerOffset.X);
+                                    Canvas.SetTop(_dragMovementGuide, lastPaneRearrangerOffset.Y);
+                                    _dragMovementGuide.Width = 50;
+                                    _dragMovementGuide.Height = lastPane.ActualHeight;
+                                }
+                                else if (newDock == Dock.Top)
+                                {
+                                    Canvas.SetLeft(_dragMovementGuide, lastPaneRearrangerOffset.X);
+                                    Canvas.SetTop(_dragMovementGuide, lastPaneRearrangerOffset.Y);
+                                    _dragMovementGuide.Width = lastPane.ActualWidth;
+                                    _dragMovementGuide.Height = 50;
+                                }
+                                else if (newDock == Dock.Right)
+                                {
+                                    Canvas.SetLeft(_dragMovementGuide, (lastPaneRearrangerOffset.X + lastPane.ActualWidth) - 50);
+                                    Canvas.SetTop(_dragMovementGuide, lastPaneRearrangerOffset.Y);
+                                    _dragMovementGuide.Width = 50;
+                                    _dragMovementGuide.Height = lastPane.ActualHeight;
+                                }
+                                else if (newDock == Dock.Bottom)
+                                {
+                                    Canvas.SetLeft(_dragMovementGuide, lastPaneRearrangerOffset.X);
+                                    Canvas.SetTop(_dragMovementGuide, (lastPaneRearrangerOffset.Y + lastPane.ActualHeight) - 50);
+                                    _dragMovementGuide.Width = lastPane.ActualWidth;
+                                    _dragMovementGuide.Height = 50;
+                                }
 
                                 currentToNewLocation = true;
                             }
