@@ -61,6 +61,51 @@ namespace Start9.UI.Wpf.Rearranger
             element.SetValue(PaneTitleProperty, value);
         }
 
+        /*public bool CanResize
+        {
+            get => (bool)GetValue(CanResizeProperty);
+            set => SetValue(CanResizeProperty, value);
+        }*/
+
+        public static DependencyProperty CanResizeProperty =
+            DependencyProperty.RegisterAttached("CanResize", typeof(bool), typeof(Rearranger), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits));
+
+        public static bool GetCanResize(DependencyObject element)
+        {
+            return (bool)element.GetValue(CanResizeProperty);
+        }
+
+        public static void SetCanResize(DependencyObject element, bool value)
+        {
+            element.SetValue(CanResizeProperty, value);
+        }
+
+        public static DependencyProperty HideFrameWhenLockedProperty =
+            DependencyProperty.RegisterAttached("HideFrameWhenLocked", typeof(bool), typeof(Rearranger), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
+
+        public static bool GetHideFrameWhenLocked(DependencyObject element)
+        {
+            return (bool)element.GetValue(HideFrameWhenLockedProperty);
+        }
+
+        public static void SetHideFrameWhenLocked(DependencyObject element, bool value)
+        {
+            element.SetValue(HideFrameWhenLockedProperty, value);
+        }
+
+        public static DependencyProperty HideTitlebarWhenLockedProperty =
+            DependencyProperty.RegisterAttached("HideTitlebarWhenLocked", typeof(bool), typeof(Rearranger), new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits));
+
+        public static bool GetHideTitlebarWhenLocked(DependencyObject element)
+        {
+            return (bool)element.GetValue(HideTitlebarWhenLockedProperty);
+        }
+
+        public static void SetHideTitlebarWhenLocked(DependencyObject element, bool value)
+        {
+            element.SetValue(HideTitlebarWhenLockedProperty, value);
+        }
+
         /*public static readonly DependencyProperty PaneDockSideProperty = DependencyProperty.RegisterAttached("PaneDockSide", typeof(Dock), typeof(Rearranger), new FrameworkPropertyMetadata(Dock.Left));
 
         public static Dock GetPaneDockSide(DependencyObject element)

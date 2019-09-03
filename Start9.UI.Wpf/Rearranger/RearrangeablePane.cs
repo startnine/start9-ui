@@ -31,16 +31,7 @@ namespace Start9.UI.Wpf.Rearranger
         Thumb _thumbBottom;
         ContentPresenter _contentPresenter;
 
-        public bool ComputedCanResize
-        {
-            get => (bool)GetValue(ComputedCanResizeProperty);
-            set => SetValue(ComputedCanResizeProperty, value);
-        }
-
-        public static DependencyProperty ComputedCanResizeProperty =
-            DependencyProperty.Register(nameof(ComputedCanResize), typeof(bool), typeof(RearrangeablePane), new FrameworkPropertyMetadata(false));
-
-        public bool? CanResize
+        /*public bool? CanResize
         {
             get => (bool?)GetValue(CanResizeProperty);
             set => SetValue(CanResizeProperty, value);
@@ -69,7 +60,25 @@ namespace Start9.UI.Wpf.Rearranger
             }
             else
                 ComputedCanResize = CanResize.Value;
+        }*/
+
+        public bool LockedHideFrame
+        {
+            get => (bool)GetValue(LockedHideFrameProperty);
+            set => SetValue(LockedHideFrameProperty, value);
         }
+        
+        public static DependencyProperty LockedHideFrameProperty =
+        DependencyProperty.Register(nameof(LockedHideFrame), typeof(bool), typeof(RearrangeablePane), new FrameworkPropertyMetadata(false));
+
+        public bool LockedHideTitlebar
+        {
+            get => (bool)GetValue(LockedHideTitlebarProperty);
+            set => SetValue(LockedHideTitlebarProperty, value);
+        }
+
+        public static DependencyProperty LockedHideTitlebarProperty =
+        DependencyProperty.Register(nameof(LockedHideTitlebar), typeof(bool), typeof(RearrangeablePane), new FrameworkPropertyMetadata(true));
 
         double _oldWidth = 0;
         double _oldHeight = 0;
@@ -123,6 +132,24 @@ namespace Start9.UI.Wpf.Rearranger
                 };
                 SetBinding(DockPanel.DockProperty, dockBinding);
 
+                Binding hideFrameBinding = new Binding()
+                {
+                    Source = obj,
+                    Path = new PropertyPath("(0)", Rearranger.HideFrameWhenLockedProperty),
+                    Mode = BindingMode.OneWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                };
+                SetBinding(LockedHideFrameProperty, hideFrameBinding);
+
+                Binding hideTitlebarBinding = new Binding()
+                {
+                    Source = obj,
+                    Path = new PropertyPath("(0)", Rearranger.HideTitlebarWhenLockedProperty),
+                    Mode = BindingMode.OneWay,
+                    UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
+                };
+                SetBinding(LockedHideTitlebarProperty, hideTitlebarBinding);
+
                 Binding visibilityBinding = new Binding()
                 {
                     Source = obj,
@@ -131,7 +158,7 @@ namespace Start9.UI.Wpf.Rearranger
                     UpdateSourceTrigger = UpdateSourceTrigger.PropertyChanged
                 };
                 SetBinding(FrameworkElement.VisibilityProperty, visibilityBinding);
-                RefreshCanResize();
+                //RefreshCanResize();
             }
         }
 
