@@ -140,10 +140,17 @@ namespace Start9.UI.Wpf.Rearranger
 
         public override void OnApplyTemplate()
         {
+            /*foreach (object item in Items)
+            {
+                if ((item.GetType().FullName == "MS.Internal.NamedObject"))// || ((item as RearrangeablePane).Content.GetType().FullName == "MS.Internal.NamedObject"))
+                    Items.Remove(item);
+            }*/
+
+
             base.OnApplyTemplate();
 
             _itemsDockPanel = GetTemplateChild(PartItemsDockPanel) as DockPanel;
-            
+
             _dragMovementCanvas = GetTemplateChild(PartDragMovementCanvas) as Canvas;
 
             _dragMovementGhost = GetTemplateChild(PartDragMovementGhost) as Control;
@@ -193,20 +200,33 @@ namespace Start9.UI.Wpf.Rearranger
                             timer.Stop();
                             _dragMovementCanvas.Visibility = Visibility.Collapsed;
 
+                            Debug.WriteLine("ITEMS BEFORE SHUNFFLE: ");
+                            for (int i = 0; i < Items.Count; i++)
+                                Debug.WriteLine("Item at " + i + " is " + Items[i].GetType().FullName);
+
                             if (cancel)
                             {
 
                             }
                             else
                             {
-                                Items.Remove(pane);
-                                DockPanel.SetDock(pane, newDock);
+                                UIElement elem = pane;
+                                if (/*(!IsItemItsOwnContainerOverride(pane)) && */(pane.Content != null) && (pane.Content is UIElement uiel))
+                                    elem = uiel;
+
+                                Debug.WriteLine("\nelem is RearrangeablePane: " + (elem is RearrangeablePane).ToString() + "\n");
+                                Items.Remove(elem);
+                                DockPanel.SetDock(elem, newDock);
                                 if (toNewLocation)
-                                    Items.Insert(EnsureValidIndex(newIndex), pane);
+                                    Items.Insert(EnsureValidIndex(newIndex), elem);
                                 else
-                                    Items.Insert(EnsureValidIndex(initialIndex), pane);
+                                    Items.Insert(EnsureValidIndex(initialIndex), elem);
                             }
                             pane.Visibility = Visibility.Visible;
+
+                            Debug.WriteLine("ITEMS AFTER SHUNFFLE: ");
+                            for (int i = 0; i < Items.Count; i++)
+                                Debug.WriteLine("Item at " + i + " is " + Items[i].GetType().FullName);
                         }
                         else
                         {
@@ -357,7 +377,7 @@ namespace Start9.UI.Wpf.Rearranger
                             {
                                 foreach (RearrangeablePane pn in _itemsDockPanel.Children)
                                 {
-                                    if (SystemScaling.IsMouseWithin(pn) && (_itemsDockPanel.Children.IndexOf(pn) != (_itemsDockPanel.Children.Count - 1)))
+                                    if ((pane != pn) && SystemScaling.IsMouseWithin(pn) && (_itemsDockPanel.Children.IndexOf(pn) != (_itemsDockPanel.Children.Count - 1)))
                                     {
                                         if (pn == pane)
                                             currentToNewLocation = false;

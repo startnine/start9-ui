@@ -53,7 +53,7 @@
                         <DockPanel x:Name="ControlsDockPanel" Margin="10">
                             <Grid x:Name="TitlebarGrid" Height="24" DockPanel.Dock="Top">
                                 <Thumb x:Name="PART_Titlebar"/>
-                                <TextBlock Text="{Binding Path=(rerr:Rearranger.PaneTitle), Source={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False"/>
+                                <TextBlock Text="{Binding Path=(rerr:Rearranger.PaneTitle), RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False"/>
                             </Grid>
                             <ContentPresenter x:Name="PART_ContentPresenter" Content="{TemplateBinding Content}" Margin="{TemplateBinding Padding}"/>
                         </DockPanel>
