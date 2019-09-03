@@ -141,7 +141,7 @@ namespace Start9.UI.Wpf.Windows
             set => SetValue(DisplayNameProperty, value);
         }
 
-        public static readonly DependencyProperty DisplayNameProperty = DependencyProperty.RegisterAttached(nameof(DisplayName), typeof(string), typeof(MessageBoxAction), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty DisplayNameProperty = DependencyProperty.Register(nameof(DisplayName), typeof(string), typeof(MessageBoxAction), new PropertyMetadata(string.Empty));
 
         public object Value
         {
@@ -149,7 +149,7 @@ namespace Start9.UI.Wpf.Windows
             set => SetValue(ValueProperty, value);
         }
 
-        public static readonly DependencyProperty ValueProperty = DependencyProperty.RegisterAttached(nameof(Value), typeof(object), typeof(MessageBoxAction), new PropertyMetadata(null));
+        public static readonly DependencyProperty ValueProperty = DependencyProperty.Register(nameof(Value), typeof(object), typeof(MessageBoxAction), new PropertyMetadata(null));
 
         public MessageBoxAction(object value, string displayName)
         {

@@ -34,7 +34,7 @@ namespace Start9.UI.Wpf
         }
 
         new public static DependencyProperty BackgroundProperty =
-            DependencyProperty.RegisterAttached("Background", typeof(Brush), typeof(CutCornerBorder), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnBackgroundPropertyChangedCallback));
+            DependencyProperty.Register("Background", typeof(Brush), typeof(CutCornerBorder), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnBackgroundPropertyChangedCallback));
 
         static void OnBackgroundPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -48,7 +48,7 @@ namespace Start9.UI.Wpf
         }
 
         new public static DependencyProperty BorderBrushProperty =
-            DependencyProperty.RegisterAttached("BorderBrush", typeof(Brush), typeof(CutCornerBorder), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnBorderBrushPropertyChangedCallback));
+            DependencyProperty.Register("BorderBrush", typeof(Brush), typeof(CutCornerBorder), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.AffectsRender, OnBorderBrushPropertyChangedCallback));
 
         static void OnBorderBrushPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -62,7 +62,7 @@ namespace Start9.UI.Wpf
         }
 
         new public static DependencyProperty BorderThicknessProperty =
-            DependencyProperty.RegisterAttached("BorderThickness", typeof(Double), typeof(CutCornerBorder), new FrameworkPropertyMetadata((Double)0, FrameworkPropertyMetadataOptions.AffectsRender, OnBorderThicknessPropertyChangedCallback));
+            DependencyProperty.Register("BorderThickness", typeof(Double), typeof(CutCornerBorder), new FrameworkPropertyMetadata((Double)0, FrameworkPropertyMetadataOptions.AffectsRender, OnBorderThicknessPropertyChangedCallback));
 
         static void OnBorderThicknessPropertyChangedCallback(Object sender, DependencyPropertyChangedEventArgs e)
         {

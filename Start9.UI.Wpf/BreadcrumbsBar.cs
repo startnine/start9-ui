@@ -102,6 +102,7 @@ namespace Start9.UI.Wpf
             };
 
             _breadcrumbsStackPanel = GetTemplateChild(PartBreadcrumbsStackPanel) as StackPanel;
+            PopulateStackPanel(Converter.Invoke?.Invoke(_textBox.Text));
         }
     }
 

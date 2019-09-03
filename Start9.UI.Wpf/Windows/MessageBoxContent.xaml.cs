@@ -30,7 +30,7 @@ namespace Start9.UI.Wpf.Windows
         }
 
         internal static readonly DependencyProperty ActionsProperty =
-                    DependencyProperty.RegisterAttached(nameof(Actions), typeof(ObservableCollection<MessageBoxAction>), typeof(MessageBoxContent),
+                    DependencyProperty.Register(nameof(Actions), typeof(ObservableCollection<MessageBoxAction>), typeof(MessageBoxContent),
                         new PropertyMetadata(new ObservableCollection<MessageBoxAction>()));
 
         internal MessageBoxAction SelectedAction
@@ -40,7 +40,7 @@ namespace Start9.UI.Wpf.Windows
         }
 
         internal static readonly DependencyProperty SelectedActionProperty =
-                    DependencyProperty.RegisterAttached(nameof(SelectedAction), typeof(MessageBoxAction), typeof(MessageBoxContent),
+                    DependencyProperty.Register(nameof(SelectedAction), typeof(MessageBoxAction), typeof(MessageBoxContent),
                         new PropertyMetadata());
 
 

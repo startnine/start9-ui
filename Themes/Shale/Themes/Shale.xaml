@@ -144,6 +144,7 @@
         <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Controls/ListView.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Controls/Menu.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Controls/ProgressBar.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Controls/Rearranger.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Controls/ScrollBar.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Controls/SpinBox.xaml"/>
         <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Controls/StatusBar.xaml"/>
