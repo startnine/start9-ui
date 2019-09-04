@@ -9,8 +9,9 @@
 
     <Style x:Key="{x:Type ui:ToggleSwitch}" TargetType="{x:Type ui:ToggleSwitch}">
         <Setter Property="SnapsToDevicePixels" Value="true" />
-        <Setter Property="MinWidth" Value="200"/>
-        <Setter Property="Height" Value="50"/>
+        <!--Setter Property="MinWidth" Value="200"/-->
+        <!--Setter Property="Height" Value="50"/-->
+        <Setter Property="Height" Value="23"/>
         <Setter Property="Background" Value="Transparent"/>
         <Setter Property="BorderBrush" Value="Transparent" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
@@ -21,18 +22,18 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ui:ToggleSwitch}">
-                    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                        <Grid.ColumnDefinitions>
+                    <DockPanel>
+                        <!--HorizontalAlignment="Stretch" VerticalAlignment="Stretch"-->
+                        <!--Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="50"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition MinHeight="25"/>
                             <RowDefinition Height="25"/>
-                        </Grid.RowDefinitions>
-                        <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" TextBlock.TextAlignment="Center" IsHitTestVisible="False" Grid.ColumnSpan="2" Grid.Row="0"/>
-                        <TextBlock x:Name="PART_StateText" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" IsHitTestVisible="False" Grid.Column="0" Grid.Row="1"/>
-                        <Grid Grid.Column="1" Grid.Row="1" Background="#01000000" Margin="0,1">
+                        </Grid.RowDefinitions-->
+                        <Grid Background="#01000000" Width="50" Height="23" VerticalAlignment="Center" DockPanel.Dock="Right">
+                            <!--Grid.Column="1" Grid.Row="1" Margin="0,1"-->
                             <Border x:Name="IdleBackground" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='5,5,5,5;0,0,0,0'}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonIdleBorderBrush}" BorderThickness="1">
                                 <Border.Background>
                                     <LinearGradientBrush StartPoint="0,1" EndPoint="0,0" GradientStops="{DynamicResource ButtonIdleBackgroundGradientStops}"/>
@@ -158,7 +159,11 @@
                                 </Button>
                             </StackPanel>
                         </Grid>
-                    </Grid>
+                        <TextBlock x:Name="PART_StateText" HorizontalAlignment="Left" VerticalAlignment="Center" TextAlignment="Left" IsHitTestVisible="False" Margin="0,0,5,0" DockPanel.Dock="Right"/>
+                        <!--Grid.Column="0" Grid.Row="1"-->
+                        <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Left" VerticalAlignment="Center" TextBlock.TextAlignment="Left" IsHitTestVisible="False"/>
+                        <!--Grid.ColumnSpan="2" Grid.Row="0"-->
+                    </DockPanel>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
                             <Trigger.EnterActions>
