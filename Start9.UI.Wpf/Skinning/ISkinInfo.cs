@@ -8,6 +8,8 @@ namespace Start9.UI.Wpf.Skinning
 {
     public interface ISkinInfo
     {
+        bool GetHaveSettingsChanged();
+
         Page GetSettingsPage();
 
         ResourceDictionary OnApplySkinSettings();

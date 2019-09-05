@@ -49,6 +49,15 @@ namespace Start9.UI.Wpf.Rearranger
 
         public event EventHandler IsLockedChanged;
 
+        public bool CollapseWhenRemoved
+        {
+            get => (bool)GetValue(CollapseWhenRemovedProperty);
+            set => SetValue(CollapseWhenRemovedProperty, value);
+        }
+
+        public static DependencyProperty CollapseWhenRemovedProperty =
+            DependencyProperty.Register(nameof(CollapseWhenRemoved), typeof(bool), typeof(Rearranger), new FrameworkPropertyMetadata(true));
+
         public static readonly DependencyProperty PaneTitleProperty = DependencyProperty.RegisterAttached("PaneTitle", typeof(string), typeof(Rearranger), new FrameworkPropertyMetadata(string.Empty));
 
         public static string GetPaneTitle(DependencyObject element)
@@ -122,8 +131,8 @@ namespace Start9.UI.Wpf.Rearranger
         public Rearranger() : base()
         {
             RearrangeablePane.TitlebarMouseLeftButtonDown += Pane_TitlebarMouseLeftButtonDown;
+            RearrangeablePane.RemoveButtonClicked += Pane_RemoveButtonClicked;
         }
-
 
         protected override bool IsItemItsOwnContainerOverride(object item)
         {
@@ -176,6 +185,20 @@ namespace Start9.UI.Wpf.Rearranger
         {
             if ((sender != null) && (sender is RearrangeablePane pane))
                 MovePane(pane);
+        }
+
+        private void Pane_RemoveButtonClicked(object sender, RoutedEventArgs e)
+        {
+            if ((sender != null) && (sender is RearrangeablePane pane))
+            {
+                if ((pane.Content != null) && (pane.Content is UIElement uiel))
+                {
+                    if (CollapseWhenRemoved)
+                        uiel.Visibility = Visibility.Collapsed;
+                    else
+                        Items.Remove(uiel);
+                }
+            }
         }
 
         private static bool IsContainerForItemsControl(DependencyObject element, ItemsControl itemsControl)

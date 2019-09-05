@@ -70,7 +70,7 @@
                                 </Border>
                                 <Thumb x:Name="PART_Titlebar" Style="{DynamicResource BorderThumbStyle}"/>
                                 <TextBlock FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TitlebarIdleForegroundBrush}" Margin="32,0" HorizontalAlignment="Center" TextAlignment="Center" VerticalAlignment="Center" Text="{Binding Path=(rerr:Rearranger.PaneTitle), RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False" Effect="{DynamicResource DropShadow}" UseLayoutRounding="True" SnapsToDevicePixels="True"/>
-                                <Button HorizontalAlignment="Right" VerticalAlignment="Stretch" MinWidth="32">
+                                <Button x:Name="PART_RemoveButton" HorizontalAlignment="Right" VerticalAlignment="Stretch" MinWidth="32">
                                     <Button.Style>
                                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource CaptionButtonStyle}">
                                             <Style.Triggers>

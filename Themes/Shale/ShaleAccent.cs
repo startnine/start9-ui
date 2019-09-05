@@ -16,12 +16,32 @@ namespace Start9.Wpf.Styles.Shale
         /// <summary>
         /// #FF8DD3D6
         /// </summary>
-        public static ShaleAccent Blue => new ShaleAccent(183, 48);
+        public static ShaleAccent Sky => new ShaleAccent(183, 48);
+
+        /// <summary>
+        /// #1E2B73
+        /// </summary>
+        public static ShaleAccent Ocean => new ShaleAccent(231, 59);
 
         /// <summary>
         /// #FFBCB3A7
         /// </summary>
-        public static ShaleAccent Beige => new ShaleAccent(33, 13);
+        public static ShaleAccent Sand => new ShaleAccent(33, 13);
+
+        /// <summary>
+        /// #FF8577
+        /// </summary>
+        public static ShaleAccent Coral => new ShaleAccent(6, 100);
+
+        /// <summary>
+        /// #538049
+        /// </summary>
+        public static ShaleAccent Palm => new ShaleAccent(109, 27);
+
+        /// <summary>
+        /// #FDC82C
+        /// </summary>
+        public static ShaleAccent Sunlight => new ShaleAccent(45, 98);
     }
     public class ShaleAccent
     {
@@ -88,9 +108,20 @@ namespace Start9.Wpf.Styles.Shale
             }
         }
 
-        public Color ToColor()
+        public SolidColorBrush Brush
         {
-            return (Color)Dictionary["ButtonPressedBorderLightColor"];
+            get
+            {
+                /*UpdateColors();
+                return (Color)Dictionary["ButtonPressedBorderLightColor"];*/
+                var rgb = new Hsl()
+                {
+                    H = _hue,
+                    S = _saturation,
+                    L = 75
+                }.ToRgb();
+                return new SolidColorBrush(Color.FromArgb(0xFF, (byte)rgb.R, (byte)rgb.G, (byte)rgb.B));
+            }
         }
     }
 }

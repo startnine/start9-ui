@@ -130,6 +130,8 @@
     </Style>
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Colors/BaseLight.xaml"/>
+        <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Colors/Accent.xaml"/>
         <!--
         <ResourceDictionary Source="pack://application:,,,/Start9.Wpf.Styles.Shale;component/Themes/Controls/.xaml"/>
         -->

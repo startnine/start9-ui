@@ -36,7 +36,7 @@ namespace FrontEndTest
             Cancel
         }
 
-        ShaleAccent _accent = ShaleAccents.Blue; //new ShaleAccent(183, 28);
+        ShaleAccent _accent = ShaleAccents.Sky; //new ShaleAccent(183, 28);
         //ResourceDictionary _dictionary = null;
 
         public MainWindow()
@@ -82,19 +82,19 @@ namespace FrontEndTest
             LightsToggleSwitch.Checked += LightsToggleSwitch_Checked;
             LightsToggleSwitch.Unchecked += LightsToggleSwitch_Unchecked;
 
-            ColouresPresetsGrid.Children.Add(GetColoureButton(ShaleAccents.Blue));
-            ColouresPresetsGrid.Children.Add(GetColoureButton(ShaleAccents.Beige));
+            ColouresPresetsGrid.Children.Add(GetColoureButton(ShaleAccents.Sky));
+            ColouresPresetsGrid.Children.Add(GetColoureButton(ShaleAccents.Sand));
 
             SkinsComboBox.SelectionChanged += SkinsComboBox_SelectionChanged;
         }
 
         private Button GetColoureButton(ShaleAccent accent)
         {
-            Debug.WriteLine("PRESET COLOUR: " + accent.ToColor());
+            Debug.WriteLine("PRESET COLOUR: " + accent.Brush.Color.ToString());
 
             Button button = new Button()
             {
-                Background = new SolidColorBrush(accent.ToColor())
+                Background = accent.Brush//new SolidColorBrush(accent.Color)
             };
 
             button.SetBinding(Button.HeightProperty, new Binding()

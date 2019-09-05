@@ -21,9 +21,7 @@ namespace Start9.UI.Wpf.Skinning
                 _skins = value;
                 NotifyPropertyChanged(nameof(Skins));
             }
-        }   
-
-        public string SkinsFolderPath = null;
+        }
         
         public ISkinInfo DefaultSkin = null;
 
@@ -40,7 +38,7 @@ namespace Start9.UI.Wpf.Skinning
             }
             set
             {
-                if ((value != null) && Skins.Contains(value))
+                if ((value != null) && Skins.Contains(value) && ((_activeSkin != value) || (value.GetHaveSettingsChanged())))
                 {
                     _activeSkin = value;
                     ApplySkin(_activeSkin);
@@ -51,39 +49,41 @@ namespace Start9.UI.Wpf.Skinning
 
         void ApplySkin(ISkinInfo targetSkin)
         {
+            ResourceDictionary defl = DefaultSkin.OnApplySkinSettings();
+            ResourceDictionary targ = targetSkin.OnApplySkinSettings();
             if (Application.Current.Resources.MergedDictionaries.Count == 0)
             {
                 if (targetSkin == DefaultSkin)
-                    Application.Current.Resources.MergedDictionaries.Add(DefaultSkin.OnApplySkinSettings());
+                    Application.Current.Resources.MergedDictionaries.Add(defl);
                 else
                 {
-                    Application.Current.Resources.MergedDictionaries.Add(DefaultSkin.OnApplySkinSettings());
-                    Application.Current.Resources.MergedDictionaries.Add(targetSkin.OnApplySkinSettings());
+                    Application.Current.Resources.MergedDictionaries.Add(defl);
+                    Application.Current.Resources.MergedDictionaries.Add(targ);
                 }
             }
             else if (Application.Current.Resources.MergedDictionaries.Count == 1)
             {
                 if (targetSkin == DefaultSkin)
-                    Application.Current.Resources.MergedDictionaries[0] = DefaultSkin.OnApplySkinSettings();
+                    Application.Current.Resources.MergedDictionaries[0] = defl;
                 else
                 {
-                    Application.Current.Resources.MergedDictionaries[0] = DefaultSkin.OnApplySkinSettings();
-                    Application.Current.Resources.MergedDictionaries.Add(targetSkin.OnApplySkinSettings());
+                    Application.Current.Resources.MergedDictionaries[0] = defl;
+                    Application.Current.Resources.MergedDictionaries.Add(targ);
                 }
             }
             else
             {
                 if (targetSkin == DefaultSkin)
                 {
-                    Application.Current.Resources.MergedDictionaries[0] = DefaultSkin.OnApplySkinSettings();
+                    Application.Current.Resources.MergedDictionaries[0] = defl;
                     
                     for (int i = 1; i < Application.Current.Resources.MergedDictionaries.Count; i++)
                         Application.Current.Resources.MergedDictionaries.RemoveAt(i);
                 }
                 else
                 {
-                    Application.Current.Resources.MergedDictionaries[0] = DefaultSkin.OnApplySkinSettings();
-                    Application.Current.Resources.MergedDictionaries[1] = targetSkin.OnApplySkinSettings();
+                    Application.Current.Resources.MergedDictionaries[0] = defl;
+                    Application.Current.Resources.MergedDictionaries[1] = targ;
 
                     for (int i = 2; i < Application.Current.Resources.MergedDictionaries.Count; i++)
                         Application.Current.Resources.MergedDictionaries.RemoveAt(i);
@@ -91,37 +91,38 @@ namespace Start9.UI.Wpf.Skinning
             }
         }
 
-        public SkinManager(string skinsFolderPath, ISkinInfo defaultSkin)
+        public SkinManager(ISkinInfo defaultSkin)
         {
-            SkinsFolderPath = skinsFolderPath;
             DefaultSkin = defaultSkin;
 
-            SkinsCollection();
+            Skins.Add(DefaultSkin);
 
             ApplySkin(DefaultSkin);
         }
 
-        void SkinsCollection()
+        public void LoadSkinFromFolder(string dirPath)
         {
-            Skins.Clear();
-            Skins.Add(DefaultSkin);
-            foreach (string s in Directory.EnumerateDirectories(SkinsFolderPath))
+            if (!Directory.Exists(dirPath))
+                throw new DirectoryNotFoundException();
+
+            string path = Path.Combine(dirPath, "Skin.dll");
+            if (File.Exists(path))
             {
-                string path = Path.Combine(s, "Skin.dll");
-                if (File.Exists(path))
+                Assembly skinAssembly = Assembly.LoadFile(path);
+                var attributes = skinAssembly.GetCustomAttributes(true); //typeof(SkinAssemblyAttribute)
+                foreach (Attribute attr in attributes)
                 {
-                    Assembly skinAssembly = Assembly.LoadFile(path);
-                    var attributes = skinAssembly.GetCustomAttributes(true); //typeof(SkinAssemblyAttribute)
-                    foreach (Attribute attr in attributes)
+                    if (attr is SkinAssemblyAttribute skinAttr)
                     {
-                        if (attr is SkinAssemblyAttribute skinAttr)
-                        {
-                            ISkinInfo skinInfo = (ISkinInfo)Activator.CreateInstance(skinAttr.InterfaceImplType);
-                            Skins.Add(skinInfo);
-                        }
+                        ISkinInfo skinInfo = (ISkinInfo)Activator.CreateInstance(skinAttr.InterfaceImplType);
+                        Skins.Add(skinInfo);
+                        return;
                     }
                 }
+                throw new Exception("The \"Skin.dll\" assembly within the provided folder does not possess the " + typeof(SkinAssemblyAttribute).FullName.ToString() + " attribute.");
             }
+            else
+                throw new FileNotFoundException("Assembly \"Skin.dll\" was not found within the folder specified.");
         }
 
 

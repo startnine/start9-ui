@@ -15,6 +15,7 @@ namespace Start9.UI.Wpf.Rearranger
     [TemplatePart(Name = PartThumbRight, Type = typeof(Thumb))]
     [TemplatePart(Name = PartThumbBottom, Type = typeof(Thumb))]
     [TemplatePart(Name = PartContentPresenter, Type = typeof(ContentPresenter))]
+    [TemplatePart(Name = PartRemoveButton, Type = typeof(Button))]
     public class RearrangeablePane : ContentControl
     {
         const String PartTitlebar = "PART_Titlebar";
@@ -23,6 +24,7 @@ namespace Start9.UI.Wpf.Rearranger
         const String PartThumbRight = "PART_ThumbRight";
         const String PartThumbBottom = "PART_ThumbBottom";
         const String PartContentPresenter = "PART_ContentPresenter";
+        const String PartRemoveButton = "PART_RemoveButton";
 
         Thumb _titlebar;
         Thumb _thumbLeft;
@@ -30,6 +32,7 @@ namespace Start9.UI.Wpf.Rearranger
         Thumb _thumbRight;
         Thumb _thumbBottom;
         ContentPresenter _contentPresenter;
+        Button _removeButton;
 
         /*public bool? CanResize
         {
@@ -209,6 +212,10 @@ namespace Start9.UI.Wpf.Rearranger
                 _thumbBottom.DragDelta += ThumbBottom_DragDelta;
 
             _contentPresenter = GetTemplateChild(PartContentPresenter) as ContentPresenter;
+
+            _removeButton = GetTemplateChild(PartRemoveButton) as Button;
+            if (_removeButton != null)
+                _removeButton.Click += RemoveButton_Click; //(sneder, args) => RemoveButtonClicked?.Invoke(sneder, args);
         }
 
         private void Titlebar_PreviewMouseLeftButtonDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -217,7 +224,14 @@ namespace Start9.UI.Wpf.Rearranger
             TitlebarMouseLeftButtonDown?.Invoke(this, null);
         }
 
+        private void RemoveButton_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("Remove button clicked!");
+            RemoveButtonClicked?.Invoke(this, null);
+        }
+
         public static event EventHandler TitlebarMouseLeftButtonDown;
+        public static event RoutedEventHandler RemoveButtonClicked;
 
         void ThumbLeft_DragDelta(Object sender, DragDeltaEventArgs e)
         {

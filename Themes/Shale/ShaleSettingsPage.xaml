@@ -1,0 +1,149 @@
+﻿<Page x:Class="Start9.Wpf.Styles.Shale.ShaleSettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:ui="clr-namespace:Start9.UI.Wpf;assembly=Start9.UI.Wpf"
+      xmlns:local="clr-namespace:Start9.Wpf.Styles.Shale"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ShaleSettingsPage">
+    <StackPanel Orientation="Vertical">
+        <GroupBox Header="Colours">
+            <StackPanel Orientation="Vertical">
+                <ui:ToggleSwitch x:Name="LightsToggleSwitch" Content="Lights" TrueText="On" FalseText="Off" Checked="LightsToggleSwitch_Checked" Unchecked="LightsToggleSwitch_Unchecked" IsChecked="True"/>
+                <DockPanel>
+                    <TextBlock Text="Hue" DockPanel.Dock="Left"/>
+                    <Slider x:Name="HueSlider" Minimum="0" Maximum="360" ValueChanged="HueSlider_ValueChanged">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Offset="0" Color="#FFFF0000"/>
+                                <GradientStop Offset="0.14925373134328358208955223880597" Color="#FFFD01FF"/>
+                                <GradientStop Offset="0.32835820895522388059701492537313" Color="#FF0200FE"/>
+                                <GradientStop Offset="0.32835820895522388059701492537313" Color="#FF0200FE"/>
+                                <GradientStop Offset="0.4875621890547263681592039800995" Color="#FF00FCFF"/>
+                                <GradientStop Offset="0.66915422885572139303482587064677" Color="#FF01FE03"/>
+                                <GradientStop Offset="0.66915422885572139303482587064677" Color="#FF01FE03"/>
+                                <GradientStop Offset="0.83830845771144278606965174129353" Color="#FFFDFE00"/>
+                                <GradientStop Offset="1" Color="#FFFC0001"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                    </Slider>
+                </DockPanel>
+                <DockPanel>
+                    <TextBlock Text="Saturation" DockPanel.Dock="Left"/>
+                    <Slider x:Name="SaturationSlider" Minimum="0" Maximum="100" ValueChanged="SaturationSlider_ValueChanged">
+                        <Slider.Background>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                <GradientStop Offset="0" Color="#FF7F7F7F"/>
+                                <GradientStop Offset="1" Color="#FFFF0000"/>
+                            </LinearGradientBrush>
+                        </Slider.Background>
+                    </Slider>
+                </DockPanel>
+                <TextBlock Text="Accent presets"/>
+                <ListView x:Name="AccentPresetsListView" Margin="-4,-4,0,0" SelectedIndex="0" SelectionChanged="AccentPresetsListView_SelectionChanged">
+                    <ListView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel MaxWidth="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListView}}}"/>
+                        </ItemsPanelTemplate>
+                    </ListView.ItemsPanel>
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="{x:Type ListViewItem}">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type ListViewItem}">
+                                        <Grid Background="#01000000">
+                                            <ContentPresenter/>
+                                        </Grid>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListView.ItemContainerStyle>
+                    <ListView.ItemTemplate>
+                        <DataTemplate DataType="{x:Type local:ShaleAccent}">
+                            <!--Button Margin="4,4,0,0" IsHitTestVisible="False" Width="56" Height="56"-->
+                            <Grid Margin="4,4,0,0" Width="56" Height="56">
+                                <Border x:Name="IdleBackground" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='3,3,3,3;0,0,0,0'}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonIdleBorderBrush}" BorderThickness="1">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ButtonIdleBackgroundGradientStops}"/>
+                                    </Border.Background>
+                                    <Border x:Name="IdleInnerBackground" CornerRadius="{Binding Path=(ui:AttachedProperties.CornerCurves), RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource CornerCurvesToCornerRadiusConverter}, ConverterParameter='2,2,2,2;0,0,0,0'}" Margin="1" Padding="0" BorderBrush="Transparent" BorderThickness="0"/>
+                                </Border>
+                                <Border x:Name="HoverBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonHoverBorderBrush}" BorderThickness="1" Opacity="0">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ButtonHoverBackgroundGradientStops}"/>
+                                    </Border.Background>
+                                    <Border CornerRadius="{Binding CornerRadius, ElementName=IdleInnerBackground}" Margin="1" Padding="0" BorderBrush="Transparent" BorderThickness="0">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ButtonHoverSecondaryBackgroundGradientStops}"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Border>
+                                <Border x:Name="PressedBackground" CornerRadius="{Binding CornerRadius, ElementName=IdleBackground}" Margin="0" Padding="0" BorderBrush="{DynamicResource ButtonPressedBorderBrush}" BorderThickness="1" Opacity="0">
+                                    <Border.Background>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ButtonPressedBackgroundGradientStops}"/>
+                                    </Border.Background>
+                                    <Border CornerRadius="{Binding CornerRadius, ElementName=IdleInnerBackground}" Margin="1" Padding="0" BorderBrush="Transparent" BorderThickness="0">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1" GradientStops="{DynamicResource ButtonPressedSecondaryBackgroundGradientStops}"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Border>
+                                <Border Margin="2" CornerRadius="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="{Binding Brush}">
+                                    <!--Border.Background>
+                                        <SolidColorBrush Color="{Binding Brush}"/>
+                                    </Border.Background-->
+                                    <Border.OpacityMask>
+                                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                            <GradientStop Offset="0" Color="#C0000000"/>
+                                            <GradientStop Offset="1" Color="Black"/>
+                                        </LinearGradientBrush>
+                                    </Border.OpacityMask>
+                                </Border>
+                            </Grid>
+                            <!--/Button-->
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding IsMouseOver, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="HoverBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.5" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ListViewItem}}}" Value="True">
+                                    <DataTrigger.EnterActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="IdleBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                                <DoubleAnimation Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.EnterActions>
+                                    <DataTrigger.ExitActions>
+                                        <BeginStoryboard>
+                                            <Storyboard>
+                                                <DoubleAnimation Storyboard.TargetName="IdleBackground" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125" />
+                                                <DoubleAnimation Storyboard.TargetName="PressedBackground" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125" />
+                                            </Storyboard>
+                                        </BeginStoryboard>
+                                    </DataTrigger.ExitActions>
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackPanel>
+        </GroupBox>
+    </StackPanel>
+</Page>
