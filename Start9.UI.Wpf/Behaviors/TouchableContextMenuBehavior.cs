@@ -87,7 +87,7 @@ namespace Start9.UI.Wpf.Behaviors
             {
                 //Debug.WriteLine("OpenedWithTouch: " + AttachedProperties.GetOpenedWithTouch(_targetMenu).ToString());
                 //Debug.WriteLine(args.Source.GetType().FullName);
-                AttachedProperties.SetOpenedWithTouch(_targetMenu, _wasOpenedWithTouch);
+                AttachedProperties.SetLastClickWasTouch(_targetMenu, _wasOpenedWithTouch);
             };
             if (_targetMenu.IsLoaded)
                 Load();
@@ -162,7 +162,7 @@ namespace Start9.UI.Wpf.Behaviors
                     if (_targetMenu.IsOpen)
                     {
                         _wasOpenedWithTouch = true;
-                        AttachedProperties.SetOpenedWithTouch(_targetMenu, _wasOpenedWithTouch);
+                        AttachedProperties.SetLastClickWasTouch(_targetMenu, _wasOpenedWithTouch);
                         //else if (!((e.OriginalSource as UIElement).AreAnyTouchesOver))
                         touchTimer.Stop();
                     }

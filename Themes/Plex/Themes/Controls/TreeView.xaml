@@ -15,7 +15,7 @@
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="Foreground" Value="{DynamicResource TreeViewItemForegroundBrush}" />
-        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="HorizontalAlignment" Value="Stretch" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
         <Setter Property="MinHeight" Value="30" />
         <Setter Property="Margin" Value="0"/>
@@ -47,7 +47,7 @@
                 </MultiBinding>
             </Setter.Value>
         </Setter-->
-        <Setter Property="Width" Value="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=TreeView}}"/>
+        <!--Setter Property="Width" Value="{Binding ActualWidth, RelativeSource={RelativeSource Mode=FindAncestor,AncestorType=TreeView}}"/-->
         <Setter Property="SnapsToDevicePixels" Value="True" />
         <Setter Property="Tag" Value="{x:Static Visibility.Visible}"/>
         <Setter Property="Template">

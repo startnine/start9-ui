@@ -165,7 +165,7 @@ namespace Start9.UI.Wpf.Rearranger
             }
         }
 
-        Rearranger owner
+        /*Rearranger owner
         {
             get
             {
@@ -176,7 +176,7 @@ namespace Start9.UI.Wpf.Rearranger
                 if ((element != null) && (element is Rearranger rerr))
                     return rerr;
                 else
-                    return null;*/
+                    return null;*
                 if (Parent is DockPanel d)
                 {
                     if (d.TemplatedParent is Rearranger rerr)
@@ -184,7 +184,7 @@ namespace Start9.UI.Wpf.Rearranger
                 }
                 return null;
             }
-        }
+        }*/
 
         public override void OnApplyTemplate()
         {

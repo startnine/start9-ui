@@ -1,6 +1,7 @@
 ﻿using Start9.UI.Wpf.Behaviors;
 using System;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Controls;
@@ -169,7 +170,7 @@ namespace Start9.UI.Wpf
         }
 
         public static readonly DependencyProperty IsContextMenuTouchableProperty =
-            DependencyProperty.RegisterAttached("IsContextMenuTouchable", typeof(bool), typeof(AttachedProperties), new FrameworkPropertyMetadata(false, OnIsContextMenuTouchablePropertyChangedCallback));
+            DependencyProperty.RegisterAttached("IsContextMenuTouchable", typeof(bool), typeof(AttachedProperties), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits, OnIsContextMenuTouchablePropertyChangedCallback));
 
         public static bool GetIsContextMenuTouchable(DependencyObject element)
         {
@@ -187,7 +188,7 @@ namespace Start9.UI.Wpf
             {
                 if (((bool)e.NewValue) && (!(bool)e.OldValue))
                 {
-                    Interaction.GetBehaviors(menu).Add(new TouchableContextMenuBehavior());
+                    Interaction.GetBehaviors(menu).Add(new ClickVsTouchContextMenuBehavior());
 
                     /*if (!menu.IsOpen)
                     {
@@ -201,7 +202,7 @@ namespace Start9.UI.Wpf
                     for (int i = 0; i < behaviors.Count; i++)
                     {
                         var behavior = behaviors[i];
-                        if (behavior is TouchableContextMenuBehavior)
+                        if (behavior is ClickVsTouchContextMenuBehavior)
                         {
                             Interaction.GetBehaviors(menu).Remove(behavior);
                             break;
@@ -211,24 +212,34 @@ namespace Start9.UI.Wpf
             }
         }
         
-        public bool OpenedWithTouch
+        public bool LastClickWasTouch
         {
-            get => (bool)GetValue(OpenedWithTouchProperty);
-            set => SetValue(OpenedWithTouchProperty, value);
+            get => (bool)GetValue(LastClickWasTouchProperty);
+            set => SetValue(LastClickWasTouchProperty, value);
         }
 
-        public static readonly DependencyProperty OpenedWithTouchProperty = DependencyProperty.Register("OpenedWithTouch",
+        public static readonly DependencyProperty LastClickWasTouchProperty = DependencyProperty.Register("LastClickWasTouch",
             typeof(bool), typeof(AttachedProperties),
-            new FrameworkPropertyMetadata(false/*, FrameworkPropertyMetadataOptions.AffectsRender, OnOpenedWithTouchChanged*/));
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits, OnLastClickWasTouchPropertyChangedCallback));
 
-        public static bool GetOpenedWithTouch(DependencyObject element)
+        public static bool GetLastClickWasTouch(DependencyObject element)
         {
-            return (bool)element.GetValue(OpenedWithTouchProperty);
+            return (bool)element.GetValue(LastClickWasTouchProperty);
         }
 
-        public static void SetOpenedWithTouch(DependencyObject element, bool value)
+        public static void SetLastClickWasTouch(DependencyObject element, bool value)
         {
-            element.SetValue(OpenedWithTouchProperty, value);
+            element.SetValue(LastClickWasTouchProperty, value);
         }
+
+        internal static void OnLastClickWasTouchPropertyChangedCallback(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (sender is ContextMenu menu)
+                Debug.WriteLine("ContextMenu LastClickWasTouch: " + GetLastClickWasTouch(menu).ToString());
+            else if (sender is MenuItem item)
+                Debug.WriteLine("MenuItem LastClickWasTouch: " + GetLastClickWasTouch(item).ToString());
+        }
+
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(object), typeof(AttachedProperties), new PropertyMetadata());
     }
 }

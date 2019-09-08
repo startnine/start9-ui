@@ -174,9 +174,9 @@
             <Trigger Property="Role" Value="SubmenuItem">
                 <Setter Property="Template" Value="{StaticResource {x:Static MenuItem.TopLevelItemTemplateKey}}"/>
             </Trigger>
-            <DataTrigger Binding="{Binding MenuOpenedWithTouch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}" Value="True">
+            <!--DataTrigger Binding="{Binding MenuOpenedWithTouch, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type ContextMenu}}}" Value="True">
                 <Setter Property="Height" Value="45"/>
-            </DataTrigger>
+            </DataTrigger-->
         </Style.Triggers>
     </Style>
     <Style x:Key="PlexMenuItemStyle" TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}"/>

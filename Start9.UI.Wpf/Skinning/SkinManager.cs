@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows;
+using System.Diagnostics;
 
 namespace Start9.UI.Wpf.Skinning
 {
@@ -105,9 +106,31 @@ namespace Start9.UI.Wpf.Skinning
             if (!Directory.Exists(dirPath))
                 throw new DirectoryNotFoundException();
 
-            string path = Path.Combine(dirPath, "Skin.dll");
+            string dllName = Path.GetFileName(dirPath) + ".dll";
+            Debug.WriteLine("DLL NAME: " + dllName);
+            string path = Path.Combine(dirPath, dllName);
             if (File.Exists(path))
             {
+                foreach (string s in Directory.EnumerateFiles(dirPath, "*.dll"))
+                {
+                    if (s != path)
+                    {
+                        string filename = Path.GetFileName(s);
+                        string combinedPath = Path.Combine(Directory.GetParent(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName).ToString(), filename);
+                        Debug.WriteLine("COMBINED PATH: " + combinedPath);
+                        if (!File.Exists(combinedPath))
+                        {
+                            try
+                            {
+                                Assembly.LoadFile(s);
+                            }
+                            catch (Exception ex)
+                            {
+                                System.Diagnostics.Debug.WriteLine(ex);
+                            }
+                        }
+                    }
+                }
                 Assembly skinAssembly = Assembly.LoadFile(path);
                 var attributes = skinAssembly.GetCustomAttributes(true); //typeof(SkinAssemblyAttribute)
                 foreach (Attribute attr in attributes)
@@ -119,10 +142,10 @@ namespace Start9.UI.Wpf.Skinning
                         return;
                     }
                 }
-                throw new Exception("The \"Skin.dll\" assembly within the provided folder does not possess the " + typeof(SkinAssemblyAttribute).FullName.ToString() + " attribute.");
+                throw new Exception("The \"" + dllName + "\" assembly within the provided folder does not possess the " + typeof(SkinAssemblyAttribute).FullName.ToString() + " attribute.");
             }
             else
-                throw new FileNotFoundException("Assembly \"Skin.dll\" was not found within the folder specified.");
+                throw new FileNotFoundException("Assembly \"" + dllName + "\" was not found within the folder specified.");
         }
 
 

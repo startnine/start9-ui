@@ -21,6 +21,8 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Reflection;
 using MessageBox = Start9.UI.Wpf.Windows.MessageBox;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace FrontEndTest
 {
@@ -39,8 +41,61 @@ namespace FrontEndTest
         ShaleAccent _accent = ShaleAccents.Sky; //new ShaleAccent(183, 28);
         //ResourceDictionary _dictionary = null;
 
+        public ObservableCollection<BreadcrumbDemo> SampleCrumbs { get; set; } = new ObservableCollection<BreadcrumbDemo>();
+
+        public void AddSampleCrumbs()
+        {
+            SampleCrumbs.Add(new BreadcrumbDemo("Organism")
+            {
+                SubItems = new ObservableCollection<BreadcrumbDemo>()
+                {
+                    new BreadcrumbDemo("Animal")
+                    {
+                        SubItems = new ObservableCollection<BreadcrumbDemo>()
+                        {
+                            new BreadcrumbDemo("Mammal")
+                            {
+                                SubItems = new ObservableCollection<BreadcrumbDemo>()
+                                {
+                                    new BreadcrumbDemo("Moose")
+                                }
+                            },
+                            new BreadcrumbDemo("Bird")
+                            {
+                                SubItems = new ObservableCollection<BreadcrumbDemo>()
+                                {
+                                    new BreadcrumbDemo("Goose")
+                                }
+                            }
+                        }
+                    },
+                    new BreadcrumbDemo("Plant")
+                    {
+                        SubItems = new ObservableCollection<BreadcrumbDemo>()
+                        {
+                            new BreadcrumbDemo("Tree")
+                            {
+                                SubItems = new ObservableCollection<BreadcrumbDemo>()
+                                {
+                                    new BreadcrumbDemo("Maple")
+                                }
+                            },
+                            new BreadcrumbDemo("Flowering Plant")
+                            {
+                                SubItems = new ObservableCollection<BreadcrumbDemo>()
+                                {
+                                    new BreadcrumbDemo("Poison Ivy")
+                                }
+                            }
+                        }
+                    },
+                }
+            });
+        }
+
         public MainWindow()
         {
+            AddSampleCrumbs();
             InitializeComponent();
             Timer timer = new Timer(5000);
             timer.Elapsed += (sneder, args) =>
@@ -320,6 +375,16 @@ namespace FrontEndTest
                 });
             }
         }
+
+        private void BreadcrumbsBar_PathUpdated(object sender, Start9.UI.Wpf.Breadcrumbs.PathChangedEventArgs e)
+        {
+            BreadcrumbsPathTextBlock.Text = e.NewPath;
+        }
+
+        private void BreadcrumbsBar_PathItemAdded(object sender, Start9.UI.Wpf.Breadcrumbs.PathItemAddedEventArgs e)
+        {
+            SampleCrumbs.Insert(e.Index, e.NewValue as BreadcrumbDemo);
+        }
     }
 
     public enum SampleButtons
@@ -355,6 +420,48 @@ namespace FrontEndTest
                 Enum.GetValues(typeof(SampleButtons)).CopyTo(objects, 0);
                 return objects.ToList();
             }
+        }
+    }
+
+    public class BreadcrumbDemo : System.ComponentModel.INotifyPropertyChanged
+    {
+        string _name = string.Empty;
+        public string Name
+        {
+            get => _name;
+            set
+            {
+                _name = value;
+                NotifyPropertyChanged(nameof(Name));
+            }
+        }
+
+        ObservableCollection<BreadcrumbDemo> _subItems = new ObservableCollection<BreadcrumbDemo>();
+        public ObservableCollection<BreadcrumbDemo> SubItems
+        {
+            get => _subItems;
+            set
+            {
+                _subItems = value;
+                NotifyPropertyChanged(nameof(SubItems));
+            }
+        }
+
+        public BreadcrumbDemo(string name)
+        {
+            Name = name;
+        }
+
+        private void NotifyPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public override string ToString()
+        {
+            return Name;
         }
     }
 }
