@@ -53,7 +53,7 @@ namespace Start9.UI.Wpf
                 }
             }
 
-            throw new Exception("Cannot convert this type to 'CornerCurves'!");
+            throw new NotSupportedException("Cannot convert this type to 'CornerCurves'!");
         }
 
         public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, CultureInfo cultureInfo, object value, Type destinationType)
@@ -240,6 +240,16 @@ namespace Start9.UI.Wpf
                 Debug.WriteLine("MenuItem LastClickWasTouch: " + GetLastClickWasTouch(item).ToString());
         }
 
-        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(object), typeof(AttachedProperties), new PropertyMetadata());
+        public static readonly DependencyProperty IconProperty = DependencyProperty.Register("Icon", typeof(object), typeof(AttachedProperties), new PropertyMetadata(null));
+
+        public static object GetIcon(DependencyObject element)
+        {
+            return element.GetValue(IconProperty);
+        }
+
+        public static void SetIcon(DependencyObject element, object value)
+        {
+            element.SetValue(IconProperty, value);
+        }
     }
 }

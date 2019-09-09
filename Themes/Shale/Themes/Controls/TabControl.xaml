@@ -65,7 +65,7 @@
                         <Trigger Property="IsSelected" Value="True">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource TitlebarHoverForegroundBrush}" />
                         </Trigger>
-                        <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="False">
+                        <DataTrigger Binding="{Binding IsActive, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type Window}}}" Value="False">
                             <Setter TargetName="ContentSite" Property="TextElement.Foreground" Value="{DynamicResource TitlebarInactiveIdleForegroundBrush}" />
                         </DataTrigger>
                         <Trigger Property="IsEnabled" Value="False">

@@ -401,7 +401,7 @@
                             </Setter>
                         </Style>
                     </ControlTemplate.Resources>
-                    <Border x:Name="WindowRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="3" Margin="{TemplateBinding Margin}">
+                    <Border x:Name="WindowRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1" CornerRadius="4" Margin="{TemplateBinding Margin}">
                         <Grid>
                             <!--Grid.RowDefinitions>
                                 <RowDefinition Height="{Binding TitlebarHeight, RelativeSource={RelativeSource Mode=TemplatedParent}}"/>
@@ -469,7 +469,9 @@
                                 </StackPanel>
                                 <Grid HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="31" Margin="5,0">
                                     <!--Height="24"-->
-                                    <Image x:Name="WindowIcon" HorizontalAlignment="Left" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}" Visibility="{Binding ShowTitlebarIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                                    <Grid Width="45" HorizontalAlignment="Left" VerticalAlignment="Stretch" Visibility="{Binding ShowTitlebarIcon, RelativeSource={RelativeSource Mode=TemplatedParent}, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                        <Image x:Name="WindowIcon" HorizontalAlignment="Center" VerticalAlignment="Center" Height="16" Width="16" Margin="0" Source="{TemplateBinding Icon}"/>
+                                    </Grid>
                                     <TextBlock x:Name="TitleText" FontWeight="Bold" FontSize="12" Foreground="{DynamicResource TitlebarIdleForegroundBrush}" HorizontalAlignment="Center" TextAlignment="Center" Margin="100,0" Effect="{DynamicResource DropShadow}" Text="{Binding Path=Title, RelativeSource={RelativeSource Mode=TemplatedParent}}" IsHitTestVisible="False" VerticalAlignment="Center" Visibility="{TemplateBinding ShowTitlebarText, Converter={StaticResource BooleanToVisibilityConverter}}" UseLayoutRounding="True" SnapsToDevicePixels="True"/>
                                 </Grid>
                             </Grid>
