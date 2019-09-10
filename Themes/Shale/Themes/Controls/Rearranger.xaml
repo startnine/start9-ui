@@ -16,11 +16,56 @@
                 <ControlTemplate TargetType="{x:Type rerr:Rearranger}">
                     <Grid Background="{TemplateBinding Background}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <DockPanel x:Name="PART_ItemsDockPanel" LastChildFill="True" IsItemsHost="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{TemplateBinding Padding}"/>
-                        <Canvas x:Name="PART_DragMovementCanvas" Visibility="Collapsed">
-                            <Button x:Name="PART_DragMovementGhost" IsHitTestVisible="False" Opacity="0.5"/>
-                            <Button x:Name="PART_DragMovementGuide" IsHitTestVisible="False" Opacity="0.5"/>
+                        <Canvas x:Name="PART_DragMovementCanvas" Opacity="0" IsHitTestVisible="False" Visibility="Collapsed">
+                            <!--Button x:Name="PART_DragMovementGuide" IsHitTestVisible="False" Opacity="0.5"/-->
+                            <Grid x:Name="PART_DragMovementGuide">
+                                <Rectangle x:Name="SizingAid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5"/>
+                                <Border x:Name="DragMovementBorder" BorderThickness="5" UseLayoutRounding="True">
+                                    <Border.BorderBrush>
+                                        <VisualBrush>
+                                            <VisualBrush.Visual>
+                                                <Grid Width="{Binding ActualWidth, ElementName=SizingAid}" Height="{Binding ActualHeight, ElementName=SizingAid}" Background="#01000000" ClipToBounds="True">
+                                                    <Border CornerRadius="3" Margin="5" Background="Black" Effect="{DynamicResource TertiaryDropShadow}"/>
+                                                </Grid>
+                                            </VisualBrush.Visual>
+                                        </VisualBrush>
+                                    </Border.BorderBrush>
+                                    <Border CornerRadius="3" Opacity="0.5">
+                                        <Border.Background>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,0.75" GradientStops="{DynamicResource CardListViewSelectedBackgroundGradientStops}"/>
+                                        </Border.Background>
+                                    </Border>
+                                </Border>
+                            </Grid>
                         </Canvas>
                     </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsDragging" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_DragMovementCanvas" Storyboard.TargetProperty="Visibility" Duration="0:0:0.0">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.0" Value="{x:Static Visibility.Visible}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="PART_DragMovementCanvas" Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.125"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="PART_DragMovementCanvas" Storyboard.TargetProperty="Opacity" To="0" Duration="0:0:0.125"/>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="PART_DragMovementCanvas" Storyboard.TargetProperty="Visibility" Duration="0:0:0.125">
+                                            <DiscreteObjectKeyFrame KeyTime="0:0:0.125" Value="{x:Static Visibility.Collapsed}"/>
+                                        </ObjectAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                        <Trigger SourceName="PART_DragMovementCanvas" Property="Visibility" Value="Collapsed">
+                            <Setter TargetName="DragMovementBorder" Property="BorderBrush" Value="Transparent"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>

@@ -16,19 +16,19 @@ namespace Start9.UI.Wpf.Rearranger
     [StyleTypedProperty(Property = "ItemContainerStyle", StyleTargetType = typeof(Rearranger))]
     [TemplatePart(Name = PartItemsDockPanel, Type = typeof(DockPanel))]
     [TemplatePart(Name = PartDragMovementCanvas, Type = typeof(Canvas))]
-    [TemplatePart(Name = PartDragMovementGhost, Type = typeof(Control))]
-    [TemplatePart(Name = PartDragMovementGuide, Type = typeof(Control))]
+    //[TemplatePart(Name = PartDragMovementGhost, Type = typeof(Control))]
+    [TemplatePart(Name = PartDragMovementGuide, Type = typeof(FrameworkElement))]
     public class Rearranger : ItemsControl
     {
         const String PartItemsDockPanel = "PART_ItemsDockPanel";
         const String PartDragMovementCanvas = "PART_DragMovementCanvas";
-        const String PartDragMovementGhost = "PART_DragMovementGhost";
+        //const String PartDragMovementGhost = "PART_DragMovementGhost";
         const String PartDragMovementGuide = "PART_DragMovementGuide";
 
         DockPanel _itemsDockPanel;
         Canvas _dragMovementCanvas;
-        Control _dragMovementGhost;
-        Control _dragMovementGuide;
+        //Control _dragMovementGhost;
+        FrameworkElement _dragMovementGuide;
 
         private object _currentItem = null;
 
@@ -46,8 +46,18 @@ namespace Start9.UI.Wpf.Rearranger
             if (sender is Rearranger rerr)
                 rerr.IsLockedChanged?.Invoke(sender, null);
         }
-
         public event EventHandler IsLockedChanged;
+
+
+        public bool IsDragging
+        {
+            get => (bool)GetValue(IsDraggingProperty);
+            set => SetValue(IsDraggingProperty, value);
+        }
+
+        public static DependencyProperty IsDraggingProperty =
+            DependencyProperty.Register(nameof(IsDragging), typeof(bool), typeof(Rearranger), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
+
 
         public bool CollapseWhenRemoved
         {
@@ -221,9 +231,9 @@ namespace Start9.UI.Wpf.Rearranger
 
             _dragMovementCanvas = GetTemplateChild(PartDragMovementCanvas) as Canvas;
 
-            _dragMovementGhost = GetTemplateChild(PartDragMovementGhost) as Control;
+            //_dragMovementGhost = GetTemplateChild(PartDragMovementGhost) as Control;
 
-            _dragMovementGuide = GetTemplateChild(PartDragMovementGuide) as Control;
+            _dragMovementGuide = GetTemplateChild(PartDragMovementGuide) as FrameworkElement;
         }
 
         int EnsureValidIndex(int baseIndex)
@@ -248,15 +258,18 @@ namespace Start9.UI.Wpf.Rearranger
                 Vector paneCursorOffset = paneInitialPoint - SystemScaling.CursorPosition;
 
                 pane.Visibility = Visibility.Hidden;
-                _dragMovementCanvas.Visibility = Visibility.Visible;
+                //_dragMovementCanvas.Visibility = Visibility.Visible;
+                IsDragging = true;
                 Dock initialDock = DockPanel.GetDock(pane);
                 int initialIndex = Items.IndexOf(pane);
 
                 bool toNewLocation = false;
                 Dock newDock = Dock.Left;
                 int newIndex = 0;
+                _itemsDockPanel.IsHitTestVisible = false;
 
                 Timer timer = new Timer(10);
+
                 timer.Elapsed += (sneder, args) =>
                 {
                     Dispatcher.BeginInvoke(new Action(() =>
@@ -266,17 +279,15 @@ namespace Start9.UI.Wpf.Rearranger
                         if (done || cancel)
                         {
                             timer.Stop();
-                            _dragMovementCanvas.Visibility = Visibility.Collapsed;
+                            //_dragMovementCanvas.Visibility = Visibility.Collapsed;
+                            _itemsDockPanel.IsHitTestVisible = true;
+                            IsDragging = false;
 
-                            Debug.WriteLine("ITEMS BEFORE SHUNFFLE: ");
+                            Debug.WriteLine("ITEMS BEFORE SHUFFLE: ");
                             for (int i = 0; i < Items.Count; i++)
                                 Debug.WriteLine("Item at " + i + " is " + Items[i].GetType().FullName);
 
-                            if (cancel)
-                            {
-
-                            }
-                            else
+                            if ((!cancel) && (newIndex != initialIndex))
                             {
                                 UIElement elem = pane;
                                 if (/*(!IsItemItsOwnContainerOverride(pane)) && */(pane.Content != null) && (pane.Content is UIElement uiel))
@@ -292,15 +303,15 @@ namespace Start9.UI.Wpf.Rearranger
                             }
                             pane.Visibility = Visibility.Visible;
 
-                            Debug.WriteLine("ITEMS AFTER SHUNFFLE: ");
+                            Debug.WriteLine("ITEMS AFTER SHUFFLE: ");
                             for (int i = 0; i < Items.Count; i++)
                                 Debug.WriteLine("Item at " + i + " is " + Items[i].GetType().FullName);
                         }
                         else
                         {
                             paneCursorOffset = paneInitialPoint - SystemScaling.CursorPosition;
-                            Canvas.SetLeft(_dragMovementGhost, Canvas.GetLeft(_dragMovementGhost) + paneCursorOffset.X);
-                            Canvas.SetTop(_dragMovementGhost, Canvas.GetTop(_dragMovementGhost) + paneCursorOffset.Y);
+                            Canvas.SetLeft(_dragMovementGuide, Canvas.GetLeft(_dragMovementGuide) + paneCursorOffset.X);
+                            Canvas.SetTop(_dragMovementGuide, Canvas.GetTop(_dragMovementGuide) + paneCursorOffset.Y);
 
                             Point rearrangerCursorPoint = PointFromScreen(SystemScaling.CursorPosition);
                             Point rearrangerPoint = PointToScreen(new Point(0, 0));
@@ -315,9 +326,10 @@ namespace Start9.UI.Wpf.Rearranger
 
                                 Canvas.SetLeft(_dragMovementGuide, 0);
                                 Canvas.SetTop(_dragMovementGuide, 0);
-                                _dragMovementGuide.Width = 50; /*pane.ActualWidth;
-                                if (_dragMovementGuide.ActualWidth < 50)
-                                    _dragMovementGuide.Width = 50;*/
+                                if ((pane.Content is FrameworkElement cont) && (cont.ActualWidth > 50))
+                                    _dragMovementGuide.Width = cont.ActualWidth;
+                                else
+                                    _dragMovementGuide.Width = 50;
                                 _dragMovementGuide.Height = ActualHeight;
 
                                 currentToNewLocation = true;
@@ -330,9 +342,10 @@ namespace Start9.UI.Wpf.Rearranger
                                 Canvas.SetLeft(_dragMovementGuide, 0);
                                 Canvas.SetTop(_dragMovementGuide, 0);
                                 _dragMovementGuide.Width = ActualWidth;
-                                _dragMovementGuide.Height = 50; /*pane.ActualHeight;
-                                if (_dragMovementGuide.ActualHeight < 50)
-                                    _dragMovementGuide.Height = 50;*/
+                                if ((pane.Content is FrameworkElement cont) && (cont.ActualHeight > 50))
+                                    _dragMovementGuide.Height = cont.ActualHeight;
+                                else
+                                    _dragMovementGuide.Height = 50;
 
                                 currentToNewLocation = true;
                             }
@@ -445,14 +458,51 @@ namespace Start9.UI.Wpf.Rearranger
                             {
                                 foreach (RearrangeablePane pn in _itemsDockPanel.Children)
                                 {
-                                    if ((pane != pn) && SystemScaling.IsMouseWithin(pn) && (_itemsDockPanel.Children.IndexOf(pn) != (_itemsDockPanel.Children.Count - 1)))
+                                    if (SystemScaling.IsMouseWithin(pn) && (_itemsDockPanel.Children.IndexOf(pn) != (_itemsDockPanel.Children.Count - 1)))
                                     {
                                         if (pn == pane)
+                                        {
+                                            newIndex = initialIndex;
                                             currentToNewLocation = false;
+
+                                            Point pnPoint = _dragMovementCanvas.PointFromScreen(pn.PointToScreen(new Point(0, 0)));
+                                            Canvas.SetLeft(_dragMovementGuide, pnPoint.X);
+                                            Canvas.SetTop(_dragMovementGuide, pnPoint.Y);
+                                            _dragMovementGuide.Width = pn.ActualWidth;
+                                            _dragMovementGuide.Height = pn.ActualHeight;
+                                        }
                                         else
                                         {
                                             currentToNewLocation = true;
                                             Point pnCurPoint = pn.PointFromScreen(SystemScaling.CursorPosition);
+                                            Point pnPoint = _dragMovementCanvas.PointFromScreen(pn.PointToScreen(new Point(0, 0)));
+
+                                            if ((DockPanel.GetDock(pn) == Dock.Top) || (DockPanel.GetDock(pn) == Dock.Bottom))
+                                            {
+                                                Canvas.SetLeft(_dragMovementGuide, pnPoint.X);
+
+                                                if (pnCurPoint.Y > (pn.ActualHeight / 2))
+                                                    Canvas.SetTop(_dragMovementGuide, pnPoint.Y + pn.ActualHeight / 2);
+                                                else
+                                                    Canvas.SetTop(_dragMovementGuide, pnPoint.Y);
+
+                                                _dragMovementGuide.Width = pn.ActualWidth;
+                                                _dragMovementGuide.Height = pn.ActualHeight / 2;
+                                            }
+                                            else
+                                            {
+                                                if (pnCurPoint.X > (pn.ActualWidth / 2))
+                                                    Canvas.SetLeft(_dragMovementGuide, pnPoint.X + pn.ActualWidth / 2);
+                                                else
+                                                    Canvas.SetLeft(_dragMovementGuide, pnPoint.X);
+
+                                                Canvas.SetTop(_dragMovementGuide, pnPoint.Y);
+
+                                                _dragMovementGuide.Width = pn.ActualWidth / 2;
+                                                _dragMovementGuide.Height = pn.ActualHeight;
+                                            }
+
+
                                             if (DockPanel.GetDock(pn) == Dock.Top)
                                             {
                                                 if (pnCurPoint.Y > (pn.ActualHeight / 2))
@@ -483,11 +533,10 @@ namespace Start9.UI.Wpf.Rearranger
                                             }
                                             newDock = DockPanel.GetDock(pn);
 
-                                            Point pnPoint = _dragMovementCanvas.PointFromScreen(pn.PointToScreen(new Point(0, 0)));
-                                            Canvas.SetLeft(_dragMovementGuide, pnPoint.X);
+                                            /*Canvas.SetLeft(_dragMovementGuide, pnPoint.X);
                                             Canvas.SetTop(_dragMovementGuide, pnPoint.Y);
                                             _dragMovementGuide.Width = pn.ActualWidth;
-                                            _dragMovementGuide.Height = pn.ActualHeight;
+                                            _dragMovementGuide.Height = pn.ActualHeight;*/
                                         }
                                         break;
                                     }
